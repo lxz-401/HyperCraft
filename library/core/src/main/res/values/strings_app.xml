@@ -18,8 +18,17 @@
   ~ Copyright (C) 2023-2026 HyperCeiler Contributions
   -->
 <resources>
-    <string name="app_name" translatable="false">HyperCeiler</string>
-    <string name="app_name_sp" translatable="false">HappyCeiler</string>
+    <string name="app_name" translatable="false">HyperCraft</string>
+    <string name="app_name_sp" translatable="false">HappyCraft</string>
+
+    <!-- HyperCraft Samsung One UI Volume Settings -->
+    <string name="system_ui_volume_oneui_style">Samsung One UI ovoz paneli</string>
+    <string name="system_ui_volume_oneui_style_desc">Ovoz panelini Samsung One UI uslubidagi zamonaviy yumaloq burchakli progress bar ko\'rinishiga o\'zgartirish</string>
+    <string name="system_ui_volume_oneui_radius">Ovoz paneli burchak radiusi</string>
+    <string name="system_ui_volume_oneui_radius_desc">Progress bar yumaloqlik darajasini sozlash</string>
+    <string name="system_ui_volume_oneui_custom_color">Maxsus progress rangi</string>
+    <string name="system_ui_volume_oneui_custom_color_desc">Standart One UI ko\'k rangi o\'rniga o\'zingiz tanlagan rangni qo\'llash</string>
+    <string name="system_ui_volume_oneui_color">Progress rangini tanlash</string>
 
     <string name="version_update">New version found</string>
     <string name="about_copy_right" translatable="false">© 2023-2026 Sevtinge &amp; HyperCeiler Contributors.</string>

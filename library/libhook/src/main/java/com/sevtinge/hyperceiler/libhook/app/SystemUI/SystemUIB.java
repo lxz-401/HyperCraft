@@ -81,6 +81,7 @@ import com.sevtinge.hyperceiler.libhook.rules.systemui.other.RemoveMiuiMultiWinS
 import com.sevtinge.hyperceiler.libhook.rules.systemui.other.UiLockApp;
 import com.sevtinge.hyperceiler.libhook.rules.systemui.other.UnlockClipboard;
 import com.sevtinge.hyperceiler.libhook.rules.systemui.plugin.NewPluginHelperKt;
+import com.sevtinge.hyperceiler.libhook.rules.systemui.plugin.systemui.OneUiVolumeStyle;
 import com.sevtinge.hyperceiler.libhook.rules.systemui.plugin.systemui.QSColor;
 import com.sevtinge.hyperceiler.libhook.rules.systemui.statusbar.DoubleTapToSleep;
 import com.sevtinge.hyperceiler.libhook.rules.systemui.statusbar.HideStatusBarBeforeScreenshot;
@@ -118,6 +119,7 @@ public class SystemUIB extends BaseLoad {
 
     @Override
     public void onPackageLoaded() {
+        android.util.Log.e("HyperCraft", ">>> SystemUIB onPackageLoaded entered! <<<");
 
 
 
@@ -138,6 +140,7 @@ public class SystemUIB extends BaseLoad {
             isHyperOSVersion(4f));
         // PluginHelper
         initHook(NewPluginHelperKt.INSTANCE);
+        initHook(OneUiVolumeStyle.INSTANCE, true);
         // Actions
         initHook(new StatusBarActionBootstrap(), PrefsBridge.getBoolean("home_gesture_enable")
             || com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.isMoreHyperOSVersion(4f));

@@ -31,6 +31,7 @@ import com.sevtinge.hyperceiler.libhook.rules.systemui.plugin.systemui.DefaultPl
 import com.sevtinge.hyperceiler.libhook.rules.systemui.plugin.systemui.DisableDeviceManagedNew
 import com.sevtinge.hyperceiler.libhook.rules.systemui.plugin.systemui.EnableVolumeBlur
 import com.sevtinge.hyperceiler.libhook.rules.systemui.plugin.systemui.HideCollpasedFootButton
+import com.sevtinge.hyperceiler.libhook.rules.systemui.plugin.systemui.OneUiVolumeStyle
 import com.sevtinge.hyperceiler.libhook.rules.systemui.plugin.systemui.HideEditButton
 import com.sevtinge.hyperceiler.libhook.rules.systemui.plugin.systemui.NewBrightnessPct
 import com.sevtinge.hyperceiler.libhook.rules.systemui.plugin.systemui.NewShowVolumePct
@@ -135,6 +136,13 @@ object NewPluginHelperKt : BaseHook() {
                         )
                     )
                 }
+
+                enabledLoaders.add(
+                    Pair(
+                        "OneUiVolumeStyle",
+                        OneUiVolumeStyle::initLoaderHook
+                    )
+                )
 
                 if (PrefsBridge.getBoolean("system_ui_other_default_plugin_theme")) {
                     enabledLoaders.add(

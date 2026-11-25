@@ -100,6 +100,7 @@ import com.sevtinge.hyperceiler.libhook.rules.systemui.other.ToastBlur;
 import com.sevtinge.hyperceiler.libhook.rules.systemui.other.UiLockApp;
 import com.sevtinge.hyperceiler.libhook.rules.systemui.other.UnlockClipboard;
 import com.sevtinge.hyperceiler.libhook.rules.systemui.plugin.NewPluginHelperKt;
+import com.sevtinge.hyperceiler.libhook.rules.systemui.plugin.systemui.OneUiVolumeStyle;
 import com.sevtinge.hyperceiler.libhook.rules.systemui.plugin.systemui.QSColor;
 import com.sevtinge.hyperceiler.libhook.rules.systemui.statusbar.DoubleTapToSleep;
 import com.sevtinge.hyperceiler.libhook.rules.systemui.statusbar.HideStatusBarBeforeScreenshot;
@@ -150,6 +151,7 @@ public class SystemUIV extends BaseLoad {
         MiuiStub.createHook();
         // PluginHelper
         initHook(NewPluginHelperKt.INSTANCE);
+        initHook(OneUiVolumeStyle.INSTANCE, PrefsBridge.getBoolean("system_ui_volume_oneui_style", false));
         // Actions
         initHook(new StatusBarActionBootstrap(), PrefsBridge.getBoolean("home_gesture_enable")
             || com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.isMoreHyperOSVersion(4f));

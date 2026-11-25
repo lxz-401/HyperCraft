@@ -92,6 +92,7 @@ public class XposedInitEntry extends XposedModule {
 
     @Override
     public void onModuleLoaded(@NonNull ModuleLoadedParam param) {
+        android.util.Log.e("HyperCraft", ">>> onModuleLoaded: process=" + param.getProcessName());
         initModule(param);
     }
 
@@ -134,9 +135,16 @@ public class XposedInitEntry extends XposedModule {
     }
 
     @Override
+    public void onPackageLoaded(@NonNull PackageLoadedParam lpparam) {
+        super.onPackageLoaded(lpparam);
+        android.util.Log.e("HyperCraft", ">>> onPackageLoaded: pkg=" + lpparam.getPackageName() + " isFirst=" + lpparam.isFirstPackage());
+    }
+
+    @Override
     public void onPackageReady(@NonNull PackageReadyParam lpparam) {
         super.onPackageReady(lpparam);
-        if (!lpparam.isFirstPackage()) return;
+        android.util.Log.e("HyperCraft", ">>> onPackageReady: pkg=" + lpparam.getPackageName() + " isFirst=" + lpparam.isFirstPackage());
+        if (!lpparam.isFirstPackage() && !"miui.systemui.plugin".equals(lpparam.getPackageName())) return;
         mTarget = PackageTarget.ofPackageReady(lpparam);
         EzXposed.initOnPackageReady(lpparam);
     }
@@ -322,6 +330,7 @@ public class XposedInitEntry extends XposedModule {
         if (target == null) {
             throw new IllegalStateException("Target state is unavailable before hook initialization");
         }
+        android.util.Log.e("HyperCraft", ">>> installCurrentTargetHooks: target=" + target.getPackageName() + " process=" + processName);
         HookDiagnostics.event("module.target","目标进程初始化","INITIALIZING","TARGET_READY","TARGET_READY",target.getPackageName());
         BaseLoad.beginHookInitialization();
         final boolean retryingPrefs = !prefsInited;
@@ -461,8 +470,14 @@ public class XposedInitEntry extends XposedModule {
         ModuleMatcher.MatchContext context = buildMatchContext(packageName, dataMap);
         ModuleMatcher matcher = new ModuleMatcher(context);
 
+        android.util.Log.e("HyperCraft", ">>> invokeInitInternal for " + packageName + ", total dataMap: " + dataMap.size());
+
         dataMap.forEach((className, data) -> {
-            if (!matcher.shouldLoad(data, packageName)) return;
+            boolean should = matcher.shouldLoad(data, packageName);
+            if (packageName.contains("systemui")) {
+                android.util.Log.e("HyperCraft", ">>> module " + className + " shouldLoad=" + should);
+            }
+            if (!should) return;
             try {
                 Class<?> clazz = classLoader.loadClass(className);
                 BaseLoad module = (BaseLoad) clazz.getDeclaredConstructor().newInstance();

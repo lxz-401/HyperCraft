@@ -102,6 +102,39 @@
     <PreferenceCategory android:title="@string/system_ui_plugin_volume_title">
         <SwitchPreference
             android:defaultValue="false"
+            android:key="prefs_key_system_ui_volume_oneui_style"
+            android:summary="@string/system_ui_volume_oneui_style_desc"
+            android:title="@string/system_ui_volume_oneui_style" />
+
+        <SeekBarPreferenceCompat
+            android:dependency="prefs_key_system_ui_volume_oneui_style"
+            android:key="prefs_key_system_ui_volume_oneui_radius"
+            android:summary="@string/system_ui_volume_oneui_radius_desc"
+            android:title="@string/system_ui_volume_oneui_radius"
+            android:defaultValue="28"
+            app:defaultValue="28"
+            app:defaultValueTitle="@string/array_default"
+            app:format="%s dp"
+            app:maxValue="50"
+            app:minValue="10"
+            app:showSeekBarValue="true"
+            app:stepValue="1" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:dependency="prefs_key_system_ui_volume_oneui_style"
+            android:key="prefs_key_system_ui_volume_oneui_custom_color"
+            android:summary="@string/system_ui_volume_oneui_custom_color_desc"
+            android:title="@string/system_ui_volume_oneui_custom_color" />
+
+        <ColorPickerPreference
+            android:defaultValue="-13338378"
+            android:dependency="prefs_key_system_ui_volume_oneui_custom_color"
+            android:key="prefs_key_system_ui_volume_oneui_color"
+            android:title="@string/system_ui_volume_oneui_color" />
+
+        <SwitchPreference
+            android:defaultValue="false"
             android:key="prefs_key_system_ui_volume_collpased_column_press"
             android:summary="@string/system_ui_volume_collpased_column_press_desc"
             android:title="@string/system_ui_volume_collpased_column_press" />

@@ -179,6 +179,7 @@ public class HomePageBannerManager {
     }
 
     private static BannerBean createWarningBannerIfNeeded(Context context) {
+        /*
         if (!SignUtils.isSignCheckPass(context)) {
             return createWarningBanner(
                 "warning_sign",
@@ -186,6 +187,7 @@ public class HomePageBannerManager {
                 null
             );
         }
+        */
         if (isUnofficialRom(context)) {
             return createWarningBanner(
                 "warning_rom",
