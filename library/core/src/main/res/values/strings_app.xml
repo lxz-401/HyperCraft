@@ -21,7 +21,40 @@
     <string name="app_name" translatable="false">HyperCraft</string>
     <string name="app_name_sp" translatable="false">HappyCraft</string>
 
-    <!-- HyperCraft Samsung One UI Volume Settings -->
+    <!-- HyperCraft Volume Panel Style Settings -->
+    <string name="system_ui_volume_style_title">Ovoz paneli uslubi (Volume Style)</string>
+    <string name="system_ui_volume_style_summary">Samsung One UI, iOS, Pixel Material You va maxsus dizaynlar</string>
+    <string name="volume_style_preset_category">Uslub shablonlari (Presets)</string>
+    <string name="volume_style_enable">Maxsus ovoz uslubi</string>
+    <string name="volume_style_enable_desc">Ovoz paneliga zamonaviy dizayn va maxsus shakllarni qo\'llash</string>
+    <string name="volume_style_preset_title">Uslub mavzusi</string>
+    <string name="volume_style_preset_desc">Asosiy dizayn shablonini tanlang</string>
+    <string name="volume_style_geometry_category">O\'lcham va shakl (Geometry)</string>
+    <string name="volume_style_slider_width">Slayder qalinligi (kengligi)</string>
+    <string name="volume_style_slider_width_desc">Ovoz ustuni kengligini sozlash</string>
+    <string name="volume_style_colors_category">Ranglar va ko\'rinish (Colors)</string>
+    <string name="volume_style_custom_bg">Maxsus trek foni</string>
+    <string name="volume_style_custom_bg_desc">Slayder orqa fon trek rangini o\'zgartirish</string>
+    <string name="volume_style_bg_color">Trek fon rangi</string>
+    <string name="volume_style_blur_title">Ovoz paneli xiraligi (Blur)</string>
+    <string name="volume_style_blur_desc">Ovoz oynasi atrofida nozik oyna (glassmorphism) effektini yoqish</string>
+    <string name="volume_style_advanced_category">Harakat va xatti-harakat (Interaction)</string>
+    <string name="volume_style_haptic_title">Vibratsiya (Haptic feedback)</string>
+    <string name="volume_style_haptic_desc">Ovoz darajasini o\'zgartirganda sezilarli tebranish berish</string>
+
+    <string-array name="volume_style_presets">
+        <item>Samsung One UI (Kapsula)</item>
+        <item>Apple iOS Style</item>
+        <item>Google Pixel (Material You)</item>
+        <item>HyperOS Custom</item>
+    </string-array>
+    <string-array name="volume_style_presets_values">
+        <item>oneui</item>
+        <item>ios</item>
+        <item>pixel</item>
+        <item>hyperos</item>
+    </string-array>
+
     <string name="system_ui_volume_oneui_style">Samsung One UI ovoz paneli</string>
     <string name="system_ui_volume_oneui_style_desc">Ovoz panelini Samsung One UI uslubidagi zamonaviy yumaloq burchakli progress bar ko\'rinishiga o\'zgartirish</string>
     <string name="system_ui_volume_oneui_radius">Ovoz paneli burchak radiusi</string>

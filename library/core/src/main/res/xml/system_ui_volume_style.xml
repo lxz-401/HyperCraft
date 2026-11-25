@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This file is part of HyperCraft.
+  ~
+  ~ Licensed under the GNU General Public License v3.0
+  -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:myLocation="@string/system_ui_volume_style_title"
+    app:quick_restart="com.android.systemui">
+
+    <PreferenceCategory android:title="@string/volume_style_preset_category">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="prefs_key_system_ui_volume_oneui_style"
+            android:summary="@string/volume_style_enable_desc"
+            android:title="@string/volume_style_enable" />
+
+        <fan.preference.DropDownPreference
+            android:defaultValue="oneui"
+            android:dependency="prefs_key_system_ui_volume_oneui_style"
+            android:key="prefs_key_system_ui_volume_style_preset"
+            android:summary="@string/volume_style_preset_desc"
+            android:title="@string/volume_style_preset_title"
+            app:entries="@array/volume_style_presets"
+            app:entryValues="@array/volume_style_presets_values" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/volume_style_geometry_category">
+        <SeekBarPreferenceCompat
+            android:defaultValue="28"
+            android:dependency="prefs_key_system_ui_volume_oneui_style"
+            android:key="prefs_key_system_ui_volume_oneui_radius"
+            android:summary="@string/system_ui_volume_oneui_radius_desc"
+            android:title="@string/system_ui_volume_oneui_radius"
+            app:defaultValue="28"
+            app:defaultValueTitle="@string/array_default"
+            app:format="%s dp"
+            app:maxValue="50"
+            app:minValue="8"
+            app:showSeekBarValue="true"
+            app:stepValue="1" />
+
+        <SeekBarPreferenceCompat
+            android:defaultValue="54"
+            android:dependency="prefs_key_system_ui_volume_oneui_style"
+            android:key="prefs_key_system_ui_volume_slider_width"
+            android:summary="@string/volume_style_slider_width_desc"
+            android:title="@string/volume_style_slider_width"
+            app:defaultValue="54"
+            app:defaultValueTitle="@string/array_default"
+            app:format="%s dp"
+            app:maxValue="85"
+            app:minValue="36"
+            app:showSeekBarValue="true"
+            app:stepValue="1" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/volume_style_colors_category">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:dependency="prefs_key_system_ui_volume_oneui_style"
+            android:key="prefs_key_system_ui_volume_oneui_custom_color"
+            android:summary="@string/system_ui_volume_oneui_custom_color_desc"
+            android:title="@string/system_ui_volume_oneui_custom_color" />
+
+        <ColorPickerPreference
+            android:defaultValue="-13338378"
+            android:dependency="prefs_key_system_ui_volume_oneui_custom_color"
+            android:key="prefs_key_system_ui_volume_oneui_color"
+            android:title="@string/system_ui_volume_oneui_color" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:dependency="prefs_key_system_ui_volume_oneui_style"
+            android:key="prefs_key_system_ui_volume_custom_bg"
+            android:summary="@string/volume_style_custom_bg_desc"
+            android:title="@string/volume_style_custom_bg" />
+
+        <ColorPickerPreference
+            android:defaultValue="855638016"
+            android:dependency="prefs_key_system_ui_volume_custom_bg"
+            android:key="prefs_key_system_ui_volume_bg_color"
+            android:title="@string/volume_style_bg_color" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:dependency="prefs_key_system_ui_volume_oneui_style"
+            android:key="prefs_key_system_ui_plugin_enable_volume_blur"
+            android:summary="@string/volume_style_blur_desc"
+            android:title="@string/volume_style_blur_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/volume_style_advanced_category">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:dependency="prefs_key_system_ui_volume_oneui_style"
+            android:key="prefs_key_system_ui_volume_haptic"
+            android:summary="@string/volume_style_haptic_desc"
+            android:title="@string/volume_style_haptic_title" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="prefs_key_system_ui_volume_collpased_column_press"
+            android:summary="@string/system_ui_volume_collpased_column_press_desc"
+            android:title="@string/system_ui_volume_collpased_column_press" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="prefs_key_system_ui_volume_hide_foot_button"
+            android:title="@string/system_ui_volume_hide_foot_button" />
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -6,7 +6,10 @@
 package com.sevtinge.hyperceiler.libhook.rules.systemui.plugin.systemui
 
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.Outline
+import android.view.HapticFeedbackConstants
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewOutlineProvider
@@ -24,6 +27,49 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 object OneUiVolumeStyle : BaseHook() {
     private val isHooked = AtomicBoolean(false)
+
+    enum class VolumeStylePreset(
+        val id: String,
+        val defaultRadiusDp: Int,
+        val defaultColor: Int,
+        val defaultWidthDp: Int
+    ) {
+        ONE_UI("oneui", 28, -13338378 /* #3478F6 */, 54),
+        IOS("ios", 18, -1 /* #FFFFFF */, 48),
+        PIXEL("pixel", 32, -9998140 /* #6750A4 */, 62),
+        HYPEROS("hyperos", 22, -15168016 /* #1875F0 */, 50);
+
+        companion object {
+            fun fromId(id: String?): VolumeStylePreset {
+                return entries.firstOrNull { it.id == id } ?: ONE_UI
+            }
+        }
+    }
+
+    private fun getActivePreset(): VolumeStylePreset {
+        val presetId = PrefsBridge.getString("system_ui_volume_style_preset", "oneui")
+        return VolumeStylePreset.fromId(presetId)
+    }
+
+    private fun getActiveRadiusDp(): Int {
+        val preset = getActivePreset()
+        return PrefsBridge.getInt("system_ui_volume_oneui_radius", preset.defaultRadiusDp)
+    }
+
+    private fun getActiveColor(): Int {
+        val preset = getActivePreset()
+        val useCustomColor = PrefsBridge.getBoolean("system_ui_volume_oneui_custom_color", false)
+        return if (useCustomColor) {
+            PrefsBridge.getInt("system_ui_volume_oneui_color", preset.defaultColor)
+        } else {
+            preset.defaultColor
+        }
+    }
+
+    private fun getActiveWidthDp(): Int {
+        val preset = getActivePreset()
+        return PrefsBridge.getInt("system_ui_volume_slider_width", preset.defaultWidthDp)
+    }
 
     override fun init() {
         android.util.Log.e("HyperCraft", ">>> OneUiVolumeStyle BaseHook.init() called <<<")
@@ -57,7 +103,7 @@ object OneUiVolumeStyle : BaseHook() {
                 parameterTypes(Int::class.javaPrimitiveType!!)
             }.createBeforeHook { param ->
                 if (PrefsBridge.getBoolean("system_ui_volume_oneui_style", false)) {
-                    val radiusDp = PrefsBridge.getInt("system_ui_volume_oneui_radius", 28)
+                    val radiusDp = getActiveRadiusDp()
                     val column = param.thisObject
                     val view = column.getObjectFieldOrNullAs<View>("view")
                     val density = view?.resources?.displayMetrics?.density ?: 2.75f
@@ -88,7 +134,7 @@ object OneUiVolumeStyle : BaseHook() {
                 parameterTypes(Int::class.javaPrimitiveType!!)
             }.createBeforeHook { param ->
                 if (PrefsBridge.getBoolean("system_ui_volume_oneui_style", false)) {
-                    val radiusDp = PrefsBridge.getInt("system_ui_volume_oneui_radius", 28)
+                    val radiusDp = getActiveRadiusDp()
                     val view = param.thisObject as? View
                     val density = view?.resources?.displayMetrics?.density ?: 2.75f
                     param.args[0] = (radiusDp * density).toInt()
@@ -101,7 +147,7 @@ object OneUiVolumeStyle : BaseHook() {
             }.createAfterHook { param ->
                 if (PrefsBridge.getBoolean("system_ui_volume_oneui_style", false)) {
                     val frame = param.thisObject as? ViewGroup ?: return@createAfterHook
-                    val radiusDp = PrefsBridge.getInt("system_ui_volume_oneui_radius", 28)
+                    val radiusDp = getActiveRadiusDp()
                     val density = frame.resources.displayMetrics.density
                     val radiusPx = radiusDp * density
                     frame.outlineProvider = object : ViewOutlineProvider() {
@@ -110,6 +156,12 @@ object OneUiVolumeStyle : BaseHook() {
                         }
                     }
                     frame.clipToOutline = true
+
+                    val useCustomBg = PrefsBridge.getBoolean("system_ui_volume_custom_bg", false)
+                    if (useCustomBg) {
+                        val bgColor = PrefsBridge.getInt("system_ui_volume_bg_color", 0x33000000)
+                        frame.backgroundTintList = ColorStateList.valueOf(bgColor)
+                    }
                 }
             }
             android.util.Log.e("HyperCraft", ">>> Successfully hooked RoundRectFrameLayout <<<")
@@ -125,7 +177,7 @@ object OneUiVolumeStyle : BaseHook() {
                 parameterTypes(Float::class.javaPrimitiveType!!)
             }.createBeforeHook { param ->
                 if (PrefsBridge.getBoolean("system_ui_volume_oneui_style", false)) {
-                    val radiusDp = PrefsBridge.getInt("system_ui_volume_oneui_radius", 28)
+                    val radiusDp = getActiveRadiusDp()
                     val view = param.thisObject as? View
                     val density = view?.resources?.displayMetrics?.density ?: 2.75f
                     param.args[0] = radiusDp * density
@@ -138,7 +190,7 @@ object OneUiVolumeStyle : BaseHook() {
             }.createAfterHook { param ->
                 if (PrefsBridge.getBoolean("system_ui_volume_oneui_style", false)) {
                     val pv = param.thisObject as? View ?: return@createAfterHook
-                    val radiusDp = PrefsBridge.getInt("system_ui_volume_oneui_radius", 28)
+                    val radiusDp = getActiveRadiusDp()
                     val density = pv.resources.displayMetrics.density
                     val radiusPx = radiusDp * density
                     pv.outlineProvider = object : ViewOutlineProvider() {
@@ -157,7 +209,7 @@ object OneUiVolumeStyle : BaseHook() {
             }.createAfterHook { param ->
                 if (PrefsBridge.getBoolean("system_ui_volume_oneui_style", false)) {
                     val view = param.thisObject as? View ?: return@createAfterHook
-                    val radiusDp = PrefsBridge.getInt("system_ui_volume_oneui_radius", 28)
+                    val radiusDp = getActiveRadiusDp()
                     val density = view.resources.displayMetrics.density
                     val radiusPx = radiusDp * density
                     view.outlineProvider = object : ViewOutlineProvider() {
@@ -167,11 +219,8 @@ object OneUiVolumeStyle : BaseHook() {
                     }
                     view.clipToOutline = true
 
-                    val useCustomColor = PrefsBridge.getBoolean("system_ui_volume_oneui_custom_color", false)
-                    if (useCustomColor) {
-                        val customColor = PrefsBridge.getInt("system_ui_volume_oneui_color", -13338378)
-                        view.backgroundTintList = ColorStateList.valueOf(customColor)
-                    }
+                    val activeColor = getActiveColor()
+                    view.backgroundTintList = ColorStateList.valueOf(activeColor)
                 }
             }
             android.util.Log.e("HyperCraft", ">>> Successfully hooked MiuiVolumeSeekBarProgressView <<<")
@@ -215,13 +264,27 @@ object OneUiVolumeStyle : BaseHook() {
             val enabled = PrefsBridge.getBoolean("system_ui_volume_oneui_style", false)
             if (!enabled) return
 
-            val radiusDp = PrefsBridge.getInt("system_ui_volume_oneui_radius", 28)
-            val useCustomColor = PrefsBridge.getBoolean("system_ui_volume_oneui_custom_color", false)
-            val customColor = PrefsBridge.getInt("system_ui_volume_oneui_color", -13338378) // #3478F6
+            val preset = getActivePreset()
+            val radiusDp = getActiveRadiusDp()
+            val activeColor = getActiveColor()
+            val widthDp = getActiveWidthDp()
+            val useCustomBg = PrefsBridge.getBoolean("system_ui_volume_custom_bg", false)
+            val bgColor = if (useCustomBg) PrefsBridge.getInt("system_ui_volume_bg_color", 0x33000000) else null
+            val enableHaptic = PrefsBridge.getBoolean("system_ui_volume_haptic", false)
 
             val view = column.getObjectFieldOrNullAs<View>("view") ?: return
             val density = view.resources.displayMetrics.density
             val radiusPx = radiusDp * density
+
+            // 0. Column Width
+            if (widthDp > 0) {
+                val widthPx = (widthDp * density).toInt()
+                val lp = view.layoutParams
+                if (lp != null && lp.width != widthPx) {
+                    lp.width = widthPx
+                    view.layoutParams = lp
+                }
+            }
 
             // 1. Column radius
             runCatching {
@@ -238,6 +301,9 @@ object OneUiVolumeStyle : BaseHook() {
                     }
                 }
                 bg.clipToOutline = true
+                if (useCustomBg && bgColor != null) {
+                    bg.backgroundTintList = ColorStateList.valueOf(bgColor)
+                }
             }
 
             // 3. Progress view (progressView: MiuiVolumeSeekBarProgressView)
@@ -250,25 +316,42 @@ object OneUiVolumeStyle : BaseHook() {
                     }
                 }
                 pv.clipToOutline = true
-                if (useCustomColor) {
-                    pv.backgroundTintList = ColorStateList.valueOf(customColor)
-                }
+                pv.backgroundTintList = ColorStateList.valueOf(activeColor)
             }
 
             // 4. Slider (slider: SeekBar / MiuiVolumeSeekBar)
             val slider = column.getObjectFieldOrNullAs<SeekBar>("slider")
-            if (useCustomColor && slider != null) {
-                slider.progressTintList = ColorStateList.valueOf(customColor)
-                slider.thumbTintList = ColorStateList.valueOf(customColor)
+            if (slider != null) {
+                slider.progressTintList = ColorStateList.valueOf(activeColor)
+                slider.thumbTintList = ColorStateList.valueOf(activeColor)
+
+                if (enableHaptic) {
+                    val tagKey = 0x7f0a9999
+                    if (slider.getTag(tagKey) == null) {
+                        slider.setTag(tagKey, true)
+                        slider.setOnTouchListener { v, event ->
+                            if (event.action == MotionEvent.ACTION_DOWN ||
+                                event.action == MotionEvent.ACTION_MOVE) {
+                                v.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK)
+                            }
+                            false
+                        }
+                    }
+                }
             }
 
             // 5. Icon
             val icon = column.getObjectFieldOrNullAs<ImageView>("icon")
-            if (useCustomColor && icon != null) {
-                icon.imageTintList = ColorStateList.valueOf(customColor)
+            if (icon != null) {
+                val iconColor = if (preset == VolumeStylePreset.IOS && !PrefsBridge.getBoolean("system_ui_volume_oneui_custom_color", false)) {
+                    Color.DKGRAY
+                } else {
+                    activeColor
+                }
+                icon.imageTintList = ColorStateList.valueOf(iconColor)
             }
 
-            android.util.Log.e("HyperCraft", ">>> One UI style applied to column: radius=${radiusDp}dp, customColor=$useCustomColor <<<")
+            android.util.Log.e("HyperCraft", ">>> Style applied to column: preset=${preset.id}, radius=${radiusDp}dp, color=$activeColor, width=${widthDp}dp <<<")
         }.onFailure {
             android.util.Log.e("HyperCraft", "Failed to applyOneUiToColumn", it)
         }

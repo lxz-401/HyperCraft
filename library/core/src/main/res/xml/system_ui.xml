@@ -19,6 +19,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory>
     <Preference
+        android:fragment="com.sevtinge.hyperceiler.hooker.systemui.VolumeStyleSettings"
+        android:title="@string/system_ui_volume_style_title"
+        android:summary="@string/system_ui_volume_style_summary" />
+
+    <Preference
         android:fragment="com.sevtinge.hyperceiler.hooker.systemui.LockScreenSettings"
         android:title="@string/system_ui_lockscreen_title" />
 
