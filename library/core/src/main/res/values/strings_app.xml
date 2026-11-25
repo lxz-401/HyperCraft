@@ -42,17 +42,23 @@
     <string name="volume_style_haptic_title">Vibratsiya (Haptic feedback)</string>
     <string name="volume_style_haptic_desc">Ovoz darajasini o\'zgartirganda sezilarli tebranish berish</string>
 
+    <string name="styles">Style</string>
+    <string name="volume_style_custom_geometry">Maxsus o\'lchamlar</string>
+    <string name="volume_style_custom_geometry_desc">Shablon o\'rniga burchak radiusi va kenglikni qo\'lda sozlash</string>
+
     <string-array name="volume_style_presets">
         <item>Samsung One UI (Kapsula)</item>
         <item>Apple iOS Style</item>
         <item>Google Pixel (Material You)</item>
-        <item>HyperOS Custom</item>
+        <item>Xiaomi HyperOS</item>
+        <item>Maxsus sozlash (Custom)</item>
     </string-array>
     <string-array name="volume_style_presets_values">
         <item>oneui</item>
         <item>ios</item>
         <item>pixel</item>
         <item>hyperos</item>
+        <item>custom</item>
     </string-array>
 
     <string name="system_ui_volume_oneui_style">Samsung One UI ovoz paneli</string>

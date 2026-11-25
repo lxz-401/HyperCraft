@@ -19,6 +19,7 @@
   -->
 <resources>
     <string name="navigation_home_title" translatable="false">@string/home</string>
+    <string name="navigation_styles_title" translatable="false">@string/styles</string>
     <string name="navigation_settings_title" translatable="false">@string/settings</string>
     <string name="navigation_about_title" translatable="false">@string/about</string>
     <string name="search_history_description">Search history</string>

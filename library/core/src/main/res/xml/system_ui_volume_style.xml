@@ -27,9 +27,16 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/volume_style_geometry_category">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:dependency="prefs_key_system_ui_volume_oneui_style"
+            android:key="prefs_key_system_ui_volume_use_custom_geometry"
+            android:summary="@string/volume_style_custom_geometry_desc"
+            android:title="@string/volume_style_custom_geometry" />
+
         <SeekBarPreferenceCompat
             android:defaultValue="28"
-            android:dependency="prefs_key_system_ui_volume_oneui_style"
+            android:dependency="prefs_key_system_ui_volume_use_custom_geometry"
             android:key="prefs_key_system_ui_volume_oneui_radius"
             android:summary="@string/system_ui_volume_oneui_radius_desc"
             android:title="@string/system_ui_volume_oneui_radius"
@@ -42,12 +49,12 @@
             app:stepValue="1" />
 
         <SeekBarPreferenceCompat
-            android:defaultValue="54"
-            android:dependency="prefs_key_system_ui_volume_oneui_style"
+            android:defaultValue="52"
+            android:dependency="prefs_key_system_ui_volume_use_custom_geometry"
             android:key="prefs_key_system_ui_volume_slider_width"
             android:summary="@string/volume_style_slider_width_desc"
             android:title="@string/volume_style_slider_width"
-            app:defaultValue="54"
+            app:defaultValue="52"
             app:defaultValueTitle="@string/array_default"
             app:format="%s dp"
             app:maxValue="85"

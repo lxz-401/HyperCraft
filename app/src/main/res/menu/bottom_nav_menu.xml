@@ -27,12 +27,20 @@
             android:visible="true"
             app:miuixNavigationId="1000" />
         <item
+            android:id="@+id/styles_page"
+            android:enabled="true"
+            android:icon="@drawable/ic_navigation_style"
+            android:title="@string/navigation_styles_title"
+            android:visible="true"
+            app:miuixNavigationId="1001" />
+
+        <item
             android:id="@+id/settings_page"
             android:enabled="true"
             android:icon="@drawable/ic_navigation_settings"
             android:title="@string/navigation_settings_title"
             android:visible="true"
-            app:miuixNavigationId="1001" />
+            app:miuixNavigationId="1002" />
 
         <item
             android:id="@+id/about_page"
@@ -40,6 +48,6 @@
             android:icon="@drawable/ic_navigation_about"
             android:title="@string/navigation_about_title"
             android:visible="true"
-            app:miuixNavigationId="1002" />
+            app:miuixNavigationId="1003" />
     </group>
 </menu>

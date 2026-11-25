@@ -22,6 +22,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.sevtinge.hyperceiler.R;
+import com.sevtinge.hyperceiler.style.StylesPageFragment;
 import com.sevtinge.hyperceiler.about.AboutPageFragment;
 import com.sevtinge.hyperceiler.about.AboutSettingsFragment;
 import com.sevtinge.hyperceiler.common.log.AndroidLog;
@@ -135,11 +136,12 @@ public class HomePageActivity extends AppCompatActivity
     private void rebuildContentPages() {
         mContentAdapter = new HomeContentAdapter(this);
         mContentAdapter.addFragment(new HomePageFragment());
+        mContentAdapter.addFragment(new StylesPageFragment());
         mContentAdapter.addFragment(new SettingsPageFragment());
         mContentAdapter.addFragment(new AboutPageFragment());
 
         mViewPager.setAdapter(mContentAdapter);
-        mViewPager.setOffscreenPageLimit(3);
+        mViewPager.setOffscreenPageLimit(4);
     }
 
     public void reloadPagesForLanguageChange() {
