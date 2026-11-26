@@ -35,15 +35,15 @@ object OneUiVolumeStyle {
         val defaultWidthDp: Int,
         val defaultBgColor: Int = 0x33000000
     ) {
-        ONE_UI("oneui", 28, -13338378 /* #3478F6 */, 52, 0x33000000),
-        IOS("ios", 18, -1 /* #FFFFFF */, 46, 0x4D000000),
-        PIXEL("pixel", 32, -9998140 /* #6750A4 */, 60, 0x33000000),
-        HYPEROS("hyperos", 22, -15168016 /* #1875F0 */, 46, 0x26000000),
+        ONE_UI("oneui", 28, -13338378 /* #3478F6 Samsung Blue */, 52, 0x33000000),
+        IOS("ios", 18, -1 /* #FFFFFF iOS White */, 46, 0x4D000000),
+        PIXEL("pixel", 32, -9998140 /* #6750A4 Pixel Purple */, 60, 0x33000000),
+        HYPEROS("hyperos", 22, -15168016 /* #1875F0 HyperOS Blue */, 46, 0x26000000),
         CUSTOM("custom", 28, -13338378, 52, 0x33000000);
 
         companion object {
             fun fromId(id: String?): VolumeStylePreset {
-                return entries.firstOrNull { it.id == id } ?: ONE_UI
+                return entries.firstOrNull { it.id.equals(id, ignoreCase = true) } ?: ONE_UI
             }
         }
     }
@@ -125,7 +125,43 @@ object OneUiVolumeStyle {
 
             runCatching {
                 volumeColumnClass.findMethod {
+                    name("setSize")
+                    parameterTypes(Boolean::class.javaPrimitiveType!!, Boolean::class.javaPrimitiveType!!)
+                }.createAfterHook { param ->
+                    applyOneUiToColumn(param.thisObject)
+                }
+            }
+
+            runCatching {
+                volumeColumnClass.findMethod {
+                    name("setProgressViewBgSize")
+                    parameterTypes(Boolean::class.javaPrimitiveType!!, Boolean::class.javaPrimitiveType!!)
+                }.createAfterHook { param ->
+                    applyOneUiToColumn(param.thisObject)
+                }
+            }
+
+            runCatching {
+                volumeColumnClass.findMethod {
+                    name("setSliderSize")
+                    parameterTypes(Boolean::class.javaPrimitiveType!!, Boolean::class.javaPrimitiveType!!)
+                }.createAfterHook { param ->
+                    applyOneUiToColumn(param.thisObject)
+                }
+            }
+
+            runCatching {
+                volumeColumnClass.findMethod {
                     name("setSliderTintColorList")
+                    parameterTypes(Boolean::class.javaPrimitiveType!!)
+                }.createAfterHook { param ->
+                    applyOneUiToColumn(param.thisObject)
+                }
+            }
+
+            runCatching {
+                volumeColumnClass.findMethod {
+                    name("updateIcon")
                     parameterTypes(Boolean::class.javaPrimitiveType!!)
                 }.createAfterHook { param ->
                     applyOneUiToColumn(param.thisObject)
@@ -260,15 +296,39 @@ object OneUiVolumeStyle {
             val density = view.resources.displayMetrics.density
             val radiusPx = radiusDp * density
 
-            // 0. Column Width
+            val progressViewBg = column.getObjectFieldOrNullAs<ViewGroup>("progressViewBg")
+            val progressView = column.getObjectFieldOrNullAs<View>("progressView")
+            val slider = column.getObjectFieldOrNullAs<SeekBar>("slider")
+            val icon = column.getObjectFieldOrNullAs<ImageView>("icon")
+
+            // 0. Column Width - apply uniformly across all elements
             if (widthDp > 0) {
                 val widthPx = (widthDp * density).toInt()
-                val lp = view.layoutParams
-                if (lp != null && lp.width != widthPx) {
-                    lp.width = widthPx
-                    view.layoutParams = lp
-                    view.requestLayout()
+                view.layoutParams?.let { lp ->
+                    if (lp.width != widthPx) {
+                        lp.width = widthPx
+                        view.layoutParams = lp
+                    }
                 }
+                progressViewBg?.layoutParams?.let { lp ->
+                    if (lp.width != widthPx) {
+                        lp.width = widthPx
+                        progressViewBg.layoutParams = lp
+                    }
+                }
+                slider?.layoutParams?.let { lp ->
+                    if (lp.width != widthPx) {
+                        lp.width = widthPx
+                        slider.layoutParams = lp
+                    }
+                }
+                progressView?.layoutParams?.let { lp ->
+                    if (lp.width != widthPx) {
+                        lp.width = widthPx
+                        progressView.layoutParams = lp
+                    }
+                }
+                view.requestLayout()
             }
 
             // 1. Column radius
@@ -277,7 +337,6 @@ object OneUiVolumeStyle {
             }
 
             // 2. Background container (progressViewBg: RoundRectFrameLayout)
-            val progressViewBg = column.getObjectFieldOrNullAs<ViewGroup>("progressViewBg")
             progressViewBg?.let { bg ->
                 runCatching { bg.callMethod("setRadius", radiusPx.toInt()) }
                 bg.outlineProvider = object : ViewOutlineProvider() {
@@ -290,7 +349,6 @@ object OneUiVolumeStyle {
             }
 
             // 3. Progress view (progressView: MiuiVolumeSeekBarProgressView)
-            val progressView = column.getObjectFieldOrNullAs<View>("progressView")
             progressView?.let { pv ->
                 runCatching { pv.callMethod("setRadius", radiusPx) }
                 pv.outlineProvider = object : ViewOutlineProvider() {
@@ -303,10 +361,13 @@ object OneUiVolumeStyle {
             }
 
             // 4. Slider (slider: SeekBar / MiuiVolumeSeekBar)
-            val slider = column.getObjectFieldOrNullAs<SeekBar>("slider")
             if (slider != null) {
                 slider.progressTintList = ColorStateList.valueOf(activeColor)
-                slider.thumbTintList = ColorStateList.valueOf(activeColor)
+                if (preset == VolumeStylePreset.IOS) {
+                    slider.thumbTintList = ColorStateList.valueOf(Color.TRANSPARENT)
+                } else {
+                    slider.thumbTintList = ColorStateList.valueOf(activeColor)
+                }
 
                 if (enableHaptic) {
                     val tagKey = 0x7f0a9999
@@ -324,10 +385,9 @@ object OneUiVolumeStyle {
             }
 
             // 5. Icon
-            val icon = column.getObjectFieldOrNullAs<ImageView>("icon")
             if (icon != null) {
                 val iconColor = if (preset == VolumeStylePreset.IOS && !PrefsBridge.getBoolean("system_ui_volume_oneui_custom_color", false)) {
-                    Color.argb(220, 50, 50, 50)
+                    Color.argb(220, 42, 42, 42)
                 } else {
                     Color.WHITE
                 }

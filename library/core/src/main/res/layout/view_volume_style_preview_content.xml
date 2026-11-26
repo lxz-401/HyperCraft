@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_volume_preview_card"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header Row: Title & Preset Badge -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_preview_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@string/miuix_font_style_misans_demibold_font_family"
+                android:text="🎨 Jonli uslub studiyasi"
+                android:textColor="?itemViewTitleTextColor"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_preview_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_volume_preview_badge"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="Samsung One UI"
+                android:textColor="#3478F6"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_preview_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Slayderni ushlab yuqoriga/pastga surib ko'ring"
+            android:textColor="?itemViewSummaryTextColor"
+            android:textSize="12sp" />
+
+        <!-- Phone Stage Simulation -->
+        <FrameLayout
+            android:id="@+id/fl_preview_stage"
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_volume_preview_stage">
+
+            <!-- Volume Percentage Display -->
+            <TextView
+                android:id="@+id/tv_preview_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginStart="24dp"
+                android:text="68%"
+                android:textColor="#DDFFFFFF"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <!-- The Live Interactive Volume Column -->
+            <FrameLayout
+                android:id="@+id/fl_preview_column_container"
+                android:layout_width="wrap_content"
+                android:layout_height="160dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="32dp">
+
+                <!-- Outer Track -->
+                <FrameLayout
+                    android:id="@+id/fl_preview_track"
+                    android:layout_width="52dp"
+                    android:layout_height="160dp"
+                    android:background="@drawable/bg_volume_preview_track">
+
+                    <!-- Inner Progress Fill -->
+                    <View
+                        android:id="@+id/v_preview_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="110dp"
+                        android:layout_gravity="bottom"
+                        android:background="@drawable/bg_volume_preview_progress" />
+
+                    <!-- Bottom Speaker Icon -->
+                    <ImageView
+                        android:id="@+id/iv_preview_icon"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:layout_marginBottom="16dp"
+                        android:src="@drawable/ic_volume_speaker"
+                        android:tint="#FFFFFFFF" />
+                </FrameLayout>
+            </FrameLayout>
+        </FrameLayout>
+
+        <!-- Bottom Action Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_preview_info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Radius: 28dp • Kenglik: 52dp"
+                android:textColor="?itemViewSummaryTextColor"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_test_system_ui"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Tizim panelini ochish"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

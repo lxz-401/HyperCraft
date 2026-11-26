@@ -9,6 +9,11 @@
     app:myLocation="@string/system_ui_volume_style_title"
     app:quick_restart="com.android.systemui">
 
+    <com.sevtinge.hyperceiler.prefs.LayoutPreference
+        android:key="prefs_key_volume_style_preview"
+        android:layout="@layout/layout_volume_style_preview"
+        android:selectable="false" />
+
     <PreferenceCategory android:title="@string/volume_style_preset_category">
         <SwitchPreference
             android:defaultValue="false"
