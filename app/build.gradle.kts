@@ -19,14 +19,14 @@ val gitBranch: String by lazy {
 }
 val gitVersionCode: Int by lazy { 5 + gitCommitCount }
 
+// Configuration-cache-safe: providers.exec is captured by Gradle instead of
+// spawning a raw external process during configuration.
 fun runGitCommand(vararg args: String): String? = runCatching {
-    ProcessBuilder(listOf("git") + args)
-        .redirectErrorStream(true)
-        .start()
-        .let { process ->
-            val output = process.inputStream.bufferedReader().readText().trim()
-            if (process.waitFor() == 0 && output.isNotBlank()) output else null
-        }
+    val exec = providers.exec {
+        commandLine(listOf("git") + args)
+    }
+    val result = exec.getResult().get()
+    if (result.exitValue == 0) exec.standardOutput.asText.get().trim() else null
 }.getOrNull()
 
 fun loadPropertiesFromFile(fileName: String): Properties? =
