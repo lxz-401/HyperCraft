@@ -21,6 +21,8 @@
 
 # --- UI / fan ---
 -keep class fan.** { *; }
+# HyperCardView also loads support implementations from this separate namespace.
+-keep class com.fan.support.** { *; }
 
 # --- Warnings ---
 -dontwarn miui.**

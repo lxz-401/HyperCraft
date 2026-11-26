@@ -136,3 +136,18 @@ not evidence of Android Binder, ART, OEM plugin, or real-device rendering behavi
 - Device verification remains necessary for SystemUI/plugin recreation, switching
   iOS/custom/off, haptics/long press, DPI changes, theme/font size, rotation and
   preference navigation. No APK was installed and no device process restarted.
+
+## Device startup correction
+
+USB installation exposed a release-only `NoClassDefFoundError` for
+`com.fan.support.cardview.BackgroundOutline` while inflating HyperCardView,
+including on the crash screen. The earlier finding that `com.fan.**` was unused
+was incorrect: the cardview AAR contains a separate `com.fan.support` namespace.
+Restored retention for that namespace in core consumer keep rules.
+
+`python3 tests/release-miuix/verify.py` inspects DEX class definitions, fails on the
+previous release, and passes 8/8 support classes in the rebuilt release.
+`:app:assembleRelease --no-parallel --max-workers=1` passed. The release was
+installed over the existing app without clearing data, and a cold launcher start
+reached `HomePageActivity` successfully on the connected tanzanite phone; no crash
+entry appeared for the new process. This verifies startup, not all volume hooks.
