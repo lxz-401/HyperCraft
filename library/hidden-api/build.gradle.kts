@@ -1,10 +1,12 @@
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.ktlint)
 }
 
 android {
     namespace = "com.android.internal"
-    compileSdk = 37
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     buildTypes {
         release {
@@ -22,14 +24,14 @@ android {
     }
     lint {
         toolchain {
-            languageVersion = JavaLanguageVersion.of(25)
+            languageVersion = JavaLanguageVersion.of(libs.versions.jvmToolchain.get().toInt())
         }
     }
 }
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
+        languageVersion = JavaLanguageVersion.of(libs.versions.jvmToolchain.get().toInt())
     }
 }
 

@@ -1,0 +1,130 @@
+# detekt configuration for HyperCeiler
+# Based on detekt's default configuration with project-specific adjustments
+
+# Each rule can be enabled or disabled, and optionally configured with parameters
+
+build:
+  maxIssues: 0  # No warnings allowed
+  weights:
+    # add more weights to make things relevant
+    complexity: 1
+    formatting: 1
+    standard: 1
+
+config:
+  validation: true
+  # by default, we don't output suggestion for the following rules
+  excludeRuleSets:
+    - 'formatting' # disabled by default, enable if needed
+
+complexity:
+  active: true
+  LongParameterList:
+    active: true
+    thresholdFunction: 6
+    thresholdConstructor: 6
+    thresholdMethod: 6
+  CyclomaticComplexMethod:
+    active: true
+    threshold: 15
+  LongMethod:
+    active: true
+    threshold: 60
+  LongParameterList:
+    active: true
+    thresholdFunction: 6
+    thresholdMethod: 6
+  TooManyFunctions:
+    active: true
+    threshold: 10
+
+coroutines:
+  active: true
+  GlobalCoroutineUsage:
+    active: true
+  RedundantSuspendCoroutine:
+    active: true
+
+exceptions:
+  active: true
+  SwallowedException:
+    active: true
+  TooGenericExceptionCaught:
+    active: true
+    exceptionNames: 'Throwable|Exception|Error'
+  TooGenericExceptionThrown:
+    active: true
+    exceptionNames: 'Throwable|RuntimeException|Error'
+
+naming:
+  active: true
+  ClassNaming:
+    active: true
+  FunctionNaming:
+    active: true
+  PropertyNaming:
+    active: true
+  TopLevelPropertyNaming:
+    active: true
+
+performance:
+  active: true
+  ArrayFilledWithLoops:
+    active: true
+  ForEachOnRange:
+    active: true
+  UnnecessaryTemporaryInstantiation:
+    active: true
+
+potential-bugs:
+  active: true
+  CastToNullable:
+    active: true
+  DoubleNegative:
+    active: true
+  NullCheckOnNonNullValue:
+    active: true
+  UnnecessaryNotNullOperator:
+    active: true
+  UselessCast:
+    active: true
+  WrongMultilineRawCount:
+    active: true
+
+style:
+  active: true
+  WildcardImport:
+    active: true
+  DataClassContainsFunctions:
+    active: true
+  MaxLineLength:
+    active: true
+    maxLineLength: 120
+  MagicNumber:
+    active: false  # Allow magic numbers for now
+  MaxLiteral:
+    active: false
+  MaxParameterList:
+    active: true
+    maxParameterList: 6
+  ReturnCount:
+    active: true
+    max: 3
+  UnusedImport:
+    active: true
+  UnusedParameter:
+    active: true
+
+# Project-specific: disable rules that would flag existing code patterns
+formatting:
+  active: false
+  # If you want to enable formatting, add the detekt-ktlint plugin
+
+comments:
+  active: true
+  CommentOverPrivateFunction:
+    active: false
+  UndocumentedPublicClass:
+    active: false
+  UndocumentedPublicFunction:
+    active: false

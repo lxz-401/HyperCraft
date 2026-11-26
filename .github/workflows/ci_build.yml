@@ -4,8 +4,6 @@ on:
   pull_request:
     types: [opened, synchronize]
     paths-ignore:
-      - ".github/**"
-      - "!.github/workflows/**"
       - ".idea/"
       - "doc/*"
       - "*.md"
@@ -15,8 +13,6 @@ on:
   push:
     branches: [main]
     paths-ignore:
-      - ".github/**"
-      - "!.github/workflows/**"
       - ".idea/"
       - "doc/*"
       - "*.md"
@@ -54,31 +50,53 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '25'
+          java-version: '21'
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6
         with:
           cache-overwrite-existing: true
 
-      - name: Create Sign File
+      - name: Setup Signing (Main branch only)
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         run: |
-          touch signing.properties
-          echo storePassword=${{ secrets.KEY_STORE_PASSWORD }} >> signing.properties
-          echo keyAlias=${{ secrets.ALIAS }} >> signing.properties
-          echo keyPassword='${{ secrets.KEY_STORE_PASSWORD }}' >> signing.properties
-          echo storeFile=../key.jks >> signing.properties
-          echo ${{ secrets.SIGNING_KEY }} | base64 --decode > key.jks
-          echo "GIT_ACTOR=${{ secrets.GIT_ACTOR }}" >> $GITHUB_ENV
-          echo "GIT_TOKEN=${{ secrets.GIT_TOKEN }}" >> $GITHUB_ENV
+          echo "${{ secrets.SIGNING_KEY }}" | base64 --decode > key.jks
+        env:
+          STORE_FILE: ../key.jks
+          STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
+          GIT_ACTOR: ${{ secrets.GIT_ACTOR }}
+          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
 
       - name: Build with Gradle (Canary)
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         shell: bash
+        env:
+          STORE_FILE: ../key.jks
+          STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
+          GIT_ACTOR: ${{ secrets.GIT_ACTOR }}
+          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
           ./gradlew assembleCanary
           echo "IS_DEBUG=false" >> $GITHUB_ENV
+
+      - name: Run Lint
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: ./gradlew lintDebug --no-daemon
+
+      - name: Run Detekt
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: ./gradlew detektCheck --no-daemon
+
+      - name: Run Ktlint
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: ./gradlew ktlintCheck --no-daemon
 
       - name: Build with Gradle (Debug)
         if: github.event_name == 'pull_request'
@@ -119,6 +137,26 @@ jobs:
           name: ${{ env.APK_FILE_NAME }}
           path: ${{ env.APK_FILE }}
           compression-level: 9
+
+  # Unit tests (run on PRs)
+  unit_tests:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    name: Unit Tests
+    needs: build_app
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-overwrite-existing: true
+      - name: Run Unit Tests
+        run: ./gradlew testDebugUnitTest --no-daemon
 
   push_to_canary_group:
     if: |

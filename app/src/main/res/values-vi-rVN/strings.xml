@@ -1,22 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ This file is part of HyperCeiler.
-  ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
-  ~ it under the terms of the GNU Affero General Public License as
-  ~ published by the Free Software Foundation, either version 3 of the
-  ~ License.
-  ~
-  ~ This program is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~ GNU Affero General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU Affero General Public License
-  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
-  ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
-  --><resources>
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
     <string name="search_history_description">Lịch sử tìm kiếm</string>
     <string name="search_history_clear_description">Xóa lịch sử tìm kiếm</string>
     <string name="revert">Khôi phục</string>
@@ -27,7 +10,7 @@
     <string name="app_device_version_parameters">Phiên bản OS</string>
     <string name="pull_to_enter_private">Kéo xuống để vào không gian riêng tư</string>
     <string name="release_enter_private">Thả ra để vào không gian riêng tư</string>
-    <!--Pop-up window/miuix part-->
+    
     <string name="miuix_appcompat_action_mode_select_all">Chọn tất cả</string>
     <string name="miuix_appcompat_cancel_description">Hủy</string>
     <string name="miuix_appcompat_confirm_description">OK</string>
@@ -38,7 +21,7 @@
     <string name="miuix_appcompat_search_input_description">Tìm kiếm</string>
     <string name="miuix_appcompat_actionbar_immersion_button_more_description">Xem thêm</string>
     <string name="miuix_appcompat_action_mode_inverse">Đảo ngược</string>
-    <!--HyperCeiler Settings/About Page-->
+    
     <string name="tip">Mẹo</string>
     <string name="root">Một số tính năng không khả dụng nếu không có quyền Root/Su</string>
     <string name="soft_reboot">Khởi động lại</string>
@@ -50,7 +33,7 @@
     <string name="pid_failed">Ứng dụng mục tiêu không chạy và không cần phải khởi động lại.</string>
     <string name="reboot_failed">Khởi động lại không thành công. Vui lòng kiểm tra xem HyperCeiler đã được cấp quyền Root/Su chưa.</string>
     <string name="experimental_features">Tính năng thử nghiệm</string>
-    <!--HyperCeiler Tips-->
+    
     <string name="error">Lỗi</string>
     <string name="warn">Cảnh báo</string>
     <string name="module_app_failed">Đã xảy ra lỗi nghiêm trọng trong mô-đun</string>
@@ -98,15 +81,15 @@
     <string name="unsupported_system_func">Tính năng này không được hỗ trợ trong phiên bản hệ thống hiện tại</string>
     <string name="supported_system_func">Chức năng này được hỗ trợ chính thức bởi phiên bản hệ thống hiện tại</string>
     <string name="feature_doing_func">Chức năng hiện tại đang được tạo ra, vui lòng chờ</string>
-    <!--System UI-->
+    
     <string name="system_ui">Giao diện hệ thống</string>
-    <!--System launcher-->
+    
     <string name="mihome">Trình khởi chạy hệ thống</string>
-    <!--Settings-->
+    
     <string name="system_settings">Cài đặt</string>
-    <!--Security/Tablet security center-->
+    
     <string name="security_center_hyperos">Bảo mật</string>
-    <!--Other-->
+    
     <string name="exit">Thoát</string>
     <string name="ignore">Bỏ qua</string>
     <string name="log_level">Mức độ nhật ký</string>
@@ -128,7 +111,7 @@
     <string name="debug_mode_switch">Phiên bản gỡ lỗi</string>
     <string name="debug_mode_home_version">Đặt mã phiên bản gốc</string>
     <string name="debug_mode_home_version_desc">Số phiên bản quá cao vẫn sẽ bị chặn, vì vậy hãy điền cẩn thận.</string>
-    <!-- LogViewer -->
+    
     <string name="log_search_hint">Tìm kiếm log</string>
     <string name="log_level_label">Mức độ</string>
     <string name="log_tag_label">Nhãn</string>
@@ -153,13 +136,13 @@
     <string name="log_share_text">Tệp log HyperCeiler</string>
     <string name="log_copy">Sao chép</string>
     <string name="log_copy_success">Log đã được sao chép vào clipboard</string>
-    <!-- Log detail dialog -->
+    
     <string name="log_detail_title">Log chi tiết</string>
     <string name="log_detail_time">Thời gian</string>
     <string name="log_detail_level">Mức độ</string>
     <string name="log_detail_tag">Nhãn</string>
     <string name="log_detail_message">Chi tiết</string>
-    <!-- Log Viewer -->
+    
     <string name="log_loading">Đang tải log…</string>
     <string name="log_viewer">Xem log</string>
     <string name="safe_mode_banner_title">Chế độ an toàn đang hoạt động</string>
@@ -181,4 +164,4 @@
     <string name="log_empty_no_logs">Chưa có nhật ký nào</string>
     <string name="log_empty_no_results">Không tìm thấy nhật ký phù hợp</string>
     <string name="log_empty_root_required">Cấp quyền Root và khởi động lại ứng dụng để tải nhật ký</string>
-</resources>
+<string name="navigation_home_title" translatable="false">@string/home</string><string name="navigation_styles_title" translatable="false">@string/styles</string><string name="navigation_settings_title" translatable="false">@string/settings</string><string name="navigation_about_title" translatable="false">@string/about</string><string name="homepage_unsupported_version_message" translatable="false">The current system version isn\'t included in HyperCeiler\'s built-in adaptation list.\n\n%1$s\n\nThe system versions supported by this release are:\n%2$s\n\nHyperCeiler will exit automatically after 30 seconds to avoid running in an unknown system environment.</string><string name="homepage_unsupported_version_current" translatable="false">Current version: Android SDK %1$d - HyperOS %2$s</string><string name="load_failed" translatable="false">Load failed.</string><string name="demo" translatable="false">Demo</string><string name="log_level_crash" translatable="false">Crash</string><string name="log_level_debug" translatable="false">Debug</string><string name="log_level_info" translatable="false">Info</string><string name="log_level_warn" translatable="false">Warn</string><string name="log_level_error" translatable="false">Error</string><string name="tos_update_title" translatable="false">User Agreement and Privacy Policy</string><string name="tos_update_desc" translatable="false">We updated our User Agreement and/or Privacy Policy these days. Please check them.\nBy continuing to use HyperCeiler, you agree to our </string></resources>

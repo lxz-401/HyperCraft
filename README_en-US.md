@@ -2,7 +2,7 @@
 
 <img src="\imgs\icon.webp" width="160" height="160" style="display: block; margin: 0 auto;" alt="icon" />
 
-# HyperCeiler
+# HyperCraft
 
 ### Make HyperOS Great Again!
 
@@ -10,13 +10,13 @@
 
 <p align="center">
   <a href="https://trendshift.io/repositories/6302?utm_source=repository-badge&amp;utm_medium=badge&amp;utm_campaign=badge-repository-6302" target="_blank" rel="noopener noreferrer">
-    <img src="https://trendshift.io/api/badge/repositories/6302" alt="ReChronoRain%2FHyperCeiler | Trendshift" width="250" height="55"/>
+    <img src="https://trendshift.io/api/badge/repositories/6302" alt="ReChronoRain%2FHyperCraft | Trendshift" width="250" height="55"/>
   </a>
   <a href="https://trendshift.io/repositories/6302?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-6302" target="_blank" rel="noopener noreferrer">
-    <img src="https://trendshift.io/api/badge/trendshift/repositories/6302/daily?language=Java" alt="ReChronoRain%2FHyperCeiler | Trendshift" width="250" height="55"/>
+    <img src="https://trendshift.io/api/badge/trendshift/repositories/6302/daily?language=Java" alt="ReChronoRain%2FHyperCraft | Trendshift" width="250" height="55"/>
   </a>
   <a href="https://trendshift.io/repositories/6302?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-6302" target="_blank" rel="noopener noreferrer">
-    <img src="https://trendshift.io/api/badge/trendshift/repositories/6302/weekly?language=Java" alt="ReChronoRain%2FHyperCeiler | Trendshift" width="250" height="55"/>
+    <img src="https://trendshift.io/api/badge/trendshift/repositories/6302/weekly?language=Java" alt="ReChronoRain%2FHyperCraft | Trendshift" width="250" height="55"/>
   </a>
 </p>
 
@@ -28,15 +28,15 @@ HyperOS for Android 15-16
 
 ## Pre-use instructions
 
-Please enable HyperCeiler in [LSPosed](https://github.com/LSPosed/LSPosed/releases), then enable the corresponding feature in the HyperCeiler app and restart the scope (root access required).
+Please enable HyperCraft in [LSPosed](https://github.com/LSPosed/LSPosed/releases), then enable the corresponding feature in the HyperCraft app and restart the scope (root access required).
 
 This module <b>does not support</b> `third-party Xiaomi HyperOS ROMs with a lot of modifications`, `system software with a lot of modifications`, and some `international Xiaomi HyperOS ROMs`.
 
-Currently, HyperCeiler is adapted for Xiaomi HyperOS 3.0 mobile devices based on Android 16. The coverage isn't very comprehensive and requires ongoing testing and improvements.
+Currently, HyperCraft is adapted for Xiaomi HyperOS 3.0 mobile devices based on Android 16. The coverage isn't very comprehensive and requires ongoing testing and improvements.
 
 Before submitting feedback, please pay attention to whether there is already the same feedback to avoid causing trouble to developers. Spending the same energy reading the same feedback is a waste of time.
 
-HyperCeiler has stopped maintaining MIUI ROMs for Android 11-13 and HyperOS 1.0/2.0 ROM for Android 13/14.
+HyperCraft has stopped maintaining MIUI ROMs for Android 11-13 and HyperOS 1.0/2.0 ROM for Android 13/14.
 
 > For MIUI ROMs on Android 11-12, please use [this version](https://github.com/ReChronoRain/Cemiuiler/releases/tag/1.3.130).
 >

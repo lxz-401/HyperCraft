@@ -1,0 +1,114 @@
+name: Bug Report
+description: Report a bug or unexpected behavior
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug! Please fill out the form below as completely as possible.
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which part of HyperCeiler is affected?
+      options:
+        - "Settings / UI"
+        - "Home / Launcher hooks"
+        - "SystemUI hooks (status bar, control center, etc.)"
+        - "Native / C++ hooks"
+        - "Safe mode / Crash handling"
+        - "Backup & Restore"
+        - "Scope management"
+        - "Logging / Diagnostics"
+        - "Build / CI"
+        - "Other / Not sure"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: rom
+    attributes:
+      label: ROM / Device
+      description: What ROM and device are you using?
+      options:
+        - "Xiaomi HyperOS (official)"
+        - "Xiaomi HyperOS (EU/Global custom)"
+        - "Xiaomi MIUI"
+        - "Other (specify below)"
+    validations:
+      required: true
+
+  - type: input
+    id: rom_version
+    attributes:
+      label: ROM Version
+      description: e.g., OS1.0.24.0.UNNCNXM, HyperOS 2.0, etc.
+      placeholder: "OS1.0.24.0.UNNCNXM"
+    validations:
+      required: true
+
+  - type: input
+    id: device
+    attributes:
+      label: Device Model
+      description: e.g., Xiaomi 14 Pro, Redmi K70, etc.
+      placeholder: "Xiaomi 14 Pro"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: xposed
+    attributes:
+      label: Xposed Framework
+      options:
+        - "LSPosed (Zygisk)"
+        - "LSPosed (Riru)"
+        - "KernelSU + KSUWebUI"
+        - "Other / Not sure"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: What happened? What did you expect to happen?
+      placeholder: |
+        Clear description of the bug...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Step-by-step instructions to reproduce the bug
+      placeholder: |
+        1. Go to Settings > ...
+        2. Enable ...
+        3. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs (if available)
+      description: Paste relevant logs from HyperCeiler Log Viewer or logcat (filter: HyperCeiler)
+      placeholder: |
+        [Log output here]
+      render: text
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Checklist
+      options:
+        - label: I have searched existing issues and this is not a duplicate
+          required: true
+        - label: I have provided all requested information above
+          required: true
+        - label: I am using the latest version of HyperCeiler
+          required: false

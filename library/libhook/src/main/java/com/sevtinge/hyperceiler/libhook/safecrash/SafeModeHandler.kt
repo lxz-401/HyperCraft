@@ -32,6 +32,19 @@ import com.sevtinge.hyperceiler.libhook.utils.api.PropUtils.setProp
 object SafeModeHandler : ICrashHandler {
     private const val TAG = "SafeModeHandler"
 
+    /**
+     * Report a crash from a hook callback to the crash monitoring system.
+     *
+     * @param featureName The feature/hook that caused the crash
+     * @param throwable The exception that occurred
+     */
+    @JvmStatic
+    fun reportCrash(featureName: String, throwable: Throwable) {
+        XposedLog.e(TAG, "Crash reported from $featureName: ${throwable.message}", throwable)
+        // Track crash counts for auto-safe-mode trigger
+        CrashMonitor.recordCrash(featureName, throwable)
+    }
+
     override fun onCrashDetected(
         context: Context,
         pkgName: String,

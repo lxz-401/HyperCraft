@@ -1,15 +1,12 @@
 // file:noinspection DependencyNotationArgument
 import com.android.build.api.dsl.ApplicationBuildType
 import com.android.build.gradle.tasks.PackageAndroidArtifact
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Date
 import java.util.Properties
-import java.util.TimeZone
 
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.ktlint)
 }
 
 val apkId = "HyperCeiler"
@@ -40,9 +37,9 @@ fun loadPropertiesFromFile(fileName: String): Properties? =
 
 android {
     namespace = "com.sevtinge.hyperceiler"
-    compileSdk = 37
-    compileSdkMinor = 0
-    buildToolsVersion = "37.0.0"
+    compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdkMinor = libs.versions.compileSdkMinor.get().toInt()
+    buildToolsVersion = libs.versions.buildToolsVersion.get()
 
     defaultConfig {
         applicationId = namespace
@@ -51,16 +48,12 @@ android {
         versionCode = gitVersionCode
         versionName = "2.11.170"
 
-        val buildTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").apply {
-            timeZone = TimeZone.getTimeZone("Asia/Shanghai")
-        }.format(Date())
-
+        // Reproducible build: only include deterministic build info
+        // Build time, OS, user, Java version are intentionally omitted
         val buildConfigData = mapOf(
-            "BUILD_TIME" to buildTime,
-            "BUILD_OS_NAME" to System.getProperty("os.name"),
-            "BUILD_USER_NAME" to System.getProperty("user.name"),
-            "BUILD_JAVA_VERSION" to System.getProperty("java.version"),
-            "GIT_BRANCH" to gitBranch
+            "GIT_HASH" to gitHash,
+            "GIT_BRANCH" to gitBranch,
+            "GIT_VERSION_CODE" to gitVersionCode.toString()
         )
 
         for ((key, value) in buildConfigData) {
@@ -112,15 +105,6 @@ android {
         signingProperties?.getProperty(propertyName)?.takeIf { it.isNotBlank() }
             ?: providers.environmentVariable(environmentName).orNull?.takeIf { it.isNotBlank() }
 
-    val buildTimeSuffix: String by lazy {
-        SimpleDateFormat("MMddHHmm").apply {
-            timeZone = TimeZone.getTimeZone("Asia/Shanghai")
-        }.format(Date())
-    }
-    val dateSuffix: String by lazy {
-        DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now())
-    }
-
     val signingStorePath = signingValue("storeFile", "STORE_FILE")
     val signingStorePassword = signingValue("storePassword", "STORE_PASSWORD")
     val signingKeyAlias = signingValue("keyAlias", "KEY_ALIAS")
@@ -152,25 +136,26 @@ android {
             buildConfigField("String", "GIT_CODE", "\"$gitVersionCode\"")
         }
 
+        // Reproducible: use git hash instead of timestamps
         release {
             applyBase()
             configSigning()
             buildConfigField("String", "GIT_HASH", "\"$gitHash\"")
-            versionNameSuffix = "-$dateSuffix"
+            versionNameSuffix = "-r${gitVersionCode}"
         }
 
         create("beta") {
             applyBase()
             configSigning()
             buildConfigField("String", "GIT_HASH", "\"$gitHashLong\"")
-            versionNameSuffix = "-$dateSuffix"
+            versionNameSuffix = "-beta-r${gitVersionCode}"
         }
 
         create("canary") {
             applyBase()
             configSigning()
             buildConfigField("String", "GIT_HASH", "\"$gitHashLong\"")
-            versionNameSuffix = "-${gitHash}-r${gitVersionCode}"
+            versionNameSuffix = "-canary-${gitHash}-r${gitVersionCode}"
         }
 
         debug {
@@ -178,13 +163,13 @@ android {
             isMinifyEnabled = false
             buildConfigField("String", "GIT_HASH", "\"$gitHashLong\"")
             buildConfigField("String", "GIT_CODE", "\"$gitVersionCode\"")
-            versionNameSuffix = "-${buildTimeSuffix}-r${gitVersionCode}"
+            versionNameSuffix = "-debug-${gitHash}-r${gitVersionCode}"
         }
     }
 
     lint {
         toolchain {
-            languageVersion = JavaLanguageVersion.of(25)
+            languageVersion = JavaLanguageVersion.of(libs.versions.jvmToolchain.get().toInt())
         }
     }
 }
@@ -208,11 +193,11 @@ tasks.withType<PackageAndroidArtifact> {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
+        languageVersion = JavaLanguageVersion.of(libs.versions.jvmToolchain.get().toInt())
     }
 }
 
-kotlin.jvmToolchain(25)
+kotlin.jvmToolchain(libs.versions.jvmToolchain.get().toInt())
 
 dependencies {
     implementation(libs.viewpager2)
@@ -246,4 +231,23 @@ tasks.register<Exec>("hostNativeTests") {
         add(script.absolutePath)
         (project.findProperty("libappSo") as String?)?.let { add(it) }
     })
+}
+
+// detekt configuration
+detekt {
+    config.setFrom(rootProject.file("detekt.yml"))
+    buildUponDefaultConfig = true
+    ignoreFailures = false
+}
+
+// ktlint configuration
+ktlint {
+    android = true
+    filter {
+        excludes(
+            "**/build/**",
+            "**/kotlin/**",
+            "**/gradle/**",
+        )
+    }
 }

@@ -19,14 +19,18 @@
 package com.sevtinge.hyperceiler.libhook.utils.hookapi.blur.zhenxiang
 
 import com.android.internal.graphics.drawable.BackgroundBlurDrawable
+import com.sevtinge.hyperceiler.common.log.ModuleLog as Log
+import com.sevtinge.hyperceiler.common.utils.ReflectionUtils
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 
 fun BackgroundBlurDrawable.setColor(color: Int) {
-    HiddenApiBypass.invoke(BackgroundBlurDrawable::class.java, this, "setColor", color)
+    ReflectionUtils.safeInvoke(BackgroundBlurDrawable::class.java, this, "setColor", arrayOf(color))
+        .onFailure { _, msg -> Log.w("BackgroundBlurDrawable", "setColor failed: $msg") }
 }
 
 fun BackgroundBlurDrawable.setBlurRadius(blurRadius: Int) {
-    HiddenApiBypass.invoke(BackgroundBlurDrawable::class.java, this, "setBlurRadius", blurRadius)
+    ReflectionUtils.safeInvoke(BackgroundBlurDrawable::class.java, this, "setBlurRadius", arrayOf(blurRadius))
+        .onFailure { _, msg -> Log.w("BackgroundBlurDrawable", "setBlurRadius failed: $msg") }
 }
 
 fun BackgroundBlurDrawable.setCornerRadius(
@@ -35,13 +39,10 @@ fun BackgroundBlurDrawable.setCornerRadius(
     cornerRadiusBL: Float,
     cornerRadiusBR: Float
 ) {
-    HiddenApiBypass.invoke(
+    ReflectionUtils.safeInvoke(
         BackgroundBlurDrawable::class.java,
         this,
         "setCornerRadius",
-        cornerRadiusTL,
-        cornerRadiusTR,
-        cornerRadiusBL,
-        cornerRadiusBR
-    )
+        arrayOf(cornerRadiusTL, cornerRadiusTR, cornerRadiusBL, cornerRadiusBR)
+    ).onFailure { _, msg -> Log.w("BackgroundBlurDrawable", "setCornerRadius failed: $msg") }
 }

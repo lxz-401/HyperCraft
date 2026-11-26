@@ -19,6 +19,7 @@
 package com.sevtinge.hyperceiler.libhook.utils.hookapi.blur.zhenxiang
 
 import com.sevtinge.hyperceiler.common.log.ModuleLog as Log
+import com.sevtinge.hyperceiler.common.utils.ReflectionUtils
 import android.view.View
 import android.view.ViewRootImpl
 import com.android.internal.graphics.drawable.BackgroundBlurDrawable
@@ -26,16 +27,10 @@ import org.lsposed.hiddenapibypass.HiddenApiBypass
 
 fun View.createBackgroundBlurDrawable(): BackgroundBlurDrawable? {
 
-    return try {
-        val getViewRootImpl =
-            HiddenApiBypass.invoke(View::class.java, this, "getViewRootImpl") as ViewRootImpl
-        HiddenApiBypass.invoke(
-            ViewRootImpl::class.java,
-            getViewRootImpl,
-            "createBackgroundBlurDrawable"
-        ) as BackgroundBlurDrawable
-    } catch (e: Exception) {
-        Log.w(null, e)
-        null
-    }
+    return ReflectionUtils.safeInvoke(View::class.java, this, "getViewRootImpl")
+        .onSuccess { viewRootImpl ->
+            ReflectionUtils.safeInvoke(ViewRootImpl::class.java, viewRootImpl, "createBackgroundBlurDrawable")
+                .getOrDefault(null) as? BackgroundBlurDrawable
+        }
+        .getOrDefault(null)
 }

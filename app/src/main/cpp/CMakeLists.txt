@@ -67,20 +67,29 @@ target_sources(HyperCeilerNative PRIVATE
     ${HYPERCEILER_TWEAKS_DIR}/xz/xz_crc64.c
     ${HYPERCEILER_TWEAKS_DIR}/xz/xz_dec_lzma2.c
     ${HYPERCEILER_TWEAKS_DIR}/xz/xz_dec_stream.c)
-# Third-party sources are held to the project's warning level only as far as they compile:
-# their style is not this repository's to fix, and -Werror would otherwise block the build.
-#
-# But -Wno-everything also silences diagnostics that are on by default and that no group the project
-# re-enables brings back - notably -Wnon-pod-varargs. That one is not style: it is what catches a
-# std::string (any non-trivial object) reaching a %s conversion, which is undefined behaviour at
-# runtime. Its absence is exactly how a std::string passed to snprintf in entry.cpp reached a device
-# and trapped the launcher (SIGTRAP/BRKPT at entry.cpp:721, four deaths in three seconds, and the
-# desktop then entered its own safe mode). Re-enable that class by name so this exemption stays about
-# third-party style and never about correctness.
+# Third-party sources (Apache-2.0) - use targeted warning suppression instead of -Wno-everything
+# -Wnon-pod-varargs: catches std::string passed to %s (UB) - CRITICAL, must keep enabled
+# -Wformat / -Werror=format-security: format string safety
+# Other style warnings suppressed per-file as needed
 file(GLOB HYPERCEILER_TWEAKS_SOURCES
     ${HYPERCEILER_TWEAKS_DIR}/*.cpp ${HYPERCEILER_TWEAKS_DIR}/xz/*.c)
 set_source_files_properties(${HYPERCEILER_TWEAKS_SOURCES} PROPERTIES
-    COMPILE_OPTIONS "-Wno-everything;-Wnon-pod-varargs;-Wformat;-Werror=format-security")
+    COMPILE_OPTIONS
+    "-Wno-unused-parameter;-Wno-sign-compare;-Wno-unused-variable;-Wno-unused-function"
+    "-Wnon-pod-varargs;-Wformat;-Werror=format-security")
+
+# clang-tidy integration for main codebase (not third-party tweaks)
+find_program(CLANG_TIDY clang-tidy)
+if(CLANG_TIDY)
+    set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY}"
+        -checks="modernize-*,performance-*,readability-*,bugprone-*,clang-analyzer-*"
+        -header-filter="${CMAKE_CURRENT_SOURCE_DIR}/nativehook/*;${CMAKE_CURRENT_SOURCE_DIR}/targets/home/*.h;${CMAKE_CURRENT_SOURCE_DIR}/targets/home/*.hpp"
+        -format-style=file
+    )
+    message(STATUS "clang-tidy enabled for native code")
+else()
+    message(WARNING "clang-tidy not found, static analysis disabled")
+endif()
 
 option(HYPERCEILER_DOCK_NATIVE_MOTION "Dynamically resolve OS4 native recents animation" ON)
 if(HYPERCEILER_DOCK_NATIVE_MOTION)

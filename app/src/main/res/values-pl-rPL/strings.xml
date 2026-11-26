@@ -1,22 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ This file is part of HyperCeiler.
-  ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
-  ~ it under the terms of the GNU Affero General Public License as
-  ~ published by the Free Software Foundation, either version 3 of the
-  ~ License.
-  ~
-  ~ This program is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~ GNU Affero General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU Affero General Public License
-  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
-  ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
-  --><resources>
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
     <string name="search_history_description">Historia wyszukiwania</string>
     <string name="search_history_clear_description">Wyczysc historie wyszukiwania</string>
     <string name="revert">Przywroc</string>
@@ -27,7 +10,7 @@
     <string name="app_device_version_parameters">Wersja systemu</string>
     <string name="pull_to_enter_private">Pociągnij w dół aby otworzyć prywatną przestrzeń</string>
     <string name="release_enter_private">Póść aby otworzyć prywatną przestrzeń</string>
-    <!--Pop-up window/miuix part-->
+    
     <string name="miuix_appcompat_action_mode_select_all">Zaznacz wszystko</string>
     <string name="miuix_appcompat_cancel_description">Anuluj</string>
     <string name="miuix_appcompat_confirm_description">OK</string>
@@ -38,7 +21,7 @@
     <string name="miuix_appcompat_search_input_description">Szukaj</string>
     <string name="miuix_appcompat_actionbar_immersion_button_more_description">Więcej</string>
     <string name="miuix_appcompat_action_mode_inverse">Odwróć</string>
-    <!--HyperCeiler Settings/About Page-->
+    
     <string name="tip">Rada</string>
     <string name="root">Niektóre funkcje nie są dostępne bez uprawnień Root/SU</string>
     <string name="soft_reboot">Zrestartuj</string>
@@ -50,7 +33,7 @@
     <string name="pid_failed">Aplikacja docelowa nie jest uruchomiona i nie trzeba jej restartować.</string>
     <string name="reboot_failed">Restart się nie powiódł. Sprawdź, czy HyperCeiler otrzymał uprawnienia Root/SU.</string>
     <string name="experimental_features">Eksperymentalne funkcje</string>
-    <!--HyperCeiler Tips-->
+    
     <string name="error">Error</string>
     <string name="warn">Uwaga</string>
     <string name="module_app_failed">Wystąpił błąd krytyczny w module</string>
@@ -98,15 +81,15 @@
     <string name="unsupported_system_func">Ta funkcja nie jest obslugiwana w biezacej wersji systemu</string>
     <string name="supported_system_func">Ta funkcja jest oficjalnie obslugiwana w biezacej wersji systemu</string>
     <string name="feature_doing_func">Ta funkcja jest w trakcie opracowywania, badz na biezaco.</string>
-    <!--System UI-->
+    
     <string name="system_ui">Interfejs systemu</string>
-    <!--System launcher-->
+    
     <string name="mihome">Systemowy launcher</string>
-    <!--Settings-->
+    
     <string name="system_settings">Ustawienia</string>
-    <!--Security/Tablet security center-->
+    
     <string name="security_center_hyperos">Bezpieczeństwo</string>
-    <!--Other-->
+    
     <string name="exit">Wyjdź</string>
     <string name="ignore">Ignoruj</string>
     <string name="log_level">Poziom dziennika</string>
@@ -128,7 +111,7 @@
     <string name="debug_mode_switch">Wersja debugowania</string>
     <string name="debug_mode_home_version">Ustaw kod wersji launchera</string>
     <string name="debug_mode_home_version_desc">Zbyt wysoki numer wersji i tak zostanie zablokowany, dlatego wypelnij to pole uwaznie.</string>
-    <!-- LogViewer -->
+    
     <string name="log_search_hint">Szukaj w logach</string>
     <string name="log_level_label">Poziom</string>
     <string name="log_tag_label">Tag</string>
@@ -153,13 +136,13 @@
     <string name="log_share_text">Plik logow HyperCeiler</string>
     <string name="log_copy">Kopiuj</string>
     <string name="log_copy_success">Logi skopiowano do schowka</string>
-    <!-- Log detail dialog -->
+    
     <string name="log_detail_title">Szczegoly logu</string>
     <string name="log_detail_time">Czas</string>
     <string name="log_detail_level">Poziom</string>
     <string name="log_detail_tag">Tag</string>
     <string name="log_detail_message">Szczegoly</string>
-    <!-- Log Viewer -->
+    
     <string name="log_loading">Ladowanie logow…</string>
     <string name="log_viewer">Przegladarka logow</string>
-</resources>
+<string name="navigation_home_title" translatable="false">@string/home</string><string name="navigation_styles_title" translatable="false">@string/styles</string><string name="navigation_settings_title" translatable="false">@string/settings</string><string name="navigation_about_title" translatable="false">@string/about</string><string name="safe_mode_banner_title" translatable="false">Safe mode active</string><string name="safe_mode_banner_desc" translatable="false">%1$s has had its HyperCeiler features temporarily disabled by Auto Safe Mode after repeated crashes. Tap to manage.</string><string name="headtip_warn_framework_service_error" translatable="false">HyperCeiler couldn\'t read the current framework information from XposedService. Module features have been disabled for safety. Tap to view details.</string><string name="homepage_unsupported_version_message" translatable="false">The current system version isn\'t included in HyperCeiler\'s built-in adaptation list.\n\n%1$s\n\nThe system versions supported by this release are:\n%2$s\n\nHyperCeiler will exit automatically after 30 seconds to avoid running in an unknown system environment.</string><string name="homepage_unsupported_version_current" translatable="false">Current version: Android SDK %1$d - HyperOS %2$s</string><string name="load_failed" translatable="false">Load failed.</string><string name="demo" translatable="false">Demo</string><string name="log_level_general" translatable="false">General logs</string><string name="log_level_detailed" translatable="false">Detailed logs</string><string name="help_framework_warning_title" translatable="false">Current framework compatibility</string><string name="help_framework_warning_unknown_framework" translatable="false">Current framework</string><string name="help_framework_warning_card_compatible" translatable="false">The current framework meets HyperCeiler\'s runtime requirements. No abnormal Hook loading has been detected.</string><string name="help_framework_warning_card_incompatible" translatable="false">The current framework doesn\'t meet HyperCeiler\'s runtime requirements. Hook loading has been stopped. Please switch to another compatible framework and try again.</string><string name="help_framework_warning_card_service_error" translatable="false">The current framework information couldn\'t be read from XposedService. Hook loading has been stopped for safety. Please check the framework status and try again.</string><string name="help_framework_warning_card_pending" translatable="false">HyperCeiler hasn\'t read the current framework information from XposedService yet, so compatibility can\'t be confirmed for now.</string><string name="help_framework_warning_section_framework_version" translatable="false">Current framework version:</string><string name="help_framework_warning_section_banner_reason" translatable="false">Why does the homepage show a warning?</string><string name="help_framework_warning_banner_reason" translatable="false">The homepage warning only appears when HyperCeiler detects that the current framework doesn\'t meet the minimum runtime requirements, or XposedService can\'t return framework information normally. To avoid instability caused by abnormal Hook loading, HyperCeiler will stop loading Hook at the same time.</string><string name="help_framework_warning_version_unavailable" translatable="false">The current framework version information couldn\'t be read from XposedService.</string><string name="log_menu_filter" translatable="false">Filter logs</string><string name="log_empty_no_logs" translatable="false">No logs yet</string><string name="log_empty_no_results" translatable="false">No matching logs found</string><string name="log_empty_root_required" translatable="false">Grant Root permission and restart the app to load logs</string><string name="log_level_crash" translatable="false">Crash</string><string name="log_level_debug" translatable="false">Debug</string><string name="log_level_info" translatable="false">Info</string><string name="log_level_warn" translatable="false">Warn</string><string name="log_level_error" translatable="false">Error</string><string name="tos_update_title" translatable="false">User Agreement and Privacy Policy</string><string name="tos_update_desc" translatable="false">We updated our User Agreement and/or Privacy Policy these days. Please check them.\nBy continuing to use HyperCeiler, you agree to our </string></resources>

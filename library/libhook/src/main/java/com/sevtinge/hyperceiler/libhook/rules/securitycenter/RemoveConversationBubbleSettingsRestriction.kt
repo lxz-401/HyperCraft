@@ -26,6 +26,7 @@ import io.github.lingqiqi5211.ezhooktool.core.findMethod
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.getObjectField
 import io.github.lingqiqi5211.ezhooktool.core.loadClass
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.createHook
+import com.sevtinge.hyperceiler.common.utils.ReflectionUtils
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 
 class RemoveConversationBubbleSettingsRestriction : BaseHook() {
@@ -39,12 +40,11 @@ class RemoveConversationBubbleSettingsRestriction : BaseHook() {
                         param.thisObject.getObjectField("mContext") as Context
                     val mCurrentUserId =
                         param.thisObject.getObjectField("mCurrentUserId") as Int
-                    val freeformSuggestionList = HiddenApiBypass.invoke(
+                    val freeformSuggestionList = ReflectionUtils.safeInvokeStatic(
                         Class.forName("android.util.MiuiMultiWindowUtils"),
-                        null,
                         "getFreeformSuggestionList",
-                        mContext
-                    ) as List<*>
+                        arrayOf(mContext)
+                    ).getOrDefault(emptyList()) as List<*>
                     if (freeformSuggestionList.isNotEmpty()) {
                         for (str in freeformSuggestionList) {
                             val bubbleApp = classBubbleApp.getConstructor(

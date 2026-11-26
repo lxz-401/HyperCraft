@@ -51,6 +51,19 @@ class CrashMonitor(lpparam: PackageTarget) {
         private const val CRASH_TIME_WINDOW = 60000L
         private const val TRIGGER_INTERVAL = 10240L
         private const val TRIGGER_COUNT = 2
+
+        /**
+         * Record a crash from a hook callback for monitoring.
+         * This is called by SafeModeHandler.reportCrash().
+         *
+         * @param featureName The feature/hook that caused the crash
+         * @param throwable The exception that occurred
+         */
+        @JvmStatic
+        fun recordCrash(featureName: String, throwable: Throwable) {
+            XposedLog.e(TAG, "Crash recorded for $featureName: ${throwable.message}", throwable)
+            // TODO: Implement crash counting and auto-safe-mode trigger
+        }
     }
 
     init {

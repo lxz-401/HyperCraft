@@ -36,6 +36,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.sevtinge.hyperceiler.common.utils.ReflectionUtils
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 
 
@@ -104,7 +105,8 @@ object AutoNfc : BaseHook() {
         EzXposed.initAppContext()
         NfcAdapter.getDefaultAdapter(EzXposed.appContext).let { nfcAdapter ->
             if (nfcAdapter.isEnabled) return
-            HiddenApiBypass.invoke(NfcAdapter::class.java, nfcAdapter, "enable")
+            ReflectionUtils.safeInvoke(NfcAdapter::class.java, nfcAdapter, "enable")
+                .onFailure { _, msg -> XposedLog.w("AutoNfc", "Failed to enable NFC: $msg") }
             val activity = param.thisObject as Activity
             if (activity.javaClass.name != "com.miui.tsmclient.ui.quick.DoubleClickActivity") return
             enableJob?.cancel()
@@ -122,7 +124,8 @@ object AutoNfc : BaseHook() {
 
     private fun destroyHook() {
         NfcAdapter.getDefaultAdapter(EzXposed.appContext).let { nfcAdapter ->
-            HiddenApiBypass.invoke(NfcAdapter::class.java, nfcAdapter, "disable")
+            ReflectionUtils.safeInvoke(NfcAdapter::class.java, nfcAdapter, "disable")
+                .onFailure { _, msg -> XposedLog.w("AutoNfc", "Failed to disable NFC: $msg") }
         }
     }
 

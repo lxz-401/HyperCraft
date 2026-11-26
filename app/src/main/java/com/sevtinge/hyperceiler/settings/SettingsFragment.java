@@ -46,6 +46,7 @@ import com.sevtinge.hyperceiler.common.utils.api.ProjectApi;
 import com.sevtinge.hyperceiler.home.utils.HeaderManager;
 import com.sevtinge.hyperceiler.libhook.utils.api.BackupUtils;
 import com.sevtinge.hyperceiler.search.SearchHelper;
+import com.sevtinge.hyperceiler.settings.PreferencesKeys;
 import com.sevtinge.hyperceiler.sub.ScopePickerActivity;
 import com.sevtinge.hyperceiler.ui.LauncherActivity;
 import com.sevtinge.hyperceiler.ui.SplashActivity;
@@ -121,15 +122,15 @@ public class SettingsFragment extends BasePreferenceFragment
         boolean isFloating = AppSettingsStore.isFloatNavEnabled(requireContext());
         boolean scopeSyncEnabled = AppSettingsStore.isScopeSyncEnabled(requireContext());
 
-        mIconModePreference = findPreference("prefs_key_settings_icon");
-        mIconModeValue = findPreference("prefs_key_settings_icon_mode");
-        mLanguage = findPreference("prefs_key_settings_app_language");
-        mHideAppIcon = findPreference("prefs_key_settings_hide_app_icon");
-        mFloatBottomPreference = findPreference("prefs_key_settings_float_nav");
-        mLogLevel = findPreference("prefs_key_log_level_v2");
-        mScopeSyncPreference = findPreference("prefs_key_settings_scope_sync");
-        mScopePreference = findPreference("prefs_key_settings_scope");
-        mHotReloadPreference = findPreference("prefs_key_settings_hot_reload");
+        mIconModePreference = findPreference(PreferencesKeys.ICON_MODE);
+        mIconModeValue = findPreference(PreferencesKeys.ICON_MODE_VALUE);
+        mLanguage = findPreference(PreferencesKeys.APP_LANGUAGE);
+        mHideAppIcon = findPreference(PreferencesKeys.HIDE_APP_ICON);
+        mFloatBottomPreference = findPreference(PreferencesKeys.FLOAT_NAV);
+        mLogLevel = findPreference(PreferencesKeys.LOG_LEVEL);
+        mScopeSyncPreference = findPreference(PreferencesKeys.SCOPE_SYNC);
+        mScopePreference = findPreference(PreferencesKeys.SCOPE);
+        mHotReloadPreference = findPreference(PreferencesKeys.HOT_RELOAD);
         updateHotReloadPreferenceVisibility();
 
         if (mHideAppIcon != null) {
@@ -251,9 +252,9 @@ public class SettingsFragment extends BasePreferenceFragment
             });
         }
 
-        Preference backPreference = findPreference("prefs_key_back");
-        Preference restPreference = findPreference("prefs_key_rest");
-        Preference resetPreference = findPreference("prefs_key_reset");
+        Preference backPreference = findPreference(PreferencesKeys.BACKUP);
+        Preference restPreference = findPreference(PreferencesKeys.RESTORE);
+        Preference resetPreference = findPreference(PreferencesKeys.RESET);
 
         backPreference.setOnPreferenceClickListener(this);
         restPreference.setOnPreferenceClickListener(this);
@@ -275,9 +276,9 @@ public class SettingsFragment extends BasePreferenceFragment
     @Override
     public boolean onPreferenceClick(@NonNull Preference preference) {
         switch (preference.getKey()) {
-            case "prefs_key_back" -> mBackupLauncher.launch(BackupUtils.getCreateDocumentIntent());
-            case "prefs_key_rest" -> mRestoreLauncher.launch(BackupUtils.getOpenDocumentIntent());
-            case "prefs_key_reset" -> {
+            case PreferencesKeys.BACKUP -> mBackupLauncher.launch(BackupUtils.getCreateDocumentIntent());
+            case PreferencesKeys.RESTORE -> mRestoreLauncher.launch(BackupUtils.getOpenDocumentIntent());
+            case PreferencesKeys.RESET -> {
                 DialogHelper.showDialog(
                     requireActivity(),
                     getString(com.sevtinge.hyperceiler.core.R.string.reset_title),
@@ -530,31 +531,35 @@ public class SettingsFragment extends BasePreferenceFragment
             : com.sevtinge.hyperceiler.core.R.string.settings_scope);
     }
 
-    private void restartApp() {
-        Context context = requireContext().getApplicationContext();
-        Intent restartIntent = new Intent(context, SplashActivity.class)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    /**
+ * Restart the app without killProcess to preserve lifecycle callbacks.
+ * Uses ProcessPhoenix pattern or standard Activity restart.
+ */
+private void restartApp() {
+    Context context = requireContext().getApplicationContext();
+    Intent restartIntent = new Intent(context, SplashActivity.class)
+        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(
-            context,
-            0,
-            restartIntent,
-            PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE
-        );
+    // API 31+: PendingIntent must be either FLAG_MUTABLE or FLAG_IMMUTABLE
+    int pendingIntentFlags = PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE;
+    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, restartIntent, pendingIntentFlags);
 
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        if (alarmManager != null) {
-            alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 200, pendingIntent);
-        } else {
-            context.startActivity(restartIntent);
-        }
-
-        Activity activity = getActivity();
-        if (activity != null) {
-            activity.finishAffinity();
-        }
-        android.os.Process.killProcess(android.os.Process.myPid());
+    // Schedule restart via AlarmManager (fires in 200ms)
+    AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+    if (alarmManager != null) {
+        alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 200, pendingIntent);
+    } else {
+        context.startActivity(restartIntent);
     }
+
+    // Finish all activities without killing the process
+    // This allows onDestroy callbacks to run properly
+    Activity activity = getActivity();
+    if (activity != null) {
+        activity.finishAffinity();
+    }
+    // Process will restart via the scheduled Intent
+}
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
