@@ -6,11 +6,11 @@ lsparanoid = "0.6.0"
 autoService = "1.1.1"
 
 # Android SDK/Build configuration
-compileSdk = 37
-compileSdkMinor = 0
+compileSdk = "37"
+compileSdkMinor = "0"
 buildToolsVersion = "37.0.0"
 ndkVersion = "28.2.13676358"
-jvmToolchain = 21
+jvmToolchain = "21"
 
 # AndroidX
 annotation = "1.10.0"
@@ -41,7 +41,6 @@ superLyricApi = "3.7"
 
 # Static Analysis
 detekt = "1.23.6"
-ktlint = "1.2.1"
 
 [libraries]
 # AndroidX
@@ -101,7 +100,6 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 lsparanoid = { id = "org.lsposed.lsparanoid", version.ref = "lsparanoid" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 
 [bundles]
 miuix = [

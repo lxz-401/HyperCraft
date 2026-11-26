@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.detekt)
-    alias(libs.plugins.ktlint)
 }
 
 val statusBarFollowBuildAvailable = providers.gradleProperty("statusBarFollow").map(String::toBoolean).getOrElse(false)

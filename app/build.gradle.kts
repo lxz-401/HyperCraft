@@ -6,7 +6,6 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.detekt)
-    alias(libs.plugins.ktlint)
 }
 
 val apkId = "HyperCeiler"
@@ -238,16 +237,4 @@ detekt {
     config.setFrom(rootProject.file("detekt.yml"))
     buildUponDefaultConfig = true
     ignoreFailures = false
-}
-
-// ktlint configuration
-ktlint {
-    android = true
-    filter {
-        excludes(
-            "**/build/**",
-            "**/kotlin/**",
-            "**/gradle/**",
-        )
-    }
 }
