@@ -16,19 +16,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Pull request template
 - CONTRIBUTING.md, SECURITY.md, CODE_OF_CONDUCT.md
 - CHANGELOG.md
+- ReflectionUtils for safe HiddenApiBypass calls
+- RomVersion abstraction for version checking
+- HookIsolation utility for feature-level try-catch
+- SafeModeHandler.reportCrash() method
+- Unit tests for AppSettingsStore, ReflectionUtils, RomVersion
+- Locale sync script (`scripts/sync_strings.py`)
+- detekt static analysis configuration
 
 ### Changed
 - CI workflows: Removed `.github/**` from paths-ignore to catch workflow changes
 - CI secret handling: Environment variables instead of writing `signing.properties` file
 - SettingsFragment: Migrated to use `PreferencesKeys` constants
+- All build files: Use centralized version catalog for SDK/NDK/JDK versions
+- CMake: Replaced `-Wno-everything` with targeted warning suppression
+- Build: JDK 21 LTS instead of JDK 25 EA
+- Build: Removed non-reproducible BuildConfig fields (build time, user, OS)
 
 ### Fixed
 - Build reproducibility: Dependency verification enabled
 - Locale completeness: All 18 locales now have all 168 strings
+- restartApp(): Removed `Process.killProcess` for proper lifecycle handling
+- CMake: Fixed `-Wno-everything` hiding UB (std::string to %s)
 
 ### Security
 - Dependency verification metadata committed
 - Secrets no longer written to files in CI
+- clang-tidy integration for native code
 
 ---
 
