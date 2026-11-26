@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ This file is part of HyperCraft.
+  ~
+  ~ HyperCraft is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Affero General Public License as
+  ~ published by the Free Software Foundation, either version 3 of the
+  ~ License.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Affero General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Affero General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
+  -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:myLocation="@string/style_preset_title"
+    app:quick_restart="com.android.systemui">
+    <PreferenceCategory
+        android:title="@string/style_preset_title">
+        <fan.preference.DropDownPreference
+            android:defaultValue="oneui"
+            android:key="prefs_key_style_preset"
+            android:summary="@string/style_preset_desc"
+            android:title="@string/style_preset_title"
+            app:entries="@array/style_preset_entries"
+            app:entryValues="@array/style_preset_values" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/backup">
+        <Preference
+            android:key="prefs_key_style_preset_export"
+            android:persistent="false"
+            android:summary="@string/style_preset_export_desc"
+            android:title="@string/style_preset_export" />
+        <Preference
+            android:key="prefs_key_style_preset_import"
+            android:persistent="false"
+            android:summary="@string/style_preset_import_desc"
+            android:title="@string/style_preset_import" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/system_ui_volume_style_title">
+        <Preference
+            android:fragment="com.sevtinge.hypercraft.hooker.systemui.VolumeStyleSettings"
+            android:title="@string/system_ui_volume_style_title" />
+    </PreferenceCategory>
+</PreferenceScreen>

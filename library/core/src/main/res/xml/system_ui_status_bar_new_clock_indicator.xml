@@ -110,4 +110,22 @@
             app:entryValues="@array/new_clock_style_value" />
 
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:dependency="prefs_key_system_ui_statusbar_clock_all_status_enable"
+        android:title="@string/system_ui_statusbar_clock_color_title">
+        <fan.preference.DropDownPreference
+            android:defaultValue="0"
+            android:key="prefs_key_system_ui_statusbar_clock_color_mode"
+            android:title="@string/system_ui_statusbar_clock_color_mode"
+            app:entries="@array/system_ui_statusbar_clock_color_entries"
+            app:entryValues="@array/system_ui_statusbar_clock_color_values" />
+
+        <fan.preference.ColorPickerPreference
+            android:defaultValue="4282549748"
+            android:dependency="prefs_key_system_ui_statusbar_clock_color_mode"
+            android:key="prefs_key_system_ui_statusbar_clock_custom_color"
+            android:title="@string/system_ui_statusbar_clock_custom_color" />
+
+    </PreferenceCategory>
 </PreferenceScreen>

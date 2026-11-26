@@ -1106,4 +1106,32 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+
+    <string-array name="system_ui_statusbar_clock_color_entries">
+        <item>@string/array_clock_color_auto</item>
+        <item>@string/array_clock_color_white</item>
+        <item>@string/array_clock_color_black</item>
+        <item>@string/array_clock_color_custom</item>
+    </string-array>
+
+    <string-array name="system_ui_statusbar_clock_color_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="style_preset_entries">
+        <item>@string/style_preset_material</item>
+        <item>@string/style_preset_oneui</item>
+        <item>@string/style_preset_minimal</item>
+        <item>@string/style_preset_custom</item>
+    </string-array>
+
+    <string-array name="style_preset_values">
+        <item>material</item>
+        <item>oneui</item>
+        <item>minimal</item>
+        <item>custom</item>
+    </string-array>
 </resources>

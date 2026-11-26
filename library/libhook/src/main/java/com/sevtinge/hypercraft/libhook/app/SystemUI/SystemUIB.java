@@ -87,6 +87,7 @@ import com.sevtinge.hypercraft.libhook.rules.systemui.statusbar.DoubleTapToSleep
 import com.sevtinge.hypercraft.libhook.rules.systemui.statusbar.HideStatusBarBeforeScreenshot;
 import com.sevtinge.hypercraft.libhook.rules.systemui.statusbar.clock.StatusBarClockNew;
 import com.sevtinge.hypercraft.libhook.rules.systemui.statusbar.battery.BatteryDetailIndicator;
+import com.sevtinge.hypercraft.libhook.rules.systemui.statusbar.battery.BatteryPercentageIndicator;
 import com.sevtinge.hypercraft.libhook.rules.systemui.statusbar.icon.all.BatteryStyle;
 import com.sevtinge.hypercraft.libhook.rules.systemui.statusbar.icon.all.DataSaverIconOS4;
 import com.sevtinge.hypercraft.libhook.rules.systemui.statusbar.icon.all.HideVoWiFiIcon;
@@ -177,6 +178,7 @@ public class SystemUIB extends BaseLoad {
         initHook(BatteryStyle.INSTANCE, PrefsBridge.getBoolean("system_ui_status_bar_battery_style_enable_custom") ||
             PrefsBridge.getBoolean("system_ui_status_bar_battery_style_change_location"));
         initHook(BatteryDetailIndicator.INSTANCE, PrefsBridge.getBoolean("system_ui_statusbar_battery_detail_enable"));
+        initHook(BatteryPercentageIndicator.INSTANCE, PrefsBridge.getBoolean("system_ui_statusbar_battery_percent_enable"));
 
         // 网速指示器
         if (PrefsBridge.getBoolean("system_ui_statusbar_network_speed_all_status_enable")) {

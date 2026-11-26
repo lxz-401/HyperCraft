@@ -19,6 +19,7 @@
 package com.sevtinge.hypercraft.libhook.rules.systemui.statusbar.clock
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Handler
 import android.os.Looper
@@ -31,6 +32,7 @@ import com.sevtinge.hypercraft.libhook.base.BaseHook
 import com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper.System.isMoreAndroidVersion
 import com.sevtinge.hypercraft.libhook.utils.api.DisplayUtils.dp2px
 import com.sevtinge.hypercraft.libhook.utils.hookapi.LazyClass.mNewClockClass
+import io.github.lingqiqi5211.ezhooktool.xposed.dsl.afterHookMethod
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.beforeHookMethod
 import io.github.lingqiqi5211.ezhooktool.core.callMethod
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.getObjectField
@@ -164,6 +166,14 @@ object StatusBarClockNew : BaseHook() {
         PrefsBridge.getStringAsInt("system_ui_statusbar_clock_double_1", 0)
     }
 
+    // 时钟颜色: 0 auto (follow theme), 1 white, 2 black, 3 custom
+    private val clockColorMode by lazy {
+        PrefsBridge.getStringAsInt("system_ui_statusbar_clock_color_mode", 0)
+    }
+    private val clockCustomColor by lazy {
+        PrefsBridge.getInt("system_ui_statusbar_clock_custom_color", 0xFF4285F4.toInt())
+    }
+
     // 时钟格式
     private val getFormatS by lazy {
         PrefsBridge.getString("system_ui_statusbar_clock_editor_s", "HH:mm")
@@ -286,6 +296,13 @@ object StatusBarClockNew : BaseHook() {
             }
         }
 
+        // 颜色覆盖（updateTime 每次刷新后重新应用，避免被主题切换重置）
+        statusBarClass.afterHookMethod("updateTime") {
+            runCatching {
+                applyClockColor(it)
+            }
+        }
+
         if (!isMoreAndroidVersion(36)) {
             // 在 Android 16 的 OS2.0.230.12.WOCCNXM 版本中，未发现此类名
             mNewClockClass.beforeHookMethod("updateTime") {
@@ -293,6 +310,25 @@ object StatusBarClockNew : BaseHook() {
                     applyMiuiClockStyleAndFormat(it)
                 }
             }
+            mNewClockClass.afterHookMethod("updateTime") {
+                runCatching {
+                    applyClockColor(it)
+                }
+            }
+        }
+    }
+
+    private fun applyClockColor(hook: HookParam) {
+        if (clockColorMode == 0) return
+        val text = hook.thisObject as? TextView ?: return
+        val color = when (clockColorMode) {
+            1 -> Color.WHITE
+            2 -> Color.BLACK
+            3 -> clockCustomColor
+            else -> return
+        }
+        if (text.currentTextColor != color) {
+            text.setTextColor(color)
         }
     }
 

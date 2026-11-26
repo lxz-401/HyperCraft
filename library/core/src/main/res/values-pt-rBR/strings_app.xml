@@ -1606,4 +1606,30 @@
     <string name="system_ui_status_bar_follow_summary">Experimental: restart SystemUI and the system process to apply. May affect system stability.</string>
     <string name="system_ui_status_bar_boot_fuse_reset_title">Reset status-bar boot fuse</string>
     <string name="system_ui_status_bar_boot_fuse_reset_summary">Explicitly clear a tripped boot fuse. Restart the target process after resetting.</string>
+    <string name="system_ui_statusbar_battery_percent_title" translatable="false">Battery percentage</string>
+    <string name="system_ui_statusbar_battery_percent_enable" translatable="false">Show battery percentage in status bar</string>
+    <string name="system_ui_statusbar_battery_percent_at_right" translatable="false">Show on the right (next to battery icons)</string>
+    <string name="system_ui_statusbar_battery_percent_show_sign" translatable="false">Show percent sign</string>
+    <string name="system_ui_statusbar_battery_percent_charging_icon" translatable="false">Show charging indicator</string>
+    <string name="system_ui_statusbar_battery_percent_low_warn" translatable="false">Low battery warning color</string>
+    <string name="system_ui_statusbar_battery_percent_font_size" translatable="false">Font size</string>
+    <string name="system_ui_statusbar_clock_color_title" translatable="false">Clock color</string>
+    <string name="system_ui_statusbar_clock_color_mode" translatable="false">Clock color</string>
+    <string name="array_clock_color_auto" translatable="false">Follow theme</string>
+    <string name="array_clock_color_white" translatable="false">White</string>
+    <string name="array_clock_color_black" translatable="false">Black</string>
+    <string name="array_clock_color_custom" translatable="false">Custom</string>
+    <string name="style_preset_title" translatable="false">Style presets</string>
+    <string name="style_preset_desc" translatable="false">Apply a bundle of style settings in one step</string>
+    <string name="style_preset_material" translatable="false">Material</string>
+    <string name="style_preset_oneui" translatable="false">One UI capsule</string>
+    <string name="style_preset_minimal" translatable="false">Bold minimal</string>
+    <string name="style_preset_custom" translatable="false">Custom</string>
+    <string name="style_preset_export" translatable="false">Export current style</string>
+    <string name="style_preset_export_desc" translatable="false">Save style settings as a JSON file</string>
+    <string name="style_preset_import" translatable="false">Import style preset</string>
+    <string name="style_preset_import_desc" translatable="false">Load style settings from a JSON file</string>
+    <string name="style_preset_invalid" translatable="false">Invalid preset file</string>
+    <string name="style_preset_io_failed" translatable="false">Could not read or write the preset file</string>
+    <string name="style_preset_more_styles" translatable="false">More styles</string>
 </resources>

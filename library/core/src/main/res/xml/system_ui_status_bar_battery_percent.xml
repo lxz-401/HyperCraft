@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ This file is part of HyperCraft.
+  ~
+  ~ HyperCraft is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Affero General Public License as
+  ~ published by the Free Software Foundation, either version 3 of the
+  ~ License.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Affero General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Affero General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
+  -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:myLocation="@string/system_ui_statusbar_battery_percent_title"
+    app:quick_restart="com.android.systemui">
+    <PreferenceCategory>
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="prefs_key_system_ui_statusbar_battery_percent_enable"
+            android:title="@string/system_ui_statusbar_battery_percent_enable" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:dependency="prefs_key_system_ui_statusbar_battery_percent_enable"
+        android:title="@string/settings">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="prefs_key_system_ui_statusbar_battery_percent_at_right"
+            android:title="@string/system_ui_statusbar_battery_percent_at_right" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="prefs_key_system_ui_statusbar_battery_percent_show_sign"
+            android:title="@string/system_ui_statusbar_battery_percent_show_sign" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="prefs_key_system_ui_statusbar_battery_percent_charging_icon"
+            android:title="@string/system_ui_statusbar_battery_percent_charging_icon" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="prefs_key_system_ui_statusbar_battery_percent_low_warn"
+            android:title="@string/system_ui_statusbar_battery_percent_low_warn" />
+        <SeekBarPreferenceCompat
+            android:key="prefs_key_system_ui_statusbar_battery_percent_font_size"
+            android:title="@string/system_ui_statusbar_battery_percent_font_size"
+            app:defaultValue="16"
+            app:defaultValueTitle="@string/array_default"
+            app:format="%.1f dp"
+            app:maxValue="40"
+            app:minValue="14"
+            app:stepValue="1" />
+    </PreferenceCategory>
+</PreferenceScreen>

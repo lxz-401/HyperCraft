@@ -21,33 +21,33 @@ Recent work: Volume panel style (One UI capsule), media seekbar, ambient color
 
 Current: Basic clock display
 Missing:
-- [ ] Clock format (12/24h, HH:mm:ss, custom)
+- [x] Clock format (12/24h, HH:mm:ss, custom) — already available via clock style prefs
 - [ ] Clock position (center, left, right)
 - [ ] Font selection (system, custom TTF)
 - [ ] Font size adjustment
-- [ ] Color override (auto, white, black, custom)
+- [x] Color override (auto, white, black, custom) — `system_ui_statusbar_clock_color_mode` + custom color picker
 - [ ] Show/hide seconds
 - [ ] Am/pm display
 
 **Complexity**: Medium
 **Dependencies**: TextFont hook, ClockView resolution
-**Estimate**: 3-5 days
+**Estimate**: 3-5 days (color override done)
 
 #### 2. Battery Percentage Text
-**Target files**: `statusbar/battery/BatteryDetailIndicator.kt`, `plugin/systemui/NewBrightnessPct.kt`
+**Target files**: `statusbar/battery/BatteryDetailIndicator.kt` (existing), new `statusbar/battery/BatteryPercentageIndicator.kt` (see also `plugin/systemui/NewBrightnessPct.kt` for the percent-text mechanism)
 
 Current: Battery icon indicators
 Missing:
-- [ ] Show battery % in status bar
-- [ ] Position (left of icon, right of icon, center)
-- [ ] Color (match icon, custom, auto)
-- [ ] Format (10%, 9, 0%)
-- [ ] Show charging %
-- [ ] Low battery warning color
+- [x] Show battery % in status bar — new `BatteryPercentageIndicator` hook (text slot, 5s refresh)
+- [x] Position (left of icon, right of icon, center) — left/right via `at_right` pref
+- [ ] Color (match icon, custom, auto) — low-battery warning color is done
+- [x] Format (10%, 9, 0%) — percent sign toggle
+- [x] Show charging % — charging ⚡ indicator
+- [x] Low battery warning color
 
 **Complexity**: Low-Medium
 **Dependencies**: BatteryLevelView hook
-**Estimate**: 2-3 days
+**Estimate**: 2-3 days (done)
 
 #### 3. Notification Shade Customization
 **Target files**: New - `rules/systemui/notificationshade/`
@@ -69,10 +69,10 @@ Missing (entirely new):
 #### 4. Quick Settings Grid Customization
 **Target files**: `controlcenter/QSGrid.kt`, `controlcenter/QQSGrid.kt`
 
-Current: Basic grid control
+Current: Basic grid control (columns/rows already available via `system_control_center_old_qs_*` prefs)
 Missing:
-- [ ] Grid columns (2, 3, 4, 5)
-- [ ] Grid rows (3, 4, 5, 6)
+- [x] Grid columns (2, 3, 4, 5) — existing `QSGrid`/`QQSGrid`
+- [x] Grid rows (3, 4, 5, 6) — existing `QSGrid`/`QQSGrid`
 - [ ] Tile size
 - [ ] Tile shape (circle, rounded, square)
 - [ ] Tile labels (show/hide)
@@ -82,7 +82,7 @@ Missing:
 
 **Complexity**: Medium
 **Dependencies**: QuickSettingsTile hooks
-**Estimate**: 3-4 days
+**Estimate**: 3-4 days (columns/rows already available)
 
 ### MEDIUM IMPACT / MEDIUM VALUE
 
@@ -167,12 +167,18 @@ Missing (entirely new):
 
 ### Refactor Style Settings UI
 
-**Current issues**:
-1. `StylesPageFragment.java` is minimal - only hosts `VolumeStyleSettings`
-2. No organized categories in UI
-3. Preferences are scattered across multiple XML files
-4. No preview functionality (except volume panel)
-5. No import/export of style presets
+**Current issues** (updated after Phase 1):
+1. ~~`StylesPageFragment.java` is minimal - only hosts `VolumeStyleSettings`~~ — now hosts `StylePresetSettings` preset hub; volume panel style is a sub-screen entry
+2. Organized categories in the preset hub are done; deeper per-category pages remain
+3. Preferences are scattered across multiple XML files (unchanged; acceptable per-feature screens)
+4. No preview functionality (volume panel has one)
+5. ~~No import/export of style presets~~ — JSON export/import via SAF is done
+
+**Implemented (Phase 1)**:
+- `style/StyleConfig.kt` — snapshot data class read from prefs (`fromPrefs()`)
+- `style/StylePreset.kt` — built-in presets (Material, One UI capsule, Bold minimal, Custom) with `apply()`
+- `StylePresetSettings.java` — hub screen: preset drop-down, JSON export/import, sub-entries
+- `StylesPageFragment.java` — hosts the hub in `styles_prefs_container`
 
 **Proposed structure**:
 ```
@@ -195,9 +201,9 @@ library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemui/
 ### New Settings UI Features
 
 1. **Style Presets**
-   - [ ] Built-in presets (Material, One UI, Custom)
-   - [ ] Save/load user presets
-   - [ ] Share presets (JSON export/import)
+   - [x] Built-in presets (Material, One UI capsule, Bold minimal, Custom)
+   - [x] Save/load user presets
+   - [x] Share presets (JSON export/import)
 
 2. **Live Preview**
    - [ ] Screenshot-based preview

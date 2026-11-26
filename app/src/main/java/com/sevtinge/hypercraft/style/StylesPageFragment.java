@@ -16,7 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.sevtinge.hypercraft.R;
-import com.sevtinge.hypercraft.hooker.systemui.VolumeStyleSettings;
+import com.sevtinge.hypercraft.hooker.systemui.StylePresetSettings;
 import com.sevtinge.hypercraft.utils.DialogHelper;
 
 import fan.appcompat.app.Fragment;
@@ -55,9 +55,11 @@ public class StylesPageFragment extends Fragment {
         super.onViewInflated(view, savedInstanceState);
         if (getActionBar() != null) getActionBar().setTitle(R.string.navigation_styles_title);
         if (getChildFragmentManager().findFragmentById(R.id.styles_prefs_container) == null) {
+            // The style page hosts the preset hub; the volume panel style screen
+            // is reachable from it as a sub-screen.
             getChildFragmentManager()
                 .beginTransaction()
-                .replace(R.id.styles_prefs_container, new VolumeStyleSettings())
+                .replace(R.id.styles_prefs_container, new StylePresetSettings())
                 .commit();
         }
     }

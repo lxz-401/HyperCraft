@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Battery percentage text indicator in the status bar (`BatteryPercentageIndicator`):
+  left/right placement, percent-sign toggle, charging indicator, low-battery
+  warning color, adjustable font size
+- Status bar clock color override: follow theme / white / black / custom
+  (color picker) via `system_ui_statusbar_clock_color_mode`
+- Style presets hub on the Styles page: built-in presets (Material, One UI
+  capsule, Bold minimal, Custom) applying bundled style settings in one step,
+  plus JSON export/import of the current style through the system file picker
+- New `StyleConfig`/`StylePreset` classes in `libhook/rules/systemui/style/`
+  as the base of the unified style architecture
 - Gradle dependency verification (`gradle/verification-metadata.xml`)
 - Centralized preference keys in `PreferencesKeys.kt`
 - Missing locale files: Korean (ko-KR), French (fr-FR)
