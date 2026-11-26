@@ -1,5 +1,5 @@
 #!/bin/bash
-ADB="/d/build-tools/android-sdk/platform-tools/adb.exe"
+ADB="${ADB:-adb}"
 URI="content://com.sevtinge.hyperceiler.provider.sharedprefs"
 set -x
 "$ADB" shell setprop debug.hyperceiler.prefs_write 1

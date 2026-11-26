@@ -1,5 +1,5 @@
 #!/bin/bash
-ADB="/d/build-tools/android-sdk/platform-tools/adb.exe"
+ADB="${ADB:-adb}"
 "$ADB" logcat -c
 "$ADB" shell am force-stop com.miui.home
 sleep 3

@@ -7,6 +7,8 @@ import os
 from pathlib import Path
 import subprocess
 import tempfile
+import shutil
+import zipfile
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -22,12 +24,26 @@ parser.add_argument("--cases", help="Comma-separated scenario names; default run
 args = parser.parse_args()
 cache = args.build_cache
 jdk = test_paths.java_home(cache) / "bin"
+if not (jdk / "javac").exists():
+    jdk = Path(shutil.which("javac")).resolve().parent
 deps = cache / "changed-hooks-compile"
-stdlib = next((cache / "gradle-home/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.4.10").rglob("*.jar"))
-jars = [deps / "api-102.0.0.jar", deps / "hook-xposed-102-1.3.0.jar", stdlib,
-        test_paths.android_home(cache) / 'platforms/android-37.0/android.jar']
+gradle_home = Path(os.environ.get("GRADLE_USER_HOME", Path.home() / ".gradle"))
+stdlib_candidates = list((cache / "gradle-home").rglob("kotlin-stdlib-2.4.10.jar"))
+stdlib_candidates += list(gradle_home.rglob("kotlin-stdlib-2.4.10.jar"))
+if not stdlib_candidates:
+    raise SystemExit("Kotlin 2.4.10 stdlib required in the configured build cache or Gradle cache")
+stdlib = next(path for path in stdlib_candidates if "kotlin/Unit.class" in zipfile.ZipFile(path).namelist())
+android_jar = test_paths.android_home(cache) / "platforms/android-37.0/android.jar"
+if not android_jar.exists():
+    android_jar = Path.home() / "Android/Sdk/platforms/android-37.0/android.jar"
+jars = [deps / "api-102.0.0.jar", deps / "hook-xposed-102-1.3.0.jar", stdlib, android_jar]
 
 STUBS = {
+    "com/sevtinge/hyperceiler/common/log/ModuleLog.java": "package com.sevtinge.hyperceiler.common.log; public class ModuleLog { public static void i(Object... x){} public static void w(Object... x){} }",
+    "android/os/Build.java": "package android.os; public class Build { public static class VERSION { public static int SDK_INT=35; } }",
+    "com/sevtinge/hyperceiler/libhook/utils/api/DeviceHelper.java": "package com.sevtinge.hyperceiler.libhook.utils.api; public class DeviceHelper { public static class System { public static boolean isHyperOSVersion(float v){return false;} } }",
+    "com/sevtinge/hyperceiler/libhook/base/HookDiagnostics.java": """package com.sevtinge.hyperceiler.libhook.base;
+public class HookDiagnostics { public static void bootstrap(Object... x){} public static void failure(Object... x){} public static void event(Object... x){} public static void lifecycle(Object... x){} public static void deferred(boolean b){} public static Scope scope(Object x){return new Scope();} public static class Scope implements AutoCloseable { public void close(){} } }""",
     "android/content/pm/ApplicationInfo.java": "package android.content.pm; public class ApplicationInfo { public String dataDir, sourceDir; }",
     "android/util/Log.java": "package android.util; public class Log { public static int i(String a,String b){return 0;} public static int w(String a,String b,Throwable t){return 0;} }",
     "com/sevtinge/hyperceiler/common/log/XposedLog.java": """package com.sevtinge.hyperceiler.common.log;
@@ -79,7 +95,7 @@ public class FlagSecure { public void onLoad(com.sevtinge.hyperceiler.libhook.ba
     "com/sevtinge/hyperceiler/libhook/safecrash/CrashMonitor.java": """package com.sevtinge.hyperceiler.libhook.safecrash;
 public class CrashMonitor { public static int instances; public CrashMonitor(com.sevtinge.hyperceiler.libhook.base.PackageTarget t){instances++;} }""",
     "com/sevtinge/hyperceiler/libhook/rules/home/other/NativeHomeHooksOS4.java": """package com.sevtinge.hyperceiler.libhook.rules.home.other;
-public class NativeHomeHooksOS4 { public static final NativeHomeHooksOS4 INSTANCE=new NativeHomeHooksOS4(); public static int recoveries; public static boolean bootstrapReady=true; public void ensureLoadedFromModuleEntry(String p){} public void ensureLoadedFromModuleEntry(String p,boolean ready){bootstrapReady=ready;} public void onPreferencesReadyAfterRetry(){recoveries++;} }""",
+public class NativeHomeHooksOS4 { public static final NativeHomeHooksOS4 INSTANCE=new NativeHomeHooksOS4(); public static int recoveries; public static boolean bootstrapReady=true; public boolean hasNativeLoadStarted(){return false;} public void ensureLoadedFromModuleEntry(String p){} public void ensureLoadedFromModuleEntry(String p,boolean ready){bootstrapReady=ready;} public void onPreferencesReadyAfterRetry(){recoveries++;} }""",
     "com/sevtinge/hyperceiler/libhook/rules/home/dock/HomeLayoutNativeEndpointOS4.java": """package com.sevtinge.hyperceiler.libhook.rules.home.dock;
 public class HomeLayoutNativeEndpointOS4 { public static boolean pauseForHotReload(){return true;} public static void resumeAfterRejectedHotReload(){} }""",
     "com/sevtinge/hyperceiler/libhook/rules/systemui/controlcenter/media3/AmbientNativeColorOS4.java": """package com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.media3;
@@ -128,6 +144,14 @@ public class EzXposed {
 
 with tempfile.TemporaryDirectory(prefix="hc-init-prefs-") as work:
     work = Path(work)
+    for index, (group, artifact, version) in enumerate([
+            ("io.github.libxposed", "api", "102.0.0"),
+            ("io.github.lingqiqi5211.ezhooktool", "hook-xposed-102", "1.3.0")]):
+        if not jars[index].exists():
+            aar = next((gradle_home / "caches/modules-2/files-2.1" / group / artifact / version).rglob("*.aar"))
+            jars[index] = work / (artifact + ".jar")
+            with zipfile.ZipFile(aar) as archive:
+                jars[index].write_bytes(archive.read("classes.jar"))
     generated = []
     for name, text in STUBS.items():
         path = work / name
@@ -137,13 +161,13 @@ with tempfile.TemporaryDirectory(prefix="hc-init-prefs-") as work:
     common = ROOT / "library/common/src/main/java/com/sevtinge/hyperceiler/common"
     base = ROOT / "library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/base"
     sources = generated + list((ROOT / "tests/dock-style-refresh/stubs").rglob("*.java")) + [
-        args.source, base / "BaseLoad.java", base / "PackageTarget.java", base / "FrameworkHookGate.java",
+        args.source, base / "BaseLoad.java", base / "PackageTarget.java", base / "FrameworkHookGate.java", base / "HotReloadCompatibility.java",
         common / "utils/PrefsBridge.java", common / "utils/prefs/PrefType.java", TESTS / "InitPrefsTest.java"]
     cp = os.pathsep.join(str(x) for x in jars)
     subprocess.run([str(jdk / "javac"), "-encoding", "UTF-8", "-cp", cp, "-d", str(work)] +
                    [str(x) for x in sources], check=True)
     failures = 0
-    cases = ["package_transient", "system_transient", "healthy_idempotent", "secondary_package",
+    cases = ["package_transient", "system_transient", "healthy_idempotent", "secondary_package", "secondary_plugin", "secondary_plugin_scope",
                  "persistent_failure", "allow_hook_gate", "framework_gate", "hot_reload_transient",
                  "hot_reload_persistent", "null_remote", "concurrent_init", "empty_success", "rule_failure",
                  "home_recovered", "home_gate", "home_framework_gate", "home_healthy", "home_bound_read_failure", "framework_changed_name", "framework_changed_version", "framework_changed_code", "framework_missing_reason", "framework_runtime_unavailable", "framework_whitespace_same", "framework_global_disabled", "framework_allowed_no_identity", "framework_missing_checked_fields", "ambient_loaded_reload", "ambient_unloaded_reload", "ambient_rule_failure_reload", "ambient_save_denied_reload", "ambient_save_throws_reload", "ambient_worker_failure_reload", "ambient_other_package_reload", "ambient_system_server_reload"]

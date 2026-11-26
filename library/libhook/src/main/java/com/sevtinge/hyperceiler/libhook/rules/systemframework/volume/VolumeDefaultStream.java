@@ -18,12 +18,7 @@
  */
 package com.sevtinge.hyperceiler.libhook.rules.systemframework.volume;
 
-import android.content.Context;
-import android.os.Handler;
-
 import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
-import com.sevtinge.hyperceiler.common.utils.prefs.PrefType;
-import com.sevtinge.hyperceiler.common.utils.prefs.PrefsChangeObserver;
 import com.sevtinge.hyperceiler.libhook.base.BaseHook;
 import io.github.lingqiqi5211.ezhooktool.xposed.java.IMethodHook;
 
@@ -41,14 +36,8 @@ public class VolumeDefaultStream extends BaseHook {
             @Override
             public void before(HookParam param) {
 
-                Context mContext = (Context) getObjectField(param.getThisObject(), "mContext");
-                Handler mHandler = new Handler(mContext.getMainLooper());
-                new PrefsChangeObserver(mContext, mHandler, true, PrefType.String,
-                        "prefs_key_system_framework_default_volume_stream", "0");
-
-                int mDefaultVolumeStream = PrefsBridge.getStringAsInt("system_framework_default_volume_stream", 0);
-
-                param.setResult(mDefaultVolumeStream);
+                int stream = PrefsBridge.getStringAsInt("system_framework_default_volume_stream", 0);
+                if (stream != 0) param.setResult(stream);
 
             }
         });

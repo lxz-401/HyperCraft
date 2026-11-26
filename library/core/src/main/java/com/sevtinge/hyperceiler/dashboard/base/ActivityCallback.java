@@ -81,14 +81,17 @@ public interface ActivityCallback {
             if (intent != null) {
                 Bundle bundle = intent.getExtras();
                 if (bundle != null) {
-                    String xmlPath = (String) bundle.get("inflatedXml");
+                    String xmlPath = bundle.getString("inflatedXml");
                     if (!TextUtils.isEmpty(xmlPath)) {
                         if (args == null) args = new Bundle();
                         String[] split = xmlPath.split("\\/");
 
-                        String[] split2 = split[2].split("\\.");
                         if (split.length == 3) {
-                            args.putInt(":settings:fragment_resId", context.getResources().getIdentifier(split2[0], split[1], context.getPackageName()));
+                            int extension = split[2].indexOf('.');
+                            String resourceName = extension >= 0 ? split[2].substring(0, extension) : split[2];
+                            if (!TextUtils.isEmpty(resourceName)) {
+                                args.putInt(":settings:fragment_resId", context.getResources().getIdentifier(resourceName, split[1], context.getPackageName()));
+                            }
                         }
                     }
                 }
@@ -96,7 +99,8 @@ public interface ActivityCallback {
         }
 
         String mFragmentName = preference.getFragment();
-        String mTitle = preference.getTitle().toString();
+        CharSequence title = preference.getTitle();
+        String mTitle = title != null ? title.toString() : "";
         SettingLauncherHelper.onStartSettingsForArguments(context, cls, mFragmentName, args, mTitle);
     }
 }

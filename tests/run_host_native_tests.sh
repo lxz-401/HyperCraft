@@ -52,10 +52,17 @@ run() {
 
 # --- NativeHookRuntime core tests (no external fixtures). ---
 for test in NativeHookElfTest NativeHookGotTest NativeHookBankTest \
-            NativeHookCoreResolverTest NativeHookPageGuardTest NativeHookImageViewTest \
-            NativeHookBoundedReadsTest; do
+            NativeHookCoreResolverTest NativeHookPageGuardTest NativeHookImageViewTest; do
   build "$test" "$ROOT/tests/nativehook/$test.cpp" && run "$test"
 done
+
+# The bounded-reader integration includes Android/Linux raw syscall wrappers.
+if [[ "$(uname -s)" == "Linux" ]]; then
+  build NativeHookBoundedReadsTest "$ROOT/tests/nativehook/NativeHookBoundedReadsTest.cpp" \
+    && run NativeHookBoundedReadsTest
+else
+  printf 'SKIP NativeHookBoundedReadsTest (needs Linux syscalls)\n'
+fi
 
 build SafeModeGateTest "$ROOT/tests/nativehook/SafeModeGateTest.cpp" \
   "$CPP/nativehook/safe_mode.cpp" && run SafeModeGateTest

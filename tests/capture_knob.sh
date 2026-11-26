@@ -2,7 +2,7 @@
 # Control experiment: the hotseat-margin knob is the known-good lever that moves both the dock and
 # the assistant capsule. If the screenshot diff cannot see THAT move, the A/B method is the problem,
 # not the indicator knob. $1 = knob key stem, $2 = value, $3 = output png.
-ADB="/d/build-tools/android-sdk/platform-tools/adb.exe"
+ADB="${ADB:-adb}"
 URI="content://com.sevtinge.hyperceiler.provider.sharedprefs"
 KEY="$1"; VALUE="$2"; OUT="$3"
 "$ADB" shell setprop debug.hyperceiler.prefs_write 1

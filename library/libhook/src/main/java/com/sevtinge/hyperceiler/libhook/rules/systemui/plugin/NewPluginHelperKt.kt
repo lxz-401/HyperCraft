@@ -18,7 +18,7 @@
  */
 package com.sevtinge.hyperceiler.libhook.rules.systemui.plugin
 
-import android.content.ContextWrapper
+import android.content.Context
 import com.sevtinge.hyperceiler.common.log.XposedLog
 import com.sevtinge.hyperceiler.common.utils.PrefsBridge
 import com.sevtinge.hyperceiler.libhook.base.BaseHook
@@ -47,13 +47,14 @@ import io.github.lingqiqi5211.ezhooktool.core.findMethod
 import io.github.lingqiqi5211.ezhooktool.core.loadClass
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.createAfterHook
 import java.lang.ref.WeakReference
+import java.util.WeakHashMap
 
 object NewPluginHelperKt : BaseHook() {
-    private val isStyle by lazy {
-        PrefsBridge.getStringAsInt("system_ui_others_pct_style", 0)
-    }
+    private val isStyle get() = PrefsBridge.getStringAsInt("system_ui_others_pct_style", 0)
+    private val loadedHooks = WeakHashMap<ClassLoader, MutableSet<String>>()
 
     override fun init() {
+        registerHotReloadCleanup { synchronized(loadedHooks) { loadedHooks.clear() } }
         // from hyperstar2.0
         /*loadClass("com.android.systemui.shared.plugins.PluginActionManager\$PluginContextWrapper")
             .constructors.first().createAfterHook {
@@ -69,7 +70,7 @@ object NewPluginHelperKt : BaseHook() {
         // https://github.com/buffcow/Hyper5GSwitch/blob/master/app/src/main/kotlin/cn/buffcow/hyper5g/hooker/PluginLoader.kt
         loadClass($$"com.android.systemui.shared.plugins.PluginInstance$PluginFactory").findMethod { name("createPluginContext") }.createAfterHook { it ->
                 runCatching {
-                    val wrapper = it.result as ContextWrapper
+                    val wrapper = it.result as? Context ?: return@createAfterHook
                     onPluginLoaded(PluginFactory(it.thisObject).also { isLoad ->
                         isLoad.pluginCtxRef = WeakReference(wrapper)
                     })
@@ -137,12 +138,9 @@ object NewPluginHelperKt : BaseHook() {
                     )
                 }
 
-                enabledLoaders.add(
-                    Pair(
-                        "OneUiVolumeStyle",
-                        OneUiVolumeStyle::initLoaderHook
-                    )
-                )
+                if (PrefsBridge.getBoolean("system_ui_volume_oneui_style", false)) {
+                    enabledLoaders.add(Pair("OneUiVolumeStyle", OneUiVolumeStyle::initLoaderHook))
+                }
 
                 if (PrefsBridge.getBoolean("system_ui_other_default_plugin_theme")) {
                     enabledLoaders.add(
@@ -273,8 +271,13 @@ object NewPluginHelperKt : BaseHook() {
     ) {
         for ((name, loader) in loaders) {
             runCatching {
-                loader(classLoader)
-                XposedLog.d(TAG, lpparam.packageName, "$name is loaded success.")
+                synchronized(loadedHooks) {
+                    val installed = loadedHooks.getOrPut(classLoader) { HashSet() }
+                    if (name in installed) return@synchronized
+                    loader(classLoader)
+                    installed.add(name)
+                    XposedLog.d(TAG, lpparam.packageName, "$name is loaded success.")
+                }
             }.onFailure {
                 XposedLog.e(TAG, lpparam.packageName, "[$tag] $name is fail loaded, log: ${it.stackTraceToString()}" )
             }

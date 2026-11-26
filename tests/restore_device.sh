@@ -2,7 +2,7 @@
 # Restore the device to the state the previous handover documented: indicator knob back to
 # value=121 / disabled, the hotseat knob I touched during the control run back to disabled,
 # and the debug write property off.
-ADB="/d/build-tools/android-sdk/platform-tools/adb.exe"
+ADB="${ADB:-adb}"
 URI="content://com.sevtinge.hyperceiler.provider.sharedprefs"
 set -x
 "$ADB" shell setprop debug.hyperceiler.prefs_write 1

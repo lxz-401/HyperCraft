@@ -25,6 +25,7 @@ import android.os.SystemProperties;
 import com.sevtinge.hyperceiler.common.log.AndroidLog;
 import com.sevtinge.hyperceiler.common.utils.ShellUtils;
 import com.sevtinge.hyperceiler.common.utils.shell.ShellInit;
+import com.sevtinge.hyperceiler.common.utils.shell.ShellExec;
 
 /**
  * 系统属性工具类
@@ -113,10 +114,10 @@ public class PropUtils {
     public static boolean setProp(String name, Object value) {
         try {
             String stringValue = String.valueOf(value);
-            if (stringValue.isEmpty() && runCommand("resetprop -p --delete " + name)) {
+            if (stringValue.isEmpty() && runCommand("resetprop -p --delete " + shellQuote(name))) {
                 return true;
             }
-            String command = "setprop " + name + " " + shellQuote(value);
+            String command = "setprop " + shellQuote(name) + " " + shellQuote(value);
             return runCommand(command);
         } catch (Throwable e) {
             AndroidLog.e(TAG, "setProp: " + name, e);
@@ -125,14 +126,15 @@ public class PropUtils {
     }
 
     private static boolean runCommand(String command) {
-        if (ShellInit.getShell() != null) {
-            return ShellInit.getShell().run(command).sync().isResult();
+        ShellExec shell = ShellInit.getShell();
+        if (shell != null) {
+            return shell.run(command).sync().isResult();
         }
         return ShellUtils.getResultBoolean(command, true);
     }
 
     private static String shellQuote(Object value) {
         String stringValue = String.valueOf(value);
-        return "\"" + stringValue.replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
+        return "'" + stringValue.replace("'", "'\"'\"'") + "'";
     }
 }

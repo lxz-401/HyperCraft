@@ -28,9 +28,11 @@ public class AboutPageFragment extends Fragment {
     @Override
     public void onViewInflated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewInflated(view, savedInstanceState);
-        getChildFragmentManager()
-            .beginTransaction()
-            .replace(R.id.prefs, new AboutSettingsFragment())
-            .commit();
+        if (getChildFragmentManager().findFragmentById(R.id.prefs) == null) {
+            getChildFragmentManager()
+                .beginTransaction()
+                .replace(R.id.prefs, new AboutSettingsFragment())
+                .commit();
+        }
     }
 }

@@ -25,15 +25,15 @@ import com.sevtinge.hyperceiler.libhook.utils.hookapi.tool.AppsTool.getPackageVe
 import io.github.lingqiqi5211.ezhooktool.core.findMethod
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.getObjectField
 import com.sevtinge.hyperceiler.libhook.utils.hookapi.tool.getString
-import io.github.lingqiqi5211.ezhooktool.core.loadClass
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.createHook
 import org.json.JSONArray
 import org.json.JSONObject
 
 object FlashLightNotificationColor : BaseHook() {
     override fun init() {
-        if (getPackageVersionCode(lpparam) >= 170000000) {
-            loadClass("miui.systemui.flashlight.NotificationManager").findMethod { name("getExtraMiuiFocusParam") }.createHook {
+        val target = lpparam ?: return
+        if (getPackageVersionCode(target) >= 170000000) {
+            Class.forName("miui.systemui.flashlight.NotificationManager", false, target.classLoader).findMethod { name("getExtraMiuiFocusParam") }.createHook {
                     before {
                         val mContext = it.args[0] as Context
                         val stringTitle = mContext.getString("flashlight_notification_content_title")
@@ -124,7 +124,7 @@ object FlashLightNotificationColor : BaseHook() {
                     }
                 }
         } else {
-            loadClass("miui.systemui.flashlight.MiFlashlightManager").findMethod { name("getExtraMiuiFocusParam") }.createHook {
+            Class.forName("miui.systemui.flashlight.MiFlashlightManager", false, target.classLoader).findMethod { name("getExtraMiuiFocusParam") }.createHook {
                     after {
                         val mContext = it.thisObject.getObjectField("context") as Context
                         val stringTitle =

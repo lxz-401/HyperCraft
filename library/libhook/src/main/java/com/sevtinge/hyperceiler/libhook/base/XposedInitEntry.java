@@ -86,13 +86,16 @@ public class XposedInitEntry extends XposedModule {
     private final Object prefsInitLock = new Object();
     private volatile boolean prefsInited = false;
     private volatile boolean runtimeInitialized = false;
+    private final java.util.Set<ClassLoader> secondaryPluginLoaders =
+        java.util.Collections.newSetFromMap(new java.util.WeakHashMap<>());
+    private volatile boolean secondaryPluginHooksLoaded;
 
     @Nullable
     private volatile PackageTarget mTarget;
 
     @Override
     public void onModuleLoaded(@NonNull ModuleLoadedParam param) {
-        android.util.Log.e("HyperCraft", ">>> onModuleLoaded: process=" + param.getProcessName());
+        XposedLog.d(TAG, "onModuleLoaded: process=" + param.getProcessName());
         initModule(param);
     }
 
@@ -137,16 +140,37 @@ public class XposedInitEntry extends XposedModule {
     @Override
     public void onPackageLoaded(@NonNull PackageLoadedParam lpparam) {
         super.onPackageLoaded(lpparam);
-        android.util.Log.e("HyperCraft", ">>> onPackageLoaded: pkg=" + lpparam.getPackageName() + " isFirst=" + lpparam.isFirstPackage());
+        XposedLog.d(TAG, "onPackageLoaded: pkg=" + lpparam.getPackageName() + " isFirst=" + lpparam.isFirstPackage());
     }
 
     @Override
     public void onPackageReady(@NonNull PackageReadyParam lpparam) {
         super.onPackageReady(lpparam);
-        android.util.Log.e("HyperCraft", ">>> onPackageReady: pkg=" + lpparam.getPackageName() + " isFirst=" + lpparam.isFirstPackage());
-        if (!lpparam.isFirstPackage() && !"miui.systemui.plugin".equals(lpparam.getPackageName())) return;
+        XposedLog.d(TAG, "onPackageReady: pkg=" + lpparam.getPackageName() + " isFirst=" + lpparam.isFirstPackage());
+        if (!lpparam.isFirstPackage()) {
+            installSecondaryPackageHooks(lpparam);
+            return;
+        }
         mTarget = PackageTarget.ofPackageReady(lpparam);
         EzXposed.initOnPackageReady(lpparam);
+    }
+
+    private void installSecondaryPackageHooks(PackageReadyParam param) {
+        PackageTarget primary = mTarget;
+        if (primary == null || !"com.android.systemui".equals(primary.getPackageName())
+                || !"miui.systemui.plugin".equals(param.getPackageName())) return;
+        initPrefs();
+        if (prepareHookLoad(param.getPackageName())) return;
+        synchronized (secondaryPluginLoaders) {
+            if (secondaryPluginLoaders.contains(param.getClassLoader())) return;
+            invokeSecondaryInit(PackageTarget.ofPackageReady(param));
+            secondaryPluginLoaders.add(param.getClassLoader());
+            secondaryPluginHooksLoaded = true;
+        }
+    }
+
+    protected void invokeSecondaryInit(PackageTarget target) {
+        invokeInitInternal(target.getPackageName(), module -> module.onLoadSecondary(target));
     }
 
     @Override
@@ -168,6 +192,13 @@ public class XposedInitEntry extends XposedModule {
                 && NativeHomeHooksOS4.INSTANCE.hasNativeLoadStarted()) {
             ModuleLog.w("HyperCeiler.HotReload", "HOT_RELOAD_DEFERRED: launcher native runtime retained"
                 + " process=" + processName + " automatic_restart=false");
+            return false;
+        }
+        // The framework only snapshots/replays the primary package lifecycle. Keep live plugin
+        // hooks intact until a process restart can replay its secondary-package callback too.
+        if (secondaryPluginHooksLoaded) {
+            XposedLog.w(TAG, processName,
+                "Hot reload deferred: secondary SystemUI plugin hooks require a process restart.");
             return false;
         }
         final PackageTarget target = BaseLoad.getTarget();
@@ -330,7 +361,7 @@ public class XposedInitEntry extends XposedModule {
         if (target == null) {
             throw new IllegalStateException("Target state is unavailable before hook initialization");
         }
-        android.util.Log.e("HyperCraft", ">>> installCurrentTargetHooks: target=" + target.getPackageName() + " process=" + processName);
+        XposedLog.d(TAG, "installCurrentTargetHooks: target=" + target.getPackageName() + " process=" + processName);
         HookDiagnostics.event("module.target","目标进程初始化","INITIALIZING","TARGET_READY","TARGET_READY",target.getPackageName());
         BaseLoad.beginHookInitialization();
         final boolean retryingPrefs = !prefsInited;
@@ -470,13 +501,10 @@ public class XposedInitEntry extends XposedModule {
         ModuleMatcher.MatchContext context = buildMatchContext(packageName, dataMap);
         ModuleMatcher matcher = new ModuleMatcher(context);
 
-        android.util.Log.e("HyperCraft", ">>> invokeInitInternal for " + packageName + ", total dataMap: " + dataMap.size());
+        XposedLog.d(TAG, "invokeInitInternal for " + packageName + ", total dataMap: " + dataMap.size());
 
         dataMap.forEach((className, data) -> {
             boolean should = matcher.shouldLoad(data, packageName);
-            if (packageName.contains("systemui")) {
-                android.util.Log.e("HyperCraft", ">>> module " + className + " shouldLoad=" + should);
-            }
             if (!should) return;
             try {
                 Class<?> clazz = classLoader.loadClass(className);

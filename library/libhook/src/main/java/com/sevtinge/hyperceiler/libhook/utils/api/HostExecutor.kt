@@ -28,7 +28,7 @@ import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 
 object HostExecutor {
-    private val executor: ExecutorService = Executors.newFixedThreadPool(4)
+    private var executor: ExecutorService? = null
     private val mainHandler = Handler(Looper.getMainLooper())
     private val taskMap = ConcurrentHashMap<Any, TaskToken>()
     @Volatile
@@ -38,6 +38,7 @@ object HostExecutor {
         @Volatile var future: Future<*>? = null
     }
 
+    @Synchronized
     fun <T> execute(
         tag: Any,
         backgroundTask: () -> T?,
@@ -45,13 +46,12 @@ object HostExecutor {
         onResult: ((T) -> Unit)? = null
     ) {
         ensureHotReloadCleanup()
-        val oldToken = taskMap[tag]
-        oldToken?.future?.cancel(true)
-
         val newToken = TaskToken()
-        taskMap[tag] = newToken
+        taskMap.put(tag, newToken)?.future?.cancel(true)
+        val activeExecutor = executor?.takeUnless { it.isShutdown }
+            ?: Executors.newFixedThreadPool(4).also { executor = it }
 
-        val future = executor.submit {
+        val future = activeExecutor.submit {
             if (Thread.currentThread().isInterrupted) return@submit
             try {
                 if (taskMap[tag] != newToken) return@submit
@@ -66,8 +66,11 @@ object HostExecutor {
                     if (runOnMain) {
                         mainHandler.post {
                             if (taskMap[tag] == newToken) {
-                                onResult(result)
-                                taskMap.remove(tag, newToken)
+                                try {
+                                    onResult(result)
+                                } finally {
+                                    taskMap.remove(tag, newToken)
+                                }
                             }
                         }
                         return@submit
@@ -77,6 +80,8 @@ object HostExecutor {
                 }
                 taskMap.remove(tag, newToken)
             } catch (_: InterruptedException) {
+                Thread.currentThread().interrupt()
+                taskMap.remove(tag, newToken)
             } catch (e: Exception) {
                 e.printStackTrace()
                 taskMap.remove(tag, newToken)
@@ -89,22 +94,28 @@ object HostExecutor {
         if (hotReloadCleanupRegistered) return
         synchronized(this) {
             if (hotReloadCleanupRegistered) return
-            BaseHook.registerHotReloadCleanup {
-                taskMap.values.forEach { token -> token.future?.cancel(true) }
-                taskMap.clear()
-                mainHandler.removeCallbacksAndMessages(null)
-                executor.shutdownNow()
-                try {
-                    if (!executor.awaitTermination(500, TimeUnit.MILLISECONDS)) {
-                        throw IllegalStateException("HostExecutor did not stop before hot reload")
-                    }
-                } catch (e: InterruptedException) {
-                    Thread.currentThread().interrupt()
-                    throw IllegalStateException("Interrupted while stopping HostExecutor", e)
-                }
-                hotReloadCleanupRegistered = false
-            }
+            BaseHook.registerHotReloadCleanup { cleanup() }
             hotReloadCleanupRegistered = true
+        }
+    }
+
+    @Synchronized
+    private fun cleanup() {
+        taskMap.values.forEach { token -> token.future?.cancel(true) }
+        taskMap.clear()
+        mainHandler.removeCallbacksAndMessages(null)
+        val current = executor
+        current?.shutdownNow()
+        try {
+            if (current != null && !current.awaitTermination(500, TimeUnit.MILLISECONDS)) {
+                throw IllegalStateException("HostExecutor did not stop before hot reload")
+            }
+        } catch (e: InterruptedException) {
+            Thread.currentThread().interrupt()
+            throw IllegalStateException("Interrupted while stopping HostExecutor", e)
+        } finally {
+            executor = null
+            hotReloadCleanupRegistered = false
         }
     }
 }

@@ -1,6 +1,6 @@
 #!/bin/bash
 # Turn every layout knob off and take the control frame.
-ADB="/d/build-tools/android-sdk/platform-tools/adb.exe"
+ADB="${ADB:-adb}"
 URI="content://com.sevtinge.hyperceiler.provider.sharedprefs"
 OUT="$1"
 "$ADB" shell setprop debug.hyperceiler.prefs_write 1

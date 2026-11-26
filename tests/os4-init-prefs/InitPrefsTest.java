@@ -15,12 +15,13 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public final class InitPrefsTest {
-    static int installed, observed;
+    static int installed, observed, secondaryInstalled, secondaryRules;
     static boolean failRule;
     static String packageName="com.android.systemui";
     static void check(boolean value,String message) { if(!value)throw new AssertionError(message); }
     static void equal(int actual,int expected,String message) { check(actual==expected,message+": got="+actual+", expected="+expected); }
 
+    static final class SecondaryRule extends BaseHook { @Override public void init(){secondaryRules++;} }
     static final class FixtureModule extends BaseLoad {
         @Override public void onPackageLoaded() {
             // The consumer is reached through real BaseLoad.onLoad/executeHook.
@@ -31,6 +32,16 @@ public final class InitPrefsTest {
     }
     static final class Entry extends XposedInitEntry {
         @Override protected void invokeInit(PackageTarget target) { new FixtureModule().onLoad(target); }
+        @Override protected void invokeSecondaryInit(PackageTarget target) {
+            new BaseLoad() {
+                @Override public void onPackageLoaded() {
+                    check(getTarget()==target,"secondary module sees plugin target during synchronous init");
+                    secondaryInstalled++;
+                    initHook(new SecondaryRule());
+                    initHook(new SecondaryRule());
+                }
+            }.onLoadSecondary(target);
+        }
         void initializePreferences() { initPrefs(); }
     }
     static final class Remote implements java.lang.reflect.InvocationHandler {
@@ -123,6 +134,43 @@ public final class InitPrefsTest {
                 Remote r=new Remote(1);Entry e=r.entry();boot(e,false);
                 e.onPackageReady(new PackageParam(false));equal(r.calls.get(),1,"secondary package ignored");
                 equal(installed,0,"secondary package cannot initialize rule consumer");ready(e,false);recovered(r);
+            }
+            case "secondary_plugin" -> {
+                Remote r=new Remote(0);Entry e=r.entry();boot(e,false);ready(e,false);
+                PackageTarget primary=BaseLoad.getTarget();
+                packageName="miui.systemui.plugin";
+                e.onPackageReady(new PackageParam(false));e.onPackageReady(new PackageParam(false));
+                equal(secondaryInstalled,1,"secondary plugin callback deduplicates its loader");
+                equal(secondaryRules,1,"secondary module deduplicates repeated initHook calls");
+                ClassLoader pluginReload=new ClassLoader(){};
+                e.onPackageReady(new PackageReadyParam(){
+                    public boolean isFirstPackage(){return false;}
+                    public String getPackageName(){return "miui.systemui.plugin";}
+                    public ApplicationInfo getApplicationInfo(){return new ApplicationInfo();}
+                    public ClassLoader getDefaultClassLoader(){return pluginReload;}
+                    public ClassLoader getClassLoader(){return pluginReload;}
+                    public android.app.AppComponentFactory getAppComponentFactory(){return null;}
+                });
+                equal(secondaryInstalled,2,"new plugin loader receives its own module initialization");
+                equal(secondaryRules,2,"new plugin loader must not hit the primary class-only hook gate");
+                equal(installed,1,"secondary plugin does not rerun primary dispatcher");
+                check(BaseLoad.getTarget()==primary,"secondary plugin restores primary global target");
+                var field=XposedInitEntry.class.getDeclaredField("mTarget");field.setAccessible(true);
+                check(field.get(e)==primary,"primary hot reload ApplicationInfo target is preserved");
+                check("com.android.systemui".equals(EzXposed.getPackageName()),"secondary plugin does not overwrite Ez runtime");
+                check(!e.onHotReloading((HotReloadingParam)Proxy.newProxyInstance(InitPrefsTest.class.getClassLoader(),new Class<?>[]{HotReloadingParam.class},(p,m,a)->null)),"secondary hooks defer reload until process restart");
+                equal(ThreadPoolManager.shutdowns,0,"rejected reload leaves primary and plugin live");
+            }
+            case "secondary_plugin_scope" -> {
+                Remote r=new Remote(0);Entry e=r.entry();boot(e,false);ready(e,false);
+                PackageTarget primary=BaseLoad.getTarget();
+                PackageTarget secondary=PackageTarget.restored("miui.systemui.plugin",new ApplicationInfo(),InitPrefsTest.class.getClassLoader(),false);
+                boolean threw=false;
+                try {
+                    new BaseLoad(){public void onPackageLoaded(){throw new IllegalStateException("fixture failure");}}.onLoadSecondary(secondary);
+                } catch(IllegalStateException expected){threw=true;}
+                check(threw,"secondary initialization failure propagates");
+                check(BaseLoad.getTarget()==primary,"failed secondary initialization restores primary target");
             }
             case "persistent_failure" -> {
                 Remote r=new Remote(2);Entry e=r.entry();boot(e,false);ready(e,false);

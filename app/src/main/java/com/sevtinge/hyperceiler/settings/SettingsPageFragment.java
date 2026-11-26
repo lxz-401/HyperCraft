@@ -28,10 +28,12 @@ public class SettingsPageFragment extends Fragment {
     @Override
     public void onViewInflated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewInflated(view, savedInstanceState);
-        getActionBar().setTitle(R.string.navigation_settings_title);
-        getChildFragmentManager()
-            .beginTransaction()
-            .replace(R.id.prefs_container, new SettingsFragment())
-            .commit();
+        if (getActionBar() != null) getActionBar().setTitle(R.string.navigation_settings_title);
+        if (getChildFragmentManager().findFragmentById(R.id.prefs_container) == null) {
+            getChildFragmentManager()
+                .beginTransaction()
+                .replace(R.id.prefs_container, new SettingsFragment())
+                .commit();
+        }
     }
 }

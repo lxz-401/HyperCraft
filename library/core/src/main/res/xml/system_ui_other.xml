@@ -83,13 +83,12 @@
 
         <SeekBarPreferenceCompat
             android:key="prefs_key_system_ui_others_showpct_top"
-            android:summary="@string/system_ui_others_showpct_top_desc"
+            app:note="@string/system_ui_others_showpct_top_desc"
             android:title="@string/system_ui_others_showpct_top"
             app:defaultValue="54"
             app:defaultValueTitle="@string/array_default"
             app:format="%s dp"
             app:maxValue="1024"
-            app:showSeekBarValue="true"
             app:stepValue="1" />
 
         <SwitchPreference

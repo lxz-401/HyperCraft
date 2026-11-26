@@ -113,13 +113,13 @@ public class LayoutPreference extends Preference implements PreferenceStyle {
     }
 
     public <T extends View> T findViewById(int id) {
-        return mRootView.findViewById(id);
+        return mRootView != null ? mRootView.findViewById(id) : null;
     }
 
     @Override
     public void onBindViewHolder(@NonNull PreferenceViewHolder holder) {
         View itemView = holder.itemView;
-        itemView.setOnClickListener(mClickListener);
+        itemView.setOnClickListener(isSelectable() ? mClickListener : null);
         itemView.setFocusable(isSelectable());
         itemView.setClickable(isSelectable());
         FrameLayout frameLayout = (FrameLayout) itemView;
@@ -131,7 +131,7 @@ public class LayoutPreference extends Preference implements PreferenceStyle {
 
     @Override
     public boolean isTouchAnimationEnable() {
-        return true;
+        return isSelectable();
     }
 
     @Override

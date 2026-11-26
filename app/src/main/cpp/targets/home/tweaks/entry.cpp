@@ -24,7 +24,6 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <time.h>
-#include <unistd.h>
 
 #include <atomic>
 #include <cerrno>
@@ -313,15 +312,29 @@ bool IntersectsProtected(uintptr_t begin, uintptr_t end) {
 }
 
 int HookMadvise(void* address, size_t length, int advice) {
-    if (advice == MADV_DONTNEED && address != nullptr && length > 0) {
-        const uintptr_t begin = reinterpret_cast<uintptr_t>(address);
-        const uintptr_t end = begin + length;
-        if (end > begin && IntersectsProtected(begin, end)) {
-            return 0;
-        }
+    if (g_madviseOriginal == nullptr) return -1;
+    const uintptr_t begin = reinterpret_cast<uintptr_t>(address);
+    const uintptr_t page = static_cast<uintptr_t>(nhk::host_page_size());
+    // Match nativehook/page_guard.h: preserve invalid requests for the kernel,
+    // and protect partial-page lengths as well as whole-page discard requests.
+    if (advice != MADV_DONTNEED || address == nullptr || length == 0
+        || begin % page != 0 || nhk::add_overflows(begin, length)) {
+        return g_madviseOriginal(address, length, advice);
     }
-    if (g_madviseOriginal != nullptr) return g_madviseOriginal(address, length, advice);
-    return -1;
+    if (!IntersectsProtected(begin, begin + length)) {
+        return g_madviseOriginal(address, length, advice);
+    }
+    const uintptr_t lastPage = static_cast<uintptr_t>(nhk::page_down(begin + length - 1));
+    for (uintptr_t chunk = begin;; chunk += page) {
+        const size_t bytes = chunk == lastPage ? length - (chunk - begin) : page;
+        if (!IntersectsProtected(chunk, chunk + bytes)) {
+            const int result = g_madviseOriginal(reinterpret_cast<void*>(chunk), bytes, advice);
+            if (result != 0) return result;
+        }
+        // Avoid advancing past the address space when the last page is its highest.
+        if (chunk == lastPage) break;
+    }
+    return 0;
 }
 
 void InstallMadviseGuard() {

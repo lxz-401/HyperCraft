@@ -33,6 +33,11 @@ public class HomeContentAdapter extends FragmentStateAdapter {
     }
 
     @Override
+    public String getFragmentTag(int position) {
+        return "home:" + mFragments.get(position).getClass().getName();
+    }
+
+    @Override
     public int getItemCount() {
         return mFragments.size();
     }

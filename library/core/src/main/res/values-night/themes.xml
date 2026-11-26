@@ -63,13 +63,11 @@
         <item name="android:forceDarkAllowed">false</item>
         <item name="android:actionBarItemBackground">@android:color/transparent</item>
         <item name="rebootIconColor">@color/white</item>
-        <item name="SeekBarPreferenceCompatStyle">@style/Preference.SeekBarPreferenceCompat</item>
     </style>
 
     <style name="Base.Theme.HyperCeiler.AprilFools" parent="Theme.AppCompat.DayNight">
         <item name="android:forceDarkAllowed">false</item>
         <item name="rebootIconColor">@color/white</item>
-        <item name="SeekBarPreferenceCompatStyle">@style/Preference.SeekBarPreferenceCompat</item>
     </style>
 
     <style name="AprilFoolsPreferenceTheme" parent="@style/ThemeOverlay.Preference.Dark.OS2">

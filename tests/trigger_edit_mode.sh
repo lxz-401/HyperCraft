@@ -1,5 +1,5 @@
 #!/bin/bash
-ADB="/d/build-tools/android-sdk/platform-tools/adb.exe"
+ADB="${ADB:-adb}"
 # Long-press on an empty desktop area enters edit mode; both transitions call
 # WorkspaceGetxController.startIndictorAnimation -> indicatorOffsetBottomPortrait.
 "$ADB" shell input swipe 600 1150 600 1150 1200

@@ -102,8 +102,9 @@ public abstract class SettingsPreferenceFragment extends BasePreferenceFragment 
         }
     }
 
+    @Nullable
     public SubSettings getSubSettings() {
-        return (SubSettings) getActivity();
+        return getActivity() instanceof SubSettings activity ? activity : null;
     }
 
     public SharedPreferences getSharedPreferences() {

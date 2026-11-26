@@ -18,54 +18,56 @@
  */
 package com.sevtinge.hyperceiler.libhook.rules.systemframework.freeform;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
-import android.os.Handler;
 
 import com.sevtinge.hyperceiler.common.log.XposedLog;
 import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
-import com.sevtinge.hyperceiler.common.utils.prefs.PrefsChangeObserver;
 import com.sevtinge.hyperceiler.libhook.base.BaseHook;
 
-import java.util.HashSet;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Set;
 
 import io.github.lingqiqi5211.ezhooktool.xposed.common.HookParam;
 import io.github.lingqiqi5211.ezhooktool.xposed.java.IMethodHook;
 
 public class AllowAutoStart extends BaseHook {
-    private Set<String> strings = new HashSet<>();
-    private ApplicationInfo calleeInfo = null;
+    private final ThreadLocal<Deque<String>> callees = ThreadLocal.withInitial(ArrayDeque::new);
 
     @Override
     public void init() {
-        findAndHookConstructor("miui.app.ActivitySecurityHelper", Context.class, new IMethodHook() {
-            @Override
-            public void after(HookParam param) {
-                Context context = (Context) param.getArgs()[0];
-                new PrefsChangeObserver(context, new Handler(context.getMainLooper()), true,
-                    "prefs_key_system_framework_auto_start_apps");
-            }
-        });
-
         findAndHookMethod("miui.app.ActivitySecurityHelper", "getCheckStartActivityIntent", ApplicationInfo.class, ApplicationInfo.class, Intent.class, boolean.class, int.class, boolean.class, int.class, int.class, new IMethodHook() {
             @Override
             public void before(HookParam param) {
-                calleeInfo = (ApplicationInfo) param.getArgs()[1];
+                ApplicationInfo callee = (ApplicationInfo) param.getArgs()[1];
+                callees.get().push(callee != null && callee.packageName != null ? callee.packageName : "");
+            }
+
+            @Override
+            public void after(HookParam param) {
+                Deque<String> stack = callees.get();
+                if (!stack.isEmpty()) stack.pop();
+                if (stack.isEmpty()) callees.remove();
             }
         });
 
         findAndHookMethod("miui.app.ActivitySecurityHelper", "restrictForChain", ApplicationInfo.class, new IMethodHook() {
             @Override
             public void before(HookParam param) {
-                strings = PrefsBridge.getStringSet("system_framework_auto_start_apps");
-                ApplicationInfo info = (ApplicationInfo) param.getArgs()[0];
-                if (calleeInfo != null) {
-                    if (strings.contains(calleeInfo.packageName)) {
-                        XposedLog.d(TAG, "Boot has been allowed! caller" + info.packageName + " callee: " + calleeInfo.packageName);
-                        param.setResult(false);
-                    }
+                Deque<String> stack = callees.get();
+                String calleePackage = stack.peek();
+                if (calleePackage == null) {
+                    callees.remove();
+                    return;
+                }
+                if (calleePackage.isEmpty()) return;
+                Set<String> selectedApps = PrefsBridge.getStringSet("system_framework_auto_start_apps");
+                if (selectedApps.contains(calleePackage)) {
+                    ApplicationInfo caller = (ApplicationInfo) param.getArgs()[0];
+                    XposedLog.d(TAG, "Boot has been allowed! caller: "
+                        + (caller != null ? caller.packageName : "unknown") + " callee: " + calleePackage);
+                    param.setResult(false);
                 }
             }
         });

@@ -73,8 +73,8 @@ public class OtherSettings extends DashboardFragment
         mPctStyle = findPreference("prefs_key_system_ui_others_pct_style");
         mBrightness1 = findPreference("prefs_key_system_ui_control_center_qs_brightness_top_value_show");
         mVolume1 = findPreference("prefs_key_system_ui_control_center_qs_volume_top_value_show");
-        mBrightness2 = findPreference("prefs_key_system_cc_volume_showpct_title");
-        mVolume2 = findPreference("prefs_key_system_showpct_title");
+        mBrightness2 = findPreference("prefs_key_system_showpct_title");
+        mVolume2 = findPreference("prefs_key_system_cc_volume_showpct_title");
         mShowPctTop = findPreference("prefs_key_system_ui_others_showpct_top");
         mShowPctBlur = findPreference("prefs_key_system_showpct_use_blur");
 

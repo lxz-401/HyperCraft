@@ -49,8 +49,9 @@ public abstract class BasePreferenceFragment extends PreferenceFragment {
     }
 
     public void setTitle(String title) {
-        if (!TextUtils.isEmpty(title)) {
-            getActivity().setTitle(title);
+        Activity activity = getActivity();
+        if (activity != null && !TextUtils.isEmpty(title)) {
+            activity.setTitle(title);
         }
     }
 
@@ -59,7 +60,8 @@ public abstract class BasePreferenceFragment extends PreferenceFragment {
     }
 
     public String getPreferenceTitle(Preference preference) {
-        return preference.getTitle().toString();
+        CharSequence title = preference.getTitle();
+        return title == null ? "" : title.toString();
     }
 
     public String getPreferenceKey(Preference preference) {
@@ -67,7 +69,10 @@ public abstract class BasePreferenceFragment extends PreferenceFragment {
     }
 
     public void finish() {
-        getActivity().finish();
+        Activity activity = getActivity();
+        if (activity != null) {
+            activity.finish();
+        }
     }
 
     protected final Context getPrefContext() {

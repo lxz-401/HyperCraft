@@ -66,7 +66,6 @@ dependencies {
     }
 
     api(libs.core.ktx)
-    api(libs.expansion)
     compileOnlyApi(projects.library.hiddenApi)
 
     // libxposed API 102 (compileOnly, runs against framework on device)
@@ -82,7 +81,7 @@ dependencies {
     api(libs.superlyricapi)
     api(libs.lunarcalendar)
 
-    api(projects.library.processor)
+    compileOnly(projects.library.processor)
     api(projects.library.common)
     annotationProcessor(projects.library.processor)
 }

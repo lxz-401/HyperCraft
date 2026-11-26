@@ -170,7 +170,7 @@ public class StateMachine {
     }
 
     private State getPreviousAvailableState(ArrayList<State> arrayList) {
-        while (true) {
+        while (!arrayList.isEmpty()) {
             int size = arrayList.size() - 1;
             State state2 = arrayList.get(size);
             if (!state2.canBackTo()) {

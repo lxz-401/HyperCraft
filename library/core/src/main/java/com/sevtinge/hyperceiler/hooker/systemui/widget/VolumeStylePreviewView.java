@@ -24,8 +24,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.graphics.ColorUtils;
 
 import com.sevtinge.hyperceiler.core.R;
+
+import java.util.Locale;
 
 public class VolumeStylePreviewView extends FrameLayout {
 
@@ -43,6 +46,20 @@ public class VolumeStylePreviewView extends FrameLayout {
     private int mProgressColor = 0xFF3478F6;
     private int mBgColor = 0x33000000;
     private int mProgressPercent = 68;
+
+    private final ViewOutlineProvider mRoundedOutline = new ViewOutlineProvider() {
+        @Override
+        public void getOutline(View view, Outline outline) {
+            int width = view.getWidth();
+            int height = view.getHeight();
+            if (width <= 0 || height <= 0) {
+                outline.setEmpty();
+                return;
+            }
+            float radius = mRadiusDp * getResources().getDisplayMetrics().density;
+            outline.setRoundRect(0, 0, width, height, Math.min(radius, Math.min(width, height) / 2f));
+        }
+    };
 
     public VolumeStylePreviewView(@NonNull Context context) {
         this(context, null);
@@ -64,23 +81,38 @@ public class VolumeStylePreviewView extends FrameLayout {
         mBtnTest = findViewById(R.id.btn_test_system_ui);
 
         if (mFlTrack != null) {
-            mFlTrack.setOnTouchListener((v, event) -> {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                    case MotionEvent.ACTION_MOVE:
-                        float height = v.getHeight();
-                        if (height > 0) {
-                            float y = event.getY();
-                            float ratio = 1.0f - (y / height);
-                            ratio = Math.max(0.0f, Math.min(1.0f, ratio));
-                            mProgressPercent = Math.round(ratio * 100);
-                            updateProgressHeight();
-                            v.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK);
-                        }
-                        return true;
+            mFlTrack.setOutlineProvider(mRoundedOutline);
+            mFlTrack.setClipToOutline(true);
+            mFlTrack.setOnClickListener(v -> { });
+            mFlTrack.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+                if (right - left != oldRight - oldLeft || bottom - top != oldBottom - oldTop) {
+                    updateProgressHeight();
                 }
-                return false;
             });
+            mFlTrack.setOnTouchListener((v, event) -> {
+                switch (event.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (v.getParent() != null) v.getParent().requestDisallowInterceptTouchEvent(true);
+                        updateProgressFromTouch(v, event);
+                        return true;
+                    case MotionEvent.ACTION_MOVE:
+                        updateProgressFromTouch(v, event);
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        if (v.getParent() != null) v.getParent().requestDisallowInterceptTouchEvent(false);
+                        v.performClick();
+                        return true;
+                    case MotionEvent.ACTION_CANCEL:
+                        if (v.getParent() != null) v.getParent().requestDisallowInterceptTouchEvent(false);
+                        return true;
+                    default:
+                        return false;
+                }
+            });
+        }
+        if (mVProgress != null) {
+            mVProgress.setOutlineProvider(mRoundedOutline);
+            mVProgress.setClipToOutline(true);
         }
 
         if (mBtnTest != null) {
@@ -95,10 +127,21 @@ public class VolumeStylePreviewView extends FrameLayout {
         }
     }
 
+    private void updateProgressFromTouch(View view, MotionEvent event) {
+        if (view.getHeight() <= 0) return;
+        float ratio = Math.max(0f, Math.min(1f, 1f - event.getY() / view.getHeight()));
+        int percent = Math.round(ratio * 100);
+        if (percent != mProgressPercent) {
+            mProgressPercent = percent;
+            updateProgressHeight();
+            view.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK);
+        }
+    }
+
     public void updateConfig(String presetId, int radiusDp, int widthDp, int progressColor, int bgColor) {
         mPresetId = presetId != null ? presetId : "oneui";
-        mRadiusDp = radiusDp;
-        mWidthDp = widthDp;
+        mRadiusDp = Math.max(8, Math.min(50, radiusDp));
+        mWidthDp = Math.max(36, Math.min(85, widthDp));
         mProgressColor = progressColor;
         mBgColor = bgColor;
         applyVisuals();
@@ -123,13 +166,7 @@ public class VolumeStylePreviewView extends FrameLayout {
             trackDrawable.setColor(mBgColor);
             mFlTrack.setBackground(trackDrawable);
 
-            mFlTrack.setOutlineProvider(new ViewOutlineProvider() {
-                @Override
-                public void getOutline(View view, Outline outline) {
-                    outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), radiusPx);
-                }
-            });
-            mFlTrack.setClipToOutline(true);
+            mFlTrack.invalidateOutline();
         }
 
         // 2. Progress fill color and radius
@@ -140,30 +177,18 @@ public class VolumeStylePreviewView extends FrameLayout {
             progressDrawable.setColor(mProgressColor);
             mVProgress.setBackground(progressDrawable);
 
-            mVProgress.setOutlineProvider(new ViewOutlineProvider() {
-                @Override
-                public void getOutline(View view, Outline outline) {
-                    outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), radiusPx);
-                }
-            });
-            mVProgress.setClipToOutline(true);
+            mVProgress.invalidateOutline();
             updateProgressHeight();
         }
 
-        // 3. Icon tint (Contrast optimization for white / iOS progress)
-        if (mIvIcon != null) {
-            int iconColor = "ios".equalsIgnoreCase(mPresetId) ? 0xDD2A2A2A : 0xFFFFFFFF;
-            mIvIcon.setColorFilter(iconColor);
-        }
-
-        // 4. Badge text and color
+        // Badge text and color
         if (mTvBadge != null) {
             String badgeText;
             int badgeColor;
-            switch (mPresetId.toLowerCase()) {
+            switch (mPresetId.toLowerCase(Locale.ROOT)) {
                 case "ios":
                     badgeText = "Apple iOS";
-                    badgeColor = 0xFFFFFFFF;
+                    badgeColor = getResources().getColor(R.color.textview_black_title, getContext().getTheme());
                     break;
                 case "pixel":
                     badgeText = "Google Pixel";
@@ -174,7 +199,7 @@ public class VolumeStylePreviewView extends FrameLayout {
                     badgeColor = 0xFF1875F0;
                     break;
                 case "custom":
-                    badgeText = "Maxsus (Custom)";
+                    badgeText = getResources().getString(R.string.volume_style_preview_custom);
                     badgeColor = mProgressColor;
                     break;
                 case "oneui":
@@ -184,6 +209,11 @@ public class VolumeStylePreviewView extends FrameLayout {
                     break;
             }
             mTvBadge.setText(badgeText);
+            int surface = getResources().getColor(R.color.volume_preview_card, getContext().getTheme());
+            int badgeSurface = ColorUtils.compositeColors(ColorUtils.setAlphaComponent(badgeColor, 40), surface);
+            if (ColorUtils.calculateContrast(ColorUtils.setAlphaComponent(badgeColor, 255), badgeSurface) < 4.5) {
+                badgeColor = contrastColor(badgeSurface);
+            }
             mTvBadge.setTextColor(badgeColor);
 
             GradientDrawable badgeBg = new GradientDrawable();
@@ -193,27 +223,41 @@ public class VolumeStylePreviewView extends FrameLayout {
             mTvBadge.setBackground(badgeBg);
         }
 
-        // 5. Info summary
+        // Info summary
         if (mTvInfo != null) {
-            mTvInfo.setText("Radius: " + mRadiusDp + "dp • Kenglik: " + mWidthDp + "dp");
+            mTvInfo.setText(getResources().getString(R.string.volume_style_preview_dimensions, mRadiusDp, mWidthDp));
         }
+        updateIconContrast();
     }
 
     private void updateProgressHeight() {
         if (mVProgress != null && mFlTrack != null) {
             int totalHeight = mFlTrack.getHeight();
-            if (totalHeight <= 0) {
-                totalHeight = (int) (160 * getResources().getDisplayMetrics().density);
-            }
             int progressHeight = (int) (totalHeight * (mProgressPercent / 100.0f));
             ViewGroup.LayoutParams lp = mVProgress.getLayoutParams();
-            if (lp != null) {
+            if (totalHeight > 0 && lp != null && lp.height != progressHeight) {
                 lp.height = progressHeight;
                 mVProgress.setLayoutParams(lp);
             }
         }
         if (mTvLevel != null) {
-            mTvLevel.setText(mProgressPercent + "%");
+            mTvLevel.setText(getResources().getString(R.string.volume_style_preview_percent, mProgressPercent));
         }
+        updateIconContrast();
+    }
+
+    private void updateIconContrast() {
+        if (mIvIcon == null || mFlTrack == null) return;
+        int surface = getResources().getColor(R.color.volume_preview_stage_end, getContext().getTheme());
+        int track = ColorUtils.compositeColors(mBgColor, surface);
+        float density = getResources().getDisplayMetrics().density;
+        boolean overProgress = mFlTrack.getHeight() * (mProgressPercent / 100f) >= 27 * density;
+        int background = overProgress ? ColorUtils.compositeColors(mProgressColor, track) : track;
+        mIvIcon.setColorFilter(contrastColor(background));
+    }
+
+    private static int contrastColor(int background) {
+        return ColorUtils.calculateContrast(Color.WHITE, background) >= ColorUtils.calculateContrast(Color.BLACK, background)
+            ? Color.WHITE : Color.BLACK;
     }
 }

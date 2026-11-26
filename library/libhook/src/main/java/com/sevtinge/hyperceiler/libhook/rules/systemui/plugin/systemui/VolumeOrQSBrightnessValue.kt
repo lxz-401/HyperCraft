@@ -36,6 +36,7 @@ import com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.isMoreAndr
 import com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.isMoreHyperOSVersion
 import com.sevtinge.hyperceiler.libhook.utils.hookapi.blur.MiBlurUtilsKt.chooseBackgroundBlurContainer
 import com.sevtinge.hyperceiler.libhook.utils.hookapi.systemui.mSupportSV
+import com.sevtinge.hyperceiler.libhook.utils.hookapi.tool.VolumeProgress
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.getStaticBooleanField
 import io.github.lingqiqi5211.ezhooktool.core.callMethod
 import io.github.lingqiqi5211.ezhooktool.core.callStaticMethod
@@ -50,14 +51,13 @@ import io.github.lingqiqi5211.ezhooktool.core.java.Constructors
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.createAfterHook
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.createAfterHooks
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.createReplaceHook
-import java.lang.reflect.Method
 import java.util.WeakHashMap
 
 object VolumeOrQSBrightnessValue {
     private const val PLUGIN = "miui.systemui.plugin"
 
-    private val brightnessShow by lazy { PrefsBridge.getBoolean("system_ui_control_center_qs_brightness_top_value_show") }
-    private val volumeShow by lazy { PrefsBridge.getBoolean("system_ui_control_center_qs_volume_top_value_show") }
+    private val brightnessShow get() = PrefsBridge.getBoolean("system_ui_control_center_qs_brightness_top_value_show")
+    private val volumeShow get() = PrefsBridge.getBoolean("system_ui_control_center_qs_volume_top_value_show")
 
     private val topTextInitialized = WeakHashMap<Any, Boolean>()
     private val topTextCache = WeakHashMap<Any, TextView>()
@@ -67,7 +67,6 @@ object VolumeOrQSBrightnessValue {
     private val streamCache = WeakHashMap<Any, Int>()
 
     private val colorArrayCache = HashMap<String, IntArray>()
-    private var progressToLevelMethod: Method? = null
 
     private fun setTextIfChanged(tv: TextView, newText: String) {
         if (tv.text.toString() != newText) tv.text = newText
@@ -147,12 +146,11 @@ object VolumeOrQSBrightnessValue {
         val volumeUtils = loadClass("miui.systemui.util.VolumeUtils", classLoader)
         val volumeSliderController = loadClass("miui.systemui.controlcenter.panel.main.volume.VolumeSliderController", classLoader)
 
-        runCatching {
-            progressToLevelMethod = volumeUtils.getMethod("progressToLevel", Int::class.javaPrimitiveType, Int::class.javaPrimitiveType)
+        val progressToLevelMethod = runCatching {
+            volumeUtils.getMethod("progressToLevel", Int::class.javaPrimitiveType, Int::class.javaPrimitiveType)
         }.onFailure {
             XposedLog.e("VolumeOrQSBrightnessValue", "cache progressToLevel method failed: ${it.message}")
-            progressToLevelMethod = null
-        }
+        }.getOrNull()
 
         val progressToLevelCall: (Int, Int) -> Int = { max, value ->
             progressToLevelMethod?.let { m ->
@@ -530,12 +528,12 @@ object VolumeOrQSBrightnessValue {
     }
 
     private fun convertToPercentageVolumeProgress(progress: Int, max: Int): String {
-        val value = progress * 100 / max
+        val value = VolumeProgress.percentage(progress, max)
         return if (mSupportSV && value >= 100) "100%+" else "$value%"
     }
 
     private fun convertToPercentageBrightProgress(progress: Int, max: Int): String {
-        val percent = (progress * 100 / max)
+        val percent = VolumeProgress.percentage(progress, max)
         return "${percent}%"
     }
 

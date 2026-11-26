@@ -18,37 +18,18 @@
  */
 package com.sevtinge.hyperceiler.libhook.rules.systemui.other
 
-import android.content.Context
-import android.os.Handler
 import com.sevtinge.hyperceiler.common.utils.PrefsBridge
-import com.sevtinge.hyperceiler.common.utils.prefs.PrefType
-import com.sevtinge.hyperceiler.common.utils.prefs.PrefsChangeObserver
 import com.sevtinge.hyperceiler.libhook.base.BaseHook
-import io.github.lingqiqi5211.ezhooktool.xposed.dsl.hookAllConstructors
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.hookAllMethods
 
 class MonetThemeOverlay : BaseHook() {
-    var mContext: Context? = null
-    var mHandler: Handler? = null
-
     override fun init() {
-        findClassIfExists("com.android.systemui.theme.ThemeOverlayController").apply {
-            hookAllConstructors {
-                before {
-                    mContext = it.args[0] as Context
-                }
-            }
-
+        findClassIfExists("com.android.systemui.theme.ThemeOverlayController")?.apply {
             hookAllMethods("createOverlays") {
                 before {
-                    val color = PrefsBridge.getInt("system_ui_monet_overlay_custom_color", -1)
-                    it.args[0] = color
-
-                    mHandler = Handler(mContext!!.mainLooper)
-                    PrefsChangeObserver(
-                        mContext, mHandler, true, PrefType.Integer,
-                        "prefs_key_system_ui_monet_overlay_custom_color", -1
-                    )
+                    if (it.args.firstOrNull() is Int) {
+                        it.args[0] = PrefsBridge.getInt("system_ui_monet_overlay_custom_color", -1)
+                    }
                 }
             }
         }

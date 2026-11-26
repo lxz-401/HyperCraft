@@ -22,36 +22,36 @@
     <string name="app_name_sp" translatable="false">HappyCraft</string>
 
     <!-- HyperCraft Volume Panel Style Settings -->
-    <string name="system_ui_volume_style_title">Ovoz paneli uslubi (Volume Style)</string>
-    <string name="system_ui_volume_style_summary">Samsung One UI, iOS, Pixel Material You va maxsus dizaynlar</string>
-    <string name="volume_style_preset_category">Uslub shablonlari (Presets)</string>
-    <string name="volume_style_enable">Maxsus ovoz uslubi</string>
-    <string name="volume_style_enable_desc">Ovoz paneliga zamonaviy dizayn va maxsus shakllarni qo\'llash</string>
-    <string name="volume_style_preset_title">Uslub mavzusi</string>
-    <string name="volume_style_preset_desc">Asosiy dizayn shablonini tanlang</string>
-    <string name="volume_style_geometry_category">O\'lcham va shakl (Geometry)</string>
-    <string name="volume_style_slider_width">Slayder qalinligi (kengligi)</string>
-    <string name="volume_style_slider_width_desc">Ovoz ustuni kengligini sozlash</string>
-    <string name="volume_style_colors_category">Ranglar va ko\'rinish (Colors)</string>
-    <string name="volume_style_custom_bg">Maxsus trek foni</string>
-    <string name="volume_style_custom_bg_desc">Slayder orqa fon trek rangini o\'zgartirish</string>
-    <string name="volume_style_bg_color">Trek fon rangi</string>
-    <string name="volume_style_blur_title">Ovoz paneli xiraligi (Blur)</string>
-    <string name="volume_style_blur_desc">Ovoz oynasi atrofida nozik oyna (glassmorphism) effektini yoqish</string>
-    <string name="volume_style_advanced_category">Harakat va xatti-harakat (Interaction)</string>
-    <string name="volume_style_haptic_title">Vibratsiya (Haptic feedback)</string>
-    <string name="volume_style_haptic_desc">Ovoz darajasini o\'zgartirganda sezilarli tebranish berish</string>
+    <string name="system_ui_volume_style_title">Volume panel style</string>
+    <string name="system_ui_volume_style_summary">Samsung One UI, iOS, Pixel Material You, and custom designs</string>
+    <string name="volume_style_preset_category">Style presets</string>
+    <string name="volume_style_enable">Custom volume style</string>
+    <string name="volume_style_enable_desc">Apply a custom design and shape to the volume panel</string>
+    <string name="volume_style_preset_title">Style preset</string>
+    <string name="volume_style_preset_desc">Choose a base design</string>
+    <string name="volume_style_geometry_category">Size and shape</string>
+    <string name="volume_style_slider_width">Slider width</string>
+    <string name="volume_style_slider_width_desc">Adjust the volume column width</string>
+    <string name="volume_style_colors_category">Colors and appearance</string>
+    <string name="volume_style_custom_bg">Custom track background</string>
+    <string name="volume_style_custom_bg_desc">Change the slider track background color</string>
+    <string name="volume_style_bg_color">Track background color</string>
+    <string name="volume_style_blur_title">Volume panel blur</string>
+    <string name="volume_style_blur_desc">Enable a glass effect around the volume panel</string>
+    <string name="volume_style_advanced_category">Interaction</string>
+    <string name="volume_style_haptic_title">Haptic feedback</string>
+    <string name="volume_style_haptic_desc">Vibrate when changing the volume level</string>
 
     <string name="styles">Style</string>
-    <string name="volume_style_custom_geometry">Maxsus o\'lchamlar</string>
-    <string name="volume_style_custom_geometry_desc">Shablon o\'rniga burchak radiusi va kenglikni qo\'lda sozlash</string>
+    <string name="volume_style_custom_geometry">Custom dimensions</string>
+    <string name="volume_style_custom_geometry_desc">Set the corner radius and width manually</string>
 
     <string-array name="volume_style_presets">
-        <item>Samsung One UI (Kapsula)</item>
+        <item>Samsung One UI (Capsule)</item>
         <item>Apple iOS Style</item>
         <item>Google Pixel (Material You)</item>
         <item>Xiaomi HyperOS</item>
-        <item>Maxsus sozlash (Custom)</item>
+        <item>Custom</item>
     </string-array>
     <string-array name="volume_style_presets_values">
         <item>oneui</item>
@@ -61,13 +61,20 @@
         <item>custom</item>
     </string-array>
 
-    <string name="system_ui_volume_oneui_style">Samsung One UI ovoz paneli</string>
-    <string name="system_ui_volume_oneui_style_desc">Ovoz panelini Samsung One UI uslubidagi zamonaviy yumaloq burchakli progress bar ko\'rinishiga o\'zgartirish</string>
-    <string name="system_ui_volume_oneui_radius">Ovoz paneli burchak radiusi</string>
-    <string name="system_ui_volume_oneui_radius_desc">Progress bar yumaloqlik darajasini sozlash</string>
-    <string name="system_ui_volume_oneui_custom_color">Maxsus progress rangi</string>
-    <string name="system_ui_volume_oneui_custom_color_desc">Standart One UI ko\'k rangi o\'rniga o\'zingiz tanlagan rangni qo\'llash</string>
-    <string name="system_ui_volume_oneui_color">Progress rangini tanlash</string>
+    <string name="system_ui_volume_oneui_style">Samsung One UI volume panel</string>
+    <string name="system_ui_volume_oneui_style_desc">Use a rounded Samsung One UI style volume panel</string>
+    <string name="system_ui_volume_oneui_radius">Volume panel corner radius</string>
+    <string name="system_ui_volume_oneui_radius_desc">Adjust the progress bar corner radius</string>
+    <string name="system_ui_volume_oneui_custom_color">Custom progress color</string>
+    <string name="system_ui_volume_oneui_custom_color_desc">Use a custom color instead of the preset color</string>
+    <string name="system_ui_volume_oneui_color">Progress color</string>
+
+    <string name="volume_style_preview_title">Live style preview</string>
+    <string name="volume_style_preview_hint">Drag the slider up or down to try it</string>
+    <string name="volume_style_preview_custom">Custom</string>
+    <string name="volume_style_preview_dimensions">Radius: %1$ddp • Width: %2$ddp</string>
+    <string name="volume_style_preview_open_panel">Open volume panel</string>
+    <string name="volume_style_preview_percent">%1$d%%</string>
 
     <string name="version_update">New version found</string>
     <string name="about_copy_right" translatable="false">© 2023-2026 Sevtinge &amp; HyperCeiler Contributors.</string>

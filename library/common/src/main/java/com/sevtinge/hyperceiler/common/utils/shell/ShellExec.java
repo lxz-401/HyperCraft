@@ -18,8 +18,8 @@ public class ShellExec {
     private final static String TAG = "ShellExec";
     private Process process;
     private DataOutputStream os;
-    private static IPassCommands pass0;
-    private static IPassCommands pass1;
+    private IPassCommands pass0;
+    private IPassCommands pass1;
     private Error mError;
     private OutPut mOutPut;
     private final ArrayList<String> outPut = new ArrayList<>();
@@ -30,12 +30,12 @@ public class ShellExec {
     private boolean init;
     private boolean destroy;
     private boolean appending = false;
-    private boolean isFilter = false;
-    private boolean noRoot = false;
+    private volatile boolean isFilter = false;
+    private volatile boolean noRoot = false;
     protected int setResult = -1;
     private int count = 1;
 
-    protected static void setICommand(IPassCommands pass, int mode) {
+    protected void setICommand(IPassCommands pass, int mode) {
         switch (mode) {
             case 0 -> pass0 = pass;
             case 1 -> pass1 = pass;
@@ -60,21 +60,14 @@ public class ShellExec {
 
     public ShellExec(String command, boolean root, boolean result, @Nullable IResult listen) {
         try {
-            OutPut.setOutputListen(listen);
-            Error.setOutputListen(listen);
-            Check.setOutputListen(listen);
             this.result = result;
             boolean need = command != null && !(command.isEmpty());
             process = Runtime.getRuntime().exec(root ? "su" : "sh");
-            if (root) {
-                Check check = new Check(process, this);
-                check.start();
-            }
             os = new DataOutputStream(process.getOutputStream());
             if (need) write(command);
             if (result) {
-                mError = new Error(process.getErrorStream(), this, listen != null);
-                mOutPut = new OutPut(process.getInputStream(), this, listen != null);
+                mError = new Error(process.getErrorStream(), this, listen);
+                mOutPut = new OutPut(process.getInputStream(), this, listen);
                 clear();
                 pass(command);
                 mError.start();
@@ -83,6 +76,9 @@ public class ShellExec {
             }
             init = true;
             destroy = false;
+            if (root) {
+                new Check(process, this, listen).start();
+            }
         } catch (IOException e) {
             init = false;
         }
@@ -149,8 +145,11 @@ public class ShellExec {
             throw new RuntimeException("Shell is in append mode!");
         }
         try {
-            this.wait();
+            while (result && isFilter && !noRoot && !destroy) {
+                this.wait();
+            }
         } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
             AndroidLog.e(TAG, "Failed to sync shell!", e);
         }
         return this;
@@ -170,7 +169,7 @@ public class ShellExec {
 
     protected synchronized void cancelSync() {
         try {
-            this.notify();
+            this.notifyAll();
         } catch (IllegalMonitorStateException ignored) {
         }
         close();
@@ -215,7 +214,7 @@ public class ShellExec {
         try {
             isFilter = true;
             os.writeBytes("result=$?; string=\"The execution of command <" + count + "> is complete. Return value: <$result>\"; " +
-                "if [[ $result != 0 ]]; then echo $string 1>&2; else echo $string 2>/dev/null; fi");
+                "if [ \"$result\" != 0 ]; then echo $string 1>&2; else echo $string 2>/dev/null; fi");
             os.writeBytes("\n");
             os.flush();
         } catch (IOException e) {
@@ -245,6 +244,8 @@ public class ShellExec {
             AndroidLog.e(TAG, "Failed to get return value at the end!", f);
         }
         destroy = true;
+        isFilter = false;
+        notifyAll();
         return result;
     }
 
@@ -255,15 +256,12 @@ public class ShellExec {
     private static class Check extends Thread {
         private final Process process;
         private final ShellExec shellExec;
-        private static IResult mIResult;
+        private final IResult mIResult;
 
-        public Check(Process process, ShellExec shellExec) {
+        public Check(Process process, ShellExec shellExec, IResult listen) {
+            mIResult = listen;
             this.process = process;
             this.shellExec = shellExec;
-        }
-
-        public static void setOutputListen(IResult iResult) {
-            mIResult = iResult;
         }
 
         @Override
@@ -275,10 +273,6 @@ public class ShellExec {
                 AndroidLog.e(TAG, "Failed while checking shell status!", e);
             }
             if (result) {
-                try {
-                    shellExec.notify();
-                } catch (IllegalMonitorStateException e) {
-                }
                 if (!shellExec.isDestroy()) {
                     if (mIResult != null) mIResult.error("No Root!");
                     shellExec.noRoot = true;
@@ -294,19 +288,16 @@ public class ShellExec {
         private final Command command;
         private final String contrast;
         private final ShellExec shellExec;
-        private static IResult mIResult;
+        private final IResult mIResult;
 
-        public OutPut(InputStream inputStream, ShellExec shellExec, boolean listen) {
+        public OutPut(InputStream inputStream, ShellExec shellExec, IResult listen) {
+            mIResult = listen;
             contrast = "The execution of command <";
             pattern = Pattern.compile(".*<(\\d+)>.*<(\\d+)>.*");
-            if (listen) command = new Command(0);
+            if (listen != null) command = shellExec.new Command(0);
             else command = null;
             this.shellExec = shellExec;
             mInput = inputStream;
-        }
-
-        public static void setOutputListen(IResult iResult) {
-            mIResult = iResult;
         }
 
         @Override
@@ -339,19 +330,16 @@ public class ShellExec {
         private final Pattern pattern;
         private final Command command;
         private final String contrast;
-        private static IResult mIResult;
+        private final IResult mIResult;
 
-        public Error(InputStream inputStream, ShellExec shellExec, boolean listen) {
+        public Error(InputStream inputStream, ShellExec shellExec, IResult listen) {
+            mIResult = listen;
             contrast = "The execution of command <";
             pattern = Pattern.compile(".*<(\\d+)>.*<(\\d+)>.*");
-            if (listen) command = new Command(1);
+            if (listen != null) command = shellExec.new Command(1);
             else command = null;
             mInput = inputStream;
             this.shellExec = shellExec;
-        }
-
-        public static void setOutputListen(IResult iResult) {
-            mIResult = iResult;
         }
 
         @Override
@@ -393,14 +381,11 @@ public class ShellExec {
                                     Integer.parseInt(result));
                                 if (finish) mIResult.readOutput("Finish!!", true);
                             }
-                            shellExec.setResult = Integer.parseInt(result);
                             synchronized (shellExec) {
-                                try {
-                                    shellExec.notify();
-                                } catch (IllegalMonitorStateException ignored) {
-                                }
+                                shellExec.setResult = Integer.parseInt(result);
+                                shellExec.isFilter = false;
+                                shellExec.notifyAll();
                             }
-                            shellExec.isFilter = false;
                             return true;
                         }
                     }
@@ -410,7 +395,7 @@ public class ShellExec {
         }
     }
 
-    protected static class Command implements IPassCommands {
+    protected class Command implements IPassCommands {
         public ArrayList<String> passCommands = new ArrayList<>();
 
         public Command(int mode) {

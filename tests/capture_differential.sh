@@ -6,7 +6,7 @@
 # If the capsule snaps back to the baseline while the dock stays moved, the capsule's Y comes from
 # the dock-window side, and the inverse combination is the independent capsule lever.
 #   $1 = slot5 symbol ("off" = no retarget), $2 = slot5 value, $3 = hotseat value, $4 = output png
-ADB="/d/build-tools/android-sdk/platform-tools/adb.exe"
+ADB="${ADB:-adb}"
 URI="content://com.sevtinge.hyperceiler.provider.sharedprefs"
 SYMBOL="$1"; IND_VALUE="$2"; HS_VALUE="$3"; OUT="$4"
 "$ADB" shell setprop debug.hyperceiler.prefs_write 1

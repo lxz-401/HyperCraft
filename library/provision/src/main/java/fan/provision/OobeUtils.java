@@ -28,6 +28,7 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.LayoutDirection;
 import com.sevtinge.hyperceiler.common.log.ModuleLog;
+import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
 import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
@@ -46,7 +47,6 @@ public class OobeUtils {
     public static final String EXTRA_DEBUG_OOBE = "extra_debug_oobe";
     private static final String PREF_OOBE_STATE = "pref_oobe_state";
     private static final String PREF_OPERATOR_STATUS = "operator_status";
-    private static final String PREF_HOOK_STATE = "hyperceiler_prefs";
     private static final String KEY_IS_PROVISIONED = "is_provisioned";
     private static final String KEY_ALLOW_HOOK = "prefs_key_allow_hook";
 
@@ -92,10 +92,9 @@ public class OobeUtils {
     }
 
     public static void syncHookAvailability(Context context, boolean allowHook) {
-        Context protectedContext = context.createDeviceProtectedStorageContext();
-        protectedContext.getSharedPreferences(PREF_HOOK_STATE, Context.MODE_PRIVATE).edit()
-            .putBoolean(KEY_ALLOW_HOOK, allowHook)
-            .apply();
+        // Application invokes this before its deferred preference initialization task.
+        PrefsBridge.initForApp(context);
+        PrefsBridge.putBoolean(KEY_ALLOW_HOOK, allowHook);
     }
 
     public static boolean isRTL() {

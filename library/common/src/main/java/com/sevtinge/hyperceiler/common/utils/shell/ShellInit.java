@@ -12,7 +12,7 @@ public class ShellInit {
         init(null);
     }
 
-    public static void init(IResult result) {
+    public static synchronized void init(IResult result) {
         try {
             if (mShell != null && !mShell.isDestroy()) {
                 return;
@@ -25,7 +25,7 @@ public class ShellInit {
         }
     }
 
-    public static void destroy() {
+    public static synchronized void destroy() {
         if (mShell != null && !mShell.isDestroy()) {
             mShell.close();
             mShell = null;
@@ -36,7 +36,7 @@ public class ShellInit {
         }
     }
 
-    public static ShellExec getShell() {
+    public static synchronized ShellExec getShell() {
         if (mShell != null) {
             if (!mShell.isRoot()) {
                 return mShell;
@@ -50,11 +50,12 @@ public class ShellInit {
             if (lastReady) {
                 AndroidLog.w(TAG, "ShellExec is null!! Attempt to rewrite creation...");
             }
-            return new ShellExec(true, true, mResult);
+            mShell = new ShellExec(true, true, mResult);
+            return mShell;
         }
     }
 
-    public static boolean ready() {
+    public static synchronized boolean ready() {
         if (mShell != null) {
             if (!mShell.isRoot()) {
                 return false;

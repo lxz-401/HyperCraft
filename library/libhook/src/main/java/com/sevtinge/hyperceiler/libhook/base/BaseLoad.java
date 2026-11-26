@@ -202,6 +202,25 @@ public abstract class BaseLoad {
         executeHook();
     }
 
+    private boolean mSecondaryPackage;
+    private final Set<Class<?>> mSecondaryInitializedHookClasses = new HashSet<>();
+
+    /** Install synchronous secondary-package rules without changing the primary process target. */
+    public final void onLoadSecondary(PackageTarget target) {
+        synchronized (sLock) {
+            PackageTarget primary = sTarget;
+            String primaryTag = sCurrentHookTag;
+            mSecondaryPackage = true;
+            try {
+                onLoad(target);
+            } finally {
+                mSecondaryPackage = false;
+                sTarget = primary;
+                sCurrentHookTag = primaryTag;
+            }
+        }
+    }
+
     private void loadModuleResources() {
         try {
             String pkgName = getPackageName();
@@ -305,6 +324,9 @@ public abstract class BaseLoad {
      */
     private boolean markHookClassInitialized(BaseHook hook) {
         Class<?> hookClass = hook.getClass();
+        // Secondary packages can be recreated with a fresh plugin loader in the same process.
+        // Their per-callback module instance must not hit the primary generation's class-only gate.
+        if (mSecondaryPackage) return mSecondaryInitializedHookClasses.add(hookClass);
         synchronized (sInitializedHookClasses) {
             if (sInitializedHookClasses.add(hookClass)) {
                 return true;

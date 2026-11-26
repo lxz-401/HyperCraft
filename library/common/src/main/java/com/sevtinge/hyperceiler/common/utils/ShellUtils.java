@@ -26,8 +26,10 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Locale;
 
 public class ShellUtils {
     /**
@@ -152,14 +154,18 @@ public class ShellUtils {
         }
 
         Process process = null;
-        BufferedReader successResult = null;
-        BufferedReader errorResult = null;
-        StringBuilder successMsg = null;
-        StringBuilder errorMsg = null;
+        StreamCollector successResult = null;
+        StreamCollector errorResult = null;
 
         DataOutputStream os = null;
         try {
             process = Runtime.getRuntime().exec(isRoot ? "su" : "sh");
+            // Drain both pipes before writing or waiting: either pipe can fill while
+            // the shell is still running, including when the caller discards output.
+            successResult = new StreamCollector(process.getInputStream(), isNeedResultMsg);
+            errorResult = new StreamCollector(process.getErrorStream(), isNeedResultMsg);
+            successResult.start();
+            errorResult.start();
             os = new DataOutputStream(process.getOutputStream());
             for (String command : commands) {
                 if (command == null) {
@@ -167,7 +173,7 @@ public class ShellUtils {
                 }
 
                 // donnot use os.writeBytes(commmand), avoid chinese charset error
-                os.write(command.getBytes());
+                os.write(command.getBytes(StandardCharsets.UTF_8));
                 os.writeBytes("\n");
                 os.flush();
             }
@@ -175,32 +181,17 @@ public class ShellUtils {
             os.flush();
 
             result = process.waitFor();
-            // get command result
-            if (isNeedResultMsg) {
-                successMsg = new StringBuilder();
-                errorMsg = new StringBuilder();
-                successResult = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                errorResult = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-                String s;
-                while ((s = successResult.readLine()) != null) {
-                    successMsg.append(s);
-                }
-                while ((s = errorResult.readLine()) != null) {
-                    errorMsg.append(s);
-                }
-            }
-        } catch (IOException | InterruptedException e) {
-            AndroidLog.e("execCommand", "IOException | InterruptedException: ", e);
+            successResult.join();
+            errorResult.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            AndroidLog.e("execCommand", "InterruptedException: ", e);
+        } catch (IOException e) {
+            AndroidLog.e("execCommand", "IOException: ", e);
         } finally {
             try {
                 if (os != null) {
                     os.close();
-                }
-                if (successResult != null) {
-                    successResult.close();
-                }
-                if (errorResult != null) {
-                    errorResult.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -210,8 +201,40 @@ public class ShellUtils {
                 process.destroy();
             }
         }
-        return new CommandResult(result, successMsg == null ? null : successMsg.toString(), errorMsg == null ? null
-                : errorMsg.toString());
+        return new CommandResult(result,
+            successResult == null ? null : successResult.output(),
+            errorResult == null ? null : errorResult.output());
+    }
+
+    private static final class StreamCollector extends Thread {
+        private final InputStream input;
+        private final StringBuilder output;
+
+        StreamCollector(InputStream input, boolean collect) {
+            this.input = input;
+            output = collect ? new StringBuilder() : null;
+            setDaemon(true);
+        }
+
+        @Override
+        public void run() {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (output != null) {
+                        synchronized (this) {
+                            output.append(line);
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                AndroidLog.e("execCommand", "Failed to read shell output", e);
+            }
+        }
+
+        synchronized String output() {
+            return output == null ? null : output.toString();
+        }
     }
 
     /**
@@ -267,7 +290,7 @@ public class ShellUtils {
     private static boolean isSafeCommand(String cmd) {
         if (cmd == null || cmd.isEmpty()) return false;
         // 基本的危险命令检查
-        String lowerCmd = cmd.toLowerCase();
+        String lowerCmd = cmd.toLowerCase(Locale.ROOT);
         String[] dangerousPatterns = {
             "rm -rf /",
             "rm -rf /*",

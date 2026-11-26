@@ -22,6 +22,7 @@ import static com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.Miui.isPad
 import static com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.isHyperOSVersion;
 
 import com.hchen.database.HookBase;
+import com.sevtinge.hyperceiler.common.log.XposedLog;
 import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
 import com.sevtinge.hyperceiler.libhook.appbase.systemui.StatusBarActionBootstrap;
 import com.sevtinge.hyperceiler.libhook.base.BaseLoad;
@@ -118,7 +119,7 @@ public class SystemUIB extends BaseLoad {
 
     @Override
     public void onPackageLoaded() {
-        android.util.Log.e("HyperCraft", ">>> SystemUIB onPackageLoaded entered! <<<");
+        XposedLog.d("HyperCraft", ">>> SystemUIB onPackageLoaded entered! <<<");
 
 
 

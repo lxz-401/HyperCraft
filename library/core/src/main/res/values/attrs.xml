@@ -56,7 +56,6 @@
     </declare-styleable>
 
     <!-- Default style for seekbar preferences. -->
-    <attr name="SeekBarPreferenceCompatStyle" format="reference" />
 
     <attr name="myLocation" format="string" />
     <attr name="myLocationHyper" format="string" />

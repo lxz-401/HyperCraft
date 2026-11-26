@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@string/miuix_font_style_misans_demibold_font_family"
-                android:text="🎨 Jonli uslub studiyasi"
+                android:text="@string/volume_style_preview_title"
                 android:textColor="@color/textview_black_title"
                 android:textSize="16sp" />
 
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="Slayderni ushlab yuqoriga/pastga surib ko'ring"
+            android:text="@string/volume_style_preview_hint"
             android:textColor="@color/textview_black_summary"
             android:textSize="12sp" />
 
@@ -66,7 +66,7 @@
                 android:layout_gravity="start|center_vertical"
                 android:layout_marginStart="24dp"
                 android:text="68%"
-                android:textColor="#DDFFFFFF"
+                android:textColor="@color/textview_black_title"
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
@@ -119,15 +119,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Radius: 28dp • Kenglik: 52dp"
                 android:textColor="@color/textview_black_summary"
                 android:textSize="12sp" />
 
             <Button
                 android:id="@+id/btn_test_system_ui"
                 android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:text="Tizim panelini ochish"
+                android:layout_height="wrap_content"
+                android:minHeight="36dp"
+                android:paddingVertical="6dp"
+                android:text="@string/volume_style_preview_open_panel"
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>

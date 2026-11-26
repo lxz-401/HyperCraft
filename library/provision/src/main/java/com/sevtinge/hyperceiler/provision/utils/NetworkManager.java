@@ -15,6 +15,9 @@ public class NetworkManager {
             return false;
         }
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm == null) {
+            return false;
+        }
         Network network = cm.getActiveNetwork();
         if (network != null) {
             NetworkCapabilities nc = cm.getNetworkCapabilities(network);
@@ -30,7 +33,7 @@ public class NetworkManager {
     public static boolean isInternetAvailable() {
         try {
             InetAddress address = InetAddress.getByName("cloudflare.com");
-            return !address.equals("");
+            return !address.isAnyLocalAddress() && !address.isLoopbackAddress();
         } catch (UnknownHostException e) {
             // Log error
         }

@@ -18,20 +18,13 @@
  */
 package com.sevtinge.hyperceiler.libhook.rules.home;
 
-import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sevtinge.hyperceiler.common.log.AndroidLog;
 import com.sevtinge.hyperceiler.common.log.XposedLog;
 import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
-import com.sevtinge.hyperceiler.common.utils.prefs.PrefType;
-import com.sevtinge.hyperceiler.common.utils.prefs.PrefsChangeObserver;
 import com.sevtinge.hyperceiler.libhook.appbase.systemframework.GlobalActionBridge;
 import com.sevtinge.hyperceiler.libhook.base.BaseHook;
 import io.github.lingqiqi5211.ezhooktool.xposed.java.IMethodHook;
@@ -53,7 +46,6 @@ public class ScreenSwipe extends BaseHook {
     @Override
     public void init() {
         hookVerticalGesture();
-        hookLauncherOnCreate();
         hookStatusBarSwipe();
         hookPullDownGesture();
         hookSlideUpGesture();
@@ -89,43 +81,6 @@ public class ScreenSwipe extends BaseHook {
             return fingerCount == 2 ? PREF_UP_SWIPE_2 : PREF_UP_SWIPE;
         }
         return null;
-    }
-
-    private void hookLauncherOnCreate() {
-        findAndHookMethod("com.miui.home.launcher.Launcher",
-            "onCreate", Bundle.class,
-            new IMethodHook() {
-                @Override
-                public void after(HookParam param) {
-                    Activity activity = (Activity) param.getThisObject();
-                    Handler handler = (Handler) getObjectField(activity, "mHandler");
-                    new PrefsChangeObserver(activity, handler) {
-                        @Override
-                        public void onChange(PrefType type, Uri uri, String name, Object def) {
-                            if (!name.contains(PREF_DOWN_SWIPE)) return;
-
-                            try {
-                                updatePrefsMap(name, type);
-                            } catch (Throwable t) {
-                                AndroidLog.d(TAG, "setAction", t);
-                            }
-                        }
-                    };
-                }
-            });
-    }
-
-    private void updatePrefsMap(String name, PrefType type) {
-        PrefsBridge.removeHookCache(name);
-        Object value = switch (type) {
-            case String -> PrefsBridge.getString(name, "");
-            case Integer -> PrefsBridge.getInt(name, 1);
-            case Boolean -> PrefsBridge.getBoolean(name, false);
-            default -> null;
-        };
-        if (value != null) {
-            PrefsBridge.putHookCache(name, value);
-        }
     }
 
     private void hookStatusBarSwipe() {

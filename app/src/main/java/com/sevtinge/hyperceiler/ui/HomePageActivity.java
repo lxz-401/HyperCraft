@@ -57,7 +57,6 @@ import fan.preference.PreferenceFragment;
 import fan.provider.Settings;
 import fan.provision.OobeUtils;
 import fan.viewpager.widget.ViewPager;
-import fan.viewpager2.widget.ViewPager2;
 
 public class HomePageActivity extends AppCompatActivity
     implements ActivityCallback, IResult,
@@ -129,11 +128,23 @@ public class HomePageActivity extends AppCompatActivity
         });
 
         mViewPager = findViewById(R.id.vp_fragments);
+        com.sevtinge.hyperceiler.home.widget.HomePageContentInsets.register(this);
         rebuildContentPages();
         new SwitchMediator(mSwitchManager, mViewPager, true).attach();
     }
 
     private void rebuildContentPages() {
+        // Retire the old position-only tags before restoring pages with stable class tags.
+        androidx.fragment.app.FragmentTransaction legacyPages = getSupportFragmentManager().beginTransaction();
+        boolean hasLegacyPages = false;
+        for (androidx.fragment.app.Fragment fragment : getSupportFragmentManager().getFragments()) {
+            String tag = fragment.getTag();
+            if (tag != null && tag.matches("f[0-9]+")) {
+                legacyPages.remove(fragment);
+                hasLegacyPages = true;
+            }
+        }
+        if (hasLegacyPages) legacyPages.commitNow();
         mContentAdapter = new HomeContentAdapter(this);
         mContentAdapter.addFragment(new HomePageFragment());
         mContentAdapter.addFragment(new StylesPageFragment());
@@ -157,7 +168,8 @@ public class HomePageActivity extends AppCompatActivity
         if (savedInstanceState == null || mViewPager == null) {
             return;
         }
-        int currentItem = savedInstanceState.getInt(STATE_CURRENT_PAGE, 0);
+        int currentItem = Math.max(0, Math.min(savedInstanceState.getInt(STATE_CURRENT_PAGE, 0),
+            mContentAdapter.getItemCount() - 1));
         mViewPager.setCurrentItem(currentItem, false);
         if (mSwitchManager != null) {
             mSwitchManager.setSelectedPosition(currentItem, false);
@@ -175,19 +187,12 @@ public class HomePageActivity extends AppCompatActivity
 
     @Override
     public boolean onPreferenceStartFragment(@NonNull PreferenceFragmentCompat caller, @NonNull Preference pref) {
-        if (caller instanceof SettingsFragment || caller instanceof AboutSettingsFragment) {
+        if (caller instanceof SettingsFragment || caller instanceof AboutSettingsFragment
+            || caller instanceof com.sevtinge.hyperceiler.hooker.systemui.VolumeStyleSettings) {
             onStartSubSettingsForArguments(this, pref, false);
             return true;
         }
         return false;
-    }
-
-    public class ViewPagerChangeListener extends ViewPager2.OnPageChangeCallback {
-        @Override
-        public void onPageSelected(int position) {
-            super.onPageSelected(position);
-            mSwitchManager.setSelectedPosition(position, true);
-        }
     }
 
     @Override

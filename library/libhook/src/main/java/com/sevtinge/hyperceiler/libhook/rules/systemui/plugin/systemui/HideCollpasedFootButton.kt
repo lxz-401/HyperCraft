@@ -19,10 +19,11 @@
 package com.sevtinge.hyperceiler.libhook.rules.systemui.plugin.systemui
 
 import android.view.View
-import io.github.lingqiqi5211.ezhooktool.core.callMethodAs
-import io.github.lingqiqi5211.ezhooktool.xposed.dsl.getObjectFieldAs
+import io.github.lingqiqi5211.ezhooktool.core.callMethod
+import io.github.lingqiqi5211.ezhooktool.core.findMethod
+import io.github.lingqiqi5211.ezhooktool.xposed.dsl.getObjectFieldOrNullAs
 import io.github.lingqiqi5211.ezhooktool.core.loadClass
-import io.github.lingqiqi5211.ezhooktool.xposed.dsl.replaceHookMethod as replaceMethod
+import io.github.lingqiqi5211.ezhooktool.xposed.dsl.createAfterHook
 
 object HideCollpasedFootButton {
     fun initLoaderHook(classLoader: ClassLoader) {
@@ -30,17 +31,19 @@ object HideCollpasedFootButton {
         loadClass(
             "com.android.systemui.miui.volume.MiuiVolumeDialogView",
             classLoader
-        ).replaceMethod("updateFooterVisibility", Boolean::class.java) { param ->
-            val thisObj = param.thisObjectOrNull ?: return@replaceMethod null
-            val mRingerModeLayout = thisObj.getObjectFieldAs<View>("mRingerModeLayout")
-            val mExpandButton = thisObj.getObjectFieldAs<View>("mExpandButton")
-            val mExpanded = thisObj.callMethodAs<Boolean>("isExpanded")
+        ).findMethod { name("updateFooterVisibility"); parameterTypes(Boolean::class.javaPrimitiveType!!) }
+            .createAfterHook { param ->
+            val thisObj = param.thisObject
+            val mRingerModeLayout = thisObj.getObjectFieldOrNullAs<View>("mRingerModeLayout") ?: return@createAfterHook
+            val mExpandButton = thisObj.getObjectFieldOrNullAs<View>("mExpandButton") ?: return@createAfterHook
+            val mExpanded = runCatching { thisObj.callMethod("isExpanded") as? Boolean }.getOrNull()
+                ?: return@createAfterHook
             if (mExpanded) {
                 mRingerModeLayout.visibility = View.VISIBLE
                 mExpandButton.visibility = View.GONE
             } else {
                 mRingerModeLayout.visibility = View.GONE
-                mExpandButton.visibility = if (param.args[0] as Boolean) View.VISIBLE else View.GONE
+                mExpandButton.visibility = if (param.args.firstOrNull() == true) View.VISIBLE else View.GONE
             }
         }
 

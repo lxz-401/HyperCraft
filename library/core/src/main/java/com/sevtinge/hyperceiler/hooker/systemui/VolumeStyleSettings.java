@@ -6,12 +6,18 @@
 package com.sevtinge.hyperceiler.hooker.systemui;
 
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.preference.Preference;
+import androidx.preference.TwoStatePreference;
+
+import fan.preference.ColorPickerPreference;
+import fan.preference.DropDownPreference;
+import fan.preference.SeekBarPreferenceCompat;
+
+import java.util.Locale;
 
 import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
 import com.sevtinge.hyperceiler.core.R;
@@ -23,6 +29,8 @@ public class VolumeStyleSettings extends DashboardFragment
     implements Preference.OnPreferenceChangeListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private VolumeStylePreviewView mPreviewView;
+    private SharedPreferences mObservedPreferences;
+    private boolean mRefreshing;
 
     @Override
     public int getPreferenceScreenResId() {
@@ -46,30 +54,107 @@ public class VolumeStyleSettings extends DashboardFragment
         bindPrefListener("prefs_key_system_ui_volume_custom_bg");
         bindPrefListener("prefs_key_system_ui_volume_oneui_style");
 
-        updatePreview();
+        refreshPreferences();
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        view.post(this::updatePreview);
-        try {
-            SharedPreferences sp = getPreferenceManager().getSharedPreferences();
-            if (sp != null) {
-                sp.registerOnSharedPreferenceChangeListener(this);
-            }
-        } catch (Exception ignored) {}
+    public void onStart() {
+        super.onStart();
+        mObservedPreferences = PrefsBridge.getSharedPreferences();
+        if (mObservedPreferences != null) {
+            mObservedPreferences.registerOnSharedPreferenceChangeListener(this);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshPreferences();
+    }
+
+    @Override
+    public void onStop() {
+        if (mObservedPreferences != null) {
+            mObservedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+            mObservedPreferences = null;
+        }
+        super.onStop();
     }
 
     @Override
     public void onDestroyView() {
+        mPreviewView = null;
         super.onDestroyView();
+    }
+
+    private void scheduleRefresh() {
+        View view = getView();
+        if (view != null) {
+            view.post(() -> {
+                if (getView() == view && isAdded()) refreshPreferences();
+            });
+        }
+    }
+
+    private void refreshPreferences() {
+        if (mRefreshing) return;
+        mRefreshing = true;
         try {
-            SharedPreferences sp = getPreferenceManager().getSharedPreferences();
-            if (sp != null) {
-                sp.unregisterOnSharedPreferenceChangeListener(this);
+            syncSwitch("system_ui_volume_oneui_style");
+            syncSwitch("system_ui_volume_use_custom_geometry");
+            syncSwitch("system_ui_volume_oneui_custom_color");
+            syncSwitch("system_ui_volume_custom_bg");
+            syncSwitch("system_ui_volume_haptic");
+            String preset = PrefsBridge.getString("system_ui_volume_style_preset", "oneui");
+            DropDownPreference presetPreference = findPreference("prefs_key_system_ui_volume_style_preset");
+            if (presetPreference != null && !preset.equals(presetPreference.getValue())) {
+                boolean persistent = presetPreference.isPersistent();
+                presetPreference.setPersistent(false);
+                presetPreference.setValue(preset);
+                presetPreference.setPersistent(persistent);
             }
-        } catch (Exception ignored) {}
+            syncNumber("system_ui_volume_oneui_radius", 28);
+            syncNumber("system_ui_volume_slider_width", 52);
+            syncNumber("system_ui_volume_oneui_color", 0xFF3478F6);
+            syncNumber("system_ui_volume_bg_color", 0x33000000);
+            boolean enabled = PrefsBridge.getBoolean("system_ui_volume_oneui_style", false);
+            boolean custom = "custom".equalsIgnoreCase(preset);
+            setControlEnabled("system_ui_volume_oneui_radius", enabled && (custom || PrefsBridge.getBoolean("system_ui_volume_use_custom_geometry", false)));
+            setControlEnabled("system_ui_volume_slider_width", enabled && (custom || PrefsBridge.getBoolean("system_ui_volume_use_custom_geometry", false)));
+            setControlEnabled("system_ui_volume_oneui_color", enabled && (custom || PrefsBridge.getBoolean("system_ui_volume_oneui_custom_color", false)));
+            setControlEnabled("system_ui_volume_bg_color", enabled && (custom || PrefsBridge.getBoolean("system_ui_volume_custom_bg", false)));
+            updatePreview();
+        } finally {
+            mRefreshing = false;
+        }
+    }
+
+    private void syncSwitch(String key) {
+        TwoStatePreference preference = findPreference("prefs_key_" + key);
+        if (preference == null) return;
+        boolean persistent = preference.isPersistent();
+        preference.setPersistent(false);
+        preference.setChecked(PrefsBridge.getBoolean(key, false));
+        preference.setPersistent(persistent);
+    }
+
+    private void syncNumber(String key, int defaultValue) {
+        Preference preference = findPreference("prefs_key_" + key);
+        if (preference == null) return;
+        int value = PrefsBridge.getInt(key, defaultValue);
+        boolean persistent = preference.isPersistent();
+        preference.setPersistent(false);
+        if (preference instanceof SeekBarPreferenceCompat seekBar && seekBar.getCurrentValue() != value) {
+            seekBar.setCurrentValue(value);
+        } else if (preference instanceof ColorPickerPreference picker && picker.getColor() != value) {
+            picker.setColor(value);
+        }
+        preference.setPersistent(persistent);
+    }
+
+    private void setControlEnabled(String key, boolean enabled) {
+        Preference preference = findPreference("prefs_key_" + key);
+        if (preference != null) preference.setEnabled(enabled);
     }
 
     private void bindPrefListener(String key) {
@@ -81,17 +166,13 @@ public class VolumeStyleSettings extends DashboardFragment
 
     @Override
     public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
-        if (getView() != null) {
-            getView().post(this::updatePreview);
-        }
+        scheduleRefresh();
         return true;
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
-        if (getView() != null) {
-            getView().post(this::updatePreview);
-        }
+        if (key == null || key.startsWith("prefs_key_system_ui_volume_")) scheduleRefresh();
     }
 
     public void updatePreview() {
@@ -113,7 +194,7 @@ public class VolumeStyleSettings extends DashboardFragment
         int defaultColor;
         int defaultBg;
 
-        switch (preset.toLowerCase()) {
+        switch (preset.toLowerCase(Locale.ROOT)) {
             case "ios":
                 defaultRadius = 18;
                 defaultWidth = 46;
@@ -157,5 +238,6 @@ public class VolumeStyleSettings extends DashboardFragment
             ? PrefsBridge.getInt("system_ui_volume_bg_color", defaultBg) : defaultBg;
 
         mPreviewView.updateConfig(preset, radius, width, color, bg);
+        mPreviewView.setAlpha(PrefsBridge.getBoolean("system_ui_volume_oneui_style", false) ? 1f : 0.5f);
     }
 }

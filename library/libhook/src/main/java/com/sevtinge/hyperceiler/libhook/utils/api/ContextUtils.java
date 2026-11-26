@@ -91,22 +91,22 @@ public class ContextUtils {
      */
     public static void getWaitContext(IContext iContext, boolean isSystem) {
         ThreadPoolManager.getInstance().submit(() -> {
-            Context context = getContextNoError(isSystem ? FlAG_ONLY_ANDROID : FLAG_CURRENT_APP);
-            if (context == null) {
-                long time = System.currentTimeMillis();
-                long timeout = 10000; // 10秒
-                while (true) {
-                    long nowTime = System.currentTimeMillis();
-                    context = getContextNoError(isSystem ? FlAG_ONLY_ANDROID : FLAG_CURRENT_APP);
-                    // AndroidLog.i(TAG, "getWaitContext: " + context);
-                    if (context != null || nowTime - time > timeout) {
-                        break;
-                    }
+            int flag = isSystem ? FlAG_ONLY_ANDROID : FLAG_CURRENT_APP;
+            long deadline = System.nanoTime() + java.util.concurrent.TimeUnit.SECONDS.toNanos(10);
+            Context context = getContextNoError(flag);
+            while (context == null && System.nanoTime() < deadline) {
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return;
                 }
+                context = getContextNoError(flag);
             }
-            iContext.hadContext(context);
+            if (!Thread.currentThread().isInterrupted()) {
+                iContext.hadContext(context);
+            }
         });
-        ThreadPoolManager.shutdown();
     }
 
     public interface IContext {
@@ -149,7 +149,7 @@ public class ContextUtils {
         if (context == null) {
             Method getSystemUiContext = clz.getDeclaredMethod("getSystemUiContext");
             getSystemUiContext.setAccessible(true);
-            context = (Context) getSystemContext.invoke(o);
+            context = (Context) getSystemUiContext.invoke(o);
         }
         return context;
     }

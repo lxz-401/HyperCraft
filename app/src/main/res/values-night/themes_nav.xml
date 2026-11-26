@@ -47,7 +47,7 @@
         <item name="actionbarSearchMaskColor">#cc000000</item>
         <item name="bgBlurOptions">actionBar|splitActionBar</item>
         <item name="miuixColorPrimary">@color/miuix_design_default_color_surface_variant_dark</item>
-        <item name="responsiveActionMenuViewStyle">@style/Widget.ResponsiveActionMenuView.Light</item>
+        <item name="responsiveActionMenuViewStyle">@style/Widget.ResponsiveActionMenuView.Dark</item>
 
         <item name="textColorDialogListItem">@color/miuix_appcompat_dialog_list_text_dark</item>
         <item name="dialogListPreferredItemHeight">@dimen/miuix_appcompat_dialog_list_preferred_item_height</item>
@@ -68,7 +68,7 @@
         <item name="windowExtraPaddingHorizontalEnable">true</item>
         <item name="windowExtraPaddingApplyToContentEnable">false</item>
 
-        <item name="preferenceTheme">@style/ThemeOverlay.Preference.Light.OS2</item>
+        <item name="preferenceTheme">@style/ThemeOverlay.Preference.Dark.OS2</item>
 
         <item name="textColorDialogListItem">@color/miuix_appcompat_dialog_list_text_dark</item>
         <item name="dialogListPreferredItemHeight">@dimen/miuix_appcompat_dialog_list_preferred_item_height</item>
@@ -240,6 +240,6 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowAnimationStyle">@style/Animation.Miuix.BottomSheetDialog</item>
-        <item name="bottomSheetStyle">@style/Widget.Miuix.BottomSheet.Modal.Light</item>
+        <item name="bottomSheetStyle">@style/Widget.Miuix.BottomSheet.Modal.Dark</item>
     </style>
 </resources>

@@ -1,7 +1,7 @@
 #!/bin/bash
 # Turn the indicator knob off, relaunch the desktop, force one edit-mode cycle so the
 # indicator offset is recomputed, then screenshot. That is the control frame for the A/B.
-ADB="/d/build-tools/android-sdk/platform-tools/adb.exe"
+ADB="${ADB:-adb}"
 URI="content://com.sevtinge.hyperceiler.provider.sharedprefs"
 OUT="$1"
 "$ADB" shell setprop debug.hyperceiler.prefs_write 1

@@ -22,16 +22,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.net.Uri;
 import android.os.BadParcelableException;
-import android.os.Handler;
 import android.util.Pair;
 import android.view.View;
 
 import com.sevtinge.hyperceiler.common.log.XposedLog;
 import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
-import com.sevtinge.hyperceiler.common.utils.prefs.PrefType;
-import com.sevtinge.hyperceiler.common.utils.prefs.PrefsChangeObserver;
 import com.sevtinge.hyperceiler.libhook.base.BaseHook;
 import com.sevtinge.hyperceiler.libhook.utils.hookapi.tool.AppsTool;
 
@@ -44,39 +40,8 @@ import io.github.lingqiqi5211.ezhooktool.xposed.java.IMethodHook;
 
 public class CleanOpenMenu extends BaseHook {
 
-    Class<?> mPackageManagerService;
-
     @Override
     public void init() {
-
-        mPackageManagerService = findClassIfExists("com.android.server.pm.PackageManagerService");
-
-        findAndHookMethod(mPackageManagerService, "systemReady", new IMethodHook() {
-            @Override
-            public void after(HookParam param) {
-                Context mContext = (Context) getObjectField(param.getThisObject(), "mContext");
-                Handler mHandler = (Handler) getObjectField(param.getThisObject(), "mHandler");
-                new PrefsChangeObserver(mContext, mHandler, PrefType.Any, null, null) {
-                    @Override
-                    public void onChange(PrefType type, Uri uri, String name, Object def) {
-                        try {
-                            if (!name.contains("pref_key_system_framework_clean_open_apps")) return;
-
-                            PrefsBridge.removeHookCache(name);
-                            switch (type) {
-                                case PrefType.StringSet ->
-                                    PrefsBridge.putHookCache(name, PrefsBridge.getStringSet(name));
-
-                                case PrefType.Integer ->
-                                    PrefsBridge.putHookCache(name, PrefsBridge.getInt(name, 0));
-                            }
-                        } catch (Throwable t) {
-                            XposedLog.e(TAG, getPackageName(), t);
-                        }
-                    }
-                };
-            }
-        });
 
         IMethodHook hook = new IMethodHook() {
             @Override
@@ -144,12 +109,13 @@ public class CleanOpenMenu extends BaseHook {
                 Pair<Boolean, Boolean> isRemove = isRemoveApp(true, mContext, mAimPackageName, selectedApps, mimeType);
 
                 View mRootView = (View) getObjectField(param.getThisObject(), "mRootView");
+                if (mRootView == null) return;
                 int appResId1 = mContext.getResources().getIdentifier("app1", "id", "android.miui");
                 int appResId2 = mContext.getResources().getIdentifier("app2", "id", "android.miui");
                 View originalApp = mRootView.findViewById(appResId1);
                 View dualApp = mRootView.findViewById(appResId2);
-                if (isRemove.first) dualApp.performClick();
-                else if (isRemove.second) originalApp.performClick();
+                if (isRemove.first && dualApp != null) dualApp.performClick();
+                else if (isRemove.second && originalApp != null) originalApp.performClick();
             }
         });
         // if (!findAndHookMethodSilently(mPackageManagerService, "queryIntentActivitiesInternal", Intent.class, String.class, int.class, int.class, int.class, boolean.class, boolean.class, hook))

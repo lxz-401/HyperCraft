@@ -172,44 +172,38 @@ public class HomePageBannerManager {
                 null));
         }
 
-        BannerBean warningBanner = createWarningBannerIfNeeded(context);
-        if (warningBanner != null) {
-            banners.add(warningBanner);
-        }
+        addWarningBannersIfNeeded(context, banners);
     }
 
-    private static BannerBean createWarningBannerIfNeeded(Context context) {
-        /*
+    private static void addWarningBannersIfNeeded(Context context, List<BannerBean> banners) {
         if (!SignUtils.isSignCheckPass(context)) {
-            return createWarningBanner(
+            banners.add(createWarningBanner(
                 "warning_sign",
                 context.getString(R.string.headtip_warn_sign_verification_failed),
                 null
-            );
+            ));
         }
-        */
         if (isUnofficialRom(context)) {
-            return createWarningBanner(
+            banners.add(createWarningBanner(
                 "warning_rom",
                 context.getString(R.string.headtip_warn_not_offical_rom),
                 null
-            );
+            ));
         }
         if (FrameworkStatusManager.hasBlockingIssue()) {
-            return createWarningBanner(
+            banners.add(createWarningBanner(
                 "warning_framework",
                 FrameworkStatusManager.getBannerSummary(context),
                 BannerCallback.ACTION_OPEN_FRAMEWORK_WARNING_HELP
-            );
+            ));
         }
         if (getSupportStatus() != SUPPORT_FULL) {
-            return createWarningBanner(
+            banners.add(createWarningBanner(
                 "warning_sysver",
                 context.getString(R.string.headtip_warn_unsupport_sysver),
                 null
-            );
+            ));
         }
-        return null;
     }
 
     private static void addBannerIfPresent(List<BannerBean> banners, BannerBean banner) {

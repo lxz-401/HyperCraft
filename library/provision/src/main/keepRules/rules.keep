@@ -13,3 +13,4 @@
 
 -keep class com.sevtinge.hyperceiler.provision.activity.** { *; }
 -keep class com.sevtinge.hyperceiler.provision.fragment.** { *; }
+-keep class com.sevtinge.hyperceiler.provision.state.** { *; }

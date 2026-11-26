@@ -41,30 +41,26 @@
 
         <SeekBarPreferenceCompat
             android:defaultValue="28"
-            android:dependency="prefs_key_system_ui_volume_use_custom_geometry"
             android:key="prefs_key_system_ui_volume_oneui_radius"
-            android:summary="@string/system_ui_volume_oneui_radius_desc"
             android:title="@string/system_ui_volume_oneui_radius"
+            app:note="@string/system_ui_volume_oneui_radius_desc"
             app:defaultValue="28"
             app:defaultValueTitle="@string/array_default"
             app:format="%s dp"
             app:maxValue="50"
             app:minValue="8"
-            app:showSeekBarValue="true"
             app:stepValue="1" />
 
         <SeekBarPreferenceCompat
             android:defaultValue="52"
-            android:dependency="prefs_key_system_ui_volume_use_custom_geometry"
             android:key="prefs_key_system_ui_volume_slider_width"
-            android:summary="@string/volume_style_slider_width_desc"
             android:title="@string/volume_style_slider_width"
+            app:note="@string/volume_style_slider_width_desc"
             app:defaultValue="52"
             app:defaultValueTitle="@string/array_default"
             app:format="%s dp"
             app:maxValue="85"
             app:minValue="36"
-            app:showSeekBarValue="true"
             app:stepValue="1" />
     </PreferenceCategory>
 
@@ -78,7 +74,6 @@
 
         <ColorPickerPreference
             android:defaultValue="-13338378"
-            android:dependency="prefs_key_system_ui_volume_oneui_custom_color"
             android:key="prefs_key_system_ui_volume_oneui_color"
             android:title="@string/system_ui_volume_oneui_color" />
 
@@ -91,16 +86,8 @@
 
         <ColorPickerPreference
             android:defaultValue="855638016"
-            android:dependency="prefs_key_system_ui_volume_custom_bg"
             android:key="prefs_key_system_ui_volume_bg_color"
             android:title="@string/volume_style_bg_color" />
-
-        <SwitchPreference
-            android:defaultValue="false"
-            android:dependency="prefs_key_system_ui_volume_oneui_style"
-            android:key="prefs_key_system_ui_plugin_enable_volume_blur"
-            android:summary="@string/volume_style_blur_desc"
-            android:title="@string/volume_style_blur_title" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/volume_style_advanced_category">
@@ -110,16 +97,5 @@
             android:key="prefs_key_system_ui_volume_haptic"
             android:summary="@string/volume_style_haptic_desc"
             android:title="@string/volume_style_haptic_title" />
-
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="prefs_key_system_ui_volume_collpased_column_press"
-            android:summary="@string/system_ui_volume_collpased_column_press_desc"
-            android:title="@string/system_ui_volume_collpased_column_press" />
-
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="prefs_key_system_ui_volume_hide_foot_button"
-            android:title="@string/system_ui_volume_hide_foot_button" />
     </PreferenceCategory>
 </PreferenceScreen>

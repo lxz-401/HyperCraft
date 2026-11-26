@@ -41,12 +41,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -54,6 +51,9 @@ public class BackupUtils {
     public static final int CREATE_DOCUMENT_CODE = 255774;
     public static final int OPEN_DOCUMENT_CODE = 277451;
     public static final String BACKUP_FILE_NAME = "HyperCeiler_settings_backup";
+    // JSON numbers do not retain SharedPreferences' Float/Long types (1.0f and 1L parse as Integer).
+    private static final String NUMBER_TYPE_KEY = "__hyperceiler_numeric_type";
+    private static final String NUMBER_VALUE_KEY = "value";
     private static final String KEY_ALLOW_HOOK = "prefs_key_allow_hook";
     private static final String KEY_FRAMEWORK_ALLOW_HOOK = "prefs_key_framework_api_allow_hook";
     private static final Set<String> RUNTIME_FRAMEWORK_KEYS = Set.of(
@@ -95,25 +95,31 @@ public class BackupUtils {
         Map<String, ?> allEntries = PrefsBridge.getAll();
         AndroidLog.d("Backup", "开始备份，读取到项数: " + allEntries.size());
 
-        try (OutputStream os = context.getContentResolver().openOutputStream(data);
-             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os))) {
+        try (OutputStream os = context.getContentResolver().openOutputStream(data)) {
+            if (os == null) throw new IOException("Unable to open backup output stream");
+            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os))) {
 
-            JSONObject jsonObject = new JSONObject();
-            for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-                String key = entry.getKey();
-                if (shouldSkipKey(key)) continue;
+                JSONObject jsonObject = new JSONObject();
+                for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+                    String key = entry.getKey();
+                    if (shouldSkipKey(key)) continue;
 
-                Object value = entry.getValue();
-                // 针对 StringSet 做特殊 JSON 处理，存为 JSONArray
-                if (value instanceof Set) {
-                    jsonObject.put(key, new JSONArray((Set<?>) value));
-                } else {
-                    jsonObject.put(key, value);
+                    Object value = entry.getValue();
+                    // 针对 StringSet 做特殊 JSON 处理，存为 JSONArray
+                    if (value instanceof Set) {
+                        jsonObject.put(key, new JSONArray((Set<?>) value));
+                    } else if (value instanceof Float || value instanceof Long) {
+                        jsonObject.put(key, new JSONObject()
+                            .put(NUMBER_TYPE_KEY, value instanceof Float ? "float" : "long")
+                            .put(NUMBER_VALUE_KEY, value.toString()));
+                    } else {
+                        jsonObject.put(key, value);
+                    }
                 }
-            }
 
-            writer.write(jsonObject.toString(4)); // 使用缩进增加可读性
-            writer.flush();
+                writer.write(jsonObject.toString(4)); // 使用缩进增加可读性
+                writer.flush();
+            }
         }
     }
 
@@ -124,10 +130,12 @@ public class BackupUtils {
         if (data == null) return;
 
         StringBuilder sb = new StringBuilder();
-        try (InputStream is = context.getContentResolver().openInputStream(data);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
-            String line;
-            while ((line = reader.readLine()) != null) sb.append(line);
+        try (InputStream is = context.getContentResolver().openInputStream(data)) {
+            if (is == null) throw new IOException("Unable to open backup input stream");
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+                String line;
+                while ((line = reader.readLine()) != null) sb.append(line);
+            }
         }
 
         JSONObject jsonObject = new JSONObject(sb.toString());
@@ -141,20 +149,12 @@ public class BackupUtils {
 
             switch (value) {
                 case JSONArray jsonArray -> PrefsBridge.putByApp(key, jsonArrayToStringSet(jsonArray));
-                case String s -> {
-                    if (s.contains("[") && s.contains("]")) {
-                        value = s.replace("[", "").replace("]", "").replace(" ", "");
-                        String[] array = ((String) value).split(",");
-                        List<String> list = Arrays.asList(array);
-                        Set<String> stringSet = new HashSet<>(list);
-                        PrefsBridge.putByApp(key, stringSet);
-                    } else {
-                        PrefsBridge.putByApp(key, s);
-                    }
-                }
+                case JSONObject typedNumber -> restoreTypedNumber(key, typedNumber);
+                case String str -> PrefsBridge.putByApp(key, str);
                 case Boolean b -> PrefsBridge.putByApp(key, b);
                 case Integer i -> PrefsBridge.putByApp(key, i);
                 case Long l -> PrefsBridge.putByApp(key, l);
+                case Number number -> PrefsBridge.putByApp(key, number.floatValue());
                 default -> {
                 }
             }
@@ -163,67 +163,28 @@ public class BackupUtils {
     }
 
     public static void handleCreateDocument(Activity activity, @Nullable Uri data) throws IOException, JSONException {
-        if (data == null) return;
-        OutputStream outputStream = activity.getContentResolver().openOutputStream(data);
-        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
-        JSONObject jsonObject = new JSONObject();
-        for (Map.Entry<String, ?> entry : PrefsBridge.getAll().entrySet()) {
-            if (shouldSkipKey(entry.getKey())) {
-                continue;
-            }
-            Object value = entry.getValue();
-            if (value instanceof Set<?>) {
-                jsonObject.put(entry.getKey(), new JSONArray((Set<?>) value));
-            } else {
-                jsonObject.put(entry.getKey(), value);
-            }
-        }
-        bufferedWriter.write(jsonObject.toString());
-        bufferedWriter.close();
+        handleCreateDocument((Context) activity, data);
     }
 
     public static void handleReadDocument(Activity activity, @Nullable Uri data) throws IOException, JSONException {
-        if (data == null) return;
-        InputStream inputStream = activity.getContentResolver().openInputStream(data);
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        StringBuilder stringBuilder = new StringBuilder();
-        String line = bufferedReader.readLine();
-        while (line != null) {
-            stringBuilder.append(line);
-            line = bufferedReader.readLine();
+        handleReadDocument((Context) activity, data);
+    }
+
+    private static void restoreTypedNumber(String key, JSONObject encoded) throws JSONException {
+        String type = encoded.optString(NUMBER_TYPE_KEY, "");
+        if (!"float".equals(type) && !"long".equals(type)) return;
+        if (!(encoded.get(NUMBER_VALUE_KEY) instanceof String value)) {
+            throw new JSONException("Invalid typed numeric preference: " + key);
         }
-        String read = stringBuilder.toString();
-        JSONObject jsonObject = new JSONObject(read);
-        Iterator<String> keys = jsonObject.keys();
-        while (keys.hasNext()) {
-            String key = keys.next();
-            if (shouldSkipKey(key)) {
-                continue;
+        try {
+            if ("float".equals(type)) {
+                PrefsBridge.putByApp(key, Float.parseFloat(value));
+            } else {
+                PrefsBridge.putByApp(key, Long.parseLong(value));
             }
-            Object value = jsonObject.get(key);
-            // https://stackoverflow.com/a/78608931
-            //noinspection IfCanBeSwitch
-            if (value instanceof JSONArray jsonArray) {
-                PrefsBridge.putByApp(key, jsonArrayToStringSet(jsonArray));
-            } else if (value instanceof String) {
-                if (((String) value).contains("[") && ((String) value).contains("]")) {
-                    value = ((String) value).replace("[", "").replace("]", "").replace(" ", "");
-                    String[] array = ((String) value).split(",");
-                    List<String> list = Arrays.asList(array);
-                    Set<String> stringSet = new HashSet<>(list);
-                    PrefsBridge.putByApp(key, stringSet);
-                } else {
-                    PrefsBridge.putByApp(key, value);
-                }
-            } else if (value instanceof Boolean) {
-                PrefsBridge.putByApp(key, value);
-            } else if (value instanceof Integer) {
-                PrefsBridge.putByApp(key, value);
-            } else if (value instanceof Long) {
-                PrefsBridge.putByApp(key, value);
-            }
+        } catch (NumberFormatException e) {
+            throw new JSONException("Invalid typed numeric preference: " + key);
         }
-        bufferedReader.close();
     }
 
     private static boolean shouldSkipKey(String key) {

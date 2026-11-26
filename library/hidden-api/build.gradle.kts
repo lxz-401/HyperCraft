@@ -33,8 +33,6 @@ java {
     }
 }
 
-kotlin.jvmToolchain(25)
-
 dependencies {
     implementation(libs.annotation)
 }

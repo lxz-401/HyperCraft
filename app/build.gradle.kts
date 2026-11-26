@@ -216,7 +216,6 @@ kotlin.jvmToolchain(25)
 
 dependencies {
     implementation(libs.viewpager2)
-    implementation(libs.expansion)
     implementation(projects.library.core)
     implementation(projects.library.common)
 

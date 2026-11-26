@@ -40,20 +40,23 @@ public class ProvisionAnimService extends Service {
 
         private final RemoteCallbackList<IAnimCallback> mListeners = new RemoteCallbackList<>();
 
-        private void dispatchVideoPlay(boolean isBackAnim) {
+        private synchronized void dispatchVideoPlay(boolean isBackAnim) {
+            int broadcast = mListeners.beginBroadcast();
             try {
-                int broadcast = mListeners.beginBroadcast();
                 for (int i = 0; i < broadcast; i++) {
                     IAnimCallback callback = mListeners.getBroadcastItem(i);
-                    if (isBackAnim) {
-                        callback.onBackAnimStart();
-                    } else {
-                        callback.onNextAminStart();
+                    try {
+                        if (isBackAnim) {
+                            callback.onBackAnimStart();
+                        } else {
+                            callback.onNextAminStart();
+                        }
+                    } catch (RemoteException e) {
+                        ModuleLog.e(TAG, "Can not call IAnimCallback:", e);
                     }
                 }
+            } finally {
                 mListeners.finishBroadcast();
-            } catch (RemoteException e) {
-                ModuleLog.e(TAG, "Can not call IAnimCallback:", e);
             }
         }
 

@@ -133,6 +133,8 @@ public class DashboardFragment extends SettingsPreferenceFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // Embedded pages supply their own ActionBar menu.
+        if (getParentFragment() instanceof fan.appcompat.app.Fragment parent && parent.hasActionBar()) return;
         requireActivity().addMenuProvider(new MenuProvider() {
             @Override
             public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
@@ -269,10 +271,11 @@ public class DashboardFragment extends SettingsPreferenceFragment {
 
     public void setAppModWarn(Preference p, String pkgName) {
         boolean check = CheckModifyUtils.INSTANCE.getCheckResult(getContext(), pkgName);
-        boolean isDebugMode = getSharedPreferences().getBoolean("prefs_key_development_debug_mode", false);
-        int debugVersionCode = getSharedPreferences().getInt("debug_choose_" + pkgName, 0);
-        if (debugVersionCode <= 0) {
-            debugVersionCode = getSharedPreferences().getInt("prefs_key_debug_choose_" + pkgName, 0);
+        android.content.SharedPreferences prefs = getSharedPreferences();
+        boolean isDebugMode = prefs != null && prefs.getBoolean("prefs_key_development_debug_mode", false);
+        int debugVersionCode = prefs != null ? prefs.getInt("debug_choose_" + pkgName, 0) : 0;
+        if (debugVersionCode <= 0 && prefs != null) {
+            debugVersionCode = prefs.getInt("prefs_key_debug_choose_" + pkgName, 0);
         }
         boolean isDebugVersion = debugVersionCode == 0;
         boolean showWarning = check && !isDebugMode && isDebugVersion;

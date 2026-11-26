@@ -52,6 +52,8 @@ java {
     }
 }
 
+kotlin.jvmToolchain(25)
+
 dependencies {
     api(libs.bundles.miuix)
     // libxposed API 102

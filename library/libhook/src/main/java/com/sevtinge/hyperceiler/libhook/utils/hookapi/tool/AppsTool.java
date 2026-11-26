@@ -190,8 +190,9 @@ public class AppsTool {
 
             if (PrefsBridge.getBoolean("system_showpct_use_blur")) {
                 try {
-                    int blurRadius = isDarkMode(getSystemContext()) ? 220 : 320;
-                    int alpha = isDarkMode(getSystemContext()) ? 140 : 160;
+                    boolean darkMode = isDarkMode(context);
+                    int blurRadius = darkMode ? 220 : 320;
+                    int alpha = darkMode ? 140 : 160;
 
                     MiBlurUtils.clearMiBackgroundBlendColor(mPct);
                     MiBlurUtils.setPassWindowBlurEnabled(mPct, true);
@@ -205,6 +206,10 @@ public class AppsTool {
             }
             container.addView(mPct);
         }
+        if (mPct.getParent() != container) {
+            if (mPct.getParent() instanceof ViewGroup parent) parent.removeView(mPct);
+            container.addView(mPct);
+        }
         mPct.setTag(source);
         mPct.setVisibility(View.GONE);
     }
@@ -212,9 +217,8 @@ public class AppsTool {
     public static void removePct(TextView mPctText) {
         if (mPctText != null) {
             mPctText.setVisibility(View.GONE);
-            ViewGroup p = (ViewGroup) mPctText.getParent();
-            p.removeView(mPctText);
-            mPct = null;
+            if (mPctText.getParent() instanceof ViewGroup parent) parent.removeView(mPctText);
+            if (mPct == mPctText) mPct = null;
         }
     }
 
