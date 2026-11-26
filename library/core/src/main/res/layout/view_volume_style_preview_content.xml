@@ -25,7 +25,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@string/miuix_font_style_misans_demibold_font_family"
                 android:text="🎨 Jonli uslub studiyasi"
-                android:textColor="?itemViewTitleTextColor"
+                android:textColor="@color/textview_black_title"
                 android:textSize="16sp" />
 
             <TextView
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:text="Slayderni ushlab yuqoriga/pastga surib ko'ring"
-            android:textColor="?itemViewSummaryTextColor"
+            android:textColor="@color/textview_black_summary"
             android:textSize="12sp" />
 
         <!-- Phone Stage Simulation -->
@@ -120,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Radius: 28dp • Kenglik: 52dp"
-                android:textColor="?itemViewSummaryTextColor"
+                android:textColor="@color/textview_black_summary"
                 android:textSize="12sp" />
 
             <Button
