@@ -27,6 +27,7 @@ import io.github.lingqiqi5211.ezhooktool.xposed.dsl.getObjectField
 import io.github.lingqiqi5211.ezhooktool.core.loadClass
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.createHook
 import com.sevtinge.hypercraft.common.utils.ReflectionUtils
+import com.sevtinge.hypercraft.common.utils.getOrDefault
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 
 class RemoveConversationBubbleSettingsRestriction : BaseHook() {
@@ -40,11 +41,15 @@ class RemoveConversationBubbleSettingsRestriction : BaseHook() {
                         param.thisObject.getObjectField("mContext") as Context
                     val mCurrentUserId =
                         param.thisObject.getObjectField("mCurrentUserId") as Int
-                    val freeformSuggestionList = ReflectionUtils.safeInvokeStatic(
+                    val freeformResult = ReflectionUtils.safeInvokeStatic(
                         Class.forName("android.util.MiuiMultiWindowUtils"),
                         "getFreeformSuggestionList",
                         arrayOf(mContext)
-                    ).getOrDefault(emptyList()) as List<*>
+                    )
+                    val freeformSuggestionList: List<*> = when (freeformResult) {
+                        is ReflectionUtils.Result.Success<*> -> freeformResult.value as? List<*> ?: emptyList<Any?>()
+                        is ReflectionUtils.Result.Failure -> emptyList<Any?>()
+                    }
                     if (freeformSuggestionList.isNotEmpty()) {
                         for (str in freeformSuggestionList) {
                             val bubbleApp = classBubbleApp.getConstructor(

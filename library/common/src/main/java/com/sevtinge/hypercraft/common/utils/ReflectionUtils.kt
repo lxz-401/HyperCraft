@@ -101,7 +101,7 @@ object ReflectionUtils {
         }
 
         return try {
-            val field = HiddenApiBypass.findField(clazz, fieldName) ?: throw NoSuchFieldException(fieldName)
+            val field = findField(clazz, fieldName) ?: throw NoSuchFieldException(fieldName)
             field.isAccessible = true
             Result.Success(field.get(receiver))
         } catch (e: NoSuchFieldException) {
@@ -133,7 +133,7 @@ object ReflectionUtils {
         }
 
         return try {
-            val field = HiddenApiBypass.findField(clazz, fieldName) ?: throw NoSuchFieldException(fieldName)
+            val field = findField(clazz, fieldName) ?: throw NoSuchFieldException(fieldName)
             field.isAccessible = true
             field.set(receiver, value)
             Result.Success(Unit)
@@ -202,34 +202,43 @@ object ReflectionUtils {
     }
 
     /**
-     * Extension for easier chaining: onSuccess { value -> ... }
+     * Look up a declared field by name via HiddenApiBypass.
+     * The 6.x API has no `findField`, so combine instance + static fields.
      */
-    inline fun <T> Result<T>.onSuccess(crossinline action: (T) -> Unit): Result<T> {
-        if (this is Result.Success) action(value)
-        return this
+    private fun findField(clazz: Class<*>, fieldName: String): Field? {
+        val fields = HiddenApiBypass.getInstanceFields(clazz) + HiddenApiBypass.getStaticFields(clazz)
+        return fields.firstOrNull { it.name == fieldName }
     }
+}
 
-    /**
-     * Extension for easier chaining: onFailure { exception, message -> ... }
-     */
-    inline fun <T> Result<T>.onFailure(crossinline action: (Exception, String) -> Unit): Result<T> {
-        if (this is Result.Failure) action(exception, message)
-        return this
-    }
+/**
+ * Extension for easier chaining: onSuccess { value -> ... }
+ */
+inline fun <T> ReflectionUtils.Result<T>.onSuccess(crossinline action: (T) -> Unit): ReflectionUtils.Result<T> {
+    if (this is ReflectionUtils.Result.Success) action(value)
+    return this
+}
 
-    /**
-     * Get value or throw if failure (for cases where failure should crash)
-     */
-    fun <T> Result<T>.getOrThrow(): T = when (this) {
-        is Result.Success -> value
-        is Result.Failure -> throw exception
-    }
+/**
+ * Extension for easier chaining: onFailure { exception, message -> ... }
+ */
+inline fun <T> ReflectionUtils.Result<T>.onFailure(crossinline action: (Exception, String) -> Unit): ReflectionUtils.Result<T> {
+    if (this is ReflectionUtils.Result.Failure) action(exception, message)
+    return this
+}
 
-    /**
-     * Get value or default
-     */
-    fun <T> Result<T>.getOrDefault(default: T): T = when (this) {
-        is Result.Success -> value
-        is Result.Failure -> default
-    }
+/**
+ * Get value or throw if failure (for cases where failure should crash)
+ */
+fun <T> ReflectionUtils.Result<T>.getOrThrow(): T = when (this) {
+    is ReflectionUtils.Result.Success -> value
+    is ReflectionUtils.Result.Failure -> throw exception
+}
+
+/**
+ * Get value or default
+ */
+fun <T> ReflectionUtils.Result<T>.getOrDefault(default: T): T = when (this) {
+    is ReflectionUtils.Result.Success -> value
+    is ReflectionUtils.Result.Failure -> default
 }

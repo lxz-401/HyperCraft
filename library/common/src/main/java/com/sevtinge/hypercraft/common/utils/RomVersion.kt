@@ -26,9 +26,9 @@ data class RomVersion(
         get() = when {
             androidSdk >= Build.VERSION_CODES.VANILLA_ICE_CREAM -> 15 // Android 15
             androidSdk >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> 14 // Android 14
-            androidSdk >= Build.VERSION_CODES.TIRAMISU -> 13
-            androidSdk >= Build.VERSION_CODES.S_V2 -> 12
-            androidSdk >= Build.VERSION_CODES.R -> 11
+            androidSdk >= Build.VERSION_CODES.TIRAMISU -> 13 // Android 13
+            androidSdk >= Build.VERSION_CODES.S -> 12 // Android 12 (12/12L)
+            androidSdk >= Build.VERSION_CODES.R -> 11 // Android 11
             else -> androidSdk
         }
 
@@ -44,9 +44,18 @@ data class RomVersion(
     val hyperOsMajor: Int?
         get() = hyperOsVersion?.split('.')?.firstOrNull()?.toIntOrNull()
 
-    /** MIUI version code (e.g., 14.0.5 -> 14005) or null */
+    /**
+     * MIUI version code, encoded as major*10000 + minor*100 + patch
+     * (e.g. "14.0.5" -> 140005). Returns null if the version is unparsable.
+     */
     val miuiVersionCode: Int?
-        get() = miuiVersion?.replace(".", "")?.toIntOrNull()
+        get() = miuiVersion?.let { v ->
+            val parts = v.split('.')
+            val major = parts.getOrNull(0)?.toIntOrNull() ?: return@let null
+            val minor = parts.getOrNull(1)?.toIntOrNull() ?: 0
+            val patch = parts.getOrNull(2)?.toIntOrNull() ?: 0
+            major * 10000 + minor * 100 + patch
+        }
 
     /** Check if Android version is at least the given SDK */
     fun isAtLeastAndroid(sdk: Int): Boolean = androidSdk >= sdk
@@ -66,7 +75,7 @@ data class RomVersion(
 
     /** Check if ROM is officially supported (Xiaomi HyperOS/MIUI) */
     val isSupportedRom: Boolean
-        get() = isXiaomiRom && (isAtLeastAndroid(Build.VERSION_CODES.UPSIDE_DOWN_CAKE) || isAtLeastMiui(14000))
+        get() = isXiaomiRom && (isAtLeastAndroid(Build.VERSION_CODES.UPSIDE_DOWN_CAKE) || isAtLeastMiui(140000))
 
     /** Get a human-readable version string for logging */
     override fun toString(): String {
@@ -88,26 +97,24 @@ data class RomVersion(
         }
 
         private fun getHyperOsVersion(): String? {
-            return try {
+            return runCatching {
                 val prop = Class.forName("android.os.SystemProperties")
                 val get = prop.getMethod("get", String::class.java, String::class.java)
-                get.invoke(null, "ro.build.version.hyper_os", "") as String?
-                    ?.takeIf { it.isNotBlank() }
-            } catch (e: Exception) {
-                null
-            }
+                val value = get.invoke(null, "ro.build.version.hyper_os", "") as? String
+                value?.takeIf { it.isNotBlank() }
+            }.getOrNull()
         }
 
         private fun getMiuiVersion(): String? {
-            return try {
+            runCatching {
                 val prop = Class.forName("android.os.SystemProperties")
                 val get = prop.getMethod("get", String::class.java, String::class.java)
-                get.invoke(null, "ro.miui.version", "") as String?
-                    ?.takeIf { it.isNotBlank() }
-            } catch (e: Exception) {
-                // Fallback to Build.VERSION.INCREMENTAL if it looks like MIUI
-                Build.VERSION.INCREMENTAL.takeIf { it.contains("MIUI", ignoreCase = true) }
+                val value = get.invoke(null, "ro.miui.version", "") as? String
+                val parsed = value?.takeIf { it.isNotBlank() }
+                if (parsed != null) return parsed
             }
+            // Fallback: MIUI version embedded in the incremental build string
+            return Build.VERSION.INCREMENTAL.takeIf { it.contains("MIUI", ignoreCase = true) }
         }
     }
 }
@@ -119,7 +126,7 @@ fun RomVersion.isAndroid14Plus(): Boolean = isAtLeastAndroid(Build.VERSION_CODES
 fun RomVersion.isAndroid15Plus(): Boolean = isAtLeastAndroid(Build.VERSION_CODES.VANILLA_ICE_CREAM)
 fun RomVersion.isHyperOs1Plus(): Boolean = isAtLeastHyperOs(1)
 fun RomVersion.isHyperOs2Plus(): Boolean = isAtLeastHyperOs(2)
-fun RomVersion.isMiui14Plus(): Boolean = isAtLeastMiui(14000)
+fun RomVersion.isMiui14Plus(): Boolean = isAtLeastMiui(140000)
 
 /**
  * Version gating helper for hooks

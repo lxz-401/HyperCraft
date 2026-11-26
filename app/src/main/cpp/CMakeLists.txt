@@ -74,21 +74,28 @@ target_sources(HyperCraftNative PRIVATE
 file(GLOB HYPERCRAFT_TWEAKS_SOURCES
     ${HYPERCRAFT_TWEAKS_DIR}/*.cpp ${HYPERCRAFT_TWEAKS_DIR}/xz/*.c)
 set_source_files_properties(${HYPERCRAFT_TWEAKS_SOURCES} PROPERTIES
-    COMPILE_OPTIONS
-    "-Wno-unused-parameter;-Wno-sign-compare;-Wno-unused-variable;-Wno-unused-function"
-    "-Wnon-pod-varargs;-Wformat;-Werror=format-security")
+    COMPILE_OPTIONS "-Wno-unused-parameter;-Wno-sign-compare;-Wno-unused-variable;-Wno-unused-function;-Wnon-pod-varargs;-Wformat;-Werror=format-security")
 
-# clang-tidy integration for main codebase (not third-party tweaks)
-find_program(CLANG_TIDY clang-tidy)
-if(CLANG_TIDY)
-    set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY}"
-        -checks="modernize-*,performance-*,readability-*,bugprone-*,clang-analyzer-*"
-        -header-filter="${CMAKE_CURRENT_SOURCE_DIR}/nativehook/*;${CMAKE_CURRENT_SOURCE_DIR}/targets/home/*.h;${CMAKE_CURRENT_SOURCE_DIR}/targets/home/*.hpp"
-        -format-style=file
-    )
-    message(STATUS "clang-tidy enabled for native code")
+# clang-tidy is opt-in static analysis; it is OFF by default so the release
+# build never depends on a tidy version or extra flags. Enable with
+# -DHYPERCRAFT_ENABLE_CLANG_TIDY=ON.
+option(HYPERCRAFT_ENABLE_CLANG_TIDY "Run clang-tidy on native sources" OFF)
+if(HYPERCRAFT_ENABLE_CLANG_TIDY)
+    find_program(CLANG_TIDY clang-tidy)
+    if(CLANG_TIDY)
+        set(CLANG_TIDY_COMMAND
+            "${CLANG_TIDY}"
+            "-checks=modernize-*,performance-*,readability-*,bugprone-*,clang-analyzer-*"
+            "-header-filter=${CMAKE_CURRENT_SOURCE_DIR}/(nativehook|targets/home)"
+            "-format-style=file")
+        # Apply so the tidy commandline is assembled by CMake itself.
+        set(CMAKE_CXX_CLANG_TIDY ${CLANG_TIDY_COMMAND})
+        message(STATUS "clang-tidy enabled for native code")
+    else()
+        message(WARNING "clang-tidy requested but not found; static analysis disabled")
+    endif()
 else()
-    message(WARNING "clang-tidy not found, static analysis disabled")
+    message(STATUS "clang-tidy disabled (enable with -DHYPERCRAFT_ENABLE_CLANG_TIDY=ON)")
 endif()
 
 option(HYPERCRAFT_DOCK_NATIVE_MOTION "Dynamically resolve OS4 native recents animation" ON)

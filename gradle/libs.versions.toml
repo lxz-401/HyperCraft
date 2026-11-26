@@ -10,7 +10,7 @@ compileSdk = "37"
 compileSdkMinor = "0"
 buildToolsVersion = "37.0.0"
 ndkVersion = "28.2.13676358"
-jvmToolchain = "21"
+jvmToolchain = "25"
 
 # AndroidX
 annotation = "1.10.0"

@@ -20,6 +20,8 @@ package com.sevtinge.hypercraft.libhook.utils.hookapi.blur.zhenxiang
 
 import com.sevtinge.hypercraft.common.log.ModuleLog as Log
 import com.sevtinge.hypercraft.common.utils.ReflectionUtils
+import com.sevtinge.hypercraft.common.utils.getOrDefault
+import com.sevtinge.hypercraft.common.utils.onSuccess
 import android.view.View
 import android.view.ViewRootImpl
 import com.android.internal.graphics.drawable.BackgroundBlurDrawable
@@ -27,10 +29,9 @@ import org.lsposed.hiddenapibypass.HiddenApiBypass
 
 fun View.createBackgroundBlurDrawable(): BackgroundBlurDrawable? {
 
-    return ReflectionUtils.safeInvoke(View::class.java, this, "getViewRootImpl")
-        .onSuccess { viewRootImpl ->
-            ReflectionUtils.safeInvoke(ViewRootImpl::class.java, viewRootImpl, "createBackgroundBlurDrawable")
-                .getOrDefault(null) as? BackgroundBlurDrawable
-        }
+    val viewRootImpl = ReflectionUtils.safeInvoke(View::class.java, this, "getViewRootImpl")
+        .getOrDefault(null) ?: return null
+    val drawable = ReflectionUtils.safeInvoke(ViewRootImpl::class.java, viewRootImpl, "createBackgroundBlurDrawable")
         .getOrDefault(null)
+    return drawable as? BackgroundBlurDrawable
 }

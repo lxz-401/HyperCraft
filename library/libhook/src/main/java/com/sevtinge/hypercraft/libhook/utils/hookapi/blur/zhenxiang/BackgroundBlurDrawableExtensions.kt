@@ -21,6 +21,7 @@ package com.sevtinge.hypercraft.libhook.utils.hookapi.blur.zhenxiang
 import com.android.internal.graphics.drawable.BackgroundBlurDrawable
 import com.sevtinge.hypercraft.common.log.ModuleLog as Log
 import com.sevtinge.hypercraft.common.utils.ReflectionUtils
+import com.sevtinge.hypercraft.common.utils.onFailure
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 
 fun BackgroundBlurDrawable.setColor(color: Int) {

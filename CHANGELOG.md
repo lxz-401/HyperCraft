@@ -15,7 +15,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - GitHub issue templates (bug report, feature request)
 - Pull request template
 - CONTRIBUTING.md, SECURITY.md, CODE_OF_CONDUCT.md
-- CHANGELOG.md
 - ReflectionUtils for safe HiddenApiBypass calls
 - RomVersion abstraction for version checking
 - HookIsolation utility for feature-level try-catch
@@ -25,6 +24,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - detekt static analysis configuration
 
 ### Changed
+- **Full package rename:** `com.sevtinge.hyperceiler` -> `com.sevtinge.hypercraft`
+  across all modules (applicationId, namespace, source trees, resources,
+  `HyperCeilerSettings` -> `HyperCraftSettings`, native `libHyperCeilerNative`
+  -> `libHyperCraftNative`, Xposed entry point, permissions and URI authority).
+  Already-installed copies under the old identifier are not detected; the
+  module must be reinstalled.
 - CI workflows: Removed `.github/**` from paths-ignore to catch workflow changes
 - CI secret handling: Environment variables instead of writing `signing.properties` file
 - SettingsFragment: Migrated to use `PreferencesKeys` constants

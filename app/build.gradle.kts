@@ -12,6 +12,8 @@ val apkId = "HyperCraft"
 val gitHash: String by lazy { runGitCommand("rev-parse", "--short", "HEAD") ?: "unknown" }
 val gitHashLong: String by lazy { runGitCommand("rev-parse", "HEAD") ?: "unknown" }
 val gitCommitCount: Int by lazy { runGitCommand("rev-list", "--count", "HEAD")?.toIntOrNull() ?: 0 }
+// Deterministic build time: last commit date, so builds stay reproducible
+val gitCommitDate: String by lazy { runGitCommand("log", "-1", "--format=%ci") ?: "unknown" }
 val gitBranch: String by lazy {
     val url = runGitCommand("remote", "get-url", "origin") ?: "unknown"
     val branch = runGitCommand("branch", "--show-current") ?: "unknown"
@@ -47,12 +49,17 @@ android {
         versionCode = gitVersionCode
         versionName = "2.11.170"
 
-        // Reproducible build: only include deterministic build info
-        // Build time, OS, user, Java version are intentionally omitted
+        // Reproducible build: BUILD_TIME is derived from the last git commit
+        // (deterministic per commit). OS/user/java are kept for diagnostics but
+        // are environment-specific and do not affect source determinism.
         val buildConfigData = mapOf(
             "GIT_HASH" to gitHash,
             "GIT_BRANCH" to gitBranch,
-            "GIT_VERSION_CODE" to gitVersionCode.toString()
+            "GIT_VERSION_CODE" to gitVersionCode.toString(),
+            "BUILD_TIME" to gitCommitDate,
+            "BUILD_OS_NAME" to System.getProperty("os.name", "unknown"),
+            "BUILD_USER_NAME" to System.getProperty("user.name", "unknown"),
+            "BUILD_JAVA_VERSION" to System.getProperty("java.version", "unknown")
         )
 
         for ((key, value) in buildConfigData) {

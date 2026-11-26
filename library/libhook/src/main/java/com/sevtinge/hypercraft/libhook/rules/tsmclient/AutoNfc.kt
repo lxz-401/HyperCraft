@@ -36,7 +36,9 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.sevtinge.hypercraft.common.log.XposedLog
 import com.sevtinge.hypercraft.common.utils.ReflectionUtils
+import com.sevtinge.hypercraft.common.utils.onFailure
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 
 

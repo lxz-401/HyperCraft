@@ -58,6 +58,7 @@ kotlin.jvmToolchain(libs.versions.jvmToolchain.get().toInt())
 
 dependencies {
     api(libs.bundles.miuix)
+    api(libs.hiddenapibypass)
     // libxposed API 102
     compileOnlyApi(libs.libxposed.api)
 
