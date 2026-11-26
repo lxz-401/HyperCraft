@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -15,7 +15,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   --><resources>
     <!--Pop-up window/miuix part-->
     <string name="miuix_appcompat_action_mode_select_all">تحديد الكل</string>
@@ -28,19 +28,19 @@
     <string name="miuix_appcompat_search_input_description">بحث</string>
     <string name="miuix_appcompat_actionbar_immersion_button_more_description">المزيد</string>
     <string name="miuix_appcompat_action_mode_inverse">إلغاء تحديد الكل</string>
-    <!--HyperCeiler Settings/About Page-->
+    <!--HyperCraft Settings/About Page-->
     <string name="tip">نصيحة</string>
     <string name="root">بعض الميزات غير متوفرة بدون صلاحيات الروت</string>
     <string name="soft_reboot">إعادة التشغيل</string>
     <string name="restart_app_desc">هل أنت متأكد من أنك تريد إعادة التشغيل الآن %1$s؟</string>
-    <string name="hyperceiler_restart_quick">إعادة التشغيل السريع للتطبيقات</string>
+    <string name="hypercraft_restart_quick">إعادة التشغيل السريع للتطبيقات</string>
     <string name="hook_failed">لم يتم تفعيل الوحدة بعد. يُرجى التحقق من تفعيل LSPosed. في هذه الحالة، يُرجى إعادة تشغيل الوحدة أو إعادة تحسينها.</string>
-    <string name="kill_failed">فشل في إنهاء العملية. يرجى التحقق مما إذا تم منح HyperCeiler صلاحيات الجذر/المستخدم الخارق.</string>
-    <string name="start_failed">فشل في بدء النشاط. يرجى التحقق مما إذا تم منح HyperCeiler صلاحيات الجذر/المستخدم الخارق.</string>
+    <string name="kill_failed">فشل في إنهاء العملية. يرجى التحقق مما إذا تم منح HyperCraft صلاحيات الجذر/المستخدم الخارق.</string>
+    <string name="start_failed">فشل في بدء النشاط. يرجى التحقق مما إذا تم منح HyperCraft صلاحيات الجذر/المستخدم الخارق.</string>
     <string name="pid_failed">التطبيق المستهدف ليس قيد التشغيل ولا يحتاج إلى إعادة تشغيله.</string>
-    <string name="reboot_failed">فشل إعادة التشغيل. يرجى التحقق مما إذا تم منح HyperCeiler صلاحيات الجذر/المستخدم الخارق.</string>
+    <string name="reboot_failed">فشل إعادة التشغيل. يرجى التحقق مما إذا تم منح HyperCraft صلاحيات الجذر/المستخدم الخارق.</string>
     <string name="experimental_features">الميزات التجريبية</string>
-    <!--HyperCeiler Tips-->
+    <!--HyperCraft Tips-->
     <string name="warn">تنبيه</string>
     <string name="module_title_1">الرسالة الأساسية</string>
     <string name="module_title_2">رسالة مكدسة</string>
@@ -63,12 +63,12 @@
     <string name="error_version_name">اسم الإصدار</string>
     <string name="error_git_hash">Git hash</string>
     <string name="error_build_time">وقت البناء</string>
-    <string name="tip_default">نصيحة: هذه هي النصيحة الافتراضية. إذا كنت ترى هذه الرسالة، فهذا يعني أن هناك مشكلة في HyperCeiler. يرجى إبلاغ المطوّر بها في الوقت المناسب وبطريقة فعّالة.</string>
+    <string name="tip_default">نصيحة: هذه هي النصيحة الافتراضية. إذا كنت ترى هذه الرسالة، فهذا يعني أن هناك مشكلة في HyperCraft. يرجى إبلاغ المطوّر بها في الوقت المناسب وبطريقة فعّالة.</string>
     <string name="headtip_tip_auto_safe_mode">يمكن للوضع الآمن فصل بعض التطبيقات بسرعة عندما تتعطل عدة مرات لضمان الأمان. تتطلب هذه الميزة نطاق ربط إطار عمل النظام لتعمل. نوصي بشدة بالتحقق من نطاق إطار عمل النظام لتفعيل الوضع الآمن.</string>
-    <string name="happy_birthday_hyperceiler">اليوم هو عيد ميلاد HyperCeiler!\nشكرًا لدعمكم طوال العام الماضي، ولنستمر معًا في العمل هذا العام!</string>
+    <string name="happy_birthday_hypercraft">اليوم هو عيد ميلاد HyperCraft!\nشكرًا لدعمكم طوال العام الماضي، ولنستمر معًا في العمل هذا العام!</string>
     <string name="headtip_tip_fuck_coolapk">اليوم في التاريخ: ألقى Sevtinge خطابًا مهمًا في 14 يوليو 2022.</string>
-    <string name="headtip_notice_dead_logger_errcode">خدمة سجل الجهاز الحالية غير طبيعية وستكون ميزات HyperCeiler محدودة. يرجى استعادة خدمة السجل لتعمل بشكل طبيعي.\nرمز الخطأ: %1$s</string>
-    <string name="headtip_notice_dead_logger">خدمة سجل الجهاز الحالية غير طبيعية، وستكون ميزات HyperCeiler محدودة. يُرجى استعادة خدمة السجل لتعمل بشكل طبيعي.</string>
+    <string name="headtip_notice_dead_logger_errcode">خدمة سجل الجهاز الحالية غير طبيعية وستكون ميزات HyperCraft محدودة. يرجى استعادة خدمة السجل لتعمل بشكل طبيعي.\nرمز الخطأ: %1$s</string>
+    <string name="headtip_notice_dead_logger">خدمة سجل الجهاز الحالية غير طبيعية، وستكون ميزات HyperCraft محدودة. يُرجى استعادة خدمة السجل لتعمل بشكل طبيعي.</string>
     <string name="unsupported_system_func">هذه الميزة غير مدعومة في إصدار النظام الحالي</string>
     <string name="supported_system_func">هذه الوظيفة مدعومة رسميا من خلال إصدار النظام الحالي</string>
     <string name="feature_doing_func">يتم إنتاج الوظيفة الحالية، يرجى التحلي بالصبر</string>

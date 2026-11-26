@@ -2,7 +2,7 @@
 """The actual update preflight must keep a live native launcher generation intact."""
 from pathlib import Path
 import os,subprocess,tempfile
-R=Path(__file__).resolve().parents[2];path=R/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/base/XposedInitEntry.java';s=path.read_text()
+R=Path(__file__).resolve().parents[2];path=R/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/base/XposedInitEntry.java';s=path.read_text()
 a=s.index('    public boolean onHotReloading(');start=s.index('{',a);end=start+1;depth=1
 while depth:depth+=(s[end]=='{')-(s[end]=='}');end+=1
 body=s[a:end]

@@ -1,6 +1,6 @@
-package com.sevtinge.hyperceiler.tests.dock;
+package com.sevtinge.hypercraft.tests.dock;
 
-import com.sevtinge.hyperceiler.libhook.rules.home.dock.DockWallpaperEndpoint;
+import com.sevtinge.hypercraft.libhook.rules.home.dock.DockWallpaperEndpoint;
 
 public final class DockWallpaperEndpointTest {
     static final class Window {}

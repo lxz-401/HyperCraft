@@ -4,7 +4,7 @@ import sys, subprocess, re
 
 W = Path(__file__).resolve().parents[2]
 R = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else W
-p = R / 'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/gesture/HomeQuickSwitchOS4.java'
+p = R / 'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/gesture/HomeQuickSwitchOS4.java'
 s = p.read_text(encoding='utf8') if p.exists() else ''
 m = re.search(r'static boolean synchronous\(int flags\)\s*\{[^}]*\}', s)
 guard = re.search(r'if \(([^\n]*?) \|\| data\.dataAvail\(\) != 0', s)

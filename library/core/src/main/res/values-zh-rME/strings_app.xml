@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -15,7 +15,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   --><resources>
     <string name="version_update">发现新版本</string>
     <!--Introduction to Xposed Modules-->
@@ -24,9 +24,9 @@
     <string name="new_cta_agree_desc">要镐蜂您的系统，我们会向您要面具（或者不要面具，但我们需要sudo 给我们权限）。要停止镐蜂您的系统，你可以随时把面具拿走，或者在应用管理里面很长很长的菜单改变红绿灯。</string>
     <string name="new_cta_app_main_purpose">玩坏你的系统应用</string>
     <string name="new_cta_app_all_purpose_reject">反弹 &amp; 安 全 出 口</string>
-    <!--HyperCeiler Settings/About Page-->
+    <!--HyperCraft Settings/About Page-->
     <string name="language">梗体中文</string>
-    <string name="translator">某些不愿透露姓名的 HyperCeiler 全体用户</string>
+    <string name="translator">某些不愿透露姓名的 HyperCraft 全体用户</string>
     <string name="translator_url">https://www.youtube.com/watch?v=dQw4w9WgXcQ</string>
     <string name="home">家</string>
     <string name="help">帮帮我！</string>
@@ -39,7 +39,7 @@
     <string name="about_donation">帮忙发电的人</string>
     <string name="about_donation_desc">V我50，每天都是疯狂星期四</string>
     <string name="about_device_info_os">CNMIOS版本</string>
-    <string name="hyperceiler_notice">拉下手机的窗帘来同时显示五颜六色小开关和烦人的通知</string>
+    <string name="hypercraft_notice">拉下手机的窗帘来同时显示五颜六色小开关和烦人的通知</string>
     <string name="delete_all_dexkit_cache_desc">要吃掉所有的 DexKit 缓存吗？</string>
     <string name="delete_all_dexkit_cache_success">成功吃掉所有的 DexKit 缓存</string>
     <string name="location_add">加</string>

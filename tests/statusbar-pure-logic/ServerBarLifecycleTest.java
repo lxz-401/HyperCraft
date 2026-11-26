@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
-package com.sevtinge.hyperceiler.libhook.rules.systemframework.statusbarfollow;
+package com.sevtinge.hypercraft.libhook.rules.systemframework.statusbarfollow;
 
 import java.util.concurrent.Executor;
 

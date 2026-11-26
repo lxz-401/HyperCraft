@@ -16,7 +16,7 @@ compiler=[jar('org.jetbrains.kotlin',a,'2.4.10') for a in ['kotlin-compiler-embe
 compiler += [stdlib,jar('org.jetbrains.kotlin','kotlin-reflect','2.4.0'),jar('org.jetbrains.kotlinx','kotlinx-coroutines-core-jvm','1.8.0'),jar('org.jetbrains','annotations','13.0')]
 def run(args):subprocess.run([str(x) for x in args],check=True)
 with tempfile.TemporaryDirectory(prefix='hc-recents-policy-') as temp:
-    out=Path(temp);lib=root/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock'
+    out=Path(temp);lib=root/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock'
     java=list((here/'policy').rglob('*.java'))+[lib/'HomeRecentsBarState.java',lib.parents[2]/'base/OriginalArgumentsHook.java']
     java += [root/'tests/home-dock-window/stubs/android/os'/f for f in ['Binder.java','IBinder.java','Parcel.java']]
     java += [root/'tests/home-layout-native/stubs/android/os/SystemClock.java']
@@ -24,4 +24,4 @@ with tempfile.TemporaryDirectory(prefix='hc-recents-policy-') as temp:
     kotlin=list((here/'policy').glob('*.kt'))+[lib/'HomeRecentsStatusBarOS4.kt']
     cp=os.pathsep.join(map(str,[out,stdlib,compiler[-1],*hookdeps]))
     run([jdk/'java','-cp',os.pathsep.join(map(str,compiler)),'org.jetbrains.kotlin.cli.jvm.K2JVMCompiler','-no-stdlib','-no-reflect','-jvm-target','21','-classpath',cp,'-d',out,*kotlin])
-    run([jdk/'java','-ea','-cp',cp,'com.sevtinge.hyperceiler.libhook.rules.home.dock.PolicyTestKt'])
+    run([jdk/'java','-ea','-cp',cp,'com.sevtinge.hypercraft.libhook.rules.home.dock.PolicyTestKt'])

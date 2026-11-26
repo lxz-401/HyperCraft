@@ -32,13 +32,13 @@ int main(){unsigned checks=0;auto ok=[&](bool b){++checks;assert(b);};
     sources={}
     for folder in [ROOT/'tests/home-layout-native/stubs',ROOT/'tests/home-dock-window/stubs']:
         for p in folder.rglob('*.java'):
-            rel=str(p.relative_to(folder)).replace('com/sevtinge/hyperceiler','com/sevtinge/hyperceiler')
-            sources[rel]=p.read_text().replace('com.sevtinge.hyperceiler','com.sevtinge.hyperceiler')
-    sources['com/sevtinge/hyperceiler/common/log/ModuleLog.java']='package com.sevtinge.hyperceiler.common.log; public class ModuleLog { public static String last="";public static void i(String tag,String text){last=text;} public static void w(String tag,String text){last=text;} }'
+            rel=str(p.relative_to(folder)).replace('com/sevtinge/hypercraft','com/sevtinge/hypercraft')
+            sources[rel]=p.read_text().replace('com.sevtinge.hypercraft','com.sevtinge.hypercraft')
+    sources['com/sevtinge/hypercraft/common/log/ModuleLog.java']='package com.sevtinge.hypercraft.common.log; public class ModuleLog { public static String last="";public static void i(String tag,String text){last=text;} public static void w(String tag,String text){last=text;} }'
     java=[]
     for rel,text in sources.items():
         p=out/'stubs'/rel;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(text);java.append(p)
-    java += [ROOT/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/provider/HomeLayoutPrefsSnapshot.java',ROOT/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock/HomeLayoutNativeEndpointOS4.java',ROOT/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/provider/HomeGesturePrefsSnapshot.java',ROOT/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/base/FrameworkHookGate.java',HERE/'EndpointTest.java']
+    java += [ROOT/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/provider/HomeLayoutPrefsSnapshot.java',ROOT/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock/HomeLayoutNativeEndpointOS4.java',ROOT/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/provider/HomeGesturePrefsSnapshot.java',ROOT/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/base/FrameworkHookGate.java',HERE/'EndpointTest.java']
     classes=out/'classes';classes.mkdir()
     run(['javac','-encoding','UTF-8','-d',classes]+java)
-    run(['java','-ea','-cp',classes,'com.sevtinge.hyperceiler.libhook.rules.home.dock.EndpointTest'])
+    run(['java','-ea','-cp',classes,'com.sevtinge.hypercraft.libhook.rules.home.dock.EndpointTest'])

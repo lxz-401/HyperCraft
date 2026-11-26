@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
-package com.sevtinge.hyperceiler.libhook.rules.home.dock;
+package com.sevtinge.hypercraft.libhook.rules.home.dock;
 import android.content.ContentResolver;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -12,7 +12,7 @@ public class ObjectScaleEndpointTest {
     public static void main(String[] args)throws Exception{
         var worker=HomeLayoutNativeEndpointOS4.class.getDeclaredField("refresher");
         worker.setAccessible(true);worker.set(null,new Thread());
-        ContentResolver.setSpecs(com.sevtinge.hyperceiler.libhook.provider.HomeLayoutPrefsSnapshot.specs());
+        ContentResolver.setSpecs(com.sevtinge.hypercraft.libhook.provider.HomeLayoutPrefsSnapshot.specs());
         Map<String,Integer> rows=new HashMap<>();
         rows.put("prefs_key_home_layout_icon_scale_enable",1);
         rows.put("prefs_key_home_layout_icon_scale",60);

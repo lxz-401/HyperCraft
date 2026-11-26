@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
-package com.sevtinge.hyperceiler.tests.dock;
+package com.sevtinge.hypercraft.tests.dock;
 
-import com.sevtinge.hyperceiler.libhook.rules.home.dock.DockGlassProcessPolicy;
+import com.sevtinge.hypercraft.libhook.rules.home.dock.DockGlassProcessPolicy;
 import java.util.Arrays;
 
 public final class DockGlassProcessPolicyTest {

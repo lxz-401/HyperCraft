@@ -7,7 +7,7 @@
         android:id="@+id/system_framework"
         android:title="@string/system_framework"
         android:summary="system"
-        android:fragment="com.sevtinge.hyperceiler.hooker.SystemFrameworkFragment" />
+        android:fragment="com.sevtinge.hypercraft.hooker.SystemFrameworkFragment" />
 
     <header
         android:icon="@drawable/ic_default"
@@ -28,7 +28,7 @@
         android:id="@+id/camera"
         android:summary="com.android.camera"
         android:title="@string/camera"
-        android:fragment="com.sevtinge.hyperceiler.hooker.CameraNewFragment"/>
+        android:fragment="com.sevtinge.hypercraft.hooker.CameraNewFragment"/>
 
     <header
         android:icon="@drawable/ic_default"
@@ -66,14 +66,14 @@
         app:inflatedXml="@xml/mms"/>
 
     <header
-        android:fragment="com.sevtinge.hyperceiler.hooker.NfcFragment"
+        android:fragment="com.sevtinge.hypercraft.hooker.NfcFragment"
         android:icon="@drawable/ic_default"
         android:id="@+id/nfc"
         android:summary="com.android.nfc"
         android:title="@string/nfc" />
 
     <header
-        android:fragment="com.sevtinge.hyperceiler.hooker.PhoneFragment"
+        android:fragment="com.sevtinge.hypercraft.hooker.PhoneFragment"
         android:icon="@drawable/ic_default"
         android:id="@+id/phone"
         android:summary="com.android.phone"
@@ -115,7 +115,7 @@
         app:inflatedXml="@xml/telecom"/>
 
     <header
-        android:fragment="com.sevtinge.hyperceiler.hooker.SystemSettingsFragment"
+        android:fragment="com.sevtinge.hypercraft.hooker.SystemSettingsFragment"
         android:icon="@drawable/ic_default"
         android:id="@+id/system_settings"
         android:summary="com.android.settings"
@@ -143,7 +143,7 @@
         app:inflatedXml="@xml/theme_manager"/>
 
     <header
-        android:fragment="com.sevtinge.hyperceiler.hooker.UpdaterFragment"
+        android:fragment="com.sevtinge.hypercraft.hooker.UpdaterFragment"
         android:icon="@drawable/ic_default"
         android:id="@+id/updater"
         android:summary="com.android.updater"
@@ -178,7 +178,7 @@
         app:inflatedXml="@xml/health" />
 
     <header
-        android:fragment="com.sevtinge.hyperceiler.hooker.MiLinkFragment"
+        android:fragment="com.sevtinge.hypercraft.hooker.MiLinkFragment"
         android:icon="@drawable/ic_default"
         android:id="@+id/milink"
         android:summary="com.milink.service"
@@ -199,7 +199,7 @@
         app:inflatedXml="@xml/analytics"/>
 
     <header
-        android:fragment="com.sevtinge.hyperceiler.hooker.AodFragment"
+        android:fragment="com.sevtinge.hypercraft.hooker.AodFragment"
         android:icon="@drawable/ic_default"
         android:id="@+id/aod"
         android:summary="com.miui.aod"
@@ -213,14 +213,14 @@
         app:inflatedXml="@xml/backup"/>
 
     <header
-        android:fragment="com.sevtinge.hyperceiler.hooker.MiCloudServiceFragment"
+        android:fragment="com.sevtinge.hypercraft.hooker.MiCloudServiceFragment"
         android:icon="@drawable/ic_default"
         android:id="@+id/micloud_service"
         android:summary="com.miui.cloudservice"
         android:title="@string/micloud_service" />
 
     <header
-        android:fragment="com.sevtinge.hyperceiler.hooker.ContentExtensionFragment"
+        android:fragment="com.sevtinge.hypercraft.hooker.ContentExtensionFragment"
         android:icon="@drawable/ic_default"
         android:id="@+id/content_extension"
         android:summary="com.miui.contentextension"
@@ -259,7 +259,7 @@
         android:id="@+id/home"
         android:summary="com.miui.home"
         android:title="@string/mihome"
-        android:fragment="com.sevtinge.hyperceiler.hooker.HomeFragment"/>
+        android:fragment="com.sevtinge.hypercraft.hooker.HomeFragment"/>
 
     <header
         android:icon="@drawable/ic_default"
@@ -269,21 +269,21 @@
         app:inflatedXml="@xml/huanji"/>
 
     <header
-        android:fragment="com.sevtinge.hyperceiler.hooker.MediaeditorFragment"
+        android:fragment="com.sevtinge.hypercraft.hooker.MediaeditorFragment"
         android:icon="@drawable/ic_default"
         android:id="@+id/mediaeditor"
         android:summary="com.miui.mediaeditor"
         android:title="@string/mediaeditor" />
 
     <header
-        android:fragment="com.sevtinge.hyperceiler.hooker.MiShareFragment"
+        android:fragment="com.sevtinge.hypercraft.hooker.MiShareFragment"
         android:icon="@drawable/ic_default"
         android:id="@+id/mishare"
         android:summary="com.miui.mishare.connectivity"
         android:title="@string/mishare" />
 
     <header
-        android:fragment="com.sevtinge.hyperceiler.hooker.MiSoundFragment"
+        android:fragment="com.sevtinge.hypercraft.hooker.MiSoundFragment"
         android:icon="@drawable/ic_default"
         android:id="@+id/misound"
         android:summary="com.miui.misound"
@@ -318,7 +318,7 @@
         app:inflatedXml="@xml/miui_passwords"/>
 
     <header
-        android:fragment="com.sevtinge.hyperceiler.hooker.PersonalAssistantFragment"
+        android:fragment="com.sevtinge.hypercraft.hooker.PersonalAssistantFragment"
         android:icon="@drawable/ic_default"
         android:id="@+id/home_personal_assistant"
         android:summary="com.miui.personalassistant"
@@ -353,14 +353,14 @@
         app:inflatedXml="@xml/screenshot"/>
 
     <header
-        android:fragment="com.sevtinge.hyperceiler.hooker.SecurityAddFragment"
+        android:fragment="com.sevtinge.hypercraft.hooker.SecurityAddFragment"
         android:icon="@drawable/ic_default"
         android:id="@+id/securityadd"
         android:summary="com.miui.securityadd"
         android:title="@string/securityadd" />
 
     <header
-        android:fragment="com.sevtinge.hyperceiler.hooker.SecurityCenterFragment"
+        android:fragment="com.sevtinge.hypercraft.hooker.SecurityCenterFragment"
         android:icon="@drawable/ic_default"
         android:id="@+id/security_center"
         android:summary="com.miui.securitycenter"
@@ -388,14 +388,14 @@
         app:inflatedXml="@xml/voicetrigger"/>
 
     <header
-        android:fragment="com.sevtinge.hyperceiler.hooker.WeatherFragment"
+        android:fragment="com.sevtinge.hypercraft.hooker.WeatherFragment"
         android:icon="@drawable/ic_default"
         android:id="@+id/weather"
         android:summary="com.miui.weather2"
         android:title="@string/weather" />
 
     <header
-        android:fragment="com.sevtinge.hyperceiler.hooker.AiasstFragment"
+        android:fragment="com.sevtinge.hypercraft.hooker.AiasstFragment"
         android:icon="@drawable/ic_default"
         android:id="@+id/aiasst"
         android:summary="com.xiaomi.aiasst.vision"
@@ -406,7 +406,7 @@
         android:id="@+id/aicr"
         android:summary="com.xiaomi.aicr"
         android:title="@string/aicr"
-        android:fragment="com.sevtinge.hyperceiler.hooker.AicrFragment" />
+        android:fragment="com.sevtinge.hypercraft.hooker.AicrFragment" />
 
     <header
         android:icon="@drawable/ic_default"
@@ -423,7 +423,7 @@
         app:inflatedXml="@xml/joyose"/>
 
     <header
-        android:fragment="com.sevtinge.hyperceiler.hooker.GetAppsFragment"
+        android:fragment="com.sevtinge.hypercraft.hooker.GetAppsFragment"
         android:icon="@drawable/ic_default"
         android:id="@+id/market"
         android:summary="com.xiaomi.market"
@@ -480,7 +480,7 @@
         app:inflatedXml="@xml/xmsf" />
 
     <header
-        android:fragment="com.sevtinge.hyperceiler.hooker.VariousFragment"
+        android:fragment="com.sevtinge.hypercraft.hooker.VariousFragment"
         android:icon="@drawable/ic_various_new"
         android:id="@+id/various"
         android:title="@string/various" />

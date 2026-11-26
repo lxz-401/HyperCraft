@@ -3,7 +3,7 @@
 ## Observed failure
 
 While the user reported missing blur in the minus-one screen, Control Center
-and notifications, SurfaceFlinger retained 12 HyperCeiler SurfaceControlViewHost
+and notifications, SurfaceFlinger retained 12 HyperCraft SurfaceControlViewHost
 roots and 11 Dock glass buffer layers under one Dock effect parent. Only one
 renderer host was active. Most old roots had no remaining local handle.
 The compositor logged `PassBlur.deqBuf failed`; affected system processes also
@@ -34,12 +34,12 @@ The first installation loaded hook diagnostic version 9 through hot reload.
 All 12 old roots / 11 old buffers disappeared. A fresh renderer reported
 `backgroundReady=true`, and the user confirmed that blur was normal again.
 Repeated renderer recovery did not accumulate old roots after this change.
-Neither the phone nor launcher/SystemUI was restarted; only HyperCeiler-owned
-surfaces were removed. One explicit HyperCeiler-only force-stop was used to
+Neither the phone nor launcher/SystemUI was restarted; only HyperCraft-owned
+surfaces were removed. One explicit HyperCraft-only force-stop was used to
 exercise renderer death, without clearing data.
 
 Further testing exposed an existing, separate lifecycle issue: OS4 SmartPower
-froze HyperCeiler while the windowless renderer was in use. Binder calls then
+froze HyperCraft while the windowless renderer was in use. Binder calls then
 returned `BR_FROZEN_REPLY`; ActivityManager recorded `unstable content provider`
 exits. Several such exits preceded the deliberate force-stop and also existed
 in the pre-fix history. The retry budget could become exhausted.
@@ -47,7 +47,7 @@ in the pre-fix history. The retry budget could become exhausted.
 Hook diagnostic version 14 replaces the ineffective service-binding experiment.
 OS4 explicitly ignores system-server dependencies when freezing background
 apps. The active generation now owns an in-memory freeze guard for the verified
-HyperCeiler UID/current PID, removed before the generation is disposed. It does
+HyperCraft UID/current PID, removed before the generation is disposed. It does
 not add a persistent whitelist or change any system/global policy.
 
 Version 13 also keeps retrying at a capped cadence after a renderer that previously
@@ -58,7 +58,7 @@ the desktop; no host is created while the launcher is invisible.
 
 Version 16 distinguishes loss of an already-ready renderer from an initialization
 failure. The former is recreated immediately, removing the fixed two-second gap
-after OS4 OneKeyClean force-stops the HyperCeiler package. If that immediate
+after OS4 OneKeyClean force-stops the HyperCraft package. If that immediate
 recreation does not become ready, subsequent failures return to the bounded
 2/4/8/16/30-second backoff.
 
@@ -70,7 +70,7 @@ thermal, idle, lock-screen or other cleanup policies. This retains the live glas
 buffer through the recents clear instead of merely shortening its reconstruction.
 
 Version 20 also handles launcher-parent visibility transitions. Returning from a
-cold-started application reasserts pass-window blur and invalidates only HyperCeiler's
+cold-started application reasserts pass-window blur and invalidates only HyperCraft's
 own windowless glass views after allowing several display frames for the WMS show
 transaction. The Surface
 package is retained, so this refresh neither accumulates layers nor flashes through a

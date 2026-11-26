@@ -12,7 +12,7 @@ parser.add_argument("--production", type=Path)
 args = parser.parse_args()
 tests = Path(__file__).resolve().parent
 root = tests.parents[1]
-production = args.production or root / "library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/systemui/controlcenter/AutoDismissExpandedPopupsHook.kt"
+production = args.production or root / "library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemui/controlcenter/AutoDismissExpandedPopupsHook.kt"
 with tempfile.TemporaryDirectory(prefix="hc-notification-expansion-") as tmp:
     jar = Path(tmp) / "tests.jar"
     subprocess.run([
@@ -23,5 +23,5 @@ with tempfile.TemporaryDirectory(prefix="hc-notification-expansion-") as tmp:
     ], check=True)
     subprocess.run([
         args.java, "-cp", f"{jar}:{args.kotlin_home / 'lib/kotlin-stdlib.jar'}",
-        "com.sevtinge.hyperceiler.tests.notification.NotificationExpansionTestKt",
+        "com.sevtinge.hypercraft.tests.notification.NotificationExpansionTestKt",
     ], check=True)

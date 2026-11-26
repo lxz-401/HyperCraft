@@ -1,8 +1,8 @@
-package com.sevtinge.hyperceiler.tests.dock;
+package com.sevtinge.hypercraft.tests.dock;
 
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
-import com.sevtinge.hyperceiler.libhook.rules.home.dock.DockNativeMotion;
-import com.sevtinge.hyperceiler.libhook.rules.home.dock.DockRecentsMotion;
+import com.sevtinge.hypercraft.libhook.rules.home.dock.DockNativeMotion;
+import com.sevtinge.hypercraft.libhook.rules.home.dock.DockRecentsMotion;
 
 public class DockNativeMotionTest {
     private static DockNativeMotion.Sample sample(long sequence, long time, int scene, double scale,

@@ -4,10 +4,10 @@ import argparse,hashlib,json,os,re,subprocess,tempfile
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 BASE=Path(__file__).resolve().parent;SOURCE=BASE.parents[1];ROOT=test_paths.TEST_DATA_ROOT;CACHE=test_paths.BUILD_CACHE;JAVA=test_paths.JAVA_HOME / 'bin';KH=test_paths.KOTLIN_HOME
-RULE=SOURCE/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/systemui/controlcenter/media3/CustomBackgroundOS4.kt'
+RULE=SOURCE/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemui/controlcenter/media3/CustomBackgroundOS4.kt'
 ROUTE=RULE.with_name('CustomBackground.kt')
 SHADER=RULE.with_name('MediaSeekBarColorOS4.kt')
 PEER=test_paths.SNAPSHOT_ROOT / 'source-os4-hyos-test12-20261009-r1/library/libhook/build/intermediates/compile_library_classes_jar/debug/bundleLibCompileToJarDebug/classes.jar'

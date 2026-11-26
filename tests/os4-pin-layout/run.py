@@ -4,10 +4,10 @@ import argparse,hashlib,json,os,re,subprocess,tempfile
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 BASE=Path(__file__).resolve().parent;SOURCE=BASE.parents[1];ROOT=test_paths.TEST_DATA_ROOT;CACHE=test_paths.BUILD_CACHE;JAVA=test_paths.JAVA_HOME / 'bin'
-RULE=SOURCE/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/systemui/lockscreen/ScramblePIN.java'
+RULE=SOURCE/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemui/lockscreen/ScramblePIN.java'
 DEPS=[CACHE/'changed-hooks-compile'/x for x in['hook-xposed-102-1.3.0.jar','api-102.0.0.jar']]+[test_paths.KOTLIN_HOME / 'lib/kotlin-stdlib.jar',test_paths.ANDROID_HOME / 'platforms/android-37.0/android.jar']
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 def inputs():return{str(test_paths.report_path(p, ROOT)):sha(p)for p in[RULE,Path(__file__),*sorted((BASE/'fixtures').rglob('*.java'))]}

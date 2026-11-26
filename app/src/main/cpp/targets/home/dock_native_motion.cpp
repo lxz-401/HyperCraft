@@ -12,7 +12,7 @@
 #include <poll.h>
 #include <sys/eventfd.h>
 #include <time.h>
-#ifdef HYPERCEILER_HYOS_BACKEND
+#ifdef HYPERCRAFT_HYOS_BACKEND
 #include "targets/hyos/hyos_control.h"
 #endif
 
@@ -44,7 +44,7 @@ static_assert(std::atomic<uint64_t>::is_always_lock_free && sizeof(std::atomic<u
 static_assert(std::atomic<uint32_t>::is_always_lock_free && sizeof(std::atomic<uint32_t>) == 4);
 
 namespace {
-constexpr char kTag[] = "HyperCeiler.DockNative";
+constexpr char kTag[] = "HyperCraft.DockNative";
 constexpr transaction_code_t kMotionTransaction = 0x0048434A;
 constexpr transaction_code_t kAutoAimTransaction = 0x0048434B;
 constexpr transaction_code_t kEditTransaction = 0x0048434F;
@@ -271,7 +271,7 @@ void set_dock_motion_feature_enabled(bool enabled) {
 }
 
 bool dock_motion_feature_active() {
-#ifdef HYPERCEILER_HYOS_BACKEND
+#ifdef HYPERCRAFT_HYOS_BACKEND
     if (hyos_control::active() && !hyos_control::feature_enabled(hyos_control::kDock)) return false;
 #endif
     return dock_motion_feature_enabled.load(std::memory_order_acquire);

@@ -4,7 +4,7 @@ import argparse,hashlib,json,os,resource,struct,subprocess,sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 sys.dont_write_bytecode=True
 W=Path(__file__).resolve().parent;R=test_paths.TEST_DATA_ROOT

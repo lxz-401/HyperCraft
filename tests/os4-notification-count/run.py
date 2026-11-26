@@ -7,12 +7,12 @@ import argparse,hashlib,json,os,re,subprocess,tempfile
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 BASE=Path(__file__).resolve().parent
 SOURCE=BASE.parents[1]
 ROOT=test_paths.TEST_DATA_ROOT
-PKG=SOURCE/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook'
+PKG=SOURCE/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook'
 RULE=PKG/'rules/systemui/controlcenter/RemoveNotifNumLimitOS4.java'
 ROUTE=PKG/'app/SystemUI/SystemUIB.java'
 CACHE=test_paths.BUILD_CACHE
@@ -26,29 +26,29 @@ def run(out,mutation=None):
  if mutation=='drop_hook':rule=rule.replace('hookMethod(callback, (IReplaceHook) param -> null) == null','false')
  if mutation=='wrong_method':rule=rule.replace('getDeclaredMethod("onViewBound$1", entry)','getDeclaredMethod("onViewBound", entry)')
  if mutation=='invert_preference':route=route.replace('&& PrefsBridge.getBoolean("system_ui_control_center_remove_notif_num_limit")','&& !PrefsBridge.getBoolean("system_ui_control_center_remove_notif_num_limit")')
- if mutation=='drop_os4_gate':route=route.replace('com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.isMoreHyperOSVersion(4f)', 'true')
+ if mutation=='drop_os4_gate':route=route.replace('com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper.System.isMoreHyperOSVersion(4f)', 'true')
  if mutation=='remove_route':route=re.sub(r'        initHook\(new RemoveNotifNumLimitOS4\(\),.*?;','',route,flags=re.S)
  cp=os.pathsep.join(map(str,DEPS))
  with tempfile.TemporaryDirectory(prefix='hc-notif-count-')as tmp:
   w=Path(tmp)
   for p in (BASE/'fixtures').rglob('*.java'):
    dest=w/p.relative_to(BASE/'fixtures');dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(p.read_bytes())
-  write(w,'com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.RemoveNotifNumLimitOS4',rule)
-  write(w,'com.sevtinge.hyperceiler.libhook.app.SystemUI.SystemUIB',route)
+  write(w,'com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.RemoveNotifNumLimitOS4',rule)
+  write(w,'com.sevtinge.hypercraft.libhook.app.SystemUI.SystemUIB',route)
   write(w,'com.hchen.database.HookBase','package com.hchen.database; public @interface HookBase { String targetPackage(); int minSdk(); }')
-  write(w,'com.sevtinge.hyperceiler.common.utils.PrefsBridge','''package com.sevtinge.hyperceiler.common.utils;
+  write(w,'com.sevtinge.hypercraft.common.utils.PrefsBridge','''package com.sevtinge.hypercraft.common.utils;
 public class PrefsBridge {public static boolean enabled;
 public static boolean getBoolean(String k){return k.equals("system_ui_control_center_remove_notif_num_limit")&&enabled;}
 public static boolean getBoolean(String k,boolean d){return getBoolean(k);}
 public static int getInt(String k,int d){return d;}public static int getStringAsInt(String k,int d){return d;}
 public static String getString(String k,String d){return d;}public static java.util.Set<String>getStringSet(String k){return java.util.Set.of();}}''')
-  write(w,'com.sevtinge.hyperceiler.libhook.base.BaseLoad','''package com.sevtinge.hyperceiler.libhook.base;
+  write(w,'com.sevtinge.hypercraft.libhook.base.BaseLoad','''package com.sevtinge.hypercraft.libhook.base;
 public abstract class BaseLoad {public abstract void onPackageLoaded();protected void initHook(BaseHook h){h.init();}protected void initHook(BaseHook h,boolean enabled){if(enabled)h.init();}}''')
-  write(w,'com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper','package com.sevtinge.hyperceiler.libhook.utils.api; public class DeviceHelper {public static class Miui {public static boolean isPad(){return false;}}public static class System {public static float version=4f;public static boolean isMoreHyperOSVersion(float v){if(v!=4f)throw new AssertionError("unexpected gate threshold");return version>=v;}}}')
+  write(w,'com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper','package com.sevtinge.hypercraft.libhook.utils.api; public class DeviceHelper {public static class Miui {public static boolean isPad(){return false;}}public static class System {public static float version=4f;public static boolean isMoreHyperOSVersion(float v){if(v!=4f)throw new AssertionError("unexpected gate threshold");return version>=v;}}}')
   for name in re.findall(r'^import (com\.[\w.]+);',route,re.M):
    if (w/(name.replace('.','/')+'.java')).exists():continue
    package,short=name.rsplit('.',1)
-   write(w,name,f'package {package};public class {short} extends com.sevtinge.hyperceiler.libhook.base.BaseHook {{public static final {short} INSTANCE=new {short}();public void init(){{}}public static void createHook(){{}}}}')
+   write(w,name,f'package {package};public class {short} extends com.sevtinge.hypercraft.libhook.base.BaseHook {{public static final {short} INSTANCE=new {short}();public void init(){{}}public static void createHook(){{}}}}')
   cmd=[str(JAVA/'javac'),'--release','21','-proc:none','-encoding','UTF-8','-cp',cp,'-d',str(w/'classes'),*map(str,w.rglob('*.java'))]
   z=subprocess.run(cmd,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT);(out/'build.txt').write_text(z.stdout)
   if z.returncode:print(z.stdout);raise RuntimeError('fixture compile failed')

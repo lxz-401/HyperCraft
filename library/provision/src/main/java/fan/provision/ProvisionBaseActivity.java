@@ -1,7 +1,7 @@
 /*
- * This file is part of HyperCeiler.
+ * This file is part of HyperCraft.
 
- * HyperCeiler is free software: you can redistribute it and/or modify
+ * HyperCraft is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License.
@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2026 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCraft Contributions
  */
 package fan.provision;
 
@@ -28,7 +28,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.DisplayMetrics;
-import com.sevtinge.hyperceiler.common.log.ModuleLog;
+import com.sevtinge.hypercraft.common.log.ModuleLog;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.TextureView;
@@ -41,7 +41,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.sevtinge.hyperceiler.provision.R;
+import com.sevtinge.hypercraft.provision.R;
 
 import fan.appcompat.app.AppCompatActivity;
 import fan.appcompat.app.GroupButtonsConfig;

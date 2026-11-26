@@ -4,15 +4,15 @@ import argparse,hashlib,json,subprocess,time
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
-ROOT=test_paths.TEST_DATA_ROOT;ADB=test_paths.ANDROID_HOME / 'platform-tools/adb';PKG='local.hyperceiler.custombgoverlayprobe';SERIAL='emulator-5580';sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+ROOT=test_paths.TEST_DATA_ROOT;ADB=test_paths.ANDROID_HOME / 'platform-tools/adb';PKG='local.hypercraft.custombgoverlayprobe';SERIAL='emulator-5580';sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 p=argparse.ArgumentParser();p.add_argument('--build',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args();a.output.mkdir(parents=True,exist_ok=False);build=json.loads((a.build/'build-report.json').read_text());variant='results';assert build['passed']is True and sha(a.build/'custombg-overlay-probe.apk')==build['apk_sha256'];commands=[]
 def adb(*args,check=True):
  cmd=[str(ADB),'-s',SERIAL,*map(str,args)];commands.append(cmd);r=subprocess.run(cmd,capture_output=True,timeout=45)
  if check:assert r.returncode==0,(cmd,r.stdout,r.stderr)
  return r
-identity=adb('emu','avd','name').stdout.decode();assert identity.splitlines()[0]=='hyperceiler_os4_api37'
+identity=adb('emu','avd','name').stdout.decode();assert identity.splitlines()[0]=='hypercraft_os4_api37'
 assert adb('shell','getprop','sys.boot_completed').stdout.strip()==b'1'
 props=adb('shell','getprop').stdout;(a.output/'android-properties.txt').write_bytes(props)
 install=adb('install','-r',a.build/'custombg-overlay-probe.apk');(a.output/'install.txt').write_bytes(install.stdout+install.stderr)

@@ -30,7 +30,7 @@
 namespace weather_runtime {
 namespace {
 constexpr char kDescriptor[] = "android.view.IWindowManager";
-constexpr char kTag[] = "HyperCeiler.Weather";
+constexpr char kTag[] = "HyperCraft.Weather";
 enum class Phase : unsigned { Cold, Preparing, Installed, Inactive, Missed, Rejected, Residue };
 std::atomic<Phase> g_phase{Phase::Cold};
 std::atomic_bool g_stop{false};

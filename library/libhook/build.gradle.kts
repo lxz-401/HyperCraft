@@ -14,14 +14,14 @@ lsparanoid {
 }
 
 android {
-    namespace = "com.sevtinge.hyperceiler.libhook"
+    namespace = "com.sevtinge.hypercraft.libhook"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         minSdk = 35
         consumerProguardFiles("diagnostics-rules.pro")
 
-        buildConfigField("String", "APP_MODULE_ID", "\"com.sevtinge.hyperceiler\"")
+        buildConfigField("String", "APP_MODULE_ID", "\"com.sevtinge.hypercraft\"")
     }
 
     buildFeatures {

@@ -28,7 +28,7 @@ https://www.apache.org/licenses/LICENSE-2.0.
 ## Attribution requirement
 
 Per Apache-2.0 §4, the ported files carry a header notice naming the source
-project and this file. HyperCeiler itself is AGPL-3.0-or-later; the derived
+project and this file. HyperCraft itself is AGPL-3.0-or-later; the derived
 files above remain subject to Apache-2.0 with the notices preserved.
 
 ## Zygisk Next API header

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -14,28 +14,28 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory>
         <Preference
-            android:fragment="com.sevtinge.hyperceiler.hooker.framework.FreeFormSettings"
+            android:fragment="com.sevtinge.hypercraft.hooker.framework.FreeFormSettings"
             android:title="@string/floating_window" />
 
         <Preference
-            android:fragment="com.sevtinge.hyperceiler.hooker.framework.VolumeSettings"
+            android:fragment="com.sevtinge.hypercraft.hooker.framework.VolumeSettings"
             android:title="@string/system_framework_volume_title" />
 
         <Preference
-            android:fragment="com.sevtinge.hyperceiler.hooker.framework.DisplaySettings"
+            android:fragment="com.sevtinge.hypercraft.hooker.framework.DisplaySettings"
             android:title="@string/system_framework_display_title" />
 
         <Preference
-            android:fragment="com.sevtinge.hyperceiler.hooker.framework.OtherSettings"
+            android:fragment="com.sevtinge.hypercraft.hooker.framework.OtherSettings"
             android:title="@string/system_framework_other_title" />
 
         <Preference
-            android:fragment="com.sevtinge.hyperceiler.hooker.framework.MiPadSettings"
+            android:fragment="com.sevtinge.hypercraft.hooker.framework.MiPadSettings"
             android:key="prefs_key_system_framework_mipad"
             android:title="@string/various_mipad_title" />
 
@@ -43,7 +43,7 @@
 
     <PreferenceCategory>
         <Preference
-            android:fragment="com.sevtinge.hyperceiler.hooker.framework.CorePatchSettings"
+            android:fragment="com.sevtinge.hypercraft.hooker.framework.CorePatchSettings"
             android:title="@string/system_framework_corepatch_title" />
     </PreferenceCategory>
 

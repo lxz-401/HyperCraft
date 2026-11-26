@@ -20,7 +20,7 @@ weather_material_support::Binding g_policy{};
 ReadFresh g_read_fresh = nullptr;
 DartBase g_dart_base = nullptr;
 std::atomic<unsigned> g_applied{0}, g_refused{0};
-constexpr char kTag[] = "HyperCeiler.WeatherMaterial";
+constexpr char kTag[] = "HyperCraft.WeatherMaterial";
 
 bool read_memory(uintptr_t address, std::span<std::byte> output) {
     if (address == 0 || output.empty() || address > UINTPTR_MAX - output.size()) return false;

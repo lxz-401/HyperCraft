@@ -10,11 +10,11 @@ while IFS= read -r -d '' source; do
     sources+=("$source")
 done < <(find "$project_dir/tests/home-layout-native/stubs" \
     "$project_dir/tests/home-dock-window/stubs" -name '*.java' -print0)
-libhook="$project_dir/library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook"
+libhook="$project_dir/library/libhook/src/main/java/com/sevtinge/hypercraft/libhook"
 javac -encoding UTF-8 -d "$classes_dir" "${sources[@]}" \
     "$libhook/base/FrameworkHookGate.java" \
     "$libhook/provider/HomeLayoutPrefsSnapshot.java" \
     "$libhook/provider/HomeGesturePrefsSnapshot.java" \
     "$libhook/rules/home/dock/HomeLayoutNativeEndpointOS4.java" \
     "$project_dir/tests/home-layout-native/HomeLayoutNativeEndpointOS4Test.java"
-java -ea -cp "$classes_dir" com.sevtinge.hyperceiler.libhook.rules.home.dock.HomeLayoutNativeEndpointOS4Test
+java -ea -cp "$classes_dir" com.sevtinge.hypercraft.libhook.rules.home.dock.HomeLayoutNativeEndpointOS4Test

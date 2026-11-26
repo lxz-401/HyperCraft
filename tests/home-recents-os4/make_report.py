@@ -5,7 +5,7 @@ import argparse,hashlib,json
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 ROOT=test_paths.TEST_DATA_ROOT
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
@@ -36,7 +36,7 @@ def main():
     assert reports['arm_components']['positive_checks']==dict(owner=2354,abi=8208,policy=398)
     assert reports['original_once']['checks']==9
     supporting=[test_paths.SOURCE_ROOT / 'library/core/src/main/res/xml/home_animation.xml',
-        test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock/HomeLayoutNativeEndpointOS4.java']
+        test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock/HomeLayoutNativeEndpointOS4.java']
     xml=supporting[0].read_text();assert 'app:quick_restart="com.miui.home"'in xml
     keys=['prefs_key_home_animation_recents_enable','prefs_key_home_animation_recents_rate'];assert all('android:key="'+key+'"'in xml for key in keys)
     endpoint=supporting[1].read_text();assert 'tweaks[14] = readBoolean(values, "home_animation_recents_enable", false)'in endpoint

@@ -46,7 +46,7 @@ It also applies when an individual is officially representing the project in pub
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement at **conduct@hyperceiler.org**.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement at **conduct@hypercraft.org**.
 
 All complaints will be reviewed and investigated promptly and fairly.
 

@@ -1,7 +1,7 @@
 <!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -14,39 +14,39 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Base.Theme.HyperCeiler.DayNight" parent="Base.Theme.HyperCeiler">
+    <style name="Base.Theme.HyperCraft.DayNight" parent="Base.Theme.HyperCraft">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
 
         <item name="endActionMenuEnabled">true</item>
     </style>
 
-    <style name="AprilFoolsTheme" parent="Base.Theme.HyperCeiler.DayNight">
+    <style name="AprilFoolsTheme" parent="Base.Theme.HyperCraft.DayNight">
         <item name="slidingButtonStyle">@style/Widget.AprilFoolsSlidingButton.DayNight</item>
         <item name="preferenceTheme">@style/AprilFoolsPreferenceTheme</item>
     </style>
 
-    <style name="CrashTheme" parent="Base.Theme.HyperCeiler.DayNight">
+    <style name="CrashTheme" parent="Base.Theme.HyperCraft.DayNight">
         <item name="android:windowBackground">@color/miuix_design_default_color_surface_variant_light</item>
         <item name="android:colorBackground">@color/miuix_design_default_color_surface_variant_light</item>
         <item name="miuixColorPrimary">@color/miuix_design_default_color_surface_variant_light</item>
         <item name="actionBarBackground">@color/miuix_design_default_color_surface_variant_light</item>
     </style>
 
-    <style name="Base.Theme.HyperCeiler" parent="Theme.AppCompat.DayNight">
+    <style name="Base.Theme.HyperCraft" parent="Theme.AppCompat.DayNight">
         <item name="android:actionBarItemBackground">@android:color/transparent</item>
         <item name="rebootIconColor">@color/black</item>
     </style>
 
-    <style name="Base.Theme.HyperCeiler.AprilFools" parent="Theme.AppCompat.DayNight">
+    <style name="Base.Theme.HyperCraft.AprilFools" parent="Theme.AppCompat.DayNight">
         <item name="rebootIconColor">@color/black</item>
     </style>
 
-    <style name="Theme.HyperCeiler.Translucent" parent="Base.Theme.HyperCeiler">
+    <style name="Theme.HyperCraft.Translucent" parent="Base.Theme.HyperCraft">
         <item name="android:windowBackground">@color/miuix_color_transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -59,12 +59,12 @@
         <item name="android:windowExitAnimation">@null</item>
     </style>
 
-    <style name="Theme.HyperCeiler.Translucent.NoActionBar">
+    <style name="Theme.HyperCraft.Translucent.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowActionBarOverlay">false</item>
     </style>
 
-    <style name="Theme.HyperCeiler.Translucent.NoActionBar.NoAnimation">
+    <style name="Theme.HyperCraft.Translucent.NoActionBar.NoAnimation">
         <item name="android:windowAnimationStyle">@style/Animation</item>
     </style>
 

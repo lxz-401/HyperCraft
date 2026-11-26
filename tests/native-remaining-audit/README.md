@@ -7,7 +7,7 @@ APK, native image, production hook or preference protocol.
 
 ```sh
 python3 tests/native-remaining-audit/audit.py \
-  --project "$HYPERCEILER_TEST_DATA" \
+  --project "$HYPERCRAFT_TEST_DATA" \
   --objdump "$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-objdump"
 ```
 

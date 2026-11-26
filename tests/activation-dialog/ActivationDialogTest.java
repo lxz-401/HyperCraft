@@ -1,9 +1,9 @@
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Looper;
-import com.sevtinge.hyperceiler.Application;
-import com.sevtinge.hyperceiler.utils.XposedActivateHelper;
-import com.sevtinge.hyperceiler.utils.DialogHelper;
+import com.sevtinge.hypercraft.Application;
+import com.sevtinge.hypercraft.utils.XposedActivateHelper;
+import com.sevtinge.hypercraft.utils.DialogHelper;
 import fan.appcompat.app.AlertDialog;
 public class ActivationDialogTest {
     static int passed,failed;

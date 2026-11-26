@@ -1,12 +1,12 @@
-package com.sevtinge.hyperceiler.libhook.rules.home.dock;
+package com.sevtinge.hypercraft.libhook.rules.home.dock;
 
 import android.content.ContentResolver;
 import android.content.pm.PackageManager;
 import android.os.Binder;
 import android.os.Parcel;
 import android.os.SystemClock;
-import com.sevtinge.hyperceiler.libhook.base.BaseHook;
-import com.sevtinge.hyperceiler.libhook.base.BaseLoad;
+import com.sevtinge.hypercraft.libhook.base.BaseHook;
+import com.sevtinge.hypercraft.libhook.base.BaseLoad;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.*;
@@ -143,7 +143,7 @@ public final class CombinedSnapshotTest {
     while(ContentResolver.queries.get()<4&&System.nanoTime()<until)Thread.sleep(20);
     check(ContentResolver.queries.get()>=4);eq(read().flags(),1);
     ContentResolver.values=prefs("allow_hook",false);ContentResolver.afterSnapshot=invalidation::block;
-    ContentResolver.signalChange("content://com.sevtinge.hyperceiler.provider.sharedprefs/pref/boolean/allow_hook");
+    ContentResolver.signalChange("content://com.sevtinge.hypercraft.provider.sharedprefs/pref/boolean/allow_hook");
     invalidation.entered();inactive(read(),0);invalidation.release.countDown();
     for(int i=0;i<100&&read().available()==0;i++)Thread.sleep(10);
     inactive(read(),1);

@@ -1,9 +1,9 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
 import android.os.Handler
-import com.sevtinge.hyperceiler.common.utils.PrefsBridge
-import com.sevtinge.hyperceiler.libhook.base.BaseHook
-import com.sevtinge.hyperceiler.libhook.rules.systemui.other.MonetThemeOverlay
-import com.sevtinge.hyperceiler.libhook.utils.api.HostExecutor
+import com.sevtinge.hypercraft.common.utils.PrefsBridge
+import com.sevtinge.hypercraft.libhook.base.BaseHook
+import com.sevtinge.hypercraft.libhook.rules.systemui.other.MonetThemeOverlay
+import com.sevtinge.hypercraft.libhook.utils.api.HostExecutor
 import io.github.lingqiqi5211.ezhooktool.xposed.common.HookParam
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.Hooks
 import java.util.concurrent.CountDownLatch

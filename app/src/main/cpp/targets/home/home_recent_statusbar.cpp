@@ -45,7 +45,7 @@ const char* last_phase=nullptr;
 void phase(const char* message){
     if(last_phase&&std::strcmp(last_phase,message)==0)return;
     last_phase=message;
-    __android_log_print(ANDROID_LOG_INFO,"HyperCeiler.HomeLayout","recents status bar bank %s",message);
+    __android_log_print(ANDROID_LOG_INFO,"HyperCraft.HomeLayout","recents status bar bank %s",message);
 }
 std::string path;
 uint64_t view_begin=0,view_end=0,last_generation=0,next_discovery=0;
@@ -240,7 +240,7 @@ void maintain(Hook hook,Unhook unhook,Protect protect) noexcept {
         nhk::android_diagnostics::counter("home.recents.flutter-scene",kFeature,dart_hits.load(std::memory_order_relaxed));
         const auto report=dart_observation.load(std::memory_order_acquire);
         if(last_dart_report!=report){last_dart_report=report;
-            __android_log_print(ANDROID_LOG_INFO,"HyperCeiler.HomeLayout","recents Flutter scene observed=%u active=%u reason=%s",(report>>1)&1,report&1,dart_scene::read_reason(dart_scene::ReadResult(report>>2)));}
+            __android_log_print(ANDROID_LOG_INFO,"HyperCraft.HomeLayout","recents Flutter scene observed=%u active=%u reason=%s",(report>>1)&1,report&1,dart_scene::read_reason(dart_scene::ReadResult(report>>2)));}
 
     }catch(...){bank_ready=false;publish(0);}
 }

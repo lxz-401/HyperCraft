@@ -46,7 +46,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         mavenLocal()
-        maven("https://maven.pkg.github.com/ReChronoRain/HyperCeiler") {
+        maven("https://maven.pkg.github.com/ReChronoRain/HyperCraft") {
             // Keep the repository available for cached dependencies without credentials.
             val gpr = loadGprCredentials()
             if (gpr != null) {
@@ -56,7 +56,7 @@ dependencyResolutionManagement {
                 }
             } else {
                 content {
-                    includeGroup("com.sevtinge.hyperceiler")
+                    includeGroup("com.sevtinge.hypercraft")
                     includeGroup("fan.miuix")
                 }
             }
@@ -66,7 +66,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "HyperCeiler"
+rootProject.name = "HyperCraft"
 
 include(
     "app",

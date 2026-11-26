@@ -116,7 +116,7 @@ int main(){
 '''
     (out/'bootstrap.cpp').write_text(src)
     run(['c++','-std=c++20','-I'+str(ROOT/'app/src/main/cpp'),out/'bootstrap.cpp','-o',out/'bootstrap']);run([out/'bootstrap'])
-entry=(ROOT/'app/src/main/cpp/targets/home/hyperceiler_home.cpp').read_text()
+entry=(ROOT/'app/src/main/cpp/targets/home/hypercraft_home.cpp').read_text()
 callback=entry[entry.index('void on_library_loaded('):]
 assert callback.index('notify_home_layout_library_loaded()')<callback.index('start_home_layout_hooks("library"')
 worker=hooks[hooks.index('void *worker('):hooks.index('void prime_home_layout_first_render_locked() {')]
@@ -127,8 +127,8 @@ import xml.etree.ElementTree as ET
 root=ET.parse(ROOT/'library/core/src/main/res/xml/home_drawer.xml').getroot();android='{http://schemas.android.com/apk/res/android}'
 preferences=[p for p in root.iter() if p.get(android+'key')=='prefs_key_home_drawer_hide_search']
 assert len(preferences)==1 and preferences[0].get(android+'defaultValue')=='false'
-provider=(ROOT/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/provider/HomeLayoutPrefsSnapshot.java').read_text()
+provider=(ROOT/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/provider/HomeLayoutPrefsSnapshot.java').read_text()
 assert 'home_drawer_hide_search' in provider
-writer=(ROOT/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock/HomeDockWindow.kt').read_text()
+writer=(ROOT/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock/HomeDockWindow.kt').read_text()
 assert 'HomeLayoutNativeEndpointOS4.writeDrawer(reply, result?.drawerHideSearch() ?: false)' in writer
 print('first-render/drawer production integration PASS: library notification and worker adoption, UI/provider/Binder writer, executable-only bank')

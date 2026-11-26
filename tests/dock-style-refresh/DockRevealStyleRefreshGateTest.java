@@ -1,4 +1,4 @@
-package com.sevtinge.hyperceiler.libhook.rules.home.dock;
+package com.sevtinge.hypercraft.libhook.rules.home.dock;
 import java.util.concurrent.*; import java.util.concurrent.atomic.AtomicInteger;
 public final class DockRevealStyleRefreshGateTest {
  static void check(boolean v,String n){if(!v)throw new AssertionError(n);}

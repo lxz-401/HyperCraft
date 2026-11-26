@@ -1,4 +1,4 @@
-package local.hyperceiler.seekbarcolorprobe;
+package local.hypercraft.seekbarcolorprobe;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.*;
@@ -13,7 +13,7 @@ import kotlin.Unit;
 import io.github.libxposed.api.XposedInterface;
 import io.github.lingqiqi5211.ezhooktool.xposed.common.*;
 import io.github.lingqiqi5211.ezhooktool.xposed.java.IMethodHook;
-import com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.media3.MediaSeekBarColorOS4;
+import com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.media3.MediaSeekBarColorOS4;
 
 /** Real Android graphics and production color helper; explicit local dispatch fixture, no LSPosed injection. */
 public final class MainActivity extends Activity {

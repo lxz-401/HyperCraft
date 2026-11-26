@@ -1,4 +1,4 @@
-# detekt configuration for HyperCeiler
+# detekt configuration for HyperCraft
 # Based on detekt's default configuration with project-specific adjustments
 
 # Each rule can be enabled or disabled, and optionally configured with parameters

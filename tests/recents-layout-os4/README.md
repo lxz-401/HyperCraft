@@ -30,7 +30,7 @@ per call. Style and color replacements allocate only from the proved bounded
 nursery fast path, admit both 0 and 8 modulo 16 tops, never retain a movable Dart
 pointer, and never call the Dart GC slow allocator. Shared const styles/colors
 are not modified. An insufficient nursery retains the original style/background
-and emits a rate-limited reason through `HyperCeiler.HomeLayout` (imported into
+and emits a rate-limited reason through `HyperCraft.HomeLayout` (imported into
 the built-in log). The non-null/transparent background arm stays original.
 
 The bank enables only after all continuations are ready. INFO diagnostics report

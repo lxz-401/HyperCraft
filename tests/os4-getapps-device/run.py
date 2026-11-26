@@ -5,10 +5,10 @@ import argparse,hashlib,json,os,re,subprocess,tempfile,xml.etree.ElementTree as 
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 BASE=Path(__file__).resolve().parent;SOURCE=BASE.parents[1];ROOT=test_paths.TEST_DATA_ROOT;CACHE=test_paths.BUILD_CACHE;JAVA=test_paths.JAVA_HOME / 'bin'
-FILES=[SOURCE/'library/common/src/main/java/com/sevtinge/hyperceiler/common/utils/GetAppsDeviceConfig.java',SOURCE/'library/core/src/main/java/com/sevtinge/hyperceiler/hooker/GetAppsFragment.java',SOURCE/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/app/GetApps.java',SOURCE/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/getapps/DeviceModify.java']
+FILES=[SOURCE/'library/common/src/main/java/com/sevtinge/hypercraft/common/utils/GetAppsDeviceConfig.java',SOURCE/'library/core/src/main/java/com/sevtinge/hypercraft/hooker/GetAppsFragment.java',SOURCE/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/app/GetApps.java',SOURCE/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/getapps/DeviceModify.java']
 XML=SOURCE/'library/core/src/main/res/xml/getapps.xml'
 DEPS=[CACHE/'changed-hooks-compile'/x for x in ['hook-xposed-102-1.3.0.jar','api-102.0.0.jar']]+[test_paths.KOTLIN_HOME / 'lib/kotlin-stdlib.jar',test_paths.ANDROID_HOME / 'platforms/android-37.0/android.jar']
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()

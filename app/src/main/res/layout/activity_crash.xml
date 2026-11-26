@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -14,7 +14,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   -->
 
 <fan.springback.view.SpringBackLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -80,19 +80,19 @@
                     android:paddingBottom="8dp"
                     android:paddingHorizontal="@dimen/miuix_theme_content_padding_horizontal_common">
 
-                    <com.sevtinge.hyperceiler.home.safemode.CrashInfoItem
+                    <com.sevtinge.hypercraft.home.safemode.CrashInfoItem
                         android:id="@+id/version_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:title="@string/error_version_name" />
 
-                    <com.sevtinge.hyperceiler.home.safemode.CrashInfoItem
+                    <com.sevtinge.hypercraft.home.safemode.CrashInfoItem
                         android:id="@+id/git_hash"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:title="@string/error_git_hash" />
 
-                    <com.sevtinge.hyperceiler.home.safemode.CrashInfoItem
+                    <com.sevtinge.hypercraft.home.safemode.CrashInfoItem
                         android:id="@+id/build_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -117,43 +117,43 @@
                     android:paddingBottom="8dp"
                     android:paddingHorizontal="@dimen/miuix_theme_content_padding_horizontal_common">
 
-                    <com.sevtinge.hyperceiler.home.safemode.CrashInfoItem
+                    <com.sevtinge.hypercraft.home.safemode.CrashInfoItem
                         android:id="@+id/message"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:title="@string/error_message" />
 
-                    <com.sevtinge.hyperceiler.home.safemode.CrashInfoItem
+                    <com.sevtinge.hypercraft.home.safemode.CrashInfoItem
                         android:id="@+id/e_type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:title="@string/error_type" />
 
-                    <com.sevtinge.hyperceiler.home.safemode.CrashInfoItem
+                    <com.sevtinge.hypercraft.home.safemode.CrashInfoItem
                         android:id="@+id/filename"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:title="@string/error_file_name" />
 
-                    <com.sevtinge.hyperceiler.home.safemode.CrashInfoItem
+                    <com.sevtinge.hypercraft.home.safemode.CrashInfoItem
                         android:id="@+id/classname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:title="@string/safe_mode_recorder_class" />
 
-                    <com.sevtinge.hyperceiler.home.safemode.CrashInfoItem
+                    <com.sevtinge.hypercraft.home.safemode.CrashInfoItem
                         android:id="@+id/methodname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:title="@string/safe_mode_recorder_method" />
 
-                    <com.sevtinge.hyperceiler.home.safemode.CrashInfoItem
+                    <com.sevtinge.hypercraft.home.safemode.CrashInfoItem
                         android:id="@+id/e_line"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:title="@string/safe_mode_recorder_line" />
 
-                    <com.sevtinge.hyperceiler.home.safemode.CrashInfoItem
+                    <com.sevtinge.hypercraft.home.safemode.CrashInfoItem
                         android:id="@+id/e_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

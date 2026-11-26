@@ -1,0 +1,1 @@
+package com.sevtinge.hypercraft.libhook.rules.getapps;import com.sevtinge.hypercraft.libhook.base.BaseHook;public class BypassRiskCheck extends BaseHook{public static final BypassRiskCheck INSTANCE=new BypassRiskCheck(); public void init(){}}

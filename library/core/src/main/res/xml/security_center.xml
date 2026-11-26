@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -14,12 +14,12 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:myLocation="@string/security_center_hyperos">
-    <com.sevtinge.hyperceiler.prefs.LayoutPreference
+    <com.sevtinge.hypercraft.prefs.LayoutPreference
         android:enabled="false"
         android:key="prefs_key_security_unsupported"
         android:layout="@layout/headtip_warn"
@@ -27,24 +27,24 @@
 
     <PreferenceCategory>
         <Preference
-            android:fragment="com.sevtinge.hyperceiler.hooker.securitycenter.ApplicationsSettings"
+            android:fragment="com.sevtinge.hypercraft.hooker.securitycenter.ApplicationsSettings"
             android:title="@string/security_center_app_title" />
 
-        <com.sevtinge.hyperceiler.prefs.XmlPreference
+        <com.sevtinge.hypercraft.prefs.XmlPreference
             android:title="@string/security_center_battery_title"
             app:inflatedXml="@xml/security_center_battery"/>
 
         <Preference
-            android:fragment="com.sevtinge.hyperceiler.hooker.securitycenter.PrivacySafetySettings"
+            android:fragment="com.sevtinge.hypercraft.hooker.securitycenter.PrivacySafetySettings"
             android:key="prefs_key_security_center_privacy_safety"
             android:title="@string/security_center_privacy_title" />
 
         <Preference
-            android:fragment="com.sevtinge.hyperceiler.hooker.securitycenter.SidebarSettings"
+            android:fragment="com.sevtinge.hypercraft.hooker.securitycenter.SidebarSettings"
             android:title="@string/security_center_newbox_title" />
 
         <Preference
-            android:fragment="com.sevtinge.hyperceiler.hooker.securitycenter.OtherSettings"
+            android:fragment="com.sevtinge.hypercraft.hooker.securitycenter.OtherSettings"
             android:title="@string/security_center_other_title" />
 
     </PreferenceCategory>

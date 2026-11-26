@@ -5,7 +5,7 @@ import argparse, hashlib, json, re, struct, subprocess, tempfile
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 
 HERE = Path(__file__).resolve().parent

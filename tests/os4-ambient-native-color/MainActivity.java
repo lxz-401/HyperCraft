@@ -1,4 +1,4 @@
-package local.hyperceiler.colorprobe;
+package local.hypercraft.colorprobe;
 import android.app.Activity;
 import android.os.Bundle;
 import java.io.*;
@@ -7,9 +7,9 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.*;
 import org.json.*;
-import com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.media3.AmbientNativeColorOS4;
+import com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.media3.AmbientNativeColorOS4;
 public final class MainActivity extends Activity {
- static {System.loadLibrary("oemprobe");System.loadLibrary("HyperCeilerAmbientOS4");}
+ static {System.loadLibrary("oemprobe");System.loadLibrary("HyperCraftAmbientOS4");}
  private static native void loadOem(String p);private static native int oem(int[] p,int w,int h);private static native void fault(int s);private static native int forceCalls();private static native int initAttempts();private static native long special(int mode,int[] p);
  static Set<String> tasks(){String[] ids=new File("/proc/self/task").list();if(ids==null)throw new AssertionError("task list");return new TreeSet<>(Arrays.asList(ids));}
  static int[] pixels(int color){int[] p=new int[12544];Arrays.fill(p,color);return p;}

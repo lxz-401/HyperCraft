@@ -237,7 +237,7 @@ void write_file(const std::filesystem::path &path, const std::vector<std::byte> 
 
 void test_zip_entry_lookup() {
     const std::filesystem::path directory =
-        std::filesystem::temp_directory_path() / "hyperceiler-container-test";
+        std::filesystem::temp_directory_path() / "hypercraft-container-test";
     std::filesystem::create_directories(directory);
     const std::string name = "lib/arm64-v8a/libapp.so";
     const auto expect_offset = static_cast<uint64_t>(30 + name.size());

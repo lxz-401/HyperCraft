@@ -67,7 +67,7 @@ hash was checked. Separate 70% and 125% desktop restarts showed:
   addition to screenshots; readiness alone was insufficient in the failing run.
 
 All eight touched scale preferences were restored to their original values and
-`debug.hyperceiler.prefs_write` was reset to zero. Desktop is back at its default
+`debug.hypercraft.prefs_write` was reset to zero. Desktop is back at its default
 page. Raw screenshots, logs, settings comparison and APK verification are under
 `/tmp/hc-object-scale-live` on the test host; they are not checked into Git.
 Only the existing steps widget was visually exercised, not every widget vendor.

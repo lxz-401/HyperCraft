@@ -1,7 +1,7 @@
 /*
- * This file is part of HyperCeiler.
+ * This file is part of HyperCraft.
 
- * HyperCeiler is free software: you can redistribute it and/or modify
+ * HyperCraft is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License.
@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2026 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCraft Contributions
  */
 package fan.provision;
 
@@ -27,13 +27,13 @@ import android.content.res.Configuration;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.LayoutDirection;
-import com.sevtinge.hyperceiler.common.log.ModuleLog;
-import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
+import com.sevtinge.hypercraft.common.log.ModuleLog;
+import com.sevtinge.hypercraft.common.utils.PrefsBridge;
 import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
-import com.sevtinge.hyperceiler.provision.R;
+import com.sevtinge.hypercraft.provision.R;
 
 import java.security.SecureRandom;
 import java.util.Locale;

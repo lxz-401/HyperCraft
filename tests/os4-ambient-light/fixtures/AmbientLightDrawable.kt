@@ -1,4 +1,4 @@
-package com.sevtinge.hyperceiler.libhook.utils.hookapi.systemui.controlcenter.drawable
+package com.sevtinge.hypercraft.libhook.utils.hookapi.systemui.controlcenter.drawable
 class AmbientLightDrawable : android.graphics.drawable.Drawable() {
  companion object { @JvmField var ready=true; @JvmField val all=ArrayList<AmbientLightDrawable>() }
  init {all.add(this)}

@@ -7,7 +7,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[2]
 source = Path(sys.argv[1]) if len(sys.argv) > 1 else (
-    ROOT / "library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/systemframework/corepatch/SharedUserPatch.java"
+    ROOT / "library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemframework/corepatch/SharedUserPatch.java"
 )
 text = source.read_text(encoding="utf-8")
 block = text.split("if (CorePatchHelper.isSharedUserEnabled())", 1)[1].split("// Android 11+", 1)[0]

@@ -1,7 +1,7 @@
 from pathlib import Path
 import subprocess,sys,tempfile,struct
 W=Path(__file__).resolve().parents[2];R=Path(sys.argv[1]).resolve() if len(sys.argv)>1 else W
-H=R/'app/src/main/cpp/targets/home';J=R/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock'
+H=R/'app/src/main/cpp/targets/home';J=R/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock'
 if not (H/'home_dock_edit.h').exists() or not (J/'DockEditState.java').exists():
  print('DOCK_EDIT=missing default edit policy; failed=1');sys.exit(1)
 D=W/'handover/dock-edit-20261009/test';D.mkdir(parents=True,exist_ok=True)
@@ -25,7 +25,7 @@ g[2]=(g[2]&~(511<<12))|(1<<12);check(!test());
 }'''
 code+='std::cout<<"DOCK_EDIT_FIELDS="<<n<<" checks; failed="<<f<<"\\n";return f?1:0;}';(D/'fields.cpp').write_text(code)
 run([W/'tests/dynamic-address-audit/runtime/zig-windows-x86_64-0.13.0/zig.exe','c++','-std=c++20','-I'+str(H),D/'fields.cpp','-o',D/'fields.exe']);run([D/'fields.exe'])
-(D/'DockEditTest.java').write_text('''import com.sevtinge.hyperceiler.libhook.rules.home.dock.*;
+(D/'DockEditTest.java').write_text('''import com.sevtinge.hypercraft.libhook.rules.home.dock.*;
 import android.os.*;import java.util.concurrent.atomic.AtomicInteger;
 public class DockEditTest {
  static int n;static void c(boolean b){n++;if(!b)throw new AssertionError("check "+n);}
@@ -50,7 +50,7 @@ public class DockEditTest {
  }
 }''')
 jdk=Path('D:/build-tools/jdk-25.0.4.1+1/bin');old=W/'tests/home-dock-window';sources=list((old/'stubs').rglob('*.java'))+[J/x for x in ['DockEditState.java','DockNativeMotion.java','DockNativeMotionEndpoint.java','DockRecentsMotion.java']]+[D/'DockEditTest.java',old/'DockNativeMotionEndpointTest.java',old/'DockNativeMotionTest.java']
-run([jdk/'javac.exe','-encoding','UTF-8','-d',D,*sources]);run([jdk/'java.exe','-ea','-cp',D,'DockEditTest']);run([jdk/'java.exe','-ea','-cp',D,'com.sevtinge.hyperceiler.tests.dock.DockNativeMotionEndpointTest']);run([jdk/'java.exe','-ea','-cp',D,'com.sevtinge.hyperceiler.tests.dock.DockNativeMotionTest'])
+run([jdk/'javac.exe','-encoding','UTF-8','-d',D,*sources]);run([jdk/'java.exe','-ea','-cp',D,'DockEditTest']);run([jdk/'java.exe','-ea','-cp',D,'com.sevtinge.hypercraft.tests.dock.DockNativeMotionEndpointTest']);run([jdk/'java.exe','-ea','-cp',D,'com.sevtinge.hypercraft.tests.dock.DockNativeMotionTest'])
 window=(J/'HomeDockWindow.kt').read_text(encoding='utf8');hooks=(H/'home_layout_hooks.cpp').read_text(encoding='utf8');motion=(H/'dock_native_motion.cpp').read_text(encoding='utf8');asm=(H/'home_layout_dart_arm64.S').read_text(encoding='utf8');a=asm[asm.index('hc_dock_edit_entry:'):]
 checks=[ 'dock_edit_packed.store(0, std::memory_order_release)' in hooks, '0x0048434F' in (J/'DockNativeMotionEndpoint.java').read_text(encoding='utf8') and '0x0048434F' in motion, 'windowVisible && !overlayShowing && !editing' in window,'requestTraversal() // Editing' in window,'!kDockEditPolicy && !config.grid_enabled' in hooks,motion.index('const uint64_t editing =')<motion.index('if (!dock_motion_feature_enabled.load',motion.index('void run_dock_motion')),'bl ' not in a and 'blr ' not in a,'ldr w10, [x1, x9]' in a and 'stlr x11, [x9]' in a,'br x16' in a,'Dock 编辑状态原消费域' in (H/'tweaks/symtab.cpp').read_text(encoding='utf8')]
 failed=sum(not x for x in checks);print(f'DOCK_EDIT_WIRING={len(checks)} checks; failed={failed}');sys.exit(int(failed>0))

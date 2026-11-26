@@ -1,10 +1,10 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
-package com.sevtinge.hyperceiler.libhook.rules.home.dock;
+package com.sevtinge.hypercraft.libhook.rules.home.dock;
 import android.content.ContentResolver;
 import android.os.Binder;
 import android.os.Parcel;
-import com.sevtinge.hyperceiler.libhook.provider.HomeLayoutPrefsSnapshot;
-import com.sevtinge.hyperceiler.common.log.ModuleLog;
+import com.sevtinge.hypercraft.libhook.provider.HomeLayoutPrefsSnapshot;
+import com.sevtinge.hypercraft.common.log.ModuleLog;
 import java.util.Map;
 
 public class EndpointTest {

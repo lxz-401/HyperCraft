@@ -23,7 +23,7 @@
 
 namespace {
 constexpr char kDescriptor[] = "android.view.IWindowManager";
-constexpr char kTag[] = "HyperCeiler.HyosControl";
+constexpr char kTag[] = "HyperCraft.HyosControl";
 constexpr int64_t kLeaseNanos = 5'000'000'000LL;
 std::atomic_bool g_active{false};
 std::atomic_bool g_worker_started{false};
@@ -126,7 +126,7 @@ void apply_options(unsigned flags) {
         home_startup::request_revoke();
         home_recents::cancel();
     }
-    hyperceiler_home_runtime_options(enabled && (flags & hyos_control::kHighModels) != 0,
+    hypercraft_home_runtime_options(enabled && (flags & hyos_control::kHighModels) != 0,
         enabled && (flags & hyos_control::kDisablePrestart) != 0,
         enabled && (flags & hyos_control::kSoftGlass) != 0,
         enabled && (flags & hyos_control::kDock) != 0,
@@ -297,10 +297,10 @@ void poll_flags() {
             }
         }
         service_startup_revoke();
-        if (g_initialized && hyos_control::allowed()) hyperceiler_home_after_startup();
+        if (g_initialized && hyos_control::allowed()) hypercraft_home_after_startup();
     }
     if (startup_finished() && hyos_control::feature_enabled(hyos_control::kHideReport)) {
-        hyperceiler_hyos_retry_home_report(api);
+        hypercraft_hyos_retry_home_report(api);
     }
     const auto phase = g_startup_phase.load(std::memory_order_acquire);
     if (phase != g_last_startup_phase && phase != StartupPhase::Installing
@@ -325,7 +325,7 @@ void poll_flags() {
         g_poll_completed = true;
     }
     g_first_poll.notify_all();
-    if (g_initialized) hyperceiler_home_maintain_back_gesture(api->inlineHook, api->inlineUnhook);
+    if (g_initialized) hypercraft_home_maintain_back_gesture(api->inlineHook, api->inlineUnhook);
     g_polling.clear(std::memory_order_release);
 }
 
@@ -446,7 +446,7 @@ void on_first_home_snapshot(uintptr_t dart_load_bias) noexcept {
 }
 }
 
-bool hyperceiler_hyos_start_home_control(const ZygiskNextAPI *api) {
+bool hypercraft_hyos_start_home_control(const ZygiskNextAPI *api) {
     g_active.store(true, std::memory_order_release);
     if (api == nullptr || api->inlineHook == nullptr || api->inlineUnhook == nullptr) return false;
     const ZygiskNextAPI *expected = nullptr;
@@ -473,7 +473,7 @@ bool hyperceiler_hyos_start_home_control(const ZygiskNextAPI *api) {
     return ready;
 }
 
-void hyperceiler_hyos_record_home_library(const char *name) {
+void hypercraft_hyos_record_home_library(const char *name) {
     if (name == nullptr) return;
     const char *slash = std::strrchr(name, '/');
     const char *base = slash == nullptr ? name : slash + 1;
@@ -483,9 +483,9 @@ void hyperceiler_hyos_record_home_library(const char *name) {
 
 // Compatibility wrappers. New Hyos entry code starts control at app_entry_point,
 // and only records images from loader notifications.
-void hyperceiler_hyos_before_home_load(const ZygiskNextAPI *api) {
-    (void) hyperceiler_hyos_start_home_control(api);
+void hypercraft_hyos_before_home_load(const ZygiskNextAPI *api) {
+    (void) hypercraft_hyos_start_home_control(api);
 }
-void hyperceiler_hyos_after_home_load(const ZygiskNextAPI *, const char *name, void *) {
-    hyperceiler_hyos_record_home_library(name);
+void hypercraft_hyos_after_home_load(const ZygiskNextAPI *, const char *name, void *) {
+    hypercraft_hyos_record_home_library(name);
 }

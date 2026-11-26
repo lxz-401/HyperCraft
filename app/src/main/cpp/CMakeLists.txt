@@ -1,27 +1,27 @@
 cmake_minimum_required(VERSION 3.22.1)
-project(HyperCeilerNative LANGUAGES CXX)
+project(HyperCraftNative LANGUAGES CXX)
 
 # Layout: nativehook/ holds the target-agnostic hook infrastructure; targets/
 # holds the per-feature entry points and resolvers that bind it to one host.
 # The root include dir keeps `nativehook/...` includes valid from any target.
 # The library name is the LSPosed native-hook contract: it must match the
-# `libHyperCeilerNative.so` entry of META-INF/xposed/native_init.list and the
+# `libHyperCraftNative.so` entry of META-INF/xposed/native_init.list and the
 # `System.loadLibrary` name in NativeHomeHooksOS4.
-add_library(HyperCeilerNative SHARED
+add_library(HyperCraftNative SHARED
     nativehook/native_log.cpp
     nativehook/safe_mode.cpp
-    targets/home/hyperceiler_home.cpp)
+    targets/home/hypercraft_home.cpp)
 
-option(HYPERCEILER_HYOS_BACKEND "Build the separate Zygisk Next native-only companion" OFF)
-if(HYPERCEILER_HYOS_BACKEND)
-    if(NOT HYPERCEILER_ZYGISK_NEXT_API_DIR)
-        set(HYPERCEILER_ZYGISK_NEXT_API_DIR "${CMAKE_CURRENT_SOURCE_DIR}/nativehook")
+option(HYPERCRAFT_HYOS_BACKEND "Build the separate Zygisk Next native-only companion" OFF)
+if(HYPERCRAFT_HYOS_BACKEND)
+    if(NOT HYPERCRAFT_ZYGISK_NEXT_API_DIR)
+        set(HYPERCRAFT_ZYGISK_NEXT_API_DIR "${CMAKE_CURRENT_SOURCE_DIR}/nativehook")
     endif()
-    set_target_properties(HyperCeilerNative PROPERTIES OUTPUT_NAME HyperCeilerHyos)
-    if(NOT EXISTS "${HYPERCEILER_ZYGISK_NEXT_API_DIR}/zygisk_next_api.h")
+    set_target_properties(HyperCraftNative PROPERTIES OUTPUT_NAME HyperCraftHyos)
+    if(NOT EXISTS "${HYPERCRAFT_ZYGISK_NEXT_API_DIR}/zygisk_next_api.h")
         message(FATAL_ERROR "Supply the pinned Zygisk Next API 4 SDK header directory")
     endif()
-    target_sources(HyperCeilerNative PRIVATE targets/hyos/hyos_entry.cpp targets/hyos/hyos_control.cpp
+    target_sources(HyperCraftNative PRIVATE targets/hyos/hyos_entry.cpp targets/hyos/hyos_control.cpp
         targets/hyos/hyos_app_entry_arm64.S
         targets/hyos/hyos_report_runtime.cpp
         targets/weather/weather_runtime.cpp
@@ -32,8 +32,8 @@ if(HYPERCEILER_HYOS_BACKEND)
         targets/home/home_startup.cpp targets/home/home_startup_arm64.S
         targets/home/recents_runtime.cpp targets/home/recents_gateway_arm64.S
         targets/home/home_report_hooks.cpp targets/home/home_report_dart_arm64.S)
-    target_include_directories(HyperCeilerNative PRIVATE ${HYPERCEILER_ZYGISK_NEXT_API_DIR})
-    target_compile_definitions(HyperCeilerNative PRIVATE HYPERCEILER_HYOS_BACKEND=1)
+    target_include_directories(HyperCraftNative PRIVATE ${HYPERCRAFT_ZYGISK_NEXT_API_DIR})
+    target_compile_definitions(HyperCraftNative PRIVATE HYPERCRAFT_HYOS_BACKEND=1)
 endif()
 
 # The Dart-side trampolines are hand-written: they follow the Dart AOT register
@@ -41,8 +41,8 @@ endif()
 # its own assembly sources independent of the dock option below.
 enable_language(ASM)
 
-target_sources(HyperCeilerNative PRIVATE targets/home/home_layout_targets.cpp)
-target_sources(HyperCeilerNative PRIVATE targets/home/home_layout_config.cpp
+target_sources(HyperCraftNative PRIVATE targets/home/home_layout_targets.cpp)
+target_sources(HyperCraftNative PRIVATE targets/home/home_layout_config.cpp
     targets/home/home_layout_hooks.cpp
     targets/home/home_gestures_os4.cpp
     targets/home/home_recents_haptic_runtime.cpp
@@ -54,26 +54,26 @@ target_sources(HyperCeilerNative PRIVATE targets/home/home_layout_config.cpp
 # their own headers; the resolver locates every site from the image's own symbol table or
 # from a signature that must match exactly once, so nothing here carries a fixed address.
 enable_language(C)
-set(HYPERCEILER_TWEAKS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/targets/home/tweaks)
-target_sources(HyperCeilerNative PRIVATE
-    ${HYPERCEILER_TWEAKS_DIR}/entry.cpp
-    ${HYPERCEILER_TWEAKS_DIR}/blob.cpp
-    ${HYPERCEILER_TWEAKS_DIR}/image.cpp
-    ${HYPERCEILER_TWEAKS_DIR}/scanner.cpp
-    ${HYPERCEILER_TWEAKS_DIR}/symtab.cpp
-    ${HYPERCEILER_TWEAKS_DIR}/ht_plan.cpp
-    ${HYPERCEILER_TWEAKS_DIR}/htcache.cpp
-    ${HYPERCEILER_TWEAKS_DIR}/xz/xz_crc32.c
-    ${HYPERCEILER_TWEAKS_DIR}/xz/xz_crc64.c
-    ${HYPERCEILER_TWEAKS_DIR}/xz/xz_dec_lzma2.c
-    ${HYPERCEILER_TWEAKS_DIR}/xz/xz_dec_stream.c)
+set(HYPERCRAFT_TWEAKS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/targets/home/tweaks)
+target_sources(HyperCraftNative PRIVATE
+    ${HYPERCRAFT_TWEAKS_DIR}/entry.cpp
+    ${HYPERCRAFT_TWEAKS_DIR}/blob.cpp
+    ${HYPERCRAFT_TWEAKS_DIR}/image.cpp
+    ${HYPERCRAFT_TWEAKS_DIR}/scanner.cpp
+    ${HYPERCRAFT_TWEAKS_DIR}/symtab.cpp
+    ${HYPERCRAFT_TWEAKS_DIR}/ht_plan.cpp
+    ${HYPERCRAFT_TWEAKS_DIR}/htcache.cpp
+    ${HYPERCRAFT_TWEAKS_DIR}/xz/xz_crc32.c
+    ${HYPERCRAFT_TWEAKS_DIR}/xz/xz_crc64.c
+    ${HYPERCRAFT_TWEAKS_DIR}/xz/xz_dec_lzma2.c
+    ${HYPERCRAFT_TWEAKS_DIR}/xz/xz_dec_stream.c)
 # Third-party sources (Apache-2.0) - use targeted warning suppression instead of -Wno-everything
 # -Wnon-pod-varargs: catches std::string passed to %s (UB) - CRITICAL, must keep enabled
 # -Wformat / -Werror=format-security: format string safety
 # Other style warnings suppressed per-file as needed
-file(GLOB HYPERCEILER_TWEAKS_SOURCES
-    ${HYPERCEILER_TWEAKS_DIR}/*.cpp ${HYPERCEILER_TWEAKS_DIR}/xz/*.c)
-set_source_files_properties(${HYPERCEILER_TWEAKS_SOURCES} PROPERTIES
+file(GLOB HYPERCRAFT_TWEAKS_SOURCES
+    ${HYPERCRAFT_TWEAKS_DIR}/*.cpp ${HYPERCRAFT_TWEAKS_DIR}/xz/*.c)
+set_source_files_properties(${HYPERCRAFT_TWEAKS_SOURCES} PROPERTIES
     COMPILE_OPTIONS
     "-Wno-unused-parameter;-Wno-sign-compare;-Wno-unused-variable;-Wno-unused-function"
     "-Wnon-pod-varargs;-Wformat;-Werror=format-security")
@@ -91,33 +91,33 @@ else()
     message(WARNING "clang-tidy not found, static analysis disabled")
 endif()
 
-option(HYPERCEILER_DOCK_NATIVE_MOTION "Dynamically resolve OS4 native recents animation" ON)
-if(HYPERCEILER_DOCK_NATIVE_MOTION)
-    target_sources(HyperCeilerNative PRIVATE
+option(HYPERCRAFT_DOCK_NATIVE_MOTION "Dynamically resolve OS4 native recents animation" ON)
+if(HYPERCRAFT_DOCK_NATIVE_MOTION)
+    target_sources(HyperCraftNative PRIVATE
         targets/home/dock_native_hooks.cpp
         targets/home/home_recent_statusbar.cpp
         targets/home/dock_native_motion.cpp
         targets/home/dock_native_motion_arm64.S)
-    target_compile_definitions(HyperCeilerNative PRIVATE HYPERCEILER_DOCK_NATIVE_MOTION=1)
+    target_compile_definitions(HyperCraftNative PRIVATE HYPERCRAFT_DOCK_NATIVE_MOTION=1)
 endif()
 
-target_include_directories(HyperCeilerNative PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(HyperCraftNative PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_compile_features(HyperCeilerNative PRIVATE cxx_std_20)
-target_compile_options(HyperCeilerNative PRIVATE
+target_compile_features(HyperCraftNative PRIVATE cxx_std_20)
+target_compile_options(HyperCraftNative PRIVATE
     -Wall
     -Wextra
     -Werror
     -fvisibility=hidden
 )
 
-target_link_libraries(HyperCeilerNative PRIVATE android binder_ndk log)
+target_link_libraries(HyperCraftNative PRIVATE android binder_ndk log)
 
 # SystemUI's isolated palette backend has no Home/Hyos initialization contract.
 # It is loaded on demand by AmbientNativeColorOS4 and is absent from the companion.
-if(NOT HYPERCEILER_HYOS_BACKEND)
-    add_library(HyperCeilerAmbientOS4 SHARED targets/systemui/ambient_color_os4.cpp)
-    target_compile_features(HyperCeilerAmbientOS4 PRIVATE cxx_std_20)
-    target_compile_options(HyperCeilerAmbientOS4 PRIVATE -Wall -Wextra -Werror -fvisibility=hidden)
-    target_link_libraries(HyperCeilerAmbientOS4 PRIVATE dl log)
+if(NOT HYPERCRAFT_HYOS_BACKEND)
+    add_library(HyperCraftAmbientOS4 SHARED targets/systemui/ambient_color_os4.cpp)
+    target_compile_features(HyperCraftAmbientOS4 PRIVATE cxx_std_20)
+    target_compile_options(HyperCraftAmbientOS4 PRIVATE -Wall -Wextra -Werror -fvisibility=hidden)
+    target_link_libraries(HyperCraftAmbientOS4 PRIVATE dl log)
 endif()

@@ -4,7 +4,7 @@
     <application>
         <provider
             android:name=".provider.SharedPrefsProvider"
-            android:authorities="com.sevtinge.hyperceiler.provider.sharedprefs"
+            android:authorities="com.sevtinge.hypercraft.provider.sharedprefs"
             android:defaultToDeviceProtectedStorage="true"
             android:directBootAware="true"
             android:exported="true"

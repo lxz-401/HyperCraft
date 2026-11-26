@@ -1,11 +1,11 @@
 package android.content;
-import java.util.*;import java.util.concurrent.atomic.*;import android.database.*;import com.sevtinge.hyperceiler.libhook.provider.*;
+import java.util.*;import java.util.concurrent.atomic.*;import android.database.*;import com.sevtinge.hypercraft.libhook.provider.*;
 public class ContentResolver {
  public static volatile Map<String,Object> values=Map.of();public static volatile String failure="";public static volatile Runnable afterSnapshot=()->{};public static volatile java.util.function.Consumer<MatrixCursor> mutate=c->{};
  public static AtomicInteger queries=new AtomicInteger(),reads=new AtomicInteger(),inflight=new AtomicInteger(),max=new AtomicInteger();public static boolean missing;
  public static SharedPreferences prefs(){return ()->{reads.incrementAndGet();if(failure.equals("getAll"))throw new IllegalStateException();return values;};}
  public Cursor query(android.net.Uri u,String[]p,String s,String[]a,String o){
-  if(!u.toString().equals("content://com.sevtinge.hyperceiler.provider.sharedprefs/weather_config"))throw new AssertionError(u);
+  if(!u.toString().equals("content://com.sevtinge.hypercraft.provider.sharedprefs/weather_config"))throw new AssertionError(u);
   queries.incrementAndGet();int n=inflight.incrementAndGet();max.accumulateAndGet(n,Math::max);
   try{if(failure.equals("query"))throw new IllegalStateException();if(failure.equals("null"))return null;
    SharedPrefsProvider provider=new SharedPrefsProvider();provider.onCreate();MatrixCursor c=(MatrixCursor)provider.query(u,p,s,a,o);

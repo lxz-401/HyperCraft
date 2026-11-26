@@ -9,7 +9,7 @@ MUTANTS={
  'drop_bridge_main_guard':('Looper.myLooper() === Looper.getMainLooper() ||','false ||'),
  'drop_bridge_interrupt_guard':(' || Thread.currentThread().isInterrupted',''),
  'truncate_argb_bits':('encoded.toInt()','(encoded and 0xffffffL).toInt()'),
- 'load_unselected_at_object_init':('@Volatile private var loadState = 0','@Volatile private var loadState = try { System.loadLibrary("HyperCeilerAmbientOS4"); 1 } catch (_: LinkageError) { -1 }'),
+ 'load_unselected_at_object_init':('@Volatile private var loadState = 0','@Volatile private var loadState = try { System.loadLibrary("HyperCraftAmbientOS4"); 1 } catch (_: LinkageError) { -1 }'),
 }
 for label,change in [('baseline',None),*MUTANTS.items()]:
  case=out/label;case.mkdir();commands=[]
@@ -17,7 +17,7 @@ for label,change in [('baseline',None),*MUTANTS.items()]:
   w=Path(tmp);classes=w/'classes';classes.mkdir();src=w/h.NATIVE_SOURCE.name;body=h.NATIVE_SOURCE.read_text()
   if change:assert body.count(change[0])==1,(label,body.count(change[0]));body=body.replace(*change)
   src.write_text(body)
-  cmds=[['g++','-shared','-fPIC','-std=c++20','-Wall','-Wextra','-Werror','-I'+str(h.JAVA.parent/'include'),'-I'+str(h.JAVA.parent/'include/linux'),HERE/'native.cpp','-o',w/'libHyperCeilerAmbientOS4.so'],[h.JAVA/'javac','--release','21','-proc:none','-d',classes,*sorted((HERE/'fixtures').rglob('*.java'))],[h.JAVA/'java','-cp',h.KH/'lib/kotlin-compiler.jar','org.jetbrains.kotlin.cli.jvm.K2JVMCompiler','-kotlin-home',h.KH,'-jvm-target','21','-classpath',classes,'-d',classes,h.SOURCE,src,HERE/'fixtures/BridgeMain.kt']]
+  cmds=[['g++','-shared','-fPIC','-std=c++20','-Wall','-Wextra','-Werror','-I'+str(h.JAVA.parent/'include'),'-I'+str(h.JAVA.parent/'include/linux'),HERE/'native.cpp','-o',w/'libHyperCraftAmbientOS4.so'],[h.JAVA/'javac','--release','21','-proc:none','-d',classes,*sorted((HERE/'fixtures').rglob('*.java'))],[h.JAVA/'java','-cp',h.KH/'lib/kotlin-compiler.jar','org.jetbrains.kotlin.cli.jvm.K2JVMCompiler','-kotlin-home',h.KH,'-jvm-target','21','-classpath',classes,'-d',classes,h.SOURCE,src,HERE/'fixtures/BridgeMain.kt']]
   for i,cmd in enumerate(cmds):
    commands.append(list(map(str,cmd)));r=subprocess.run(commands[-1],capture_output=True,text=True,timeout=90);(case/f'build-{i}.txt').write_text(r.stdout+r.stderr);assert r.returncode==0,r.stdout+r.stderr
   modes=[]

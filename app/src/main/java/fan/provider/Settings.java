@@ -22,9 +22,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public final class Settings {
-    public static final String AUTHORITY = "hyperceiler.provider.settings";
-    public static final String PERMISSION_READ = "hyperceiler.permission.READ_SETTINGS";
-    public static final String PERMISSION_WRITE = "hyperceiler.permission.WRITE_SETTINGS";
+    public static final String AUTHORITY = "hypercraft.provider.settings";
+    public static final String PERMISSION_READ = "hypercraft.permission.READ_SETTINGS";
+    public static final String PERMISSION_WRITE = "hypercraft.permission.WRITE_SETTINGS";
 
     /**
      * 基础表结构定义

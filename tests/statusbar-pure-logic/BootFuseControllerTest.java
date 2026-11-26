@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
-package com.sevtinge.hyperceiler.libhook.rules.systemui.statusbarfollow;
+package com.sevtinge.hypercraft.libhook.rules.systemui.statusbarfollow;
 
 import java.util.ArrayList;
 import java.util.List;

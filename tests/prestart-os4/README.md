@@ -31,10 +31,10 @@ ordinary LSPosed-native backend follows its existing JNI configuration path
 (restart the launcher after changing the switch). No new polling worker is
 created. Late image discovery and hook repair use the existing layout worker.
 
-`HyperCeiler.HomeLayout` INFO records report graph binding plus `requested`,
+`HyperCraft.HomeLayout` INFO records report graph binding plus `requested`,
 `ready`, actual `hits` and actual `blocked` counts on the existing maintenance
 cadence. WARN records explain missing/ambiguous graphs or unavailable binding.
-This tag is already imported by HyperCeiler's built-in log collector. Installed
+This tag is already imported by HyperCraft's built-in log collector. Installed
 and ready are distinct from actual interception, rendering and interaction.
 
 Run from the repository root, entirely offline after providing the optional ROM

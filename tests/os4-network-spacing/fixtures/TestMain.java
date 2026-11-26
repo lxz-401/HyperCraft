@@ -5,9 +5,9 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.util.Log;
 import com.android.systemui.statusbar.policy.NetworkSpeedController;
-import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
-import com.sevtinge.hyperceiler.libhook.base.BaseHook;
-import com.sevtinge.hyperceiler.libhook.rules.systemui.statusbar.network.NetworkSpeedSpacing;
+import com.sevtinge.hypercraft.common.utils.PrefsBridge;
+import com.sevtinge.hypercraft.libhook.base.BaseHook;
+import com.sevtinge.hypercraft.libhook.rules.systemui.statusbar.network.NetworkSpeedSpacing;
 import io.github.lingqiqi5211.ezhooktool.xposed.common.HookParam;
 public class TestMain {
     static int passes;

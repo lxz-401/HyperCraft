@@ -40,7 +40,7 @@ HyperCraft has stopped maintaining MIUI ROMs for Android 11-13 and HyperOS 1.0/2
 
 > For MIUI ROMs on Android 11-12, please use [this version](https://github.com/ReChronoRain/Cemiuiler/releases/tag/1.3.130).
 >
-> For MIUI ROMs on Android 13 and HyperOS 1.0 ROM, please use [this version](https://github.com/Xposed-Modules-Repo/com.sevtinge.hyperceiler/releases/download/3866-2.5.156_20250118/HyperCeiler_2.5.156_20250118_3866_release_miui.apk).
+> For MIUI ROMs on Android 13 and HyperOS 1.0 ROM, please use [this version](https://github.com/Xposed-Modules-Repo/com.sevtinge.hypercraft/releases/download/3866-2.5.156_20250118/HyperCraft_2.5.156_20250118_3866_release_miui.apk).
 >
 > Android 14's HyperOS 1.0/2.0 has been archived, and support for Android 14 will be removed starting from version 2.6.162.
 
@@ -137,17 +137,17 @@ Join our group to report issues or get the latest updates.
 
 ## Translation contributions
 
-We used Hosted Weblate to synchronize project translations. You can contribute translations for the HyperCeiler project [here](https://hosted.weblate.org/engage/hyperceiler/)
+We used Hosted Weblate to synchronize project translations. You can contribute translations for the HyperCraft project [here](https://hosted.weblate.org/engage/hypercraft/)
 
-<a href="https://hosted.weblate.org/engage/hyperceiler/">
-<img src="https://hosted.weblate.org/widget/hyperceiler/multi-auto.svg" alt="Translation status" />
+<a href="https://hosted.weblate.org/engage/hypercraft/">
+<img src="https://hosted.weblate.org/widget/hypercraft/multi-auto.svg" alt="Translation status" />
 </a>
 
 > Note: When the translation progress of the new language is greater than or equal to 85%, it will enter the merge process. If the translation progress of the added language is less than or equal to 30% of the source text, it will be temporarily removed until the translation progress is greater than or equal to 85%.
 
 ## Thanks!
 
-> <b>HyperCeiler</b> uses some or all of the following projects, thanks to the developers of these projects for their support (in no particular order).
+> <b>HyperCraft</b> uses some or all of the following projects, thanks to the developers of these projects for their support (in no particular order).
 
 - [「Accompanist」 by Android Open Source Project, Google Inc.](https://google.github.io/accompanist)
 - [「Android」 by Android Open Source Project, Google Inc.](https://source.android.google.cn/license)

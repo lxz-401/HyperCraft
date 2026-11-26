@@ -2,4 +2,4 @@
 #pragma once
 struct ZygiskNextAPI;
 // Control worker only, after fresh authorization. No new thread or JNI.
-void hyperceiler_hyos_retry_home_report(const ZygiskNextAPI *api);
+void hypercraft_hyos_retry_home_report(const ZygiskNextAPI *api);

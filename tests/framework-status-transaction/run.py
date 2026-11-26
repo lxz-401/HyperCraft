@@ -5,21 +5,21 @@ import argparse, subprocess, tempfile, json, hashlib, re
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 p=argparse.ArgumentParser();p.add_argument('--output',required=True,type=Path);p.add_argument('--manager-source',type=Path);a=p.parse_args()
 b=Path(__file__).resolve().parent;r=b.parents[1];a.output.mkdir(parents=True,exist_ok=True)
 j=test_paths.JAVA_HOME / 'bin'
-manager=a.manager_source or r/'app/src/main/java/com/sevtinge/hyperceiler/utils/FrameworkStatusManager.java'
-prod=[manager,r/'library/common/src/main/java/com/sevtinge/hyperceiler/common/utils/PrefsBridge.java',r/'library/common/src/main/java/com/sevtinge/hyperceiler/common/utils/prefs/PrefType.java',r/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/base/FrameworkHookGate.java']
+manager=a.manager_source or r/'app/src/main/java/com/sevtinge/hypercraft/utils/FrameworkStatusManager.java'
+prod=[manager,r/'library/common/src/main/java/com/sevtinge/hypercraft/common/utils/PrefsBridge.java',r/'library/common/src/main/java/com/sevtinge/hypercraft/common/utils/prefs/PrefType.java',r/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/base/FrameworkHookGate.java']
 stubs=[x for x in (r/'tests/dock-style-refresh/stubs').rglob('*.java') if x.name not in ('Context.java','ContentResolver.java','AndroidLog.java')]
 gen={
 'android/annotation/SuppressLint.java':'package android.annotation; public @interface SuppressLint { String[] value(); }',
 'android/content/Context.java':'''package android.content; public class Context { public static final int MODE_PRIVATE=0; public final SharedPreferences prefs; public final ContentResolver resolver=new ContentResolver(); public Context(SharedPreferences p){prefs=p;} public Context createDeviceProtectedStorageContext(){return this;} public SharedPreferences getSharedPreferences(String n,int m){return prefs;} public ContentResolver getContentResolver(){return resolver;} public String getString(int id,Object...v){return "resource";} }''',
 'android/content/ContentResolver.java':'''package android.content; import android.net.Uri; import java.util.*; public class ContentResolver { public final List<String> events=new ArrayList<>(); public Runnable observer=()->{}; public void notifyChange(Uri u,Object o){events.add(u.toString());observer.run();} }''',
-'com/sevtinge/hyperceiler/common/log/AndroidLog.java':'package com.sevtinge.hyperceiler.common.log; public class AndroidLog { public static void w(Object...v){} public static void e(Object...v){} }',
+'com/sevtinge/hypercraft/common/log/AndroidLog.java':'package com.sevtinge.hypercraft.common.log; public class AndroidLog { public static void w(Object...v){} public static void e(Object...v){} }',
 'io/github/libxposed/service/XposedService.java':'''package io.github.libxposed.service; public interface XposedService { String getFrameworkName(); String getFrameworkVersion(); long getFrameworkVersionCode(); int getApiVersion(); }''',
-'com/sevtinge/hyperceiler/R.java':'package com.sevtinge.hyperceiler; public final class R { public static final class string {'+''.join('public static final int '+v+'='+str(i)+';' for i,v in enumerate(sorted(set(re.findall(r'R.string.(\w+)',manager.read_text())))))+'} }'}
+'com/sevtinge/hypercraft/R.java':'package com.sevtinge.hypercraft; public final class R { public static final class string {'+''.join('public static final int '+v+'='+str(i)+';' for i,v in enumerate(sorted(set(re.findall(r'R.string.(\w+)',manager.read_text())))))+'} }'}
 with tempfile.TemporaryDirectory(prefix='hc-framework-status-') as t:
  t=Path(t)
  for f,s in gen.items():

@@ -2,7 +2,7 @@
 from pathlib import Path
 import sys,subprocess,json
 W=Path(__file__).resolve().parents[2];R=Path(sys.argv[1]).resolve() if len(sys.argv)>1 else W
-J=R/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook';D=W/'handover/gesture-extra-os4-20261017'/('endpoint-'+R.name);D.mkdir(parents=True,exist_ok=True)
+J=R/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook';D=W/'handover/gesture-extra-os4-20261017'/('endpoint-'+R.name);D.mkdir(parents=True,exist_ok=True)
 s=(J/'rules/home/gesture/HomeQuickSwitchOS4.java').read_text()
 if 'static int actionIndex' not in s:print('EXTRA_ENDPOINT=missing wire mapping; failed=1');sys.exit(1)
 def body(start):
@@ -32,15 +32,15 @@ stubs={
 'android/os/Binder.java':'package android.os;public class Binder {public static int uid=1000,pid=222;public static int getCallingUid(){return uid;}public static int getCallingPid(){return pid;}public static long clearCallingIdentity(){return 1;}public static void restoreCallingIdentity(long t){}}',
 'android/os/Parcel.java':'''package android.os;import java.util.*;public class Parcel {public List<Number> data=new ArrayList<>();int index;public Parcel(Number... n){data.addAll(Arrays.asList(n));}public void enforceInterface(String s){if(!s.equals("android.view.IWindowManager"))throw new IllegalArgumentException();}public int readInt(){return data.get(index++).intValue();}public long readLong(){return data.get(index++).longValue();}public int dataAvail(){return (data.size()-index)*4;}public void writeInt(int i){data.add(i);}}''',
 'android/content/Context.java':'''package android.content;import java.util.*;import android.database.*;public class Context {
- public static String KEYGUARD_SERVICE="key",POWER_SERVICE="power";public static Map<String,Object> prefs=new HashMap<>();public static Cursor cursor(){return com.sevtinge.hyperceiler.libhook.provider.HomeGesturePrefsSnapshot.cursor(()->prefs);}
+ public static String KEYGUARD_SERVICE="key",POWER_SERVICE="power";public static Map<String,Object> prefs=new HashMap<>();public static Cursor cursor(){return com.sevtinge.hypercraft.libhook.provider.HomeGesturePrefsSnapshot.cursor(()->prefs);}
  public static class Resolver {public Cursor query(android.net.Uri u,Object a,Object b,Object c,Object d){return cursor();}}public Resolver getContentResolver(){return new Resolver();}public Object getSystemService(String s){return s.equals("key")?new android.app.KeyguardManager():new android.os.PowerManager();}public <T>T getSystemService(Class<T> c){try{return c.getConstructor().newInstance();}catch(Exception e){throw new RuntimeException(e);}}public android.content.pm.PackageManager getPackageManager(){return new android.content.pm.PackageManager();}}''',
 'android/util/Log.java':'package android.util;public class Log {public static int i(String t,String s){return 0;}public static int w(String t,String s,Exception e){return 0;}}',
-'com/sevtinge/hyperceiler/libhook/utils/api/ContextUtils.java':'package com.sevtinge.hyperceiler.libhook.utils.api;public class ContextUtils {public static int FlAG_ONLY_ANDROID=1;public static android.content.Context getContextNoError(int i){return new android.content.Context();}}',
-'com/sevtinge/hyperceiler/common/utils/PrefsBridge.java':'package com.sevtinge.hyperceiler.common.utils;import java.util.*;public class PrefsBridge {public static Map<String,Object> cache=new HashMap<>();public static void putHookCache(String k,Object v){cache.put(k,v);}}',
-'com/sevtinge/hyperceiler/libhook/appbase/systemframework/GlobalActionBridge.java':'package com.sevtinge.hyperceiler.libhook.appbase.systemframework;public class GlobalActionBridge {public static String key;public static boolean handleAction(android.content.Context c,String k){key=k;return true;}}'
+'com/sevtinge/hypercraft/libhook/utils/api/ContextUtils.java':'package com.sevtinge.hypercraft.libhook.utils.api;public class ContextUtils {public static int FlAG_ONLY_ANDROID=1;public static android.content.Context getContextNoError(int i){return new android.content.Context();}}',
+'com/sevtinge/hypercraft/common/utils/PrefsBridge.java':'package com.sevtinge.hypercraft.common.utils;import java.util.*;public class PrefsBridge {public static Map<String,Object> cache=new HashMap<>();public static void putHookCache(String k,Object v){cache.put(k,v);}}',
+'com/sevtinge/hypercraft/libhook/appbase/systemframework/GlobalActionBridge.java':'package com.sevtinge.hypercraft.libhook.appbase.systemframework;public class GlobalActionBridge {public static String key;public static boolean handleAction(android.content.Context c,String k){key=k;return true;}}'
 }
 for n,t in stubs.items():write(n,t)
-pre='''import android.app.ActivityManager;import android.content.Context;import android.database.Cursor;import android.os.*;import android.net.Uri;import com.sevtinge.hyperceiler.libhook.utils.api.ContextUtils;
+pre='''import android.app.ActivityManager;import android.content.Context;import android.database.Cursor;import android.os.*;import android.net.Uri;import com.sevtinge.hypercraft.libhook.utils.api.ContextUtils;
 public class EndpointTest {
 static int ACK=0x48435131;static long lastSwitch;static Uri PREFS=new Uri();static int switches;
 static boolean isSystemUI(Context c,int uid,int pid){return uid==1000&&pid==222;}static boolean isLauncher(Context c,int uid,int pid){return uid==20001&&pid==111;}
@@ -56,12 +56,12 @@ static boolean call(int event,int uid,int pid,int flags,long age,boolean extra) 
 }
 public static void main(String[]args) {
  Context.prefs.put("prefs_key_home_gesture_enable",true);Context.prefs.put("prefs_key_home_navigation_quick_back",true);
- var keys=com.sevtinge.hyperceiler.libhook.provider.HomeGesturePrefsSnapshot.ACTIONS;
+ var keys=com.sevtinge.hypercraft.libhook.provider.HomeGesturePrefsSnapshot.ACTIONS;
  for(String key:keys){Context.prefs.put("prefs_key_"+key+"_action",8);Context.prefs.put("prefs_key_"+key+"_app","test.app");}
  try(Cursor c=Context.cursor()){ok(c.getColumnCount()==43&&c.moveToFirst(),"production snapshot 43 columns");for(String key:keys)ok(c.getInt(c.getColumnIndex(key+"_action"))==8,"every action serialized");}
  for(int event:new int[]{1,2,3,4,5,8,9,10,11,12}){
   boolean ui=event>=8;ok(call(event,ui?1000:20001,ui?222:111,16,0,false),"action accepted "+event);
-  ok(com.sevtinge.hyperceiler.libhook.appbase.systemframework.GlobalActionBridge.key.equals(keys[actionIndex(event)]),"correct action "+event);
+  ok(com.sevtinge.hypercraft.libhook.appbase.systemframework.GlobalActionBridge.key.equals(keys[actionIndex(event)]),"correct action "+event);
   ok(!call(event,ui?20001:1000,ui?111:222,0,0,false),"wrong process role "+event);
  }
  ok(call(6,20001,111,0,0,false)&&call(7,1000,222,0,0,false)&&switches==2,"Previous contract retained");
@@ -72,7 +72,7 @@ public static void main(String[]args) {
  android.app.ActivityManager.home=false;ok(!call(8,1000,222,0,0,false),"shake foreground rechecked in server");ok(call(9,1000,222,0,0,false),"corner works over app");android.app.ActivityManager.home=true;
  Context.prefs.put("prefs_key_home_gesture_enable",false);ok(!call(11,1000,222,0,0,false),"master off");ok(call(7,1000,222,0,0,false),"quick independent");Context.prefs.put("prefs_key_home_gesture_enable",true);
  Context.prefs.put("prefs_key_home_gesture_line_double_click_action",0);ok(!call(12,1000,222,0,0,false),"action off");ok(call(11,1000,222,0,0,false),"other action unaffected");
- Context.prefs.put("prefs_key_home_gesture_line_long_press_action",13);ok(call(11,1000,222,0,0,false)&&com.sevtinge.hyperceiler.common.utils.PrefsBridge.cache.get("home_gesture_line_long_press_action").equals(13),"fresh payload reload");
+ Context.prefs.put("prefs_key_home_gesture_line_long_press_action",13);ok(call(11,1000,222,0,0,false)&&com.sevtinge.hypercraft.common.utils.PrefsBridge.cache.get("home_gesture_line_long_press_action").equals(13),"fresh payload reload");
  System.out.println("EXTRA_ENDPOINT_CHECKS="+checks+" FAILED="+failed+"; production snapshot/receive/perform, caller identity/Binder/actions mocked");if(failed>0)System.exit(1);
 }}
 '''

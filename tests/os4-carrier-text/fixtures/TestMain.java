@@ -2,11 +2,11 @@ import java.lang.reflect.*;import java.util.*;
 import android.view.View;
 import io.github.libxposed.api.XposedInterface;
 import io.github.lingqiqi5211.ezhooktool.xposed.EzXposed;
-import com.sevtinge.hyperceiler.libhook.base.BaseHook;
-import com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.CustomCarrierText;
-import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
-import com.sevtinge.hyperceiler.libhook.utils.api.PropUtils;
-import com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper;
+import com.sevtinge.hypercraft.libhook.base.BaseHook;
+import com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.CustomCarrierText;
+import com.sevtinge.hypercraft.common.utils.PrefsBridge;
+import com.sevtinge.hypercraft.libhook.utils.api.PropUtils;
+import com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper;
 import com.android.systemui.controlcenter.shade.*;
 import com.android.systemui.plugins.miui.statusbar.MiuiPrivacyController;
 public class TestMain{

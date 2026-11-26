@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -15,7 +15,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   --><resources>
     <!--Pop-up window/miuix part-->
     <string name="miuix_appcompat_action_mode_select_all">Chọn tất cả</string>
@@ -28,19 +28,19 @@
     <string name="miuix_appcompat_search_input_description">Tìm kiếm</string>
     <string name="miuix_appcompat_actionbar_immersion_button_more_description">Xem thêm</string>
     <string name="miuix_appcompat_action_mode_inverse">Đảo ngược</string>
-    <!--HyperCeiler Settings/About Page-->
+    <!--HyperCraft Settings/About Page-->
     <string name="tip">Mẹo</string>
     <string name="root">Một số tính năng không khả dụng nếu không có quyền Root/Su</string>
     <string name="soft_reboot">Khởi động lại</string>
     <string name="restart_app_desc">Bạn có chắc chắn muốn khởi động lại ngay bây giờ không %1$s?</string>
-    <string name="hyperceiler_restart_quick">Ứng dụng khởi động lại nhanh</string>
+    <string name="hypercraft_restart_quick">Ứng dụng khởi động lại nhanh</string>
     <string name="hook_failed">Module chưa được kích hoạt. Vui lòng kiểm tra xem LSPosed có được bật không. Nếu có, vui lòng khởi động lại hoặc tối ưu hóa lại module.</string>
-    <string name="kill_failed">Không thể kết thúc tiến trình. Vui lòng kiểm tra xem HyperCeiler đã được cấp quyền Root/Su chưa.</string>
-    <string name="start_failed">Không thể bắt đầu hoạt động. Vui lòng kiểm tra xem HyperCeiler đã được cấp quyền Root/Su chưa.</string>
+    <string name="kill_failed">Không thể kết thúc tiến trình. Vui lòng kiểm tra xem HyperCraft đã được cấp quyền Root/Su chưa.</string>
+    <string name="start_failed">Không thể bắt đầu hoạt động. Vui lòng kiểm tra xem HyperCraft đã được cấp quyền Root/Su chưa.</string>
     <string name="pid_failed">Ứng dụng mục tiêu không chạy và không cần phải khởi động lại.</string>
-    <string name="reboot_failed">Khởi động lại không thành công. Vui lòng kiểm tra xem HyperCeiler đã được cấp quyền Root/Su chưa.</string>
+    <string name="reboot_failed">Khởi động lại không thành công. Vui lòng kiểm tra xem HyperCraft đã được cấp quyền Root/Su chưa.</string>
     <string name="experimental_features">Tính năng thử nghiệm</string>
-    <!--HyperCeiler Tips-->
+    <!--HyperCraft Tips-->
     <string name="warn">Cảnh báo</string>
     <string name="module_title_1">Tin nhắn cơ bản</string>
     <string name="module_title_2">Tin nhắn ngăn xếp</string>
@@ -63,12 +63,12 @@
     <string name="error_version_name">Tên phiên bản</string>
     <string name="error_git_hash">Git hash</string>
     <string name="error_build_time">Thời gian xây dựng</string>
-    <string name="tip_default">Mẹo: Đây là mẹo mặc định. Nếu bạn có thể nhìn thấy tôi, điều đó có nghĩa là có vấn đề với HyperCeiler. Vui lòng báo cáo cho nhà phát triển kịp thời và hiệu quả.</string>
+    <string name="tip_default">Mẹo: Đây là mẹo mặc định. Nếu bạn có thể nhìn thấy tôi, điều đó có nghĩa là có vấn đề với HyperCraft. Vui lòng báo cáo cho nhà phát triển kịp thời và hiệu quả.</string>
     <string name="headtip_tip_auto_safe_mode">Chế độ an toàn có thể gỡ bỏ một số ứng dụng kịp thời khi chúng bị sập nhiều lần để đảm bảo an toàn. Tính năng này yêu cầu phạm vi hook của System Framework để chạy. Chúng tôi đặc biệt khuyên bạn nên kiểm tra phạm vi System Framework để bật Chế độ an toàn.</string>
-    <string name="happy_birthday_hyperceiler">Hôm nay là sinh nhật của HyperCeiler!\nCảm ơn sự ủng hộ của bạn trong năm qua và chúng ta hãy tiếp tục hợp tác trong năm nay nhé!</string>
+    <string name="happy_birthday_hypercraft">Hôm nay là sinh nhật của HyperCraft!\nCảm ơn sự ủng hộ của bạn trong năm qua và chúng ta hãy tiếp tục hợp tác trong năm nay nhé!</string>
     <string name="headtip_tip_fuck_coolapk">Ngày này trong lịch sử: Sevtinge đã có bài phát biểu quan trọng vào ngày 14 tháng 7 năm 2022.</string>
-    <string name="headtip_notice_dead_logger_errcode">Dịch vụ nhật ký thiết bị hiện tại không bình thường và các tính năng HyperCeiler sẽ bị hạn chế. Vui lòng khôi phục dịch vụ nhật ký để nó có thể chạy bình thường.\nMã lỗi: %1$s</string>
-    <string name="headtip_notice_dead_logger">Dịch vụ nhật ký thiết bị hiện tại không bình thường và các tính năng của HyperCeiler sẽ bị hạn chế. Vui lòng khôi phục dịch vụ nhật ký để có thể chạy bình thường.</string>
+    <string name="headtip_notice_dead_logger_errcode">Dịch vụ nhật ký thiết bị hiện tại không bình thường và các tính năng HyperCraft sẽ bị hạn chế. Vui lòng khôi phục dịch vụ nhật ký để nó có thể chạy bình thường.\nMã lỗi: %1$s</string>
+    <string name="headtip_notice_dead_logger">Dịch vụ nhật ký thiết bị hiện tại không bình thường và các tính năng của HyperCraft sẽ bị hạn chế. Vui lòng khôi phục dịch vụ nhật ký để có thể chạy bình thường.</string>
     <string name="unsupported_system_func">Tính năng này không được hỗ trợ trong phiên bản hệ thống hiện tại</string>
     <string name="supported_system_func">Chức năng này được hỗ trợ chính thức bởi phiên bản hệ thống hiện tại</string>
     <string name="feature_doing_func">Chức năng hiện tại đang được tạo ra, vui lòng chờ</string>

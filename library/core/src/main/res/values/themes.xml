@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="SubSettingsTheme" parent="Base.Theme.HyperCeiler.DayNight">
+    <style name="SubSettingsTheme" parent="Base.Theme.HyperCraft.DayNight">
 
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
         <item name="android:windowBackground">@color/miuix_design_default_color_surface_variant_light</item>

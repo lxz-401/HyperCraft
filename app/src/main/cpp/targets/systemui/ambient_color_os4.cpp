@@ -25,11 +25,11 @@ constexpr std::array<uint8_t,32> kDigest={0x65,0x2e,0xb3,0xfb,0x88,0x50,0xb4,0x6
 constexpr char kInitName[]="_ZN19MainColorSingleRect4initEv";
 constexpr char kHctName[]="_ZN19MainColorSingleRect15getMainColorHCTEPiiiS0_";
 constexpr char kWrapperName[]="_Z15getMainColorHCTP7_JNIEnvP7_jclassP10_jintArrayii";
-#ifndef HYPERCEILER_AMBIENT_TEST_PATH
+#ifndef HYPERCRAFT_AMBIENT_TEST_PATH
 constexpr char kPath[]="/system_ext/lib64/libMiMainColor.so";
 #else
 // Research builds only: substitute the same hash-pinned OTA file inside a probe app.
-constexpr char kPath[]=HYPERCEILER_AMBIENT_TEST_PATH;
+constexpr char kPath[]=HYPERCRAFT_AMBIENT_TEST_PATH;
 #endif
 using Init=void(*)(void*);
 using Hct=int(*)(void*,int*,int,int,int*);
@@ -51,7 +51,7 @@ bool fail(Stage value) noexcept {stage=value;return false;}
 void log_initialization() noexcept {
     if(init_logged||!attempted)return;
     init_logged=true;
-    __android_log_print(available?ANDROID_LOG_INFO:ANDROID_LOG_WARN,"HyperCeilerAmbientOS4",
+    __android_log_print(available?ANDROID_LOG_INFO:ANDROID_LOG_WARN,"HyperCraftAmbientOS4",
         "isolated color initialization %s stage=%d vendor_sha=652eb3fb8850b46a prior_objects=%zu prior_vendor_names=%zu",
         available?"ready":"unavailable",static_cast<int>(stage),prior_mapping_count,prior_vendor_name_count);
 }
@@ -175,7 +175,7 @@ bool initialize() {
 } // namespace ambient_os4
 
 extern "C" JNIEXPORT jlong JNICALL
-Java_com_sevtinge_hyperceiler_libhook_rules_systemui_controlcenter_media3_AmbientNativeColorOS4_nativeResolve(
+Java_com_sevtinge_hypercraft_libhook_rules_systemui_controlcenter_media3_AmbientNativeColorOS4_nativeResolve(
     JNIEnv* env,jclass,jintArray pixels,jint width,jint height) {
     if(env->ExceptionCheck()||!pixels||width<=0||height<=0)return 0;
     const int64_t count=static_cast<int64_t>(width)*height;
@@ -207,7 +207,7 @@ Java_com_sevtinge_hyperceiler_libhook_rules_systemui_controlcenter_media3_Ambien
             // Retire this private object under the same lock; never reuse it.
             ambient_os4::available=false;
             ambient_os4::stage=ambient_os4::Stage::AlgorithmException;
-            __android_log_print(ANDROID_LOG_WARN,"HyperCeilerAmbientOS4",
+            __android_log_print(ANDROID_LOG_WARN,"HyperCraftAmbientOS4",
                 "isolated color unavailable stage=%d algorithm exception; instance retired",
                 static_cast<int>(ambient_os4::stage));
             return 0;

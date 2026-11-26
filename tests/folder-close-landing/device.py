@@ -2,7 +2,7 @@ from pathlib import Path
 import subprocess, time, json, sys
 O=Path(__file__).resolve().parent
 A=['adb','-s','192.168.31.52:33509']
-URI='content://com.sevtinge.hyperceiler.provider.sharedprefs'
+URI='content://com.sevtinge.hypercraft.provider.sharedprefs'
 def c(*args):
     p=subprocess.run(A+list(args),capture_output=True,timeout=30)
     with (O/'device-commands.jsonl').open('a',encoding='utf-8') as f:
@@ -30,11 +30,11 @@ def record(name,outside=False):
     out,err=p.communicate(timeout=15);assert p.returncode==0,(out,err)
     c('pull',remote,str(O/(name+'.mp4')));c('shell','rm','-f',remote)
     assert c('shell','pidof','com.miui.home')==pid
-    (O/(name+'-native.log')).write_bytes(c('logcat','-d','-s','HyperCeiler.HomeLayout'))
+    (O/(name+'-native.log')).write_bytes(c('logcat','-d','-s','HyperCraft.HomeLayout'))
     (O/(name+'-final.png')).write_bytes(c('exec-out','screencap','-p'))
     print('RECORDED',name,'PID_STABLE='+pid.decode().strip(),'EXIT=0',flush=True)
 phase=sys.argv[1]
-c('shell','setprop','debug.hyperceiler.prefs_write','1')
+c('shell','setprop','debug.hypercraft.prefs_write','1')
 if phase=='modified':
     for k in ['top','bottom']:put(f'boolean:home_layout_workspace_padding_{k}_enable:true')
     margin(0,240);time.sleep(3);restart()
@@ -47,6 +47,6 @@ elif phase=='restore':
     for k,e in json.loads((O/'test-settings-original.json').read_text()).items():
         t='integer' if e['type']=='int' else e['type']
         put(f"{t}:{k.removeprefix('prefs_key_')}:{e['value']}")
-    c('shell','setprop','debug.hyperceiler.prefs_write','0');restart()
+    c('shell','setprop','debug.hypercraft.prefs_write','0');restart()
     print('RESTORED original four top/bottom settings; EXIT=0')
 else:raise SystemExit('phase')

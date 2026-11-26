@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Binder;
 import com.android.wm.shell.recents.IRecentTasks;
 import com.android.wm.shell.recents.IRecentTasks.Group;
-import com.sevtinge.hyperceiler.libhook.base.BaseHook;
-import com.sevtinge.hyperceiler.libhook.rules.home.recent.*;
-import com.sevtinge.hyperceiler.libhook.utils.api.*;
-import com.sevtinge.hyperceiler.libhook.provider.HomeLayoutPrefsSnapshot;
+import com.sevtinge.hypercraft.libhook.base.BaseHook;
+import com.sevtinge.hypercraft.libhook.rules.home.recent.*;
+import com.sevtinge.hypercraft.libhook.utils.api.*;
+import com.sevtinge.hypercraft.libhook.provider.HomeLayoutPrefsSnapshot;
 import java.util.*;
 
 public class Test {
@@ -34,15 +34,15 @@ public class Test {
    public Object proceed(Object[] v){replacements[0]++;return v;}
    public Object proceedWith(Object target,Object[] v){replacements[0]++;return v;}
   };
-  var observer=com.sevtinge.hyperceiler.libhook.base.OriginalArgumentsHook.of(new io.github.lingqiqi5211.ezhooktool.xposed.java.IMethodHook(){
+  var observer=com.sevtinge.hypercraft.libhook.base.OriginalArgumentsHook.of(new io.github.lingqiqi5211.ezhooktool.xposed.java.IMethodHook(){
    public void after(io.github.lingqiqi5211.ezhooktool.xposed.common.HookParam p){after[0]++;}
   });
   ok(observer.intercept(raw)==service.tasks&&originals[0]==1&&replacements[0]==0&&after[0]==1,"actual EzHookTool forwards boxed primitives through original proceed once");
-  var modified=com.sevtinge.hyperceiler.libhook.base.OriginalArgumentsHook.of(new io.github.lingqiqi5211.ezhooktool.xposed.java.IMethodHook(){
+  var modified=com.sevtinge.hypercraft.libhook.base.OriginalArgumentsHook.of(new io.github.lingqiqi5211.ezhooktool.xposed.java.IMethodHook(){
    public void before(io.github.lingqiqi5211.ezhooktool.xposed.common.HookParam p){p.getArgs()[0]=Integer.valueOf(2000);}
   });
   ok(((Object[])modified.intercept(raw))[0].equals(2000)&&replacements[0]==1&&originals[0]==1,"explicit argument replacement retains framework validation path");
-  var skipped=com.sevtinge.hyperceiler.libhook.base.OriginalArgumentsHook.of(new io.github.lingqiqi5211.ezhooktool.xposed.java.IMethodHook(){
+  var skipped=com.sevtinge.hypercraft.libhook.base.OriginalArgumentsHook.of(new io.github.lingqiqi5211.ezhooktool.xposed.java.IMethodHook(){
    public void before(io.github.lingqiqi5211.ezhooktool.xposed.common.HookParam p){p.setResult("skip");}
   });
   ok(skipped.intercept(raw).equals("skip")&&originals[0]==1,"early result still skips original");
@@ -76,10 +76,10 @@ public class Test {
   ok(query(service)==original,"default selection empty");
   choose(Set.of("app.hide"));ok(receiver.changed==1,"configuration update notifies actual recent listener");
   ok(((Group[])query(service)).length==3,"shipping wrapper filters selected groups");
-  int reads=ContextUtils.app.resolver.reads,queries=ContextUtils.app.resolver.queries,logs=com.sevtinge.hyperceiler.common.log.ModuleLog.logs;
+  int reads=ContextUtils.app.resolver.reads,queries=ContextUtils.app.resolver.queries,logs=com.sevtinge.hypercraft.common.log.ModuleLog.logs;
   for(int i=0;i<10000;i++)ok(((Group[])query(service)).length==3,"warm reply");
   ok(ContextUtils.app.resolver.reads==reads&&ContextUtils.app.resolver.queries==queries&&ThreadPoolManager.queue.isEmpty(),"10000 callbacks perform no provider/file reads or scheduled polling");
-  ok(com.sevtinge.hyperceiler.common.log.ModuleLog.logs==logs,"no callback log spam");
+  ok(com.sevtinge.hypercraft.common.log.ModuleLog.logs==logs,"no callback log spam");
   for(int uid:new int[]{0,1000,10140}){Binder.uid=uid;ok(query(service)==original,"other callers untouched");}
   Binder.uid=110139;ok(((Group[])query(service)).length==3,"launcher in another Android user");Binder.uid=10139;
   var error=new SecurityException("original permission denial");service.failure=error;

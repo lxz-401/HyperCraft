@@ -9,20 +9,20 @@ import tempfile
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 
 ROOT=Path(__file__).resolve().parents[2]
 TESTS=Path(__file__).resolve().parent
 parser=argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--production',type=Path,default=ROOT/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/other/NativeHomeHooksOS4.kt')
+parser.add_argument('--production',type=Path,default=ROOT/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/other/NativeHomeHooksOS4.kt')
 parser.add_argument('--kotlin-home',type=Path,default=test_paths.KOTLIN_HOME)
 parser.add_argument('--jdk',type=Path,default=test_paths.JAVA_HOME)
 args=parser.parse_args()
 with tempfile.TemporaryDirectory(prefix='hc-native-prefs-') as temp:
     temp=Path(temp)
     subprocess.run(['g++','-shared','-fPIC','-std=c++17','-I'+str(args.jdk/'include'),'-I'+str(args.jdk/'include/linux'),
-                    str(TESTS/'native_probe.cpp'),'-o',str(temp/'libHyperCeilerNative.so')],check=True)
+                    str(TESTS/'native_probe.cpp'),'-o',str(temp/'libHyperCraftNative.so')],check=True)
     clock=temp/'AndroidOs.kt'
     clock.write_text('package android.os\nclass Bundle { fun putStringArray(key:String,value:Array<String>)=Unit }\nobject SystemClock { fun sleep(millis:Long)=Unit; fun uptimeMillis()=0L }\n')
     excluded={'PrefsBridge.kt','AndroidOs.kt','NativeHomeDockListenerTest.kt'}

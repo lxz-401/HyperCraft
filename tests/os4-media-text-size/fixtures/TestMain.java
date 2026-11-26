@@ -1,7 +1,7 @@
 import java.lang.reflect.*;import java.util.*;
 import io.github.libxposed.api.XposedInterface;import io.github.lingqiqi5211.ezhooktool.xposed.EzXposed;
-import com.sevtinge.hyperceiler.libhook.base.BaseHook;import com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper;import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
-import com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.media3.MediaViewSize;
+import com.sevtinge.hypercraft.libhook.base.BaseHook;import com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper;import com.sevtinge.hypercraft.common.utils.PrefsBridge;
+import com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.media3.MediaViewSize;
 public class TestMain {
  static final Map<Method,XposedInterface.Hooker>hooks=new LinkedHashMap<>();static int passes,failures,originalCalls;static boolean failUnhook;static Runnable onInstall;
  static final String NC="com.android.systemui.statusbar.notification.mediacontrol.",DI="com.android.systemui.statusbar.notification.mediaisland.",NP="system_ui_control_center_media_control",DP="system_ui_island_media_control";

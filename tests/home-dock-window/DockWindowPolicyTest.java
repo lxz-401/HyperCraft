@@ -1,6 +1,6 @@
-package com.sevtinge.hyperceiler.tests.dock;
+package com.sevtinge.hypercraft.tests.dock;
 
-import com.sevtinge.hyperceiler.libhook.rules.home.dock.DockWindowPolicy;
+import com.sevtinge.hypercraft.libhook.rules.home.dock.DockWindowPolicy;
 
 public class DockWindowPolicyTest {
     private static void check(boolean condition, String message) {

@@ -19,8 +19,8 @@
 
 namespace {
 
-constexpr const char *kEnableProperty = "debug.hyperceiler.home_layout_resolve";
-constexpr const char *kWindowProperty = "debug.hyperceiler.home_layout_window_ms";
+constexpr const char *kEnableProperty = "debug.hypercraft.home_layout_resolve";
+constexpr const char *kWindowProperty = "debug.hypercraft.home_layout_window_ms";
 
 /**
  * How long to keep watching for the launcher's images.

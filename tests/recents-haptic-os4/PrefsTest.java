@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
-import com.sevtinge.hyperceiler.libhook.provider.HomeRecentsHapticPrefs;
+import com.sevtinge.hypercraft.libhook.provider.HomeRecentsHapticPrefs;
 import android.content.SharedPreferences;
 import java.util.Map;
 public final class PrefsTest {

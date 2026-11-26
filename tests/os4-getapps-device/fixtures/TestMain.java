@@ -3,12 +3,12 @@ import java.util.*;
 import android.os.Build;
 import io.github.libxposed.api.XposedInterface;
 import io.github.lingqiqi5211.ezhooktool.xposed.EzXposed;
-import com.sevtinge.hyperceiler.common.utils.*;
-import com.sevtinge.hyperceiler.hooker.GetAppsFragment;
-import com.sevtinge.hyperceiler.libhook.app.GetApps;
-import com.sevtinge.hyperceiler.libhook.base.*;
-import com.sevtinge.hyperceiler.libhook.rules.getapps.DeviceModify;
-import com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper;
+import com.sevtinge.hypercraft.common.utils.*;
+import com.sevtinge.hypercraft.hooker.GetAppsFragment;
+import com.sevtinge.hypercraft.libhook.app.GetApps;
+import com.sevtinge.hypercraft.libhook.base.*;
+import com.sevtinge.hypercraft.libhook.rules.getapps.DeviceModify;
+import com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper;
 import com.xiaomi.market.MarketApp;
 import androidx.preference.*;
 public class TestMain {

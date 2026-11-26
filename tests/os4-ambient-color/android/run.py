@@ -4,20 +4,20 @@ import argparse,hashlib,json,subprocess,time
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
-ROOT=test_paths.TEST_DATA_ROOT;ADB=test_paths.ANDROID_HOME / 'platform-tools/adb';PKG='local.hyperceiler.ambientcolorprobe';SERIAL='emulator-5580';sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+ROOT=test_paths.TEST_DATA_ROOT;ADB=test_paths.ANDROID_HOME / 'platform-tools/adb';PKG='local.hypercraft.ambientcolorprobe';SERIAL='emulator-5580';sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 p=argparse.ArgumentParser();p.add_argument('--build',required=True,type=Path);p.add_argument('--output',required=True,type=Path);p.add_argument('--single-loader',action='store_true');p.add_argument('--oem-media-init',action='store_true');a=p.parse_args();out=a.output.resolve();out.mkdir(parents=True,exist_ok=False);build=json.loads((a.build/'report.json').read_text());assert build['passed']and sha(a.build/'probe.apk')==build['apk_sha256'];commands=[]
 def adb(*args,check=True):
  cmd=[str(ADB),'-s',SERIAL,*map(str,args)];commands.append(cmd);r=subprocess.run(cmd,capture_output=True,timeout=90)
  if check:assert r.returncode==0,(cmd,r.stdout,r.stderr)
  return r
-identity=adb('emu','avd','name').stdout.decode();assert identity.splitlines()[0]=='hyperceiler_os4_api37';assert adb('shell','getprop','sys.boot_completed').stdout.strip()==b'1';(out/'properties.txt').write_bytes(adb('shell','getprop').stdout);r=adb('install','-r','--abi','arm64-v8a',a.build/'probe.apk');(out/'install.txt').write_bytes(r.stdout+r.stderr);adb('shell','am','force-stop',PKG);adb('shell','run-as',PKG,'rm','-f','files/run/report.json');r=adb('shell','am','start','-W','-n',PKG+'/.MainActivity',*(['--ez','single_loader','true']if a.single_loader else[]),*(['--ez','oem_media_init','true']if a.oem_media_init else[]));(out/'start.txt').write_bytes(r.stdout+r.stderr);until=time.monotonic()+60;data=None
+identity=adb('emu','avd','name').stdout.decode();assert identity.splitlines()[0]=='hypercraft_os4_api37';assert adb('shell','getprop','sys.boot_completed').stdout.strip()==b'1';(out/'properties.txt').write_bytes(adb('shell','getprop').stdout);r=adb('install','-r','--abi','arm64-v8a',a.build/'probe.apk');(out/'install.txt').write_bytes(r.stdout+r.stderr);adb('shell','am','force-stop',PKG);adb('shell','run-as',PKG,'rm','-f','files/run/report.json');r=adb('shell','am','start','-W','-n',PKG+'/.MainActivity',*(['--ez','single_loader','true']if a.single_loader else[]),*(['--ez','oem_media_init','true']if a.oem_media_init else[]));(out/'start.txt').write_bytes(r.stdout+r.stderr);until=time.monotonic()+60;data=None
 while time.monotonic()<until:
  r=adb('exec-out','run-as',PKG,'cat','files/run/report.json',check=False)
  if r.returncode==0 and r.stdout.strip().startswith(b'{'):data=r.stdout;break
  time.sleep(1)
-(out/'logcat.txt').write_bytes(adb('logcat','-d','-t','800','-s','AmbientColorProbe:I','AndroidRuntime:E','art:I','linker:E','HyperCeilerAmbientOS4:I','nativeloader:I').stdout)
+(out/'logcat.txt').write_bytes(adb('logcat','-d','-t','800','-s','AmbientColorProbe:I','AndroidRuntime:E','art:I','linker:E','HyperCraftAmbientOS4:I','nativeloader:I').stdout)
 if data:
  d=json.loads(data);(out/'android-report.json').write_bytes(data)
  for f in d['frames']:

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -15,7 +15,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   -->
 <resources>
     <color name="black">#FF000000</color>
@@ -54,8 +54,8 @@
     <color name="update_text_border1">#29ffffff</color>
     <color name="update_text_border2">#ccffffff</color>
 
-    <color name="headtip_hyperceiler_color">#FFF7E4EC</color>
-    <color name="headtip_hyperceiler_text_color">#C2467A</color>
+    <color name="headtip_hypercraft_color">#FFF7E4EC</color>
+    <color name="headtip_hypercraft_text_color">#C2467A</color>
     <color name="headtip_notice_color">#FFF8EDC9</color>
     <color name="headtip_notice_text_color">#A76400</color>
     <color name="headtip_tip_color">#FFE8F1FD</color>

@@ -8,7 +8,7 @@ import re
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 
 ROOT=Path(__file__).resolve().parents[2]
@@ -21,8 +21,8 @@ def result(name, pattern):
     matches=re.findall(pattern,path.read_text())
     if len(matches)!=1: raise ValueError(f'Expected one result in {name}: {matches}')
     return {**record(path),'passed':int(matches[0][0]),'total':int(matches[0][1])}
-entry=ROOT/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/base/XposedInitEntry.java'
-native=ROOT/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/other/NativeHomeHooksOS4.kt'
+entry=ROOT/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/base/XposedInitEntry.java'
+native=ROOT/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/other/NativeHomeHooksOS4.kt'
 baseline=OUT/'os4-init-prefs-baseline/XposedInitEntry.java'
 gate_marker='    private boolean prepareHookLoad('
 assert entry.read_text().split(gate_marker,1)[1]==baseline.read_text().split(gate_marker,1)[1]

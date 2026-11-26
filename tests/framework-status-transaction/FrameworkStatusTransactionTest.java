@@ -1,7 +1,7 @@
 import android.content.*;
-import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
-import com.sevtinge.hyperceiler.utils.FrameworkStatusManager;
-import com.sevtinge.hyperceiler.libhook.base.FrameworkHookGate;
+import com.sevtinge.hypercraft.common.utils.PrefsBridge;
+import com.sevtinge.hypercraft.utils.FrameworkStatusManager;
+import com.sevtinge.hypercraft.libhook.base.FrameworkHookGate;
 import io.github.libxposed.service.XposedService;
 import java.util.*;
 import java.util.concurrent.*;

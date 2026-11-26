@@ -1,7 +1,7 @@
 OS4 custom barrage display length: complete production callback regression
 
 From the repository root (choose new output paths; see tests/PORTABILITY.md):
- python3 "$HYPERCEILER_TEST_DATA/acceptance/java-test12/barrage-v1/rom-v1/extract_rom.py"
+ python3 "$HYPERCRAFT_TEST_DATA/acceptance/java-test12/barrage-v1/rom-v1/extract_rom.py"
  python3 tests/os4-barrage-length/verify_rom.py --output <new-rom-review>
  python3 tests/os4-barrage-length/run.py --output <new-host> --negative-controls
  python3 tests/os4-barrage-length/compile_android.py --output <new-sdk-compile>

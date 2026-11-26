@@ -9,12 +9,12 @@
     android:clipChildren="true"
     android:orientation="vertical">
 
-    <com.sevtinge.hyperceiler.about.widget.DeviceNameCard
+    <com.sevtinge.hypercraft.about.widget.DeviceNameCard
         android:id="@+id/device_name_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.sevtinge.hyperceiler.about.widget.VersionNameCard
+    <com.sevtinge.hypercraft.about.widget.VersionNameCard
         android:id="@+id/version_name_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

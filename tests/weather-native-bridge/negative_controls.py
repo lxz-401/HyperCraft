@@ -2,7 +2,7 @@
 """Change copied production code only; require a runtime assertion failure, never a compile failure."""
 from pathlib import Path
 import argparse,concurrent.futures,hashlib,json,subprocess,sys
-p=argparse.ArgumentParser();p.add_argument('--output',type=Path,required=True);a=p.parse_args();a.output.mkdir(parents=True,exist_ok=True);b=Path(__file__).resolve().parent;r=b.parents[1];src=r/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/weather/WeatherNativeEndpointOS4.java';original=src.read_text()
+p=argparse.ArgumentParser();p.add_argument('--output',type=Path,required=True);a=p.parse_args();a.output.mkdir(parents=True,exist_ok=True);b=Path(__file__).resolve().parent;r=b.parents[1];src=r/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/weather/WeatherNativeEndpointOS4.java';original=src.read_text()
 cases=[
  ('drop_caller_verifier',' || !verifier.isWeather(uid, pid)',''),
  ('renew_lease_after_query','published = new Published(pid, values, epoch, ++revision, started + LEASE_NS);','published = new Published(pid, values, epoch, ++revision, now + LEASE_NS);'),

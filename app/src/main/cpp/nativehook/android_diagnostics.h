@@ -53,7 +53,7 @@ inline void emit(const char* hook,const char* feature,const char* type,const cha
             std::to_string(cached.pid),cached.boot,cached.start,generation,cached.module,"native",
             std::to_string(int64_t(now.tv_sec)*1000+now.tv_nsec/1000000),phase,stage,code,std::string(detail?detail:"").substr(0,1200)};
         std::string out="HCD1|";for(size_t i=0;i<fields.size();++i){if(i)out+='|';out+=b64(fields[i]);}
-        __android_log_write(ANDROID_LOG_INFO,"HyperCeiler.HookDiagnostics",out.c_str());
+        __android_log_write(ANDROID_LOG_INFO,"HyperCraft.HookDiagnostics",out.c_str());
     }catch(...){}
 }
 inline void counter(const char* id,const char* feature,uint64_t hits,uint64_t applied=0) noexcept {

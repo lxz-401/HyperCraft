@@ -5,6 +5,6 @@
 
 // Invoked outside the specialization callback and outside the original dlopen call.
 // Implementations must tolerate retries and nested dependency loads. No JNI is available.
-void hyperceiler_hyos_before_home_load(const ZygiskNextAPI *api);
-void hyperceiler_hyos_after_home_load(const ZygiskNextAPI *api, const char *name,
+void hypercraft_hyos_before_home_load(const ZygiskNextAPI *api);
+void hypercraft_hyos_after_home_load(const ZygiskNextAPI *api, const char *name,
                                      void *handle);

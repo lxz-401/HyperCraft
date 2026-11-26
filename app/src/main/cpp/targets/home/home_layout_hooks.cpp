@@ -29,7 +29,7 @@ extern "C" void hc_home_diagnostic_sample();
 #include "home_layout_config.h"
 #include "home_back_gesture.h"
 #include "home_back_region_hooks.h"
-#ifdef HYPERCEILER_HYOS_BACKEND
+#ifdef HYPERCRAFT_HYOS_BACKEND
 #include "targets/hyos/hyos_control.h"
 #include "home_startup.h"
 #endif
@@ -101,7 +101,7 @@ void SetInLoaderCallback(bool value);
  * degrades to "always interactive" (see layout_panel_refresh_and_check) so this
  * file still builds and the worker keeps its unconditional cadence.
  */
-#if defined(HYPERCEILER_DOCK_NATIVE_MOTION)
+#if defined(HYPERCRAFT_DOCK_NATIVE_MOTION)
 bool refresh_dock_screen_state();
 bool dock_motion_screen_active();
 // The dock translation unit owns the madvise guard used by every launcher
@@ -182,7 +182,7 @@ void hc_native_columns_entry();
 void *hc_native_columns_original = nullptr;
 uint32_t hc_native_columns_request = 0;
 void hc_dock_edit_entry();
-#if defined(HYPERCEILER_DOCK_NATIVE_MOTION)
+#if defined(HYPERCRAFT_DOCK_NATIVE_MOTION)
 extern std::atomic<uint64_t> dock_edit_packed;
 #endif
 void *hc_dock_edit_original = nullptr;
@@ -458,7 +458,7 @@ void hc_layout_apply_now(uint64_t config, uintptr_t caller);
 }
 
 namespace {
-constexpr char kTag[] = "HyperCeiler.HomeLayout";
+constexpr char kTag[] = "HyperCraft.HomeLayout";
 std::array<std::atomic_uint,11> g_layout_contract_declines{};
 bool layout_contract_declined(unsigned feature,unsigned stage,const char* reason) {
     static constexpr const char* names[]={"dock_margin","folder_row_spacing","animation_ratio",
@@ -519,7 +519,7 @@ constexpr size_t kFolderProbeSlot = kFolderPreviewSlotBase + 7;
 constexpr size_t kBigFolderSizeSlotBase = kFolderProbeSlot + 1;
 constexpr size_t kBackGestureSlot = kBigFolderSizeSlotBase + 7;
 constexpr size_t kBackWindowSlot = kBackGestureSlot + 1;
-#if defined(HYPERCEILER_DOCK_NATIVE_MOTION)
+#if defined(HYPERCRAFT_DOCK_NATIVE_MOTION)
 constexpr bool kDockEditPolicy = true;
 #else
 constexpr bool kDockEditPolicy = false;
@@ -606,7 +606,7 @@ std::atomic_bool g_started{false};
 std::atomic_bool g_field_writes_enabled{false};
 /* Only the title-size field is promoted to production: its exact getter and field path are
  * re-validated against the loaded Dart image before any heap write. Other experimental layout
- * field rewrites remain behind debug.hyperceiler.layout.knobs_enable. */
+ * field rewrites remain behind debug.hypercraft.layout.knobs_enable. */
 std::atomic_int g_title_desktop_sp{12};
 std::atomic_int g_title_drawer_sp{12};
 home_dynamic::GeometryFrame g_geometry_frame[3]{};
@@ -704,7 +704,7 @@ void sync_folder_layout(const home_layout::Config &config) {
 }
 std::atomic_uint32_t g_back_gesture_config{60u | (100u << 16)};
 constexpr uint32_t kStockBackConfig = 60u | (100u << 16);
-#ifndef HYPERCEILER_HYOS_BACKEND
+#ifndef HYPERCRAFT_HYOS_BACKEND
 std::atomic_uint32_t g_live_back_config{0};
 std::mutex g_back_config_mutex;
 std::condition_variable g_back_config_changed;
@@ -712,7 +712,7 @@ bool g_back_config_pending = false;
 #endif
 
 uint32_t back_gesture_config() {
-#ifndef HYPERCEILER_HYOS_BACKEND
+#ifndef HYPERCRAFT_HYOS_BACKEND
     const auto live = g_live_back_config.load(std::memory_order_acquire);
     if (live != 0) return live;
 #endif
@@ -888,7 +888,7 @@ extern "C" void hc_native_columns_body(std::byte *saved) {
 }
 bool back_regions_enabled() {
     if (!g_back_regions_ready.load(std::memory_order_acquire)) return false;
-#ifdef HYPERCEILER_HYOS_BACKEND
+#ifdef HYPERCRAFT_HYOS_BACKEND
     return hyos_control::allowed();
 #else
     return true;
@@ -1167,7 +1167,7 @@ std::array<KnobRuntime, HC_LAYOUT_KNOB_COUNT> g_knobs = {{
 void apply_debug_hook_overrides() {
     for (size_t index = 0; index < g_knobs.size(); ++index) {
         char name[PROP_VALUE_MAX] = {};
-        const std::string key = "debug.hyperceiler.layout.hook" + std::to_string(index);
+        const std::string key = "debug.hypercraft.layout.hook" + std::to_string(index);
         if (__system_property_get(key.c_str(), name) <= 0 || name[0] == '\0') continue;
         if (name[0] == '-' || std::strcmp(name, "off") == 0) {
             if (g_knobs[index].hook_mode) {
@@ -1356,7 +1356,7 @@ nhk::InlineHookHost<kPatchWords> &slot_host() {
         // existing guard must protect layout/title sites too, not only Dock.
         // Register before the backend exposes any branch; no extra idle polls.
         value.protect_range = [](uintptr_t address, size_t bytes) {
-#ifdef HYPERCEILER_DOCK_NATIVE_MOTION
+#ifdef HYPERCRAFT_DOCK_NATIVE_MOTION
             // The dock health worker owns the madvise guard. Ask it to settle
             // first; a pending/unavailable/residual guard must leave the
             // layout patch stock rather than register an effective no-op page.
@@ -2470,7 +2470,7 @@ void delay_ms(long milliseconds) {
 }
 
 bool wait_layout_pass(long milliseconds) {
-#ifdef HYPERCEILER_HYOS_BACKEND
+#ifdef HYPERCRAFT_HYOS_BACKEND
     delay_ms(milliseconds);
     return false;
 #else
@@ -2523,7 +2523,7 @@ bool rate_limited(std::atomic_uint64_t &stamp, unsigned seconds) {
  * endpoint therefore costs the saving, never the hooks.
  */
 bool layout_panel_refresh_and_check() {
-#if defined(HYPERCEILER_DOCK_NATIVE_MOTION)
+#if defined(HYPERCRAFT_DOCK_NATIVE_MOTION)
     (void) refresh_dock_screen_state();
     return dock_motion_screen_active();
 #else
@@ -2981,7 +2981,7 @@ bool bind_folder_preview() {
  */
 bool folder_probe_requested() {
     char value[PROP_VALUE_MAX] = {};
-    return __system_property_get("debug.hyperceiler.folder.probe", value) > 0 && value[0] == '1';
+    return __system_property_get("debug.hypercraft.folder.probe", value) > 0 && value[0] == '1';
 }
 
 bool bind_folder_probe() {
@@ -4830,7 +4830,7 @@ bool bind_workspace_scope() {
 
 
 bool bind_dock_edit() {
-#if defined(HYPERCEILER_DOCK_NATIVE_MOTION)
+#if defined(HYPERCRAFT_DOCK_NATIVE_MOTION)
     if (g_slots[kDockEditSlot].address) return true;
     uint32_t getter=0, rx=0, update=0, size=0;
     std::vector<uint32_t> gb, rb, ub; home_layout::DockEditFields fields;
@@ -5094,7 +5094,7 @@ bool bind_infinite_scroll() {
 
 bool bind_prestart() {
     if(g_slots[kPrestartSlot].address)return true;
-    if(!hyperceiler_home_prestart_disabled())return false;
+    if(!hypercraft_home_prestart_disabled())return false;
     const auto declined=[&](unsigned stage,const char* why){
         if(g_prestart_bind_failure.exchange(stage,std::memory_order_relaxed)!=stage)
             __android_log_print(ANDROID_LOG_WARN,kTag,"prestart binding unavailable stage=%u reason=%s; original retained",stage,why);
@@ -5716,7 +5716,7 @@ void *worker(void *) {
     home_layout::Config config;
     bool queried = false;
     for (int attempt = 0; attempt < 20; ++attempt) {
-#ifndef HYPERCEILER_HYOS_BACKEND
+#ifndef HYPERCRAFT_HYOS_BACKEND
         // A direct preference publish can be ready before the layout Binder.
         if (g_live_back_config.load(std::memory_order_acquire) != 0
             && back_gesture_config() != kStockBackConfig
@@ -5794,7 +5794,7 @@ void *worker(void *) {
      */
     char probe_top[PROP_VALUE_MAX] = {};
     const bool top_probe =
-        __system_property_get("debug.hyperceiler.layout.probe_top", probe_top) > 0
+        __system_property_get("debug.hypercraft.layout.probe_top", probe_top) > 0
         && probe_top[0] == '1';
     if (top_probe) {
         g_knobs[2].hook_mode = true;
@@ -5818,7 +5818,7 @@ void *worker(void *) {
         || config.object_scales[0].enabled || config.object_scales[1].enabled || config.object_scales[2].enabled
         || config.recent.requested() || (config.policies&home_layout::kDismissAnimationPolicy) || config.drawer_hide_search || config.dock_horizontal!=0 || config.infinite_scroll
         || shortcut_actions_requested(config)
-        || hyperceiler_home_prestart_disabled() || hc_recents_haptic_enabled()
+        || hypercraft_home_prestart_disabled() || hc_recents_haptic_enabled()
         || config.tweaks.recents_hide_clear || config.tweaks.recents_no_clear
         || config.tweaks.animation_open_enabled || config.tweaks.animation_recents_enabled
         || config.tweaks.hotseat_unlimited || config.widget_allow_move || config.folder_auto_close || config.dock_show_title
@@ -5874,9 +5874,9 @@ void *worker(void *) {
     }
 
     /*
-     * Calibration channel, read once per process and gated on `debug.hyperceiler.layout.override=1`.
+     * Calibration channel, read once per process and gated on `debug.hypercraft.layout.override=1`.
      *
-     * The gate is not cosmetic: `debug.hyperceiler.layout.symbols` / `hook0..7` / `raw0..7` retarget a
+     * The gate is not cosmetic: `debug.hypercraft.layout.symbols` / `hook0..7` / `raw0..7` retarget a
      * knob, and while they were read unconditionally a leftover property from an earlier calibration
      * run silently overrode the shipped table - which is exactly how "the settings page does nothing"
      * was produced once already. With the gate, an unset or stale property cannot influence production
@@ -5884,23 +5884,23 @@ void *worker(void *) {
      */
     char debug_gate[PROP_VALUE_MAX] = {};
     const bool debug_channel =
-        __system_property_get("debug.hyperceiler.layout.override", debug_gate) > 0
+        __system_property_get("debug.hypercraft.layout.override", debug_gate) > 0
         && debug_gate[0] == '1';
     if (debug_channel) {
         __android_log_print(ANDROID_LOG_WARN, kTag,
             "layout calibration channel is ON; preferences are overridden by debug properties");
         char probe[PROP_VALUE_MAX] = {};
-        if (__system_property_get("debug.hyperceiler.layout.probe", probe) > 0
+        if (__system_property_get("debug.hypercraft.layout.probe", probe) > 0
             && probe[0] == '1') {
             for (size_t index = 0; index < g_knobs.size(); ++index) {
                 char name[PROP_VALUE_MAX] = {};
-                const std::string key = "debug.hyperceiler.layout.probe" + std::to_string(index);
+                const std::string key = "debug.hypercraft.layout.probe" + std::to_string(index);
                 if (__system_property_get(key.c_str(), name) <= 0) continue;
                 if (name[0] != '\0') g_knobs[index].symbol = name;
             }
         } else {
             char value[PROP_VALUE_MAX] = {};
-            if (__system_property_get("debug.hyperceiler.layout.symbols", value) > 0) {
+            if (__system_property_get("debug.hypercraft.layout.symbols", value) > 0) {
                 const std::string_view text(value);
                 size_t cursor = 0;
                 for (size_t index = 0; index < g_knobs.size(); ++index) {
@@ -5914,7 +5914,7 @@ void *worker(void *) {
             }
         }
         /*
-         * `debug.hyperceiler.layout.hook0..hook7` switch a single knob to the hook strategy and name
+         * `debug.hypercraft.layout.hook0..hook7` switch a single knob to the hook strategy and name
          * the layout aggregator it should hook. This is the calibration path for the values whose
          * accessor Dart inlines away.
          */
@@ -5987,12 +5987,12 @@ void *worker(void *) {
      * The field-rewriting path is opt-in while it is still being validated, and off by default.
      *
      * It writes into the launcher's own live objects, so a wrong path is a launcher crash rather than
-     * a no-op; a build that could do that without being asked is not shippable. `debug.hyperceiler.
+     * a no-op; a build that could do that without being asked is not shippable. `debug.hypercraft.
      * layout.knobs_enable=1` is the explicit request.
      */
     char knobs_gate[PROP_VALUE_MAX] = {};
     const bool field_writes =
-        __system_property_get("debug.hyperceiler.layout.knobs_enable", knobs_gate) > 0
+        __system_property_get("debug.hypercraft.layout.knobs_enable", knobs_gate) > 0
         && knobs_gate[0] == '1';
     g_field_writes_enabled.store(field_writes, std::memory_order_relaxed);
     if ((any_knob || top_probe) && field_writes) {
@@ -6428,10 +6428,10 @@ void *worker(void *) {
                     g_drawer_search_requested.load(std::memory_order_acquire),g_drawer_search_ready.load(std::memory_order_acquire),
                     static_cast<unsigned long long>(g_drawer_hits.load(std::memory_order_relaxed)),
                     static_cast<unsigned long long>(g_drawer_applied.load(std::memory_order_relaxed)));
-            if(g_slots[kPrestartSlot].address||hyperceiler_home_prestart_disabled())
+            if(g_slots[kPrestartSlot].address||hypercraft_home_prestart_disabled())
                 __android_log_print(ANDROID_LOG_INFO,kTag,
                     "prestart runtime requested=%d ready=%d hits=%llu blocked=%llu; normal launches and transition cleanup unchanged",
-                    hyperceiler_home_prestart_disabled(),g_prestart_ready.load(std::memory_order_acquire),
+                    hypercraft_home_prestart_disabled(),g_prestart_ready.load(std::memory_order_acquire),
                     static_cast<unsigned long long>(g_prestart_hits.load(std::memory_order_relaxed)),
                     static_cast<unsigned long long>(g_prestart_blocked.load(std::memory_order_relaxed)));
             if(const auto recent=std::atomic_load_explicit(&g_recent_routing,std::memory_order_acquire)){
@@ -6581,7 +6581,7 @@ void *worker(void *) {
         // HYOS bootstrap is an atomic cache read, with no Binder/disk work, and
         // expired/denied authorization must still restore the original words.
         bool capacity_enabled=config.tweaks.hotseat_unlimited;
-#ifdef HYPERCEILER_HYOS_BACKEND
+#ifdef HYPERCRAFT_HYOS_BACKEND
         home_layout::Config capacity_config;
         capacity_enabled=home_layout::query_bootstrap_config(capacity_config)
             && capacity_config.tweaks.hotseat_unlimited;
@@ -7119,7 +7119,7 @@ extern "C" void hc_shareapk_body(home_layout::recent_render::Registers* saved, u
     if (!saved) return;
     bool enabled = g_share_apk_ready.load(std::memory_order_acquire)
         && g_share_apk_requested.load(std::memory_order_acquire);
-#ifdef HYPERCEILER_HYOS_BACKEND
+#ifdef HYPERCRAFT_HYOS_BACKEND
     enabled = enabled && hyos_control::feature_enabled(hyos_control::kShareApk);
 #endif
     if (home_layout::features::shortcut_actions::apply_share_apk(*saved, enabled,
@@ -7132,7 +7132,7 @@ extern "C" void hc_freeformshortcut_body(home_layout::recent_render::Registers* 
     if (!saved) return;
     bool enabled = g_freeform_shortcut_ready.load(std::memory_order_acquire)
         && g_freeform_shortcut_requested.load(std::memory_order_acquire);
-#ifdef HYPERCEILER_HYOS_BACKEND
+#ifdef HYPERCRAFT_HYOS_BACKEND
     enabled = enabled && hyos_control::feature_enabled(hyos_control::kFreeformShortcut);
 #endif
     if (home_layout::features::shortcut_actions::apply_freeform(*saved, enabled,
@@ -7146,7 +7146,7 @@ extern "C" void hc_shortcutmenu_body(home_layout::recent_render::Registers* save
     g_shortcut_menu_hits.fetch_add(1, std::memory_order_relaxed);
     bool enabled = g_shortcut_menu_ready.load(std::memory_order_acquire)
         && g_shortcut_menu_requested.load(std::memory_order_acquire);
-#ifdef HYPERCEILER_HYOS_BACKEND
+#ifdef HYPERCRAFT_HYOS_BACKEND
     enabled = enabled && hyos_control::feature_enabled(hyos_control::kShortcutMenu);
 #endif
     if (home_layout::features::shortcut_menu::apply(*saved, enabled,
@@ -7192,7 +7192,7 @@ extern "C" void hc_prestart_body(home_layout::recent_render::Registers* saved,un
     if(!saved)return;
     g_prestart_hits.fetch_add(1,std::memory_order_relaxed);
     if(home_prestart::apply(*saved,g_prestart_ready.load(std::memory_order_acquire),
-        hyperceiler_home_prestart_disabled(),reinterpret_cast<uintptr_t>(hc_prestart_original)))
+        hypercraft_home_prestart_disabled(),reinterpret_cast<uintptr_t>(hc_prestart_original)))
         g_prestart_blocked.fetch_add(1,std::memory_order_relaxed);
 }
 
@@ -7294,13 +7294,13 @@ extern "C" void hc_layout_folder_body(uintptr_t frame, uint64_t heap, uintptr_t 
     const uint64_t count = __atomic_fetch_add(&hc_layout_folder_hits[kind], uint64_t{1}, __ATOMIC_RELAXED);
     if (count < 4 || (render_hit && !(rendered_workspace.logged_hits & (1u << kind)))) {
         if (render_hit) rendered_workspace.logged_hits |= 1u << kind;
-        __android_log_print(ANDROID_LOG_INFO, "HyperCeiler.HomeLayout",
+        __android_log_print(ANDROID_LOG_INFO, "HyperCraft.HomeLayout",
             "folder geometry body kind=%u ready=%d delta=%d/%d/%d valid=%d render-hit=%d",
             kind, ready ? 1 : 0, top, bottom, side, valid ? 1 : 0, render_hit ? 1 : 0);
         if (kind == 0 || kind == 2) {
             // Diagnostic scalars only; never dereference cached Dart identity.
             for (const auto &l : rendered_workspace.layouts) if (l.grid != 0) {
-                __android_log_print(ANDROID_LOG_INFO, "HyperCeiler.HomeLayout",
+                __android_log_print(ANDROID_LOG_INFO, "HyperCraft.HomeLayout",
                     "folder rendered grid cols=%lld rows=%lld raw=%.3f/%.3f inset=%.3f/%.3f stride=%.3f/%.3f",
                     static_cast<long long>(l.columns), static_cast<long long>(l.rows),
                     l.raw_width, l.raw_height, l.side, l.top, l.width, l.height);
@@ -7373,7 +7373,7 @@ extern "C" void hc_layout_workspace_layout(uintptr_t frame, uint64_t heap, int o
     }
     static std::array<std::atomic_uint64_t,3> reports{};
     if (rate_limited(reports[hotseat ? 2 : occupied != 0], 2)) {
-        __android_log_print(ANDROID_LOG_INFO, "HyperCeiler.HomeLayout",
+        __android_log_print(ANDROID_LOG_INFO, "HyperCraft.HomeLayout",
             "workspace layout splice occupied=%d delta=%d/%d/%d base=%.1f valid=%d "
             "origin=%.3f,%.3f stride=%.3f,%.3f",
             occupied, top, bottom, side, height_baseline, valid ? 1 : 0,
@@ -7397,7 +7397,7 @@ extern "C" void hc_layout_probe_container(uint64_t widget, uint64_t heap,
     static std::atomic<uint32_t> seen{0};
     const uint32_t ordinal = seen.fetch_add(1, std::memory_order_relaxed);
     if ((widget & 1u) == 0) {
-        if (ordinal < 12) __android_log_print(ANDROID_LOG_INFO, "HyperCeiler.HomeLayout",
+        if (ordinal < 12) __android_log_print(ANDROID_LOG_INFO, "HyperCraft.HomeLayout",
             "container build probe n=%u untagged=%#llx", ordinal,
             static_cast<unsigned long long>(widget));
         return;
@@ -7405,7 +7405,7 @@ extern "C" void hc_layout_probe_container(uint64_t widget, uint64_t heap,
     uint64_t header = 0;
     std::memcpy(&header, reinterpret_cast<const void *>(widget - 1), 8);
     const uint32_t widget_cid = static_cast<uint32_t>((header >> 12) & 0xfffffu);
-    if (ordinal < 12) __android_log_print(ANDROID_LOG_INFO, "HyperCeiler.HomeLayout",
+    if (ordinal < 12) __android_log_print(ANDROID_LOG_INFO, "HyperCraft.HomeLayout",
         "container build probe n=%u cid=%#x widget=%#llx", ordinal, widget_cid,
         static_cast<unsigned long long>(widget));
     if (widget_cid != 0x2017) return;
@@ -7413,7 +7413,7 @@ extern "C" void hc_layout_probe_container(uint64_t widget, uint64_t heap,
     std::memcpy(&compressed, reinterpret_cast<const void *>(widget + 0x27), 4);
     const uint64_t margin = (heap << 32) + compressed;
     if (ordinal < 12) {
-        __android_log_print(ANDROID_LOG_INFO, "HyperCeiler.HomeLayout",
+        __android_log_print(ANDROID_LOG_INFO, "HyperCraft.HomeLayout",
             "container build probe n=%u widget=%#llx margin=%#llx null=%#llx",
             ordinal, static_cast<unsigned long long>(widget),
             static_cast<unsigned long long>(margin), static_cast<unsigned long long>(dart_null));
@@ -7427,7 +7427,7 @@ extern "C" void hc_layout_probe_container(uint64_t widget, uint64_t heap,
     if (top == 0 && bottom == 0) return;
     static std::atomic<uint32_t> reports{0};
     if (reports.fetch_add(1, std::memory_order_relaxed) < 12) {
-        __android_log_print(ANDROID_LOG_INFO, "HyperCeiler.HomeLayout",
+        __android_log_print(ANDROID_LOG_INFO, "HyperCraft.HomeLayout",
             "container probe widget=%#llx margin=%#llx top=%.2f bottom=%.2f",
             static_cast<unsigned long long>(widget),
             static_cast<unsigned long long>(margin), top, bottom);
@@ -7467,7 +7467,7 @@ bool adopt_layout_state() {
     const pid_t self = getpid();
     if (g_state_owner.load(std::memory_order_acquire) == self) return false;
     g_state_owner.store(self, std::memory_order_release);
-#if defined(HYPERCEILER_DOCK_NATIVE_MOTION)
+#if defined(HYPERCRAFT_DOCK_NATIVE_MOTION)
     dock_edit_packed.store(0, std::memory_order_release); // A fork starts with unknown editing state.
 #endif
 
@@ -7618,7 +7618,7 @@ bool adopt_layout_state() {
     g_back_stock_generation.store(0, std::memory_order_release);
     g_back_stock_sequence.store(0,std::memory_order_release);g_back_stock_writer.clear(std::memory_order_release);
     g_back_gesture_config.store(60u | (100u << 16), std::memory_order_release);
-#ifndef HYPERCEILER_HYOS_BACKEND
+#ifndef HYPERCRAFT_HYOS_BACKEND
     g_live_back_config.store(0, std::memory_order_release);
 #endif
     g_grid_field = {};
@@ -7797,7 +7797,7 @@ bool adopt_layout_state() {
     return true;
 }
 
-#ifdef HYPERCEILER_HYOS_BACKEND
+#ifdef HYPERCRAFT_HYOS_BACKEND
 // The dedicated Hyos owner never enters the legacy resolver/slot bank. This
 // bridge shares only the already-tested Dart ABI's original pointers and atomic
 // parameters; legacy ART startup and maintenance continue to use their old bank.
@@ -8068,7 +8068,7 @@ void prime_home_layout_knobs(HookFunction hook, UnhookFunction unhook) {
     g_unhook_function = unhook;
     if (!ensure_dart_library()) return;
     char debug_gate[PROP_VALUE_MAX] = {};
-    if (__system_property_get("debug.hyperceiler.layout.override", debug_gate) > 0
+    if (__system_property_get("debug.hypercraft.layout.override", debug_gate) > 0
         && debug_gate[0] == '1') {
         apply_debug_hook_overrides();
     }
@@ -8179,7 +8179,7 @@ void prime_home_layout_probe(HookFunction hook, UnhookFunction unhook) {
         ~LoaderScope() { home_layout_engine::SetInLoaderCallback(false); }
     } loader_scope;
     char probe[PROP_VALUE_MAX] = {};
-    if (__system_property_get("debug.hyperceiler.layout.probe_top", probe) <= 0
+    if (__system_property_get("debug.hypercraft.layout.probe_top", probe) <= 0
         || probe[0] != '1') return;
     if (hook == nullptr) return;
     g_hook_function = hook;
@@ -8364,7 +8364,7 @@ void notify_home_back_launcher_loaded() {
     g_back_library_notified.store(true, std::memory_order_release);
 }
 
-#ifndef HYPERCEILER_HYOS_BACKEND
+#ifndef HYPERCRAFT_HYOS_BACKEND
 void publish_home_back_preferences(int height, int width) {
     const auto packed = static_cast<uint32_t>(height) | (static_cast<uint32_t>(width) << 16);
     const auto previous = g_live_back_config.exchange(packed, std::memory_order_acq_rel);
@@ -8378,8 +8378,8 @@ void publish_home_back_preferences(int height, int width) {
 }
 #endif
 
-#ifdef HYPERCEILER_HYOS_BACKEND
-void hyperceiler_home_maintain_back_gesture(HookFunction hook, UnhookFunction unhook) {
+#ifdef HYPERCRAFT_HYOS_BACKEND
+void hypercraft_home_maintain_back_gesture(HookFunction hook, UnhookFunction unhook) {
     if (!hook || nhk::home_safe_mode::decision().blocked) return;
     home_layout::Config config;
     if (!hyos_control::layout_config(config)) return;

@@ -1,5 +1,5 @@
 PUSH_VERIFICATION 2026-10-03 Asia/Shanghai
-REMOTE=git@github.com:LDS-XiaoYe/HyperCeiler.git
+REMOTE=git@github.com:LDS-XiaoYe/HyperCraft.git
 COMMIT=825dba606; nine source files; local regression and prior device results recorded separately
 MERGE=6e138f323; retained os4-branch history; no conflicts; both final trees identical
 PUSH_COMMAND=git push --atomic origin codex/os4-dock-icon-align:refs/heads/os4-personal os4-branch:refs/heads/os4-branch

@@ -1,4 +1,4 @@
-import com.sevtinge.hyperceiler.libhook.rules.systemui.navigation.BackGestureWidthState;
+import com.sevtinge.hypercraft.libhook.rules.systemui.navigation.BackGestureWidthState;
 public class WidthTest {
  static int checks;static void ok(boolean b){checks++;if(!b)throw new AssertionError(checks);}
  public static void main(String[] args){

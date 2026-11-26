@@ -3,7 +3,7 @@
 import os,re,shutil,subprocess,tempfile,json
 from pathlib import Path
 root=Path(__file__).resolve().parents[2];here=Path(__file__).parent
-cpp=root/'app/src/main/cpp';lib=root/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook'
+cpp=root/'app/src/main/cpp';lib=root/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook'
 jdk=Path(os.environ.get('JAVA_HOME','/opt/homebrew/opt/openjdk@25/libexec/openjdk.jdk/Contents/Home'))/'bin'
 def run(command):subprocess.run([str(c) for c in command],check=True)
 with tempfile.TemporaryDirectory(prefix='hc-dock-horizontal-') as folder:
@@ -39,6 +39,6 @@ with tempfile.TemporaryDirectory(prefix='hc-dock-horizontal-') as folder:
     stubs += list((root/'tests/hyos-control/java').rglob('*.java'))
     stubs += [root/'tests/home-dock-window/stubs/android/os'/f for f in ['Binder.java','IBinder.java','Parcel.java']]
     prod=[lib/f for f in ['base/FrameworkHookGate.java','provider/HomeLayoutPrefsSnapshot.java','provider/HomeGesturePrefsSnapshot.java','rules/home/dock/HomeLayoutNativeEndpointOS4.java']]
-    prod += [root/'library/common/src/main/java/com/sevtinge/hyperceiler/common/log/ModuleLog.java']
+    prod += [root/'library/common/src/main/java/com/sevtinge/hypercraft/common/log/ModuleLog.java']
     run([jdk/'javac','--release','21','-encoding','UTF-8','-d',out,*stubs,*prod,here/'EndpointTest.java'])
-    run([jdk/'java','-ea','-cp',out,'com.sevtinge.hyperceiler.libhook.rules.home.dock.EndpointTest'])
+    run([jdk/'java','-ea','-cp',out,'com.sevtinge.hypercraft.libhook.rules.home.dock.EndpointTest'])

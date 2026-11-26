@@ -1,9 +1,9 @@
 @file:OptIn(kotlinx.coroutines.InternalCoroutinesApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
-import com.sevtinge.hyperceiler.libhook.rules.systemui.statusbar.icon.v.WifiStandard
-import com.sevtinge.hyperceiler.libhook.base.BaseHook
-import com.sevtinge.hyperceiler.common.utils.PrefsBridge
-import com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper
-import com.sevtinge.hyperceiler.libhook.utils.hookapi.StateFlowHelper
+import com.sevtinge.hypercraft.libhook.rules.systemui.statusbar.icon.v.WifiStandard
+import com.sevtinge.hypercraft.libhook.base.BaseHook
+import com.sevtinge.hypercraft.common.utils.PrefsBridge
+import com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper
+import com.sevtinge.hypercraft.libhook.utils.hookapi.StateFlowHelper
 import com.android.systemui.statusbar.pipeline.wifi.ui.viewmodel.`WifiViewModelInject$special$$inlined$map$1` as Outer
 import com.android.systemui.statusbar.pipeline.wifi.ui.viewmodel.`WifiViewModelInject$wifiStandardFlow$1` as Producer
 import kotlinx.coroutines.flow.`FlowKt__ZipKt$combine$$inlined$combineUnsafe$FlowKt__ZipKt$1` as Combined

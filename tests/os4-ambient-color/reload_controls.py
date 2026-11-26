@@ -18,7 +18,7 @@ for label,change in [('baseline',None),*MUTANTS.items()]:
   w=Path(tmp);classes=w/'classes';classes.mkdir();src=w/h.NATIVE_SOURCE.name;body=h.NATIVE_SOURCE.read_text()
   if change:assert body.count(change[0])==1,(label,body.count(change[0]));body=body.replace(*change)
   src.write_text(body)
-  cmds=[['g++','-shared','-fPIC','-std=c++20','-Wall','-Wextra','-Werror','-I'+str(h.JAVA.parent/'include'),'-I'+str(h.JAVA.parent/'include/linux'),HERE/'native.cpp','-o',w/'libHyperCeilerAmbientOS4.so'],[h.JAVA/'javac','--release','21','-proc:none','-d',classes,*sorted((HERE/'fixtures').rglob('*.java'))],[h.JAVA/'java','-cp',h.KH/'lib/kotlin-compiler.jar','org.jetbrains.kotlin.cli.jvm.K2JVMCompiler','-kotlin-home',h.KH,'-jvm-target','21','-classpath',classes,'-d',classes,h.SOURCE,src,HERE/'fixtures/BridgeReloadMain.kt']]
+  cmds=[['g++','-shared','-fPIC','-std=c++20','-Wall','-Wextra','-Werror','-I'+str(h.JAVA.parent/'include'),'-I'+str(h.JAVA.parent/'include/linux'),HERE/'native.cpp','-o',w/'libHyperCraftAmbientOS4.so'],[h.JAVA/'javac','--release','21','-proc:none','-d',classes,*sorted((HERE/'fixtures').rglob('*.java'))],[h.JAVA/'java','-cp',h.KH/'lib/kotlin-compiler.jar','org.jetbrains.kotlin.cli.jvm.K2JVMCompiler','-kotlin-home',h.KH,'-jvm-target','21','-classpath',classes,'-d',classes,h.SOURCE,src,HERE/'fixtures/BridgeReloadMain.kt']]
   for i,cmd in enumerate(cmds):
    commands.append(list(map(str,cmd)));r=subprocess.run(commands[-1],capture_output=True,text=True,timeout=90);(case/f'build-{i}.txt').write_text(r.stdout+r.stderr);assert r.returncode==0,r.stdout+r.stderr
   modes=[]

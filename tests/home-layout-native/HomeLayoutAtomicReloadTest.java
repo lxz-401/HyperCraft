@@ -1,9 +1,9 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
-package com.sevtinge.hyperceiler.libhook.rules.home.dock;
+package com.sevtinge.hypercraft.libhook.rules.home.dock;
 
 import android.content.ContentResolver;
-import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
-import com.sevtinge.hyperceiler.libhook.base.BaseHook;
+import com.sevtinge.hypercraft.common.utils.PrefsBridge;
+import com.sevtinge.hypercraft.libhook.base.BaseHook;
 import java.lang.reflect.*;
 import java.util.*;
 
@@ -76,7 +76,7 @@ public final class HomeLayoutAtomicReloadTest {
             establish(300); check(ready().knobDeltaDp()[5] == 230, "new height stuck behind cached revision");
         });
         test("provider reads physical file exactly once and keeps one revision", () -> {
-            Class<?> helper = Class.forName("com.sevtinge.hyperceiler.libhook.provider.HomeLayoutPrefsSnapshot");
+            Class<?> helper = Class.forName("com.sevtinge.hypercraft.libhook.provider.HomeLayoutPrefsSnapshot");
             Method build = helper.getMethod("cursor", android.content.SharedPreferences.class);
             Map<String, Object> rows = new HashMap<>();
             rows.put("prefs_key_" + ENABLE, true); rows.put("prefs_key_" + MARGIN, 184);

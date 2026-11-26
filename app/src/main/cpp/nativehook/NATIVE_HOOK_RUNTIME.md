@@ -1,9 +1,9 @@
 # NativeHookRuntime
 
-HyperCeiler 的统一 native hook 运行时。它由两部分合流而成：
+HyperCraft 的统一 native hook 运行时。它由两部分合流而成：
 
 ```
-MiuiBackGestureHook                      HyperCeiler（本仓库）
+MiuiBackGestureHook                      HyperCraft（本仓库）
 成熟的 ELF / dynsym / PLT-GOT /         成熟的 mapping / snapshot / generation /
 ARM64 运行时解析能力                     continuation 校验 / health / re-arm /
 （Apache-2.0，见 THIRD_PARTY_NOTICES.md）  Dart AOT hook 生命周期

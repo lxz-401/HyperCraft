@@ -4,11 +4,11 @@
 
 The status-bar-follow implementation under:
 
-- `library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/systemui/barfollow/`
-- `library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/systemui/statusbarfollow/RecentsOpenSession.java`
-- `library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/systemframework/statusbarfollow/`
+- `library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemui/barfollow/`
+- `library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemui/statusbarfollow/RecentsOpenSession.java`
+- `library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemframework/statusbarfollow/`
 
-is derived from the MiuiBackGestureHook project and modified for HyperCeiler.
+is derived from the MiuiBackGestureHook project and modified for HyperCraft.
 
 - Source project: <https://github.com/wxxsfxyzm/MiuiBackGestureHook>
 - Reference commit: `004bc059e5821775917b771d89aa1d8c18a1e669`
@@ -17,6 +17,6 @@ is derived from the MiuiBackGestureHook project and modified for HyperCeiler.
 - Copyright: Copyright (C) 2026 MiuiBackGestureHook contributors
 - License: Apache License 2.0
 - License text: <https://www.apache.org/licenses/LICENSE-2.0>
-- Changes: package/import adaptation, HyperCeiler hook/log/preference/gate integration, default-off behavior, and compile-only hidden API accommodation.
+- Changes: package/import adaptation, HyperCraft hook/log/preference/gate integration, default-off behavior, and compile-only hidden API accommodation.
 
 The copied files retain the source/license header. No reference-project logging or diagnostic tools are copied.

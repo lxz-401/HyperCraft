@@ -5,14 +5,14 @@ import argparse,subprocess,json,hashlib,os
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 p=argparse.ArgumentParser();p.add_argument('--output',required=True,type=Path);a=p.parse_args();o=a.output;o.mkdir(parents=True,exist_ok=False)
 r=test_paths.TEST_DATA_ROOT;c=test_paths.BUILD_CACHE;s=test_paths.SNAPSHOT_ROOT / 'source-os4-hyos-test11-20261009-r1'
 cp=[s/f'library/{m}/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes'for m in['common','libhook','hidden-api']]+[s/f'library/{m}/build/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes'for m in['common','libhook']]+[test_paths.ANDROID_HOME / 'platforms/android-37.0/android.jar']+[c/'changed-hooks-compile'/f for f in['hook-xposed-102-1.3.0.jar','core-1.3.0.jar','api-102.0.0.jar']]+list((c/'gradle-home/caches').glob('*/transforms/*/transformed/core-ktx-*/jars/classes.jar'))+list((c/'gradle-home/caches').glob('*/transforms/*/transformed/core-ktx-*-api.jar'))
 cp += list((c/'gradle-home/caches').glob('*/transforms/*/transformed/dexkit-*/jars/classes.jar'))
 assert all(p.exists()for p in cp)
-kh=test_paths.KOTLIN_HOME;src=test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/systemui/controlcenter/media3/MediaViewSize.kt';sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();before=sha(src)
+kh=test_paths.KOTLIN_HOME;src=test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemui/controlcenter/media3/MediaViewSize.kt';sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();before=sha(src)
 def dependency_digest(p):
  if p.is_file(): return sha(p)
  return hashlib.sha256(''.join(str(f.relative_to(p))+' '+sha(f)+'\n' for f in sorted(p.rglob('*')) if f.is_file()).encode()).hexdigest()

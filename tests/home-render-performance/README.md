@@ -3,7 +3,7 @@
 This change follows third-party reports of interrupted-animation stutter,
 delayed back gestures and accidental back-long-press actions. October 26 logs
 from launcher 8593 show two input ANRs with the main thread in `property_get`,
-HyperCeiler native code and file reads, during back-arrow resource creation or
+HyperCraft native code and file reads, during back-arrow resource creation or
 buffer import. The anonymous offsets cannot be attributed to a specific helper
 without that APK's matching Build ID. The checks below prove avoidable work on
 that entry path, not that every reported gesture symptom has been eliminated.

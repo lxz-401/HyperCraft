@@ -1,3 +1,3 @@
-package com.sevtinge.hyperceiler.libhook.base
+package com.sevtinge.hypercraft.libhook.base
 
 abstract class BaseHook { abstract fun init() }

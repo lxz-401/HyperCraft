@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config xmlns:android="http://schemas.android.com/apk/res/android">
     <intent
-        android:icon="@drawable/ic_hyperceiler_settings_v130"
+        android:icon="@drawable/ic_hypercraft_settings_v130"
         android:name="@string/app_name"
-        android:targetPackage="com.sevtinge.hyperceiler"
+        android:targetPackage="com.sevtinge.hypercraft"
         android:action="android.intent.action.VIEW"
-        android:targetClass="com.sevtinge.hyperceiler.ui.SplashActivity"
-        android:tag="HYPERCEILER" />
+        android:targetClass="com.sevtinge.hypercraft.ui.SplashActivity"
+        android:tag="HYPERCRAFT" />
 </config>

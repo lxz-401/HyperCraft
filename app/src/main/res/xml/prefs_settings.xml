@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -14,7 +14,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -87,7 +87,7 @@
 
     <PreferenceCategory android:title="@string/settings_bug_title">
         <Preference
-            android:fragment="com.sevtinge.hyperceiler.home.safemode.SafeModeFragment"
+            android:fragment="com.sevtinge.hypercraft.home.safemode.SafeModeFragment"
             android:key="prefs_key_safe_mode"
             android:summary="@string/settings_safe_mode_desc"
             android:title="@string/settings_safe_mode" />
@@ -104,12 +104,12 @@
             android:key="prefs_key_log_viewer"
             android:title="@string/log_viewer">
             <intent
-                android:targetPackage="com.sevtinge.hyperceiler"
-                android:targetClass="com.sevtinge.hyperceiler.log.LogViewerActivity"/>
+                android:targetPackage="com.sevtinge.hypercraft"
+                android:targetClass="com.sevtinge.hypercraft.log.LogViewerActivity"/>
         </Preference>
 
         <Preference
-            android:fragment="com.sevtinge.hyperceiler.settings.development.DevelopmentFragment"
+            android:fragment="com.sevtinge.hypercraft.settings.development.DevelopmentFragment"
             android:key="prefs_key_development"
             android:title="@string/development" />
 

@@ -1,6 +1,6 @@
 import java.lang.reflect.*;import java.util.*;
 import io.github.libxposed.api.XposedInterface;import io.github.lingqiqi5211.ezhooktool.xposed.EzXposed;import io.github.lingqiqi5211.ezhooktool.xposed.java.*;import io.github.lingqiqi5211.ezhooktool.xposed.common.HookParam;
-import com.sevtinge.hyperceiler.libhook.base.BaseHook;import com.sevtinge.hyperceiler.libhook.rules.systemui.lockscreen.HideLockscreenZenMode;import com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper;
+import com.sevtinge.hypercraft.libhook.base.BaseHook;import com.sevtinge.hypercraft.libhook.rules.systemui.lockscreen.HideLockscreenZenMode;import com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper;
 import kotlin.Unit;import kotlin.coroutines.Continuation;import kotlinx.coroutines.flow.FlowCollector;
 public class TestMain {
  static final Map<Method,XposedInterface.Hooker>hooks=new LinkedHashMap<>();static int passes,failures,originalCalls;static boolean failUnhook;static Runnable onInstall;

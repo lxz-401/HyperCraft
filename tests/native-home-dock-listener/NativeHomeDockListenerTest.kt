@@ -1,9 +1,9 @@
-package com.sevtinge.hyperceiler.tests.nativehome
+package com.sevtinge.hypercraft.tests.nativehome
 
 import android.content.SharedPreferences
-import com.sevtinge.hyperceiler.common.log.ModuleLog as Log
-import com.sevtinge.hyperceiler.common.utils.PrefsBridge
-import com.sevtinge.hyperceiler.libhook.rules.home.other.NativeHomeHooksOS4
+import com.sevtinge.hypercraft.common.log.ModuleLog as Log
+import com.sevtinge.hypercraft.common.utils.PrefsBridge
+import com.sevtinge.hypercraft.libhook.rules.home.other.NativeHomeHooksOS4
 import java.lang.ref.WeakReference
 import java.util.concurrent.atomic.AtomicBoolean
 

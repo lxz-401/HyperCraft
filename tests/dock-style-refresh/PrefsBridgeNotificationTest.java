@@ -1,5 +1,5 @@
 import android.content.*;
-import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
+import com.sevtinge.hypercraft.common.utils.PrefsBridge;
 import java.util.*;
 public final class PrefsBridgeNotificationTest {
  static final String K="prefs_key_home_dock_unlock_style";

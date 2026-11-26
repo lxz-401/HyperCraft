@@ -43,7 +43,7 @@ with tempfile.TemporaryDirectory()as tmp:
  names=[l.split(' ',1)[1]for l in raw.splitlines()]
  assert not any(n in ['桌面布局','最近任务','用途未知的原生挂钩']for n in names)
  (p/'native-names.txt').write_text('\n'.join(names))
- sources=list((root/'library/common/src/main/java/com/sevtinge/hyperceiler/common/diagnostics').glob('*.java'))
+ sources=list((root/'library/common/src/main/java/com/sevtinge/hypercraft/common/diagnostics').glob('*.java'))
  sources.append(Path(__file__).with_name('PresentationTest.java'))
  subprocess.run(['javac','-encoding','UTF-8','-d',tmp,*map(str,sources)],check=True)
  subprocess.run(['java','-ea','-cp',tmp,'PresentationTest',str(p/'native-names.txt')],check=True)
@@ -63,7 +63,7 @@ for directory in ['values','values-zh-rCN']:
   assert all(ch in ',，' or not unicodedata.category(ch).startswith(('P','S'))for ch in text),(n.get('name'),text)
 print('Diagnostics UI contract PASS: overview first, both launcher entries, comma-only resource copy')
 
-fragment=(root/'app/src/main/java/com/sevtinge/hyperceiler/diagnostics/HookDiagnosticsFragment.java').read_text()
+fragment=(root/'app/src/main/java/com/sevtinge/hypercraft/diagnostics/HookDiagnosticsFragment.java').read_text()
 assert 'assessment.counts()' in fragment and 'counts.success()' in fragment
 assert all(old not in fragment for old in ['最终效果','f.effect()','f.installation()','f.execution()','hook_diagnostics_levels'])
 assert not any(n.get('name','').startswith('hook_diagnostics_levels') for n in ET.parse(root/'app/src/main/res/values/diagnostics.xml').getroot())

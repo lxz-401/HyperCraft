@@ -45,7 +45,7 @@ constexpr const char* kModuleVersion = "2.3";
  * shared-memory read but it is not free, and this is asked on a path that runs on every pass.
  */
 // Existing debug input contract, independent of the engine/log naming.
-constexpr const char* kPropConfigBlob = "debug.hyperceiler.hometweaks.blob";
+constexpr const char* kPropConfigBlob = "debug.hypercraft.hometweaks.blob";
 
 bool DebugPropertyEnabled(const char* name) {
     char value[PROP_VALUE_MAX] = {};
@@ -892,7 +892,7 @@ std::string DescribePlan(const PlanResult& plan) {
  * Nothing ever read either copy back - it was write-only - so the entire feature is gone rather
  * than gated behind a property. Everything it used to say is already in logcat, which is where a
  * device that misbehaves is actually diagnosed: LogPlanReasons() below names each failed feature and
- * its reason, and ApplyPatches() logs every skip and write failure. `logcat -s HyperCeiler.HomeLayoutEngine` is the
+ * its reason, and ApplyPatches() logs every skip and write failure. `logcat -s HyperCraft.HomeLayoutEngine` is the
  * replacement for `cat home_layout_engine.status`, and it costs no file in any user-visible directory.
  */
 

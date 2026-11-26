@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    namespace = "com.sevtinge.hyperceiler.core"
+    namespace = "com.sevtinge.hypercraft.core"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         minSdk = 35
 
-        buildConfigField("String", "APP_MODULE_ID", "\"com.sevtinge.hyperceiler\"")
+        buildConfigField("String", "APP_MODULE_ID", "\"com.sevtinge.hypercraft\"")
     }
 
     buildFeatures {

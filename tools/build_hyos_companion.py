@@ -99,12 +99,12 @@ run(
         "-DANDROID_PLATFORM=android-35",
         "-DANDROID_STL=c++_static",
         "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
-        "-DHYPERCEILER_HYOS_BACKEND=ON",
-        "-DHYPERCEILER_ZYGISK_NEXT_API_DIR=" + str(sdk),
+        "-DHYPERCRAFT_HYOS_BACKEND=ON",
+        "-DHYPERCRAFT_ZYGISK_NEXT_API_DIR=" + str(sdk),
     ],
 )
 run("build", [cmake, "--build", build, "-j4"])
-lib = build / "libHyperCeilerHyos.so"
+lib = build / "libHyperCraftHyos.so"
 dynamic = run("dynamic", [llvm / "llvm-readelf", "-d", lib])
 symbols = run("symbols", [llvm / "llvm-readelf", "--dyn-syms", "--wide", lib])
 require(
@@ -142,7 +142,7 @@ for f in (ROOT / "packaging/hyos-companion").iterdir():
         )
     elif f.is_file():
         shutil.copy2(f, stage / f.name)
-dest = stage / "lib/arm64-v8a/libHyperCeilerHyos.so"
+dest = stage / "lib/arm64-v8a/libHyperCraftHyos.so"
 dest.parent.mkdir(parents=True)
 shutil.copy2(lib, dest)
 run("strip", [llvm / "llvm-strip", "--strip-debug", dest])
@@ -152,7 +152,7 @@ shutil.copy2(
     stage / "NOTICE-LLVM.txt",
 )
 (stage / "SOURCE-AND-API.txt").write_text(
-    "Sources: the exact HyperCeiler Git checkout used for this build; retain its commit and local diff.\n"
+    "Sources: the exact HyperCraft Git checkout used for this build; retain its commit and local diff.\n"
     "Zygisk Next SDK is an external build dependency and is not redistributed here.\n"
     "Pinned SDK commit: 22fe320814656e7b44715b5f32c967ceb51cda08\n"
     "SDK header SHA256: "

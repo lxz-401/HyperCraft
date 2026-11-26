@@ -35,7 +35,7 @@ catch boundary; other runtime exceptions propagate through the production entry.
 For the negative control, extract the original entry and run the same test:
 
 ```sh
-git show 5e4686069:library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/base/XposedInitEntry.java \
+git show 5e4686069:library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/base/XposedInitEntry.java \
   > /tmp/XposedInitEntry.java
 python3 tests/os4-init-prefs/run.py --source /tmp/XposedInitEntry.java
 ```

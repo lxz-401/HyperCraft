@@ -112,5 +112,5 @@ For changes prior to v2.11.168, see the Git history and release tags.
 
 ## Links
 
-- [GitHub Releases](https://github.com/ReChronoRain/HyperCeiler/releases)
-- [Compare v2.11.170...main](https://github.com/ReChronoRain/HyperCeiler/compare/v2.11.170...main)
+- [GitHub Releases](https://github.com/ReChronoRain/HyperCraft/releases)
+- [Compare v2.11.170...main](https://github.com/ReChronoRain/HyperCraft/compare/v2.11.170...main)

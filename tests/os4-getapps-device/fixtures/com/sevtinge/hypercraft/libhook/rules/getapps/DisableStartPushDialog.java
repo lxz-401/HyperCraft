@@ -1,0 +1,1 @@
+package com.sevtinge.hypercraft.libhook.rules.getapps;import com.sevtinge.hypercraft.libhook.base.BaseHook;public class DisableStartPushDialog extends BaseHook{public static final DisableStartPushDialog INSTANCE=new DisableStartPushDialog(); public void init(){}}

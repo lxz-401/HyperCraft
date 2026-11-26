@@ -29,12 +29,12 @@ with tempfile.TemporaryDirectory(prefix='hc-recents-cache-')as work:
  subprocess.run(['c++','-std=c++20','-Wall','-Wextra','-Werror','-I'+str(ROOT/'app/src/main/cpp'),str(out/'cache.cpp'),'-o',str(out/'cache')],check=True)
  subprocess.run([str(out/'cache')],check=True)
 with tempfile.TemporaryDirectory(prefix='hc-recents-jvm-')as work:
- lib=ROOT/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook'
+ lib=ROOT/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook'
  sources=list((ROOT/'tests/home-layout-native/stubs').rglob('*.java'))+list((ROOT/'tests/home-dock-window/stubs').rglob('*.java'))
  sources = [p for p in sources if p.name != 'ModuleLog.java']
- sources += [lib/'provider/HomeLayoutPrefsSnapshot.java',lib/'provider/HomeGesturePrefsSnapshot.java',lib/'base/FrameworkHookGate.java',lib/'rules/home/dock/HomeLayoutNativeEndpointOS4.java',ROOT/'library/common/src/main/java/com/sevtinge/hyperceiler/common/log/ModuleLog.java',HERE/'EndpointTest.java']
+ sources += [lib/'provider/HomeLayoutPrefsSnapshot.java',lib/'provider/HomeGesturePrefsSnapshot.java',lib/'base/FrameworkHookGate.java',lib/'rules/home/dock/HomeLayoutNativeEndpointOS4.java',ROOT/'library/common/src/main/java/com/sevtinge/hypercraft/common/log/ModuleLog.java',HERE/'EndpointTest.java']
  subprocess.run(['javac','-encoding','UTF-8','-d',work]+list(map(str,sources)),check=True)
- subprocess.run(['java','-ea','-cp',work,'com.sevtinge.hyperceiler.libhook.rules.home.dock.EndpointTest'],check=True)
+ subprocess.run(['java','-ea','-cp',work,'com.sevtinge.hypercraft.libhook.rules.home.dock.EndpointTest'],check=True)
 # Actual production binding must consume the runtime plan, never a symbol/name resolver.
 hooks=(ROOT/'app/src/main/cpp/targets/home/home_layout_hooks.cpp').read_text();binding=hooks[hooks.index('bool bind_recent()'):hooks.index('size_t arm_hooks(')]
 assert 'g_runtime_features.recent' in binding and 'HomeLayoutEngineFindSymbol' not in binding and 'dartscan::' not in binding

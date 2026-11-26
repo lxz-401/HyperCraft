@@ -1,4 +1,4 @@
-package com.sevtinge.hyperceiler.common.utils;
+package com.sevtinge.hypercraft.common.utils;
 
 import java.util.HashMap;
 import java.util.Map;

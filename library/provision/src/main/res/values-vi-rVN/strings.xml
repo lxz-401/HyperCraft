@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -15,7 +15,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   --><resources>
     <string name="provision_back_description">Quay lại</string>
     <string name="provision_start_content_description">Bắt đầu</string>
@@ -58,5 +58,5 @@
     <string name="provision_basic_settings_icon_miui_13">Kiểu không nền</string>
     <string name="provision_system_preparing">Hệ thống đang trong quá trình chuẩn bị</string>
     <string name="provision_system_complete">Cài đặt hoàn tất</string>
-    <string name="provision_get_md_failed">## Không thể tải nội dung. \n - Bạn có thể truy cập [tại đây](%URL%) để xem nội dung gốc. \n - Hoặc thử [làm mới](hyperceiler://refresh) trang này.</string>
+    <string name="provision_get_md_failed">## Không thể tải nội dung. \n - Bạn có thể truy cập [tại đây](%URL%) để xem nội dung gốc. \n - Hoặc thử [làm mới](hypercraft://refresh) trang này.</string>
 </resources>

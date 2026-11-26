@@ -18,11 +18,11 @@ with tempfile.TemporaryDirectory(prefix='hc-independent-scale-') as temp:
 with tempfile.TemporaryDirectory(prefix='hc-scale-endpoint-') as temp:
     sources=list((root/'tests/home-layout-native/stubs').rglob('*.java'))
     sources+=list((root/'tests/home-dock-window/stubs').rglob('*.java'))
-    lib=root/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook'
+    lib=root/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook'
     sources += [lib/'provider/HomeLayoutPrefsSnapshot.java',lib/'provider/HomeGesturePrefsSnapshot.java',
         lib/'base/FrameworkHookGate.java',
         lib/'rules/home/dock/HomeLayoutNativeEndpointOS4.java',
-        root/'library/common/src/main/java/com/sevtinge/hyperceiler/common/log/ModuleLog.java',
+        root/'library/common/src/main/java/com/sevtinge/hypercraft/common/log/ModuleLog.java',
         Path(__file__).with_name('ObjectScaleEndpointTest.java')]
     subprocess.run(['javac','-encoding','UTF-8','-d',temp]+[str(p) for p in sources],check=True)
-    subprocess.run(['java','-ea','-cp',temp,'com.sevtinge.hyperceiler.libhook.rules.home.dock.ObjectScaleEndpointTest'],check=True)
+    subprocess.run(['java','-ea','-cp',temp,'com.sevtinge.hypercraft.libhook.rules.home.dock.ObjectScaleEndpointTest'],check=True)

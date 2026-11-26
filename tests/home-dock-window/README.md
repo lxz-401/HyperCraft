@@ -22,9 +22,9 @@ Device verification must additionally check that repeated renderer recovery does
 not accumulate old SurfaceControlViewHost / Dock glass layers in SurfaceFlinger.
 An unstable provider reference and a system-server service binding both allow
 OS4 to freeze the rendering process, returning BR_FROZEN_REPLY and triggering
-provider-death recovery. While at least one verified HyperCeiler glass lease is
-active, the hook filters only HyperCeiler's exact UID/current PID out of OS4
-Greeze freeze batches. The same live-PID verification adds HyperCeiler only to
+provider-death recovery. While at least one verified HyperCraft glass lease is
+active, the hook filters only HyperCraft's exact UID/current PID out of OS4
+Greeze freeze batches. The same live-PID verification adds HyperCraft only to
 the per-request whitelist of OS4 policy-1 OneKeyClean, so clearing recents cannot
 destroy an active native-glass buffer. Direct force-stop and every other clean
 policy remain untouched. It first verifies exclusive package ownership and checks
@@ -43,7 +43,7 @@ The probe/v7 sections below are historical investigation notes; their address
 profiles and opt-in probe have been removed and are not used by current builds.
 
 The September 4 device log shows `Loaded HyperOS Runtime native module` for
-HyperCeiler, but no launcher Java hook entry. An `Activity.onCreate` hook cannot
+HyperCraft, but no launcher Java hook entry. An `Activity.onCreate` hook cannot
 create the Dock view in this dex-free launcher. `HomeDockWindow` instead runs in
 the existing `system` scope and owns two child SurfaceControl layers under the
 exact launcher window: a background blur effect and a separate translucent tint.
@@ -63,19 +63,19 @@ From the repository root:
 ```sh
 dock_test_dir=$(mktemp -d)
 javac -d "$dock_test_dir" \
-  library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock/DockWindowPolicy.java \
-  library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock/DockGlassPreset.java \
-  library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock/DockRecentsMotion.java \
-  library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock/DockUnlockReveal.java \
-  library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock/DockGlassRetryPolicy.java \
-  library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock/DockGlassSurfaceLease.java \
-  library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock/DockGlassProcessPolicy.java \
-  library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock/DockWallpaperEndpoint.java \
-  library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock/DockNativeMotion.java \
-  library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock/DockNativeMotionEndpoint.java \
-  library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock/DockGlassRecoveryGate.java \
-  library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock/DockRotationPolicy.java \
-  library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock/DockGlassGeometry.java \
+  library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock/DockWindowPolicy.java \
+  library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock/DockGlassPreset.java \
+  library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock/DockRecentsMotion.java \
+  library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock/DockUnlockReveal.java \
+  library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock/DockGlassRetryPolicy.java \
+  library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock/DockGlassSurfaceLease.java \
+  library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock/DockGlassProcessPolicy.java \
+  library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock/DockWallpaperEndpoint.java \
+  library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock/DockNativeMotion.java \
+  library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock/DockNativeMotionEndpoint.java \
+  library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock/DockGlassRecoveryGate.java \
+  library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock/DockRotationPolicy.java \
+  library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock/DockGlassGeometry.java \
   tests/home-dock-window/stubs/android/os/IBinder.java \
   tests/home-dock-window/stubs/android/os/Binder.java \
   tests/home-dock-window/stubs/android/os/Parcel.java \
@@ -93,7 +93,7 @@ javac -d "$dock_test_dir" \
   tests/home-dock-window/DockRotationPolicyTest.java \
   tests/home-dock-window/DockGlassGeometryTest.java
 for test in DockWindowPolicy DockGlassPreset DockRecentsMotion DockUnlockReveal DockGlassRetryPolicy DockGlassSurfaceLease DockGlassProcessPolicy DockWallpaperEndpoint DockNativeMotion DockNativeMotionEndpoint DockGlassRecoveryGate DockRotationPolicy DockGlassGeometry; do
-  java -cp "$dock_test_dir" "com.sevtinge.hyperceiler.tests.dock.${test}Test"
+  java -cp "$dock_test_dir" "com.sevtinge.hypercraft.tests.dock.${test}Test"
 done
 ```
 
@@ -155,7 +155,7 @@ the unlock epoch always wins over the replay.
 4. Open apps, recents, folders and the drawer; lock/unlock and rotate. Check no
    background leaks into other apps and the launcher buffer does not obscure it.
 5. Disable the feature, restart the launcher, and hot-reload the module. Verify
-   no old `HyperCeiler Dock` SurfaceFlinger layers remain.
+   no old `HyperCraft Dock` SurfaceFlinger layers remain.
 
 Unknown window titles are logged (at most twelve launcher-only titles) and are
 not guessed. If no title matches, attach the new logs. If layers are created but
@@ -165,9 +165,9 @@ changing Z order; an opaque Flutter buffer may require a different attachment.
 ## Native glass (separate style value 3)
 
 `DockGlassHost` creates an input-transparent, windowless HWUI View in the
-HyperCeiler process. `DockGlassClient` performs provider IPC on its own worker
+HyperCraft process. `DockGlassClient` performs provider IPC on its own worker
 with an unstable provider client, never under the WM lock. The system hook
-parents only the returned HyperCeiler surface, underneath the launcher buffer.
+parents only the returned HyperCraft surface, underneath the launcher buffer.
 The original compositor blur is retained until the host commits a frame **and**
 reports a nonzero vendor background-texture timestamp. Unsupported APIs,
 rejected pass-window background, missing textures, and renderer death fall back
@@ -256,7 +256,7 @@ single-flight latch, the exhausted budget, stale generations, idempotent
 retirement, refresh deduplication and closed-client admission.
 
 The diagnostic build records a bounded history (96 metadata events) in
-HyperCeiler's private device-protected storage, independently of release logging
+HyperCraft's private device-protected storage, independently of release logging
 preferences. It includes hook endpoint resolution, glass attempt/failure/readiness,
 up to twelve launcher wallpaper command samples, and limited motion-position
 samples. No pixels, icons, user input or other application data are collected.
@@ -265,7 +265,7 @@ All IPC and diagnostic storage access happen away from WMS callbacks.
 
 ```sh
 adb shell content call \
-  --uri content://com.sevtinge.hyperceiler.provider.sharedprefs \
+  --uri content://com.sevtinge.hypercraft.provider.sharedprefs \
   --method dock_glass_history
 ```
 
@@ -275,11 +275,11 @@ event rather than assuming a reload occurred. Rebooting requires separate
 permission. An empty history before reload does not prove observer failure.
 
 Before testing the real desktop, ADB can run a fixed **unparented** host smoke
-test through HyperCeiler (no screenshot or third-party app data):
+test through HyperCraft (no screenshot or third-party app data):
 
 ```sh
 adb shell content call \
-  --uri content://com.sevtinge.hyperceiler.provider.sharedprefs \
+  --uri content://com.sevtinge.hypercraft.provider.sharedprefs \
   --method dock_glass_self_test
 ```
 
@@ -289,9 +289,9 @@ only system UID or the app UID, not arbitrary apps or ADB shell.
 
 Additional device checks: glass day/night appearance and backdrop motion;
 disable/re-enable; switch between system material and glass; rapid dimension changes;
-HyperCeiler process death while glass is active; lock/unlock; launcher/window
+HyperCraft process death while glass is active; lock/unlock; launcher/window
 removal; module hot reload. Verify touch still reaches icons and no host survives
-removal. Device reboot/launcher restart and inspecting data outside HyperCeiler
+removal. Device reboot/launcher restart and inspecting data outside HyperCraft
 require separate permission under this task's phone restrictions.
 
 ## Recents background lift
@@ -338,7 +338,7 @@ motion-position events during user interaction.
 The version-3 initial motion was a bounded 20dp lift over 250ms, reversed on a home/app
 scene. This is a conservative approximation, **not** the native icon transform
 or an exact gesture-progress match. Repeated targets do not restart it; a
-reversal starts from the current position. Only the HyperCeiler effect parent's
+reversal starts from the current position. Only the HyperCraft effect parent's
 position changes, in the WMS sync transaction. Glass host size, preset, key,
 texture and child positions stay unchanged. A Choreographer callback requests
 traversal while the visible background is moving; there is no idle polling.
@@ -610,7 +610,7 @@ reviewed for stack/flag restoration and absence of call instructions. Release
 assembly and APK-v2 verification passed. The installed APK hash is
 `69877275f142c2b8d2665484899e1987f714f1f58eac1fc9110f6d5fcc21c994`.
 The previous v6 APK was preserved at
-`/private/tmp/hyperceiler-before-native-probe.vrtKxf/HyperCeiler-v6.apk`.
+`/private/tmp/hypercraft-before-native-probe.vrtKxf/HyperCraft-v6.apk`.
 
 At 22:05:54 the authorized force-stop/start changed the launcher PID from 31911
 to 32647. The new native module loaded, but at 22:05:55 reported
@@ -627,7 +627,7 @@ phone reboot or app-data clearing was performed.
 ### Current launcher 6236 profile (probe v2)
 
 With separate permission, only the installed launcher APK was exported to
-`/private/tmp/hyperceiler-current-launcher-20260904/base.apk`; no launcher user
+`/private/tmp/hypercraft-current-launcher-20260904/base.apk`; no launcher user
 data was read. Its version is `RELEASE-8.01.02.6236-260818-09031543-R`, whereas
 the original sample is `RELEASE-8.01.02.6179-260818-08292132-R`. APK SHA-256:
 `5aab4adbda52c0f046b5851bb702edc41e0c438099e3d4f81f84e6b00df25cd3`.

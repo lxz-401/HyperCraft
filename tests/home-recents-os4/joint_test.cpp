@@ -77,9 +77,9 @@ void reset(){g_api=nullptr;g_active=false;g_worker_started=false;g_watchdog_star
  no_symbol=no_service=fail_associate=fail_prepare=null_input=fail_transact=null_output=fail_worker=fail_init=false;
  ack=hyos_snapshot::kBackAck;available=1;flags=1;bytes=196;read_fail=-1;binder.clazz=&type;api={};api.inlineHook=hook;api.inlineUnhook=unhook;events.clear();options.clear();}
 unsigned last_options(){std::lock_guard l(events_mutex);return options.empty()?999:options.back();}
-void record(const char *name){hyperceiler_hyos_record_home_library(name);}
+void record(const char *name){hypercraft_hyos_record_home_library(name);}
 void next_poll(){std::thread t([]{poll_flags();});t.join();}
-bool boot(const char *name="libapp.so"){record(name);bool ready=hyperceiler_hyos_start_home_control(&api);join_workers();return ready;}
+bool boot(const char *name="libapp.so"){record(name);bool ready=hypercraft_hyos_start_home_control(&api);join_workers();return ready;}
 int pass=0,fail=0;
 void run(const char *name,std::function<void()> fn){reset();try{fn();join_workers();CHECK(allocations==deletes&&service_refs==0);++pass;std::printf("PASS %s\n",name);}catch(const std::exception &e){++fail;std::printf("FAIL %s: %s\n",name,e.what());}}
 }
@@ -117,10 +117,10 @@ int32_t AParcel_getDataSize(const AParcel *p){return p->bytes;}
 binder_status_t AParcel_readInt32(const AParcel *p,int32_t *v){auto *q=const_cast<AParcel *>(p);if(q->pos==q->fail_index||q->pos>=q->bytes/4||q->pos>=static_cast<int>(std::size(q->values)))return STATUS_BAD_VALUE;*v=q->values[q->pos++];return STATUS_OK;}
 void AParcel_delete(AParcel *p){++fixture::deletes;delete p;}
 extern "C" home_native::LibraryLoaded native_init(const home_native::ApiEntries *e){CHECK(e->version==1&&e->hook_func==fixture::api.inlineHook&&e->unhook_func==fixture::api.inlineUnhook);++fixture::inits;fixture::init_gate.block();return fixture::fail_init?nullptr:fixture::loaded;}
-void hyperceiler_home_runtime_options(bool high,bool prestart,bool glass,bool dock,bool report){fixture::options_gate.block();++fixture::options_calls;std::lock_guard l(fixture::events_mutex);fixture::options.push_back((high?2:0)|(prestart?4:0)|(glass?8:0)|(dock?16:0)|(report?32:0));}
-void hyperceiler_hyos_retry_home_report(const ZygiskNextAPI *api){CHECK(api==&fixture::api&&hyos_control::feature_enabled(hyos_control::kHideReport));CHECK(g_publish_mutex.try_lock());g_publish_mutex.unlock();++fixture::report_retries;}
-void hyperceiler_home_after_startup(){CHECK(startup_finished());++fixture::post_startups;}
-void hyperceiler_home_maintain_back_gesture(home_native::HookFunction,home_native::UnhookFunction){}
+void hypercraft_home_runtime_options(bool high,bool prestart,bool glass,bool dock,bool report){fixture::options_gate.block();++fixture::options_calls;std::lock_guard l(fixture::events_mutex);fixture::options.push_back((high?2:0)|(prestart?4:0)|(glass?8:0)|(dock?16:0)|(report?32:0));}
+void hypercraft_hyos_retry_home_report(const ZygiskNextAPI *api){CHECK(api==&fixture::api&&hyos_control::feature_enabled(hyos_control::kHideReport));CHECK(g_publish_mutex.try_lock());g_publish_mutex.unlock();++fixture::report_retries;}
+void hypercraft_home_after_startup(){CHECK(startup_finished());++fixture::post_startups;}
+void hypercraft_home_maintain_back_gesture(home_native::HookFunction,home_native::UnhookFunction){}
 namespace home_recents_test {bool atomics();void event(unsigned);}
 #define HOME_RECENTS_RUNTIME_TEST 1
 #define clock_gettime fixture_clock

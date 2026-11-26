@@ -7,14 +7,14 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[2]
-SOURCE = ROOT / 'library/common/src/main/java/com/sevtinge/hyperceiler'
+SOURCE = ROOT / 'library/common/src/main/java/com/sevtinge/hypercraft'
 
 with tempfile.TemporaryDirectory(prefix='hc-shell-test-') as temporary:
     work = Path(temporary)
     fixtures = {
         'androidx/annotation/Nullable.java': 'package androidx.annotation; public @interface Nullable {}',
         'androidx/annotation/NonNull.java': 'package androidx.annotation; public @interface NonNull {}',
-        'com/sevtinge/hyperceiler/common/log/AndroidLog.java': '''package com.sevtinge.hyperceiler.common.log;
+        'com/sevtinge/hypercraft/common/log/AndroidLog.java': '''package com.sevtinge.hypercraft.common.log;
 public class AndroidLog {
     public static void e(String tag, String message, Throwable error) { error.printStackTrace(); }
     public static void i(String tag, String message) {}

@@ -3,7 +3,7 @@
 #include "home_widget_move.h"
 #include "home_endpoint_diagnostics.h"
 
-#ifdef HYPERCEILER_HYOS_BACKEND
+#ifdef HYPERCRAFT_HYOS_BACKEND
 #include "targets/hyos/hyos_control.h"
 #else
 #include <android/binder_ibinder.h>
@@ -31,7 +31,7 @@
 #endif
 
 namespace home_layout {
-#ifndef HYPERCEILER_HYOS_BACKEND
+#ifndef HYPERCRAFT_HYOS_BACKEND
 namespace {
 constexpr transaction_code_t kLayoutTransaction = 0x0048434C;
 constexpr int32_t kLayoutAck = 0x48434C34;
@@ -41,12 +41,12 @@ constexpr char kDescriptor[] = "android.view.IWindowManager";
  * Debug-only override of the preference snapshot, for calibrating the layout knobs from adb without
  * walking the settings page (which restarts the desktop on every change). All four properties are
  * plain values in the same units the Binder snapshot carries, and only exist while
- * `debug.hyperceiler.layout.override` is 1:
+ * `debug.hypercraft.layout.override` is 1:
  *
- *   debug.hyperceiler.layout.override = 1
- *   debug.hyperceiler.layout.grid     = <enabled>,<cellX>,<cellY>
- *   debug.hyperceiler.layout.knobs    = <enabled>:<deltaPx>,...   (HC_LAYOUT_KNOBS order)
- *   debug.hyperceiler.layout.tweaks   = <17 ints, protocol order; legacy 16 keeps capacity locked>
+ *   debug.hypercraft.layout.override = 1
+ *   debug.hypercraft.layout.grid     = <enabled>,<cellX>,<cellY>
+ *   debug.hypercraft.layout.knobs    = <enabled>:<deltaPx>,...   (HC_LAYOUT_KNOBS order)
+ *   debug.hypercraft.layout.tweaks   = <17 ints, protocol order; legacy 16 keeps capacity locked>
  *
  * A malformed or missing property is ignored field by field, never fatal. This is a build-time
  * constant-free diagnostics path: it cannot change behaviour unless the property is set, so a
@@ -54,7 +54,7 @@ constexpr char kDescriptor[] = "android.view.IWindowManager";
  */
 bool debug_override_enabled() {
     char value[PROP_VALUE_MAX] = {};
-    return __system_property_get("debug.hyperceiler.layout.override", value) > 0
+    return __system_property_get("debug.hypercraft.layout.override", value) > 0
         && value[0] == '1';
 }
 
@@ -66,7 +66,7 @@ std::string_view property_text(const char *name) {
 
 /* One `enabled:deltaPx` entry per geometry knob, in HC_LAYOUT_KNOBS order. */
 void apply_knob_override(Config &config) {
-    const std::string_view text = property_text("debug.hyperceiler.layout.knobs");
+    const std::string_view text = property_text("debug.hypercraft.layout.knobs");
     if (text.empty()) return;
     size_t cursor = 0;
     for (size_t index = 0; index < config.knobs.size(); ++index) {
@@ -88,7 +88,7 @@ void apply_knob_override(Config &config) {
 }
 
 void apply_tweaks_override(Config &config) {
-    const std::string_view text = property_text("debug.hyperceiler.layout.tweaks");
+    const std::string_view text = property_text("debug.hypercraft.layout.tweaks");
     if (text.empty()) return;
     int values[17] = {};
     size_t cursor = 0;
@@ -116,7 +116,7 @@ void apply_tweaks_override(Config &config) {
 
 void apply_debug_override(Config &config) {
     char grid[PROP_VALUE_MAX] = {};
-    if (__system_property_get("debug.hyperceiler.layout.grid", grid) > 0) {
+    if (__system_property_get("debug.hypercraft.layout.grid", grid) > 0) {
         int values[3] = {-1, -1, -1};
         size_t cursor = 0;
         size_t count = 0;
@@ -417,7 +417,7 @@ static void config_diagnostic(unsigned category,int priority,const char* format,
     std::vsnprintf(message,sizeof(message),format,args);va_end(args);
     if(last[category]==message)return;
     last[category]=message;
-    __android_log_print(priority,"HyperCeiler.HomeConfig","%s",message);
+    __android_log_print(priority,"HyperCraft.HomeConfig","%s",message);
 }
 
 static bool query_binder(Config &result) {
@@ -687,7 +687,7 @@ bool query_bootstrap_config(Config &result) {
 #endif
 
 bool query_config(Config &result) {
-#ifdef HYPERCEILER_HYOS_BACKEND
+#ifdef HYPERCRAFT_HYOS_BACKEND
     // Unavailable/expired authorization publishes neutral values, never an old
     // JNI/property/disk configuration or a second independent Binder revision.
     (void) hyos_control::layout_config(result);

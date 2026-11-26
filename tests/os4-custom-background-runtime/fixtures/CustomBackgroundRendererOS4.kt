@@ -1,7 +1,7 @@
-package com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.media3
+package com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.media3
 import android.content.Context
-import com.sevtinge.hyperceiler.libhook.base.BaseHook
-import com.sevtinge.hyperceiler.libhook.utils.hookapi.systemui.controlcenter.media.MediaViewColorConfig
+import com.sevtinge.hypercraft.libhook.base.BaseHook
+import com.sevtinge.hypercraft.libhook.utils.hookapi.systemui.controlcenter.media.MediaViewColorConfig
 class CustomBackgroundRendererOS4 private constructor() {
  val mediaDataClass:Class<*> get()=BaseHook.classes["test.MediaData"]!!
  data class Options(val colorAnimation:Boolean=false,val inverse:Boolean=false,val blurPercent:Int=10)

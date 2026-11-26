@@ -1,4 +1,4 @@
-import com.sevtinge.hyperceiler.common.diagnostics.*;
+import com.sevtinge.hypercraft.common.diagnostics.*;
 import java.nio.file.*;
 import java.util.*;
 
@@ -20,7 +20,7 @@ public final class PresentationTest {
         assert DiagnosticFeatureNames.forEvent(event("home.layout.slot.-1","桌面布局")).contains("未知");
         var precise=event("home.layout.slot.200","最近任务卡片圆角大小");
         assert DiagnosticFeatureNames.forEvent(precise).equals("最近任务卡片圆角大小");
-        String javaOwner="com.sevtinge.hyperceiler.libhook.rules.home.recent.CardTextSize/Hook(android.Context)";
+        String javaOwner="com.sevtinge.hypercraft.libhook.rules.home.recent.CardTextSize/Hook(android.Context)";
         assert DiagnosticFeatureNames.forEvent(event(javaOwner,javaOwner)).equals("最近任务卡片文字大小");
         assert LegacyDiagnosticAdapter.label("drop_geometry").equals("图标拖放落点与桌面边距");
         var legacy=event("home.layout.slot.4","桌面布局");String wire=legacy.wire();

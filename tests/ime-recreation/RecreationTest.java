@@ -1,10 +1,10 @@
-import com.sevtinge.hyperceiler.common.log.ModuleLog;
-import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
-import com.sevtinge.hyperceiler.libhook.app.Others.VariousThirdApps;
-import com.sevtinge.hyperceiler.libhook.appbase.input.MiuiImeSupport;
-import com.sevtinge.hyperceiler.libhook.base.BaseHook;
-import com.sevtinge.hyperceiler.libhook.base.BaseLoad;
-import com.sevtinge.hyperceiler.libhook.utils.hookapi.tool.AppsTool;
+import com.sevtinge.hypercraft.common.log.ModuleLog;
+import com.sevtinge.hypercraft.common.utils.PrefsBridge;
+import com.sevtinge.hypercraft.libhook.app.Others.VariousThirdApps;
+import com.sevtinge.hypercraft.libhook.appbase.input.MiuiImeSupport;
+import com.sevtinge.hypercraft.libhook.base.BaseHook;
+import com.sevtinge.hypercraft.libhook.base.BaseLoad;
+import com.sevtinge.hypercraft.libhook.utils.hookapi.tool.AppsTool;
 import io.github.lingqiqi5211.ezhooktool.xposed.common.HookParam;
 import java.util.Set;
 

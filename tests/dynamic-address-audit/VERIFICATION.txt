@@ -13,10 +13,10 @@ Dart allocation8/nativeSP16 unchanged. No new polling thread/timer/service/wakel
 Baseline and independent rollback restore HEAD's 36 failing checks of the same 44-check audit;
 12 of those are missing new owning-field capabilities, not previously proven runtime crashes.
 Release built; no installation/restart/UI/settings/device layout changes. ADB enumeration: empty.
-MODIFIED_FILE=C:\Users\XiaoYe\.codex\worktrees\f0f3\HyperCeiler\tests\dynamic-address-audit\MODIFIED_FILE.zip
-DIFF_FILE=C:\Users\XiaoYe\.codex\worktrees\f0f3\HyperCeiler\tests\dynamic-address-audit\DIFF_FILE.patch
-VERIFICATION=C:\Users\XiaoYe\.codex\worktrees\f0f3\HyperCeiler\tests\dynamic-address-audit\VERIFICATION.txt
-ROLLBACK=C:\Users\XiaoYe\.codex\worktrees\f0f3\HyperCeiler\tests\dynamic-address-audit\ROLLBACK.sh
+MODIFIED_FILE=C:\Users\XiaoYe\.codex\worktrees\f0f3\HyperCraft\tests\dynamic-address-audit\MODIFIED_FILE.zip
+DIFF_FILE=C:\Users\XiaoYe\.codex\worktrees\f0f3\HyperCraft\tests\dynamic-address-audit\DIFF_FILE.patch
+VERIFICATION=C:\Users\XiaoYe\.codex\worktrees\f0f3\HyperCraft\tests\dynamic-address-audit\VERIFICATION.txt
+ROLLBACK=C:\Users\XiaoYe\.codex\worktrees\f0f3\HyperCraft\tests\dynamic-address-audit\ROLLBACK.sh
 Exact BASELINE/MODIFIED/ROLLBACK command, input, literal output and status:
 [
   {
@@ -25,10 +25,10 @@ Exact BASELINE/MODIFIED/ROLLBACK command, input, literal output and status:
       "C:\\Users\\XiaoYe\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
       "-X",
       "utf8",
-      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCeiler\\tests\\dynamic-address-audit\\verify.py",
-      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCeiler\\tests\\dynamic-address-audit\\baseline-copy"
+      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCraft\\tests\\dynamic-address-audit\\verify.py",
+      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCraft\\tests\\dynamic-address-audit\\baseline-copy"
     ],
-    "input": "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCeiler\\tests\\dynamic-address-audit\\baseline-copy",
+    "input": "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCraft\\tests\\dynamic-address-audit\\baseline-copy",
     "stdout": "FAIL changed clone field register rejected\nFAIL symbol span must stop at unlisted function\nFAIL signed TB imm14 backward\nFAIL unscaled load is not indexed load\nFAIL preindexed load is not LDUR\nFAIL BL overflow rejected\nFAIL indexed load is not field LDUR\nFAIL heap ADD must extend same register\nFAIL real Gadget anchors and original return PC\nFAIL backward Gadget reject preserved\nFAIL duplicate select rejected\nFAIL changed replay register rejected\nFAIL changed span replay rejected\nFAIL Gadget follows shifted anchors\nFAIL shifted cell patch\nFAIL shifted occ patch\nFAIL shifted dock patch\nFAIL MIUI field may move below 0x80\nFAIL enable relocated rejection branch\nFAIL restore exact relocated original branch\nFAIL real stride fields from owner\nFAIL renumbered stride fields\nFAIL ambiguous stride fields rejected\nFAIL stride receiver change rejected\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nDYNAMIC_AUDIT=44 checks; failed=36\n\n",
     "stderr": "",
     "exit": 1
@@ -39,10 +39,10 @@ Exact BASELINE/MODIFIED/ROLLBACK command, input, literal output and status:
       "C:\\Users\\XiaoYe\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
       "-X",
       "utf8",
-      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCeiler\\tests\\dynamic-address-audit\\verify.py",
-      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCeiler"
+      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCraft\\tests\\dynamic-address-audit\\verify.py",
+      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCraft"
     ],
-    "input": "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCeiler",
+    "input": "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCraft",
     "stdout": "DYNAMIC_AUDIT=44 checks; failed=0\n\n",
     "stderr": "",
     "exit": 0
@@ -51,10 +51,10 @@ Exact BASELINE/MODIFIED/ROLLBACK command, input, literal output and status:
     "phase": "ROLLBACK_SCRIPT",
     "command": [
       "D:/Git/bin/bash.exe",
-      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCeiler\\tests\\dynamic-address-audit\\ROLLBACK.sh",
-      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCeiler\\tests\\dynamic-address-audit\\rollback-copy"
+      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCraft\\tests\\dynamic-address-audit\\ROLLBACK.sh",
+      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCraft\\tests\\dynamic-address-audit\\rollback-copy"
     ],
-    "input": "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCeiler\\tests\\dynamic-address-audit\\rollback-copy",
+    "input": "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCraft\\tests\\dynamic-address-audit\\rollback-copy",
     "stdout": "ROLLBACK_HASHES=9 ORIGINAL; HEAD audit failure behavior restored\n",
     "stderr": "",
     "exit": 0
@@ -65,10 +65,10 @@ Exact BASELINE/MODIFIED/ROLLBACK command, input, literal output and status:
       "C:\\Users\\XiaoYe\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
       "-X",
       "utf8",
-      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCeiler\\tests\\dynamic-address-audit\\verify.py",
-      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCeiler\\tests\\dynamic-address-audit\\rollback-copy"
+      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCraft\\tests\\dynamic-address-audit\\verify.py",
+      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCraft\\tests\\dynamic-address-audit\\rollback-copy"
     ],
-    "input": "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCeiler\\tests\\dynamic-address-audit\\rollback-copy",
+    "input": "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCraft\\tests\\dynamic-address-audit\\rollback-copy",
     "stdout": "FAIL changed clone field register rejected\nFAIL symbol span must stop at unlisted function\nFAIL signed TB imm14 backward\nFAIL unscaled load is not indexed load\nFAIL preindexed load is not LDUR\nFAIL BL overflow rejected\nFAIL indexed load is not field LDUR\nFAIL heap ADD must extend same register\nFAIL real Gadget anchors and original return PC\nFAIL backward Gadget reject preserved\nFAIL duplicate select rejected\nFAIL changed replay register rejected\nFAIL changed span replay rejected\nFAIL Gadget follows shifted anchors\nFAIL shifted cell patch\nFAIL shifted occ patch\nFAIL shifted dock patch\nFAIL MIUI field may move below 0x80\nFAIL enable relocated rejection branch\nFAIL restore exact relocated original branch\nFAIL real stride fields from owner\nFAIL renumbered stride fields\nFAIL ambiguous stride fields rejected\nFAIL stride receiver change rejected\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nFAIL missing bounded owning-field capability\nDYNAMIC_AUDIT=44 checks; failed=36\n\n",
     "stderr": "",
     "exit": 1
@@ -79,10 +79,10 @@ Exact BASELINE/MODIFIED/ROLLBACK command, input, literal output and status:
       "C:\\Users\\XiaoYe\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
       "-X",
       "utf8",
-      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCeiler\\tests\\dynamic-address-audit\\verify_bindings.py",
-      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCeiler"
+      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCraft\\tests\\dynamic-address-audit\\verify_bindings.py",
+      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCraft"
     ],
-    "input": "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCeiler",
+    "input": "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCraft",
     "stdout": "\nBINDINGS_AUDIT=19 checks; failed=0\n\n",
     "stderr": "",
     "exit": 0
@@ -93,9 +93,9 @@ Exact BASELINE/MODIFIED/ROLLBACK command, input, literal output and status:
       "C:\\Users\\XiaoYe\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
       "-X",
       "utf8",
-      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCeiler\\tests\\dynamic-address-audit\\verify_geometry.py"
+      "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCraft\\tests\\dynamic-address-audit\\verify_geometry.py"
     ],
-    "input": "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCeiler",
+    "input": "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCraft",
     "stdout": "workspace_geometry_test 0 \nworkspace_geometry_test 0 workspace geometry: neutral/top/bottom/symmetric-side/combined/extremes/guards/rebuild ok\nworkspace frame: grid/occupied/pristine-per-child/hotseat-exclusion ok\ndock horizontal: 1..8-icons/symmetric/signed-extremes/1000-frames/no-heap-or-Y-or-size-writes/guards ok\n\nfolder_geometry_test 0 \nfolder_geometry_test 0 folder endpoint regression: PASS (1536 positions; cell and actual preview paths; 1000 rebuilds; heap unchanged)\n\nfolder_render_snapshot_test 0 \nfolder_render_snapshot_test 0 folder rendered-frame regression: PASS (bottom-only; occupied; off/on; preview snapshot; grid change; bounded cache; heap unchanged)\n\ndrop_render_snapshot_test 0 \ndrop_render_snapshot_test 0 drop-back rendered-frame regression: PASS (rendered x/y; settings race; reset; grid change)\n\nhotseat_capacity_test 0 \nhotseat_capacity_test 0 hotseat capacity: 8-sites/off-on-off/idempotent/foreign-word-guard/alignment/partial-write-rollback PASS\nhotseat original logic: canonical-false/branch-destination/count-aware-division/getters-unchanged PASS\n\nindicator_pair_test 0 \nindicator_pair_test 0 indicator pair: equal displacement / zero-sum / originals intact / bounds / atomic skip PASS\n\n",
     "stderr": "",
     "exit": 0
@@ -106,8 +106,8 @@ MODIFIED_HASHES={"app/src/main/cpp/targets/home/home_layout_hooks.cpp": "d0fe94d
 ROLLBACK_COPY=original nine hashes and old audit failures; LIVE_SOURCE=modified nine hashes.
 Build exact command/input: C:/Users/XiaoYe/.gradle/wrapper/dists/gradle-9.7.1-bin/1w1c7tv4s851m17nbqdsro2tv/gradle-9.7.1/bin/gradle.bat :app:assembleRelease --offline --no-daemon; input=current worktree, JAVA_HOME=D:/zulu-17; exit=0. Full output: release-build-final.log.
 
-APK_REOPEN={"apk": "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCeiler\\app\\build\\outputs\\apk\\release\\HyperCeiler-2.10.166-20261003-release.apk", "sha256": "4353230ad2f921d558268c9db5683b3f6be44b0ceb1dd7d23d4dbc469b7c0451", "native_entries_verified": ["lib/arm64-v8a/libdexkit.so", "lib/arm64-v8a/libHyperCeilerNative.so"], "zip_reopen": "PASS"}
-APK_SIGNATURE_COMMAND=D:/build-tools/android-sdk/build-tools/37.0.0/apksigner.bat verify --verbose --print-certs C:\Users\XiaoYe\.codex\worktrees\f0f3\HyperCeiler\app\build\outputs\apk\release\HyperCeiler-2.10.166-20261003-release.apk
-APK_SIGNATURE_INPUT=C:\Users\XiaoYe\.codex\worktrees\f0f3\HyperCeiler\app\build\outputs\apk\release\HyperCeiler-2.10.166-20261003-release.apk
+APK_REOPEN={"apk": "C:\\Users\\XiaoYe\\.codex\\worktrees\\f0f3\\HyperCraft\\app\\build\\outputs\\apk\\release\\HyperCraft-2.10.166-20261003-release.apk", "sha256": "4353230ad2f921d558268c9db5683b3f6be44b0ceb1dd7d23d4dbc469b7c0451", "native_entries_verified": ["lib/arm64-v8a/libdexkit.so", "lib/arm64-v8a/libHyperCraftNative.so"], "zip_reopen": "PASS"}
+APK_SIGNATURE_COMMAND=D:/build-tools/android-sdk/build-tools/37.0.0/apksigner.bat verify --verbose --print-certs C:\Users\XiaoYe\.codex\worktrees\f0f3\HyperCraft\app\build\outputs\apk\release\HyperCraft-2.10.166-20261003-release.apk
+APK_SIGNATURE_INPUT=C:\Users\XiaoYe\.codex\worktrees\f0f3\HyperCraft\app\build\outputs\apk\release\HyperCraft-2.10.166-20261003-release.apk
 APK_SIGNATURE_RESULT=Verifies; certificate SHA-256=6cb2fc87856eedd2f8a580050d0fd0f468f9016d2d3898cc0c260cc15699b314; exit=0; full literal output=apk-signature.txt
 RELEASE_RESULT=BUILD SUCCESSFUL in 46s; exit=0

@@ -1,11 +1,11 @@
-package com.sevtinge.hyperceiler.tests.dock;
+package com.sevtinge.hypercraft.tests.dock;
 
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcel;
-import com.sevtinge.hyperceiler.libhook.rules.home.dock.DockNativeMotion;
-import com.sevtinge.hyperceiler.libhook.rules.home.dock.DockNativeMotionEndpoint;
+import com.sevtinge.hypercraft.libhook.rules.home.dock.DockNativeMotion;
+import com.sevtinge.hypercraft.libhook.rules.home.dock.DockNativeMotionEndpoint;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class DockNativeMotionEndpointTest {

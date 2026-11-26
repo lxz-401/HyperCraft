@@ -4,7 +4,7 @@ import argparse,hashlib,json,re,subprocess,tempfile
 from pathlib import Path
 p=argparse.ArgumentParser();p.add_argument('--output',type=Path,required=True);a=p.parse_args()
 r=Path(__file__).resolve().parents[2];a.output.mkdir(parents=True,exist_ok=True)
-source=r/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock/HomeLayoutNativeEndpointOS4.java';text=source.read_text()
+source=r/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock/HomeLayoutNativeEndpointOS4.java';text=source.read_text()
 cases={
  'renew_lease_after_slow_query':('final long deadline = started + HYOS_MAX_SNAPSHOT_AGE_NANOS;','final long deadline = SystemClock.elapsedRealtimeNanos() + HYOS_MAX_SNAPSHOT_AGE_NANOS;'),
  'return_retired_publication':('if (combinedPublished != value || paused) return null;','if (paused) return null;'),

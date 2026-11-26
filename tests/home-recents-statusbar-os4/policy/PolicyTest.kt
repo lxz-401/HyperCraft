@@ -1,4 +1,4 @@
-package com.sevtinge.hyperceiler.libhook.rules.home.dock
+package com.sevtinge.hypercraft.libhook.rules.home.dock
 import android.os.*
 import com.android.server.wm.*
 private var checks=0
@@ -8,7 +8,7 @@ fun main(){
  val logs=mutableListOf<String>();val p=HomeRecentsStatusBarOS4{logs.add(it)}
  p.install(WindowState::class.java);p.bind(home,wm);wm.mH.drain()
  c(logs.any{it.contains("installed")});c(home.getRequestedVisibleTypes()==15)
- c(com.sevtinge.hyperceiler.libhook.base.BaseHook.deoptimized.map{it.name}.toSet()==
+ c(com.sevtinge.hypercraft.libhook.base.BaseHook.deoptimized.map{it.name}.toSet()==
   setOf("getStatusControlTargetInner","getStatusControlTarget","updateBarControlTarget"))
  Binder.setCallingIdentityForTest(10123,20)
  var seq=0L;var rev=0L

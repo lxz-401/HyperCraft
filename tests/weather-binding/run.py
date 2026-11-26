@@ -3,7 +3,7 @@ from pathlib import Path
 import argparse,hashlib,importlib.util,json,re,subprocess,sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 p=argparse.ArgumentParser();p.add_argument('--output',type=Path,required=True);p.add_argument('--binding-header',type=Path);a=p.parse_args();a.output.mkdir(parents=True,exist_ok=True);b=Path(__file__).resolve().parent;root=test_paths.TEST_DATA_ROOT;src=test_paths.SOURCE_ROOT;sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 z=subprocess.run([sys.executable,str(b/'generate.py'),'--check','--output',str(a.output/'regeneration')],text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT);(a.output/'regeneration.txt').write_text(z.stdout)

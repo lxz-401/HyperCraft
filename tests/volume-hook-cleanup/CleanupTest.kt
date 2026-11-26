@@ -1,4 +1,4 @@
-package com.sevtinge.hyperceiler.libhook.rules.systemui.plugin.systemui
+package com.sevtinge.hypercraft.libhook.rules.systemui.plugin.systemui
 
 import android.os.Handler
 import android.os.Looper

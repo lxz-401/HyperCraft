@@ -1,11 +1,11 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
-import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
-import com.sevtinge.hyperceiler.libhook.base.*;
-import com.sevtinge.hyperceiler.libhook.safecrash.CrashMonitor;
-import com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.media3.AmbientNativeColorOS4;
-import com.sevtinge.hyperceiler.libhook.utils.api.ThreadPoolManager;
+import com.sevtinge.hypercraft.common.utils.PrefsBridge;
+import com.sevtinge.hypercraft.libhook.base.*;
+import com.sevtinge.hypercraft.libhook.safecrash.CrashMonitor;
+import com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.media3.AmbientNativeColorOS4;
+import com.sevtinge.hypercraft.libhook.utils.api.ThreadPoolManager;
 import io.github.libxposed.api.XposedInterface;
 import io.github.libxposed.api.XposedModuleInterface.*;
 import io.github.lingqiqi5211.ezhooktool.xposed.*;
@@ -244,7 +244,7 @@ public final class InitPrefsTest {
                 }
                 Entry e=r.entry();e.onModuleLoaded(new ModuleParam(false,packageName));ready(e,false);
                 equal(r.calls.get(),healthy?1:2,"Home transport initialization");
-                equal(com.sevtinge.hyperceiler.libhook.rules.home.other.NativeHomeHooksOS4.recoveries,
+                equal(com.sevtinge.hypercraft.libhook.rules.home.other.NativeHomeHooksOS4.recoveries,
                     healthy||denied?0:1,"native recovery only after a real retry and allowed gates");
                 equal(installed,denied?0:1,"Home rule respects gates");
             }
@@ -252,10 +252,10 @@ public final class InitPrefsTest {
                 packageName="com.miui.home";Remote r=new Remote(0);r.failReads=true;Entry e=r.entry();
                 e.onModuleLoaded(new ModuleParam(false,packageName));
                 check(PrefsBridge.getSharedPreferences()!=null,"transport already bound before read failure");
-                check(!com.sevtinge.hyperceiler.libhook.rules.home.other.NativeHomeHooksOS4.bootstrapReady,
+                check(!com.sevtinge.hypercraft.libhook.rules.home.other.NativeHomeHooksOS4.bootstrapReady,
                     "native probe must receive explicit failed bootstrap state despite a non-null handle");
                 r.failReads=false;ready(e,false);recovered(r);
-                equal(com.sevtinge.hyperceiler.libhook.rules.home.other.NativeHomeHooksOS4.recoveries,1,"failed bootstrap native recovery notified");
+                equal(com.sevtinge.hypercraft.libhook.rules.home.other.NativeHomeHooksOS4.recoveries,1,"failed bootstrap native recovery notified");
             }
             case "framework_changed_name", "framework_changed_version", "framework_changed_code", "framework_missing_reason", "framework_runtime_unavailable", "framework_whitespace_same", "framework_global_disabled", "framework_allowed_no_identity", "framework_missing_checked_fields" -> {
                 Remote r=new Remote(0);

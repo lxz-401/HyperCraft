@@ -4,7 +4,7 @@ from pathlib import Path
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 R=test_paths.TEST_DATA_ROOT
 ENGINE=test_paths.ROM_ROOT / 'components/system_ext/lib64/libhyper_os_flutter.so'

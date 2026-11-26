@@ -5,7 +5,7 @@ import argparse,hashlib,importlib.util,json,re,subprocess,tempfile,zipfile,xml.e
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 ROOT=test_paths.TEST_DATA_ROOT;ROM=test_paths.TEST_DATA_ROOT / 'acceptance/java-test12/media-text-v1/rom';APK=test_paths.ROM_ROOT / 'components/system_ext/priv-app/MiuiSystemUI/MiuiSystemUI.apk';CACHE=test_paths.BUILD_CACHE;sha=lambda b:hashlib.sha256(b).hexdigest()
 p=argparse.ArgumentParser();p.add_argument('--output',type=Path,required=True);a=p.parse_args();a.output.mkdir(parents=True,exist_ok=False);checks=[];inputs={};methods={}
@@ -59,7 +59,7 @@ for name,prefix in [('system_ui_control_center_media_cards.xml','system_ui_contr
  for suffix,default,minimum,maximum in [('title_size',180,120,360),('artist_size',120,80,240),('time_view_text_size',130,50,200)]:
   e=items['prefs_key_'+prefix+'_'+suffix];actual={k:e.get('{'+ns['p']+'}'+k)for k in ['defaultValue','minValue','maxValue','dividerValue','format','stepValue']};ck('unchanged full UI domain '+prefix+'_'+suffix,actual==dict(defaultValue=str(default),minValue=str(minimum),maxValue=str(maximum),dividerValue='10',format='%.1f sp',stepValue='1')and e.get('{'+ns['a']+'}dependency')==key)
  pattern=r'(<SeekBarPreferenceCompat\s[^>]*android:key="prefs_key_'+prefix+r'_(?:title_size|artist_size|time_view_text_size)"[^>]*app:format=")%.1f dp(")';expected,n=re.subn(pattern,r'\1%.1f sp\2',old);ck('only3 unit-label changes '+name,n==3 and expected==now)
-rule=test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/systemui/controlcenter/media3/MediaViewSize.kt';body=rb(rule).decode();old=rb(oldbase/rule.relative_to(test_paths.SOURCE_ROOT)).decode();legacy=old[old.index('    // ==================== 通知中心 ===================='):];ck('complete OS3 hook bodies unchanged',body.endswith(legacy));ck('no global TextView hooks or resource replacement','TextView::class.java)'in body and 'TextView::class.java.'not in body and 'setTextAppearance('not in body)
+rule=test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemui/controlcenter/media3/MediaViewSize.kt';body=rb(rule).decode();old=rb(oldbase/rule.relative_to(test_paths.SOURCE_ROOT)).decode();legacy=old[old.index('    // ==================== 通知中心 ===================='):];ck('complete OS3 hook bodies unchanged',body.endswith(legacy));ck('no global TextView hooks or resource replacement','TextView::class.java)'in body and 'TextView::class.java.'not in body and 'setTextAppearance('not in body)
 ck('all input bytes stable',all(sha(Path(p).read_bytes())==h for p,h in inputs.items()))
 out=dict(passed=all(x['passed']for x in checks),checks=checks,check_count=len(checks),inputs=inputs,full_selected_method_sha256=methods,device_status='NOT_TESTED',scope='Original OTA complete class re-disassembly, full DEX reference scan, selected full method/resource review and production/XML contract checks; not original ART/UI execution.',limits=['The finite bytecode reference scan does not claim exclusion of arbitrary injected hooks or downloaded third-party code.','Stock NC18sp/12sp/time12sp and Island18dp/12dp differ from module enabled defaults18sp/12sp/time13sp. Switch-off after SystemUI restart preserves stock values.'])
 (a.output/'report.json').write_text(json.dumps(out,indent=2)+'\n');print(len(checks),'checks',out['passed']);print([x for x in checks if not x['passed']]);raise SystemExit(0 if out['passed']else 1)

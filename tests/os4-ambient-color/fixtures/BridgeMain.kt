@@ -4,8 +4,8 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Icon
 import com.android.systemui.media.controls.shared.model.MediaData
-import com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.media3.AmbientNativeColorOS4 as N
-import com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.media3.AmbientColorResolverOS4 as R
+import com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.media3.AmbientNativeColorOS4 as N
+import com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.media3.AmbientColorResolverOS4 as R
 import java.util.concurrent.*
 fun main(args:Array<String>){
  Looper.getMainLooper();var checks=0

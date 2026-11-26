@@ -1,4 +1,4 @@
-package local.hyperceiler.ambientreloadprobe;
+package local.hypercraft.ambientreloadprobe;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -31,8 +31,8 @@ public final class MainActivity extends Activity {
                 for (int n; (n = in.read(buf)) >= 0;) out.write(buf, 0, n);
             }
             String nativeDir = getApplicationInfo().nativeLibraryDir;
-            String path = nativeDir + "/libHyperCeilerAmbientOS4.so";
-            String name = "com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.media3.AmbientNativeColorOS4";
+            String path = nativeDir + "/libHyperCraftAmbientOS4.so";
+            String name = "com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.media3.AmbientNativeColorOS4";
             for (int i = 0; i < 2; i++) generations[i] = new DexClassLoader(
                 dex.getPath(), getCodeCacheDir().getPath(), nativeDir, getClassLoader().getParent());
             Class<?> first = Class.forName(name, true, generations[0]);

@@ -6,8 +6,8 @@ import sys
 
 
 ROOT = Path(__file__).resolve().parents[2]
-repository = (ROOT / "app/src/main/java/com/sevtinge/hyperceiler/log/db/LogRepository.java").read_text(encoding="utf-8")
-status = (ROOT / "library/common/src/main/java/com/sevtinge/hyperceiler/common/log/LogStatusManager.java").read_text(encoding="utf-8")
+repository = (ROOT / "app/src/main/java/com/sevtinge/hypercraft/log/db/LogRepository.java").read_text(encoding="utf-8")
+status = (ROOT / "library/common/src/main/java/com/sevtinge/hypercraft/common/log/LogStatusManager.java").read_text(encoding="utf-8")
 
 checks = {
     "database parent created before Room builder": bool(

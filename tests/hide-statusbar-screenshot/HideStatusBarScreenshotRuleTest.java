@@ -1,4 +1,4 @@
-package com.sevtinge.hyperceiler.libhook.rules.systemui.statusbar;
+package com.sevtinge.hypercraft.libhook.rules.systemui.statusbar;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,8 +10,8 @@ import android.view.View;
 
 import androidx.core.content.ContextCompat;
 
-import com.sevtinge.hyperceiler.common.log.XposedLog;
-import com.sevtinge.hyperceiler.libhook.base.BaseHook;
+import com.sevtinge.hypercraft.common.log.XposedLog;
+import com.sevtinge.hypercraft.libhook.base.BaseHook;
 
 import io.github.lingqiqi5211.ezhooktool.xposed.common.HookParam;
 import io.github.lingqiqi5211.ezhooktool.xposed.java.IMethodHook;

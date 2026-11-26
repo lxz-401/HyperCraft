@@ -1,11 +1,11 @@
-package com.sevtinge.hyperceiler.libhook.rules.home.dock;
+package com.sevtinge.hypercraft.libhook.rules.home.dock;
 import android.content.ContentResolver;
 import android.content.pm.PackageManager;
 import android.os.Binder;
 import android.os.Parcel;
-import com.sevtinge.hyperceiler.libhook.provider.HomeLayoutPrefsSnapshot;
-import com.sevtinge.hyperceiler.libhook.base.BaseHook;
-import com.sevtinge.hyperceiler.libhook.base.BaseLoad;
+import com.sevtinge.hypercraft.libhook.provider.HomeLayoutPrefsSnapshot;
+import com.sevtinge.hypercraft.libhook.base.BaseHook;
+import com.sevtinge.hypercraft.libhook.base.BaseLoad;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.*;

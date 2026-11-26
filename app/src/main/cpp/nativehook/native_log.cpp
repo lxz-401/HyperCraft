@@ -94,7 +94,7 @@ bool enqueue(Level level, const char *tag, const char *message) noexcept {
             if (!g_enqueue_position.compare_exchange_weak(position, position + 1,
                     std::memory_order_acq_rel, std::memory_order_relaxed)) continue;
             entry.level = level;
-            const char *safe_tag = tag == nullptr ? "HyperCeiler.Native" : tag;
+            const char *safe_tag = tag == nullptr ? "HyperCraft.Native" : tag;
             const char *safe_message = message == nullptr ? "" : message;
             std::snprintf(entry.tag, sizeof(entry.tag), "%s", safe_tag);
             std::snprintf(entry.message, sizeof(entry.message), "%s", safe_message);
@@ -197,7 +197,7 @@ bool java_sink(Level level, const char *tag, const char *message, void *) noexce
     return !threw;
 }
 bool logcat_sink(Level level, const char *tag, const char *message, void *) noexcept {
-    __android_log_print(java_priority(level), tag == nullptr ? "HyperCeiler.Native" : tag,
+    __android_log_print(java_priority(level), tag == nullptr ? "HyperCraft.Native" : tag,
         "%s", message == nullptr ? "" : message);
     return true;
 }
@@ -254,7 +254,7 @@ void attach_java_bridge(JavaVM *vm, JNIEnv *env) noexcept {
     if (vm == nullptr || env == nullptr) return;
     install_android_sinks();
     if (env->ExceptionCheck()) env->ExceptionClear();
-    jclass local = env->FindClass("com/sevtinge/hyperceiler/common/log/NativeLogBridge");
+    jclass local = env->FindClass("com/sevtinge/hypercraft/common/log/NativeLogBridge");
     if (local == nullptr) {
         if (env->ExceptionCheck()) env->ExceptionClear();
         return;

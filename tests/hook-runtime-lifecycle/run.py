@@ -8,10 +8,10 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).resolve().parent
-PROD = ROOT / 'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook'
+PROD = ROOT / 'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook'
 KOTLIN = Path(os.environ.get('KOTLIN_HOME', '/opt/android-studio/plugins/Kotlin/kotlinc'))
 JAVA = Path(os.environ.get('JAVA_HOME', Path(shutil.which('javac')).resolve().parents[1])) / 'bin'
-JSON_SOURCES = Path(os.environ.get('HYPERCEILER_JSON_SOURCE',
+JSON_SOURCES = Path(os.environ.get('HYPERCRAFT_JSON_SOURCE',
     str(Path(os.environ.get('ANDROID_HOME', Path.home() / 'Android/Sdk')) / 'sources/android-37.0/org/json')))
 STUBS = {
 'android/compat/annotation/UnsupportedAppUsage.java': 'package android.compat.annotation; public @interface UnsupportedAppUsage {}',
@@ -56,19 +56,19 @@ STUBS = {
  public static String get(String k){return "";} public static String get(String k,String d){return d;}
  public static boolean getBoolean(String k,boolean d){return d;} public static int getInt(String k,int d){return d;} public static long getLong(String k,long d){return d;}
 }''',
-'com/sevtinge/hyperceiler/common/log/AndroidLog.java': 'package com.sevtinge.hyperceiler.common.log; public class AndroidLog { public static void e(Object... a){} public static void d(Object... a){} }',
-'com/sevtinge/hyperceiler/common/log/XposedLog.java': 'package com.sevtinge.hyperceiler.common.log; public class XposedLog { public static void d(Object... a){} }',
-'com/sevtinge/hyperceiler/common/utils/PrefsBridge.java': '''package com.sevtinge.hyperceiler.common.utils; public class PrefsBridge {
+'com/sevtinge/hypercraft/common/log/AndroidLog.java': 'package com.sevtinge.hypercraft.common.log; public class AndroidLog { public static void e(Object... a){} public static void d(Object... a){} }',
+'com/sevtinge/hypercraft/common/log/XposedLog.java': 'package com.sevtinge.hypercraft.common.log; public class XposedLog { public static void d(Object... a){} }',
+'com/sevtinge/hypercraft/common/utils/PrefsBridge.java': '''package com.sevtinge.hypercraft.common.utils; public class PrefsBridge {
  public static final java.util.Map<String,Object> values=new java.util.concurrent.ConcurrentHashMap<>();
  public static int getStringAsInt(String k,int d){return Integer.parseInt((String)values.getOrDefault(k,""+d));}
  public static int getInt(String k,int d){return (Integer)values.getOrDefault(k,d);}
  @SuppressWarnings("unchecked") public static java.util.Set<String> getStringSet(String k){return (java.util.Set<String>)values.getOrDefault(k,java.util.Set.of());}
  public static void putByApp(String k,Object v){values.put(k,v);} public static java.util.Map<String,?> getAll(){return values;}
 }''',
-'com/sevtinge/hyperceiler/common/utils/ShellUtils.java': 'package com.sevtinge.hyperceiler.common.utils; public class ShellUtils { public static int checkRootPermission(){return 0;} public static String rootExecCmd(String s){return "";} public static boolean getResultBoolean(String s,boolean b){return false;} public static String getResult(String s,boolean b){return "";} }',
-'com/sevtinge/hyperceiler/common/utils/shell/ShellExec.java': 'package com.sevtinge.hyperceiler.common.utils.shell; public class ShellExec { public static String command; public ShellExec run(String s){command=s;return this;} public ShellExec sync(){return this;} public boolean isResult(){return true;} }',
-'com/sevtinge/hyperceiler/common/utils/shell/ShellInit.java': 'package com.sevtinge.hyperceiler.common.utils.shell; public class ShellInit { public static int gets; public static ShellExec getShell(){gets++;return new ShellExec();} }',
-'com/sevtinge/hyperceiler/libhook/base/BaseHook.java': '''package com.sevtinge.hyperceiler.libhook.base; public class BaseHook {
+'com/sevtinge/hypercraft/common/utils/ShellUtils.java': 'package com.sevtinge.hypercraft.common.utils; public class ShellUtils { public static int checkRootPermission(){return 0;} public static String rootExecCmd(String s){return "";} public static boolean getResultBoolean(String s,boolean b){return false;} public static String getResult(String s,boolean b){return "";} }',
+'com/sevtinge/hypercraft/common/utils/shell/ShellExec.java': 'package com.sevtinge.hypercraft.common.utils.shell; public class ShellExec { public static String command; public ShellExec run(String s){command=s;return this;} public ShellExec sync(){return this;} public boolean isResult(){return true;} }',
+'com/sevtinge/hypercraft/common/utils/shell/ShellInit.java': 'package com.sevtinge.hypercraft.common.utils.shell; public class ShellInit { public static int gets; public static ShellExec getShell(){gets++;return new ShellExec();} }',
+'com/sevtinge/hypercraft/libhook/base/BaseHook.java': '''package com.sevtinge.hypercraft.libhook.base; public class BaseHook {
  public String TAG="fixture"; public static final java.util.List<Runnable> cleanups=new java.util.ArrayList<>();
  public static final java.util.Map<String,io.github.lingqiqi5211.ezhooktool.xposed.java.IMethodHook> hooks=new java.util.HashMap<>();
  public static boolean classMissing;
@@ -102,7 +102,7 @@ with tempfile.TemporaryDirectory(prefix='hc-hook-runtime-') as temp:
     json_sources = [JSON_SOURCES / (name + '.java') for name in
                     ['JSON', 'JSONObject', 'JSONArray', 'JSONStringer', 'JSONTokener', 'JSONException']]
     if not all(path.exists() for path in json_sources):
-        raise SystemExit('Android SDK37 JSON sources required; set HYPERCEILER_JSON_SOURCE to their org/json directory')
+        raise SystemExit('Android SDK37 JSON sources required; set HYPERCRAFT_JSON_SOURCE to their org/json directory')
     sources += json_sources + [HERE / 'LifecycleTest.java']
     subprocess.run([str(JAVA / 'javac'), '--release', '21', '-d', str(work), *map(str, sources)], check=True)
     subprocess.run([str(JAVA / 'java'), '-ea', '-cp', str(work), 'LifecycleTest'], check=True, timeout=20)

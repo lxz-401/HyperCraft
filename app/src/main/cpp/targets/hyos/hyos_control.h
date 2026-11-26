@@ -42,6 +42,6 @@ void on_home_snapshot_window_missed(uint32_t reason) noexcept;
 struct ZygiskNextAPI;
 // May wait at most 150ms for first poll; call outside loader/fork callbacks.
 // true means a fresh authoritative snapshot (which may explicitly disable hooks).
-bool hyperceiler_hyos_start_home_control(const ZygiskNextAPI *api);
+bool hypercraft_hyos_start_home_control(const ZygiskNextAPI *api);
 // Loader-safe bookkeeping only; no Binder, hooks, allocation or thread creation.
-void hyperceiler_hyos_record_home_library(const char *name);
+void hypercraft_hyos_record_home_library(const char *name);

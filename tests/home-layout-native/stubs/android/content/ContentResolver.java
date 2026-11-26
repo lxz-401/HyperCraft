@@ -81,7 +81,7 @@ public class ContentResolver {
                 }
                 public int getInt(int i) {
                     if (i == 0) return wrongSchema ? 999
-                        : com.sevtinge.hyperceiler.libhook.provider.HomeLayoutPrefsSnapshot.SCHEMA;
+                        : com.sevtinge.hypercraft.libhook.provider.HomeLayoutPrefsSnapshot.SCHEMA;
                     if (i-1 == failureIndex && "read".equals(failureMode)) throw new IllegalStateException("invalid cell");
                     return ((Number)snapshot.get("prefs_key_" + specs[i-1][1])).intValue();
                 }

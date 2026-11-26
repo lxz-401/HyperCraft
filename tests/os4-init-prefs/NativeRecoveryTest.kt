@@ -1,7 +1,7 @@
 package fixture
 import android.content.SharedPreferences
-import com.sevtinge.hyperceiler.common.utils.PrefsBridge
-import com.sevtinge.hyperceiler.libhook.rules.home.other.NativeHomeHooksOS4 as Home
+import com.sevtinge.hypercraft.common.utils.PrefsBridge
+import com.sevtinge.hypercraft.libhook.rules.home.other.NativeHomeHooksOS4 as Home
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean

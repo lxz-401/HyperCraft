@@ -83,7 +83,7 @@ void* worker(void*){
         const auto status=exchange(static_cast<int>(r.operation),r.time,r.count,result,(r.config&0x1000)!=0);
         const bool ok=status==STATUS_OK&&result.available&&(closing?result.close:result.enabled)&&result.performed;
         if(ok)done.fetch_add(r.count,std::memory_order_relaxed);else skipped.fetch_add(r.count,std::memory_order_relaxed);
-        if(reports++<8)__android_log_print(ANDROID_LOG_INFO,"HyperCeiler.HomeLayout",
+        if(reports++<8)__android_log_print(ANDROID_LOG_INFO,"HyperCraft.HomeLayout",
             "recents card haptic event=%s delivered=%d cards=%u type=%d strength=%d status=%d; native-only WMS path, no launcher JVM required",
             closing?"close":"scroll",ok,r.count,result.type,result.strength,status);
     }
@@ -102,7 +102,7 @@ void configure(bool enabled,int type,int strength,bool close_enabled=false,bool 
     }
     config.store((((old>>16)+1)<<16)|values,std::memory_order_release);
     changed.store(true,std::memory_order_release);publish();
-    __android_log_print(ANDROID_LOG_INFO,"HyperCeiler.HomeLayout","recents card haptic config enabled=%d close=%d type=%d strength=%d source=physical-provider-via-WMS",enabled,close_enabled,type,strength);
+    __android_log_print(ANDROID_LOG_INFO,"HyperCraft.HomeLayout","recents card haptic config enabled=%d close=%d type=%d strength=%d source=physical-provider-via-WMS",enabled,close_enabled,type,strength);
 }
 }
 void hc_recents_haptic_refresh(){
@@ -114,12 +114,12 @@ void hc_recents_haptic_refresh(){
     auto status=exchange(0,time,0,profile,extended);
     if(extended&&status==STATUS_UNKNOWN_TRANSACTION){
         v2_retry=time+30000;extended=false;status=exchange(0,time,0,profile,false);
-        if(!reported)__android_log_print(ANDROID_LOG_WARN,"HyperCeiler.HomeLayout","close haptic endpoint not loaded; retaining V1 scroll feedback until system_server reload");
+        if(!reported)__android_log_print(ANDROID_LOG_WARN,"HyperCraft.HomeLayout","close haptic endpoint not loaded; retaining V1 scroll feedback until system_server reload");
     }
     next=time+(status==STATUS_UNKNOWN_TRANSACTION?30000:status==STATUS_OK&&profile.available?1000:5000);
     if(status==STATUS_OK&&profile.available){configure(profile.enabled,profile.type,profile.strength,profile.close,extended);reported=!extended;}
     else {configure(false,0,50);if(!reported){reported=true;
-        __android_log_print(ANDROID_LOG_WARN,"HyperCeiler.HomeLayout","recents card haptic config unavailable status=%d; new WMS endpoint requires system_server reload after installation",status);}}
+        __android_log_print(ANDROID_LOG_WARN,"HyperCraft.HomeLayout","recents card haptic config unavailable status=%d; new WMS endpoint requires system_server reload after installation",status);}}
 }
 bool hc_recents_haptic_enabled(){return config.load(std::memory_order_acquire)&9;}
 bool hc_recents_haptic_scroll_enabled(){return config.load(std::memory_order_acquire)&1;}

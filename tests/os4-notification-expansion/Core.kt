@@ -1,8 +1,8 @@
 package io.github.lingqiqi5211.ezhooktool.core
 
 import java.lang.reflect.Method
-import com.sevtinge.hyperceiler.tests.notification.HeadsUpEntry
-import com.sevtinge.hyperceiler.tests.notification.Presenter
+import com.sevtinge.hypercraft.tests.notification.HeadsUpEntry
+import com.sevtinge.hypercraft.tests.notification.Presenter
 
 fun loadClass(name: String): Class<*> = when (name) {
     "com.android.systemui.statusbar.notification.headsup.HeadsUpManagerImpl\$HeadsUpEntry" -> HeadsUpEntry::class.java

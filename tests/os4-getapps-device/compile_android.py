@@ -5,7 +5,7 @@ import argparse,subprocess,json,hashlib,os,importlib.util
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 HERE=Path(__file__).resolve().parent;ROOT=test_paths.TEST_DATA_ROOT;CACHE=test_paths.BUILD_CACHE;FROZEN=test_paths.SNAPSHOT_ROOT / 'source-os4-hyos-test11-20261009-r1'
 sp=importlib.util.spec_from_file_location('getapps_tests',HERE/'run.py');m=importlib.util.module_from_spec(sp);sp.loader.exec_module(m)

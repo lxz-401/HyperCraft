@@ -1,4 +1,4 @@
-package com.sevtinge.hyperceiler.libhook.base;
+package com.sevtinge.hypercraft.libhook.base;
 
 public abstract class BaseHook {
     public abstract void init();

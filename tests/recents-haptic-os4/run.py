@@ -23,13 +23,13 @@ for version in ('8583','8584','close-8584'):
         subprocess.run([str(out/'test')],check=True)
 with tempfile.TemporaryDirectory(prefix='hc-haptic-pattern-') as work:
     jdk=Path(os.environ['JAVA_HOME'])
-    source=ROOT/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/recent/HomeRecentsHapticPattern.java'
+    source=ROOT/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/recent/HomeRecentsHapticPattern.java'
     subprocess.run([str(jdk/'bin/javac'),'-d',work,str(source),str(source.with_name('HomeRecentsHapticProtocol.java')),str(HERE/'PatternTest.java')],check=True)
     subprocess.run([str(jdk/'bin/java'),'-cp',work,'PatternTest'],check=True)
 with tempfile.TemporaryDirectory(prefix='hc-haptic-prefs-') as work:
     stubs=ROOT/'tests/home-layout-native/stubs'
     sources=[stubs/p for p in ['android/content/SharedPreferences.java','android/database/Cursor.java','android/database/MatrixCursor.java','android/os/Bundle.java']]
-    sources += [ROOT/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/provider/HomeRecentsHapticPrefs.java',HERE/'PrefsTest.java']
+    sources += [ROOT/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/provider/HomeRecentsHapticPrefs.java',HERE/'PrefsTest.java']
     subprocess.run([str(jdk/'bin/javac'),'-d',work,*map(str,sources)],check=True)
     subprocess.run([str(jdk/'bin/java'),'-cp',work,'PrefsTest'],check=True)
 

@@ -11,9 +11,9 @@
 #   public *;
 #}
 # --- App ---
--keep class com.sevtinge.hyperceiler.ui.** { *; }
--keep class com.sevtinge.hyperceiler.about.** { *; }
--keep class com.sevtinge.hyperceiler.home.utils.HeaderManager {
+-keep class com.sevtinge.hypercraft.ui.** { *; }
+-keep class com.sevtinge.hypercraft.about.** { *; }
+-keep class com.sevtinge.hypercraft.home.utils.HeaderManager {
     public static void syncHeaderPreferencesToCurrentScope(android.content.Context);
 }
 
@@ -28,10 +28,10 @@
 
 # --- Room ---
 -keep class * extends androidx.room.RoomDatabase { *; }
--keepclassmembers class com.sevtinge.hyperceiler.search.data.ModEntity {
+-keepclassmembers class com.sevtinge.hypercraft.search.data.ModEntity {
     <fields>;
 }
--keep interface com.sevtinge.hyperceiler.search.data.ModDao { *; }
+-keep interface com.sevtinge.hypercraft.search.data.ModDao { *; }
 -keep class * extends androidx.room.RoomOpenHelper { *; }
 -keep interface androidx.sqlite.db.SupportSQLiteOpenHelper { *; }
 -keep interface androidx.sqlite.db.SupportSQLiteDatabase { *; }

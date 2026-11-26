@@ -1,7 +1,7 @@
 from pathlib import Path
 import sys
 
-source = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().parents[2] / 'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock/HomeDockWindow.kt'
+source = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().parents[2] / 'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock/HomeDockWindow.kt'
 text = source.read_text(encoding='utf-8')
 checks = {
     'state reply gates covered launcher': 'reply.writeInt(if (desktopDrawable()) 1 else 0)' in text,

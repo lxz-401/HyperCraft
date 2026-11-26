@@ -1,0 +1,392 @@
+/*
+ * This file is part of HyperCraft.
+ *
+ * HyperCraft is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * Copyright (C) 2023-2026 HyperCraft Contributions
+ */
+package com.sevtinge.hypercraft.common.utils;
+
+import androidx.annotation.NonNull;
+
+import com.sevtinge.hypercraft.common.log.AndroidLog;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Locale;
+
+public class ShellUtils {
+    /**
+     * check whether has root permission
+     *
+     * @return if int = 0, then have root, else don't have.
+     */
+    public static int checkRootPermission() {
+        Process process = null;
+        int exitCode = -1;
+        try {
+            process = Runtime.getRuntime().exec("su -c true");
+            return process.waitFor();
+        } catch (IOException | InterruptedException e) {
+            AndroidLog.e("checkRootPermission", "check whether has root permission error: ", e);
+            return exitCode;
+        } finally {
+            if (process != null) {
+                process.destroy();
+            }
+        }
+    }
+
+    /**
+     * execute shell command, default return result msg
+     *
+     * @param command command
+     * @param isRoot  whether need to run with root
+     * @see ShellUtils#execCommand(String[], boolean, boolean)
+     */
+    public static CommandResult execCommand(String command, boolean isRoot) {
+        return execCommand(new String[]{command}, isRoot, true);
+    }
+
+    /**
+     * execute shell commands, default return result msg
+     *
+     * @param commands command activity_wifi
+     * @param isRoot   whether need to run with root
+     * @see ShellUtils#execCommand(String[], boolean, boolean)
+     */
+    public static CommandResult execCommand(List<String> commands, boolean isRoot) {
+        return execCommand(commands == null ? null : commands.toArray(new String[]{}), isRoot, true);
+    }
+
+    /**
+     * execute shell commands, default return result msg
+     *
+     * @param commands command array
+     * @param isRoot   whether need to run with root
+     * @see ShellUtils#execCommand(String[], boolean, boolean)
+     */
+    public static CommandResult execCommand(String[] commands, boolean isRoot) {
+        return execCommand(commands, isRoot, true);
+    }
+
+    /**
+     * execute shell command
+     *
+     * @param command         command
+     * @param isRoot          whether need to run with root
+     * @param isNeedResultMsg whether need result msg
+     * @noinspection UnusedReturnValue
+     * @see ShellUtils#execCommand(String[], boolean, boolean)
+     */
+    public static CommandResult execCommand(String command, boolean isRoot, boolean isNeedResultMsg) {
+        return execCommand(new String[]{command}, isRoot, isNeedResultMsg);
+    }
+
+    /**
+     * execute shell commands
+     *
+     * @param commands        command activity_wifi
+     * @param isRoot          whether need to run with root
+     * @param isNeedResultMsg whether need result msg
+     * @see ShellUtils#execCommand(String[], boolean, boolean)
+     */
+    public static CommandResult execCommand(List<String> commands, boolean isRoot, boolean isNeedResultMsg) {
+        return execCommand(commands == null ? null : commands.toArray(new String[]{}), isRoot, isNeedResultMsg);
+    }
+
+    /**
+     * execute shell commands
+     *
+     * @param command command activity_wifi
+     * @param isRoot  whether need to run with root
+     * @return if execCommand.result is 0, then return true, else return false
+     * @see ShellUtils#execCommand(String[], boolean, boolean)
+     */
+    public static boolean getResultBoolean(String command, boolean isRoot) {
+        return execCommand(new String[]{command}, isRoot, false).result == 0;
+    }
+
+    /**
+     * execute shell commands
+     *
+     * @param commands command activity_wifi
+     * @param isRoot   whether need to run with root
+     * @return if execCommand.result is 0, then return true, else return false
+     * @see ShellUtils#execCommand(String[], boolean, boolean)
+     */
+    public static boolean getResultBoolean(List<String> commands, boolean isRoot) {
+        return execCommand(commands == null ? null : commands.toArray(new String[]{}), isRoot, false).result == 0;
+    }
+
+    /**
+     * execute shell commands
+     *
+     * @param commands        command array
+     * @param isRoot          whether need to run with root
+     * @param isNeedResultMsg whether need result msg
+     * @return <ul>
+     * <li>if isNeedResultMsg is false, {@link CommandResult#successMsg} is null and
+     * {@link CommandResult#errorMsg} is null.</li>
+     * <li>if {@link CommandResult#result} is -1, there maybe some excepiton.</li>
+     * </ul>
+     */
+    public static CommandResult execCommand(String[] commands, boolean isRoot, boolean isNeedResultMsg) {
+        int result = -1;
+        if (commands == null || commands.length == 0) {
+            return new CommandResult(result, null, null);
+        }
+
+        Process process = null;
+        StreamCollector successResult = null;
+        StreamCollector errorResult = null;
+
+        DataOutputStream os = null;
+        try {
+            process = Runtime.getRuntime().exec(isRoot ? "su" : "sh");
+            // Drain both pipes before writing or waiting: either pipe can fill while
+            // the shell is still running, including when the caller discards output.
+            successResult = new StreamCollector(process.getInputStream(), isNeedResultMsg);
+            errorResult = new StreamCollector(process.getErrorStream(), isNeedResultMsg);
+            successResult.start();
+            errorResult.start();
+            os = new DataOutputStream(process.getOutputStream());
+            for (String command : commands) {
+                if (command == null) {
+                    continue;
+                }
+
+                // donnot use os.writeBytes(commmand), avoid chinese charset error
+                os.write(command.getBytes(StandardCharsets.UTF_8));
+                os.writeBytes("\n");
+                os.flush();
+            }
+            os.writeBytes("exit\n");
+            os.flush();
+
+            result = process.waitFor();
+            successResult.join();
+            errorResult.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            AndroidLog.e("execCommand", "InterruptedException: ", e);
+        } catch (IOException e) {
+            AndroidLog.e("execCommand", "IOException: ", e);
+        } finally {
+            try {
+                if (os != null) {
+                    os.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (process != null) {
+                process.destroy();
+            }
+        }
+        return new CommandResult(result,
+            successResult == null ? null : successResult.output(),
+            errorResult == null ? null : errorResult.output());
+    }
+
+    private static final class StreamCollector extends Thread {
+        private final InputStream input;
+        private final StringBuilder output;
+
+        StreamCollector(InputStream input, boolean collect) {
+            this.input = input;
+            output = collect ? new StringBuilder() : null;
+            setDaemon(true);
+        }
+
+        @Override
+        public void run() {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (output != null) {
+                        synchronized (this) {
+                            output.append(line);
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                AndroidLog.e("execCommand", "Failed to read shell output", e);
+            }
+        }
+
+        synchronized String output() {
+            return output == null ? null : output.toString();
+        }
+    }
+
+    /**
+     * result of command
+     * <ul>
+     * <li>{@link CommandResult#result} means result of command, 0 means normal, else means error, same to excute in
+     * linux shell</li>
+     * <li>{@link CommandResult#successMsg} means success message of command result</li>
+     * <li>{@link CommandResult#errorMsg} means error message of command result</li>
+     * </ul>
+     *
+     * @author <main href="http://www.trinea.cn" target="_blank">Trinea</main> 2013-5-16
+     */
+    public static class CommandResult {
+
+        /**
+         * result of command
+         **/
+        public int result;
+        /**
+         * success message of command result
+         **/
+        public String successMsg;
+        /**
+         * error message of command result
+         **/
+        public String errorMsg;
+
+        public CommandResult(int result) {
+            this.result = result;
+        }
+
+        public CommandResult(int result, String successMsg, String errorMsg) {
+            this.result = result;
+            this.successMsg = successMsg;
+            this.errorMsg = errorMsg;
+        }
+
+        @NonNull
+        @Override
+        public String toString() {
+            return "CommandResult{" +
+                "result=" + result +
+                ", successMsg='" + successMsg + '\'' +
+                ", errorMsg='" + errorMsg + '\'' +
+                '}';
+        }
+    }
+
+    /**
+     * 检查命令是否安全
+     */
+    private static boolean isSafeCommand(String cmd) {
+        if (cmd == null || cmd.isEmpty()) return false;
+        // 基本的危险命令检查
+        String lowerCmd = cmd.toLowerCase(Locale.ROOT);
+        String[] dangerousPatterns = {
+            "rm -rf /",
+            "rm -rf /*",
+            "dd if=",
+            "mkfs",
+            "> /dev/",
+            "format"
+        };
+        for (String pattern : dangerousPatterns) {
+            if (lowerCmd.contains(pattern)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static String rootExecCmd(String cmd) {
+        if (!isSafeCommand(cmd)) return "Cannot exec this command: Dangerous operation";
+        final String fullCmd = "nsenter --mount=/proc/1/ns/mnt -- " + cmd;
+        ProcessBuilder pb = new ProcessBuilder("su", "-c", fullCmd);
+        pb.redirectErrorStream(true);
+
+        StringBuilder result = new StringBuilder();
+
+        try {
+            Process p = pb.start();
+            try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(p.getInputStream(), StandardCharsets.UTF_8))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line).append('\n');
+                }
+            }
+
+            p.waitFor();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            String msg = e.toString();
+            if (!cmd.contains("nsenter") && msg.contains("nsenter: exec ")) {
+                return msg.replace("nsenter: exec ", "");
+            }
+            return msg;
+        } catch (IOException e) {
+            String msg = e.toString();
+            if (!cmd.contains("nsenter") && msg.contains("nsenter: exec ")) {
+                return msg.replace("nsenter: exec ", "");
+            }
+            return msg;
+        }
+
+        String out = result.toString();
+        if (!out.isEmpty() && out.charAt(out.length() - 1) == '\n') {
+            out = out.substring(0, out.length() - 1);
+        }
+
+        if (!cmd.contains("nsenter") && out.contains("nsenter: exec ")) {
+            return out.replace("nsenter: exec ", "");
+        }
+        return out;
+    }
+
+    /**
+     * Execute a command directly in a root shell without imposing a mount namespace.
+     * Use this when the caller needs to try several namespace strategies by itself.
+     */
+    public static CommandResult execRootCommand(String cmd) {
+        if (!isSafeCommand(cmd)) {
+            return new CommandResult(-1, "Cannot exec this command: Dangerous operation", null);
+        }
+
+        int result = -1;
+        StringBuilder output = new StringBuilder();
+        Process process = null;
+        try {
+            ProcessBuilder builder = new ProcessBuilder("su", "-c", cmd);
+            builder.redirectErrorStream(true);
+            process = builder.start();
+            try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    output.append(line).append('\n');
+                }
+            }
+            result = process.waitFor();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            output.append(e);
+        } catch (IOException e) {
+            output.append(e);
+        } finally {
+            if (process != null) {
+                process.destroy();
+            }
+        }
+        return new CommandResult(result, output.toString(), null);
+    }
+}
+

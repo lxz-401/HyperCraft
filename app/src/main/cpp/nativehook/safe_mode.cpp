@@ -12,7 +12,7 @@
 namespace nhk::home_safe_mode {
 namespace {
 
-constexpr char kProperty[] = "persist.service.hyperceiler.crash.report";
+constexpr char kProperty[] = "persist.service.hypercraft.crash.report";
 
 // Java's CrashScope currently has exactly these aliases. Keep parsing strict:
 // accepting arbitrary tokens would let a malformed value look like normal.

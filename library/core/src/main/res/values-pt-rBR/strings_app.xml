@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -15,7 +15,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   --><resources>
     <string name="version_update">Nova versão encontrada</string>
     <!--Introduction to Xposed Modules-->
@@ -24,10 +24,10 @@
     <string name="new_cta_agree_desc">Durante o uso, para fornecer mais recursos, podemos solicitar permissão root. Você pode acessar o Gerenciador de permissões a qualquer momento para ajustar o status de autorização de todas as permissões e ir ao seu gerenciador root para obter permissões root.</string>
     <string name="new_cta_app_main_purpose">Modificar apps do sistema</string>
     <string name="new_cta_app_all_purpose_welcome">Contrato do Usuário &amp; Política de Privacidade</string>
-    <string name="new_cta_app_all_purpose_title">Bem-vindo ao HyperCeiler! Este app depende do LSPosed para ser executado. Você pode usar este app para sequestrar e modificar outros apps suportados para aprimorar o sistema. Durante o uso, para fornecer mais funções, podemos solicitar suas permissões root. Você pode gerenciá-lo a qualquer momento acessando seu gerenciador root.\nAo continuar usando o HyperCeiler, você concorda com o nosso <annotation key="protocol">Contrato do Usuário</annotation> e a nossa <annotation key="privacy">Política de Privacidade</annotation>.</string>
+    <string name="new_cta_app_all_purpose_title">Bem-vindo ao HyperCraft! Este app depende do LSPosed para ser executado. Você pode usar este app para sequestrar e modificar outros apps suportados para aprimorar o sistema. Durante o uso, para fornecer mais funções, podemos solicitar suas permissões root. Você pode gerenciá-lo a qualquer momento acessando seu gerenciador root.\nAo continuar usando o HyperCraft, você concorda com o nosso <annotation key="protocol">Contrato do Usuário</annotation> e a nossa <annotation key="privacy">Política de Privacidade</annotation>.</string>
     <string name="new_cta_app_all_purpose_agree">Aceitar e continuar</string>
     <string name="new_cta_app_all_purpose_reject">Rejeitar e sair</string>
-    <!--HyperCeiler Settings/About Page-->
+    <!--HyperCraft Settings/About Page-->
     <string name="language">Português (Brasil)</string>
     <string name="translator">Igor</string>
     <string name="translator_url">https://github.com/igormiguell</string>
@@ -36,26 +36,26 @@
     <string name="settings">Configurações</string>
     <string name="about">Sobre</string>
     <string name="about_use">Referências</string>
-    <string name="about_use_desc">O HyperCeiler usa alguns ou todos os projetos a seguir, graças ao apoio dos desenvolvedores desses projetos (em nenhuma ordem em particular).</string>
+    <string name="about_use_desc">O HyperCraft usa alguns ou todos os projetos a seguir, graças ao apoio dos desenvolvedores desses projetos (em nenhuma ordem em particular).</string>
     <string name="about_contributer">Colaboradores</string>
-    <string name="about_contributer_desc">Obrigado aos seguintes colaboradores pela sua ajuda no desenvolvimento do HyperCeiler (em nenhuma ordem em particular)</string>
+    <string name="about_contributer_desc">Obrigado aos seguintes colaboradores pela sua ajuda no desenvolvimento do HyperCraft (em nenhuma ordem em particular)</string>
     <string name="about_donation">Patrocinadores</string>
     <string name="about_donation_desc">Você pode nos apoiar doando aqui</string>
     <string name="about_device_info_device">Dispositivo</string>
     <string name="about_device_info_android">Versão do Android</string>
     <string name="about_device_info_os">Versão do OS</string>
-    <string name="hyperceiler_notice">Puxe para baixo a barra de status para exibir as opções de atalho e notificações do sistema</string>
+    <string name="hypercraft_notice">Puxe para baixo a barra de status para exibir as opções de atalho e notificações do sistema</string>
     <string name="delete_all_dexkit_cache_desc">Tem certeza que deseja limpar todo o cache do DexKit?</string>
     <string name="delete_all_dexkit_cache_success">Cache do DexKit limpo com sucesso</string>
     <string name="set_homepage_entrance">Configurar entrada da página inicial</string>
     <string name="set_homepage_entrance_about">Observação: Ao modificar esta configuração ela oculta apenas a visibilidade do recurso na página inicial e os recursos que foram ativados não serão desativados!\nOcultar o recurso na página inicial terá efeito imediato e o app precisara ser reiniciado para reaparecer.</string>
     <string name="help_cant_see_apps_guide">Não consegue encontrar os recursos do app?</string>
     <string name="help_cant_see_apps_title">Não consegue encontrar os recursos do app na página inicial?</string>
-    <string name="help_cant_see_apps_desc">Para manter a simplicidade e a usabilidade da página inicial, ocultamos o acesso aos seguintes tipos de recursos do app:\n\n • Aqueles atualmente desativados ou ocultos\n • Aqueles que não foram encontrados em seu dispositivo\n • Aqueles incompatíveis com a versão atual do sistema ou do app\n • Não selecionado como escopo\n\nPor favor, solucione o problema com base nas informações acima, reinicie o HyperCeiler e tente novamente. Se você ainda não conseguir encontrar o recurso do app, pode ser um bug. Por favor, forneça-nos feedbacks oportunos e eficazes.\n\nRecursos do app atualmente ocultos:</string>
+    <string name="help_cant_see_apps_desc">Para manter a simplicidade e a usabilidade da página inicial, ocultamos o acesso aos seguintes tipos de recursos do app:\n\n • Aqueles atualmente desativados ou ocultos\n • Aqueles que não foram encontrados em seu dispositivo\n • Aqueles incompatíveis com a versão atual do sistema ou do app\n • Não selecionado como escopo\n\nPor favor, solucione o problema com base nas informações acima, reinicie o HyperCraft e tente novamente. Se você ainda não conseguir encontrar o recurso do app, pode ser um bug. Por favor, forneça-nos feedbacks oportunos e eficazes.\n\nRecursos do app atualmente ocultos:</string>
     <string name="help_cant_see_apps_uninstall">Apps desinstalados:\n</string>
     <string name="help_cant_see_apps_disable">Apps desativados ou ocultos:\n</string>
     <string name="help_cant_see_apps_scope">Não selecionado como escopo:\n</string>
-    <string name="help_cant_see_apps_desc_no_hidden">Para manter a simplicidade e a usabilidade da página inicial, ocultamos o acesso aos seguintes tipos de recursos do app:\n\n • Aqueles atualmente desativados ou ocultos\n • Aqueles que não foram encontrados em seu dispositivo\n • Aqueles incompatíveis com a versão atual do sistema ou do app\n • Não selecionado como escopo\n\nPor favor, solucione o problema com base nas informações acima, reinicie o HyperCeiler e tente novamente. Se você ainda não conseguir encontrar o recurso do app, pode ser um bug. Por favor, forneça-nos feedbacks oportunos e eficazes.\n\nAtualmente não há recursos ocultos!</string>
+    <string name="help_cant_see_apps_desc_no_hidden">Para manter a simplicidade e a usabilidade da página inicial, ocultamos o acesso aos seguintes tipos de recursos do app:\n\n • Aqueles atualmente desativados ou ocultos\n • Aqueles que não foram encontrados em seu dispositivo\n • Aqueles incompatíveis com a versão atual do sistema ou do app\n • Não selecionado como escopo\n\nPor favor, solucione o problema com base nas informações acima, reinicie o HyperCraft e tente novamente. Se você ainda não conseguir encontrar o recurso do app, pode ser um bug. Por favor, forneça-nos feedbacks oportunos e eficazes.\n\nAtualmente não há recursos ocultos!</string>
     <string name="help_cant_see_apps_switch">Ocultar esta ajuda na página inicial</string>
     <string name="help_cant_see_apps_switch_desc">Você ainda pode encontrar esta página em Sobre &gt; Ajuda. Reinicie o app para aplicar</string>
     <string name="help_support_version_title">Lista de versões do sistema com suporte à versão atual do app</string>
@@ -134,7 +134,7 @@
     <string name="about_github_desc">Este projeto é de código aberto baseado na licença AGPL-3.0</string>
     <string name="about_offical">Site oficial</string>
     <string name="about_crwd">Crowdin</string>
-    <string name="about_crwd_desc">Ajude-nos a traduzir o HyperCeiler para o seu idioma</string>
+    <string name="about_crwd_desc">Ajude-nos a traduzir o HyperCraft para o seu idioma</string>
     <string name="about_privacy">Política de Privacidade</string>
     <string name="about_protocol">Contrato do Usuário</string>
     <!--Pop-up window/miuix part-->
@@ -488,7 +488,7 @@
     <string name="community">Xiaomi Community</string>
     <string name="community_device_modify">Disfarçar modelo</string>
     <string name="community_fuck_detection">Bloquear detecção</string>
-    <string name="community_fuck_detection_desc">Evite a detecção do HyperCeiler ao fornecer feedback. Por favor, certifique-se de que o problema não seja causado por você, mas sim por um problema real do sistema, antes de fornecer feedback para evitar problemas desnecessários.</string>
+    <string name="community_fuck_detection_desc">Evite a detecção do HyperCraft ao fornecer feedback. Por favor, certifique-se de que o problema não seja causado por você, mas sim por um problema real do sistema, antes de fornecer feedback para evitar problemas desnecessários.</string>
     <!--File Manager-->
     <string name="fileexplorer">Arquivos</string>
     <string name="file_explorer_can_selectable">Permitir pressionar o nome da pasta e executar a ação</string>

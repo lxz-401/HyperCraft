@@ -95,7 +95,7 @@ extern std::atomic<uint32_t> dock_motion_subscribed;
 bool home_madvise_protect_range(uintptr_t address, size_t bytes);
 
 namespace {
-constexpr char kTag[] = "HyperCeiler.DockNative";
+constexpr char kTag[] = "HyperCraft.DockNative";
 // Defined after the maintenance loop; the loop calls it once per pass.
 void maybe_install_madvise_guard();
 constexpr size_t kTargetCount = 3;
@@ -1217,7 +1217,7 @@ constexpr size_t kGuardHeaderBytes = 16 * 1024;
 
 std::atomic<uint64_t> g_madvise_retained{0};
 
-int hyperceiler_guarded_madvise(void *address, size_t length, int advice) {
+int hypercraft_guarded_madvise(void *address, size_t length, int advice) {
     const auto real = reinterpret_cast<int (*)(void *, size_t, int)>(
         g_real_madvise.load(std::memory_order_acquire));
     if (real == nullptr) {
@@ -1809,7 +1809,7 @@ void maybe_install_madvise_guard_locked() {
     for (const auto& bound : imports->bindings) {
         const void* live = nullptr; std::vector<nhk::ReadRegion> callable;
         if (!read_pointer_safely(bound.address,live) || !live
-            || live == reinterpret_cast<void*>(hyperceiler_guarded_madvise)
+            || live == reinterpret_cast<void*>(hypercraft_guarded_madvise)
             || !nhk::ParseReadableRanges(after_text,reinterpret_cast<uintptr_t>(live),4,callable)
             || callable.size()!=1 || callable[0].permissions[2]!='x') {
             give_up("runtime madvise forwarding entry is not executable"); return;
@@ -1822,7 +1822,7 @@ void maybe_install_madvise_guard_locked() {
         [](uintptr_t slot, const void *&value) {
             return read_pointer_safely(slot, value);
         },
-        reinterpret_cast<void *>(hyperceiler_guarded_madvise),
+        reinterpret_cast<void *>(hypercraft_guarded_madvise),
         // Published before the slot is replaced: once the GOT points at the
         // replacement, its forwarding target is already visible.
         [](void *original) {

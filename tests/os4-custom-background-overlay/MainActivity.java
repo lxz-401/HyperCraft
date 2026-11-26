@@ -1,4 +1,4 @@
-package local.hyperceiler.custombgoverlayprobe;
+package local.hypercraft.custombgoverlayprobe;
 import android.app.Activity;
 import android.graphics.*;
 import android.os.*;

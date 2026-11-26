@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -15,7 +15,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   --><resources>
     <string name="version_update">Yeni sürüm bulundu</string>
     <!--Introduction to Xposed Modules-->
@@ -23,10 +23,10 @@
     <string name="new_permission_location_desc">enlem ve boylam gibi hizmetleri sağlamak için kullanılır</string>
     <string name="new_cta_agree_desc">Kullanım sırasında, size daha fazla özellik sunabilmek için sizden Root/Su izni talep edebiliriz. Tüm izinlerin yetki durumunu ayarlamak için istediğiniz zaman İzin Yönetimi\'ne gidebilirsiniz ve Root/Su izinlerini vermek için lütfen Root/Su yöneticinize gidin.</string>
     <string name="new_cta_app_main_purpose">sistem uygulamalarını değiştir</string>
-    <string name="new_cta_app_all_purpose_title">HyperCeiler\'a hoş geldiniz! Bu uygulama çalışmak için Xposed framework\'una dayanır. Bu uygulamayı, sistemi geliştirmek için desteklenen diğer uygulamaları ele geçirmek ve değiştirmek için kullanabilirsiniz. Kullanım sırasında, size daha fazla işlev sağlamak için sizden root izinleri talep edebiliriz. İstediğiniz zaman root yöneticinize giderek bunu yönetebilirsiniz.\nHyperCeiler\'ı kullanmaya devam ederek, <annotation key="protocol">Kullanıcı Sözleşmesi</annotation> ve <annotation key="privacy">Gizlilik Politikası</annotation>\'nı kabul etmiş olursunuz.</string>
+    <string name="new_cta_app_all_purpose_title">HyperCraft\'a hoş geldiniz! Bu uygulama çalışmak için Xposed framework\'una dayanır. Bu uygulamayı, sistemi geliştirmek için desteklenen diğer uygulamaları ele geçirmek ve değiştirmek için kullanabilirsiniz. Kullanım sırasında, size daha fazla işlev sağlamak için sizden root izinleri talep edebiliriz. İstediğiniz zaman root yöneticinize giderek bunu yönetebilirsiniz.\nHyperCraft\'ı kullanmaya devam ederek, <annotation key="protocol">Kullanıcı Sözleşmesi</annotation> ve <annotation key="privacy">Gizlilik Politikası</annotation>\'nı kabul etmiş olursunuz.</string>
     <string name="new_cta_app_all_purpose_agree">Devam etmek için &amp;\'ı kabul et</string>
     <string name="new_cta_app_all_purpose_reject">Çıkmak için &amp;\'ı reddedin</string>
-    <!--HyperCeiler Settings/About Page-->
+    <!--HyperCraft Settings/About Page-->
     <string name="language">İngilizce</string>
     <string name="translator">can1gulle</string>
     <string name="translator_url">https://github.com/ReChronoRain</string>
@@ -35,26 +35,26 @@
     <string name="settings">Ayarlar</string>
     <string name="about">Hakkında</string>
     <string name="about_use">Referanslar</string>
-    <string name="about_use_desc">HyperCeiler, destekleri için bu projelerin geliştiricilerine teşekkürler (belirli bir sıra olmadan) aşağıdaki açık kaynak projelerinin bir kısmını veya tamamını kullanır</string>
+    <string name="about_use_desc">HyperCraft, destekleri için bu projelerin geliştiricilerine teşekkürler (belirli bir sıra olmadan) aşağıdaki açık kaynak projelerinin bir kısmını veya tamamını kullanır</string>
     <string name="about_contributer">Katkıda Bulunan</string>
-    <string name="about_contributer_desc">HyperCeiler\'in geliştirilmesindeki yardımları için aşağıdaki katkıda bulunanlara teşekkürler (belirli bir sıra olmadan)</string>
+    <string name="about_contributer_desc">HyperCraft\'in geliştirilmesindeki yardımları için aşağıdaki katkıda bulunanlara teşekkürler (belirli bir sıra olmadan)</string>
     <string name="about_donation">Katkıda Bulunanlar</string>
     <string name="about_donation_desc">Buradan bağış yaparak bize destek olabilirsiniz</string>
     <string name="about_device_info_device">Aygıt</string>
     <string name="about_device_info_android">Android sürümü</string>
     <string name="about_device_info_os">İşletim Sistemi Sürümü</string>
-    <string name="hyperceiler_notice">Kısayol anahtarlarını ve sistem bildirimlerini görüntülemek için durum çubuğunu aşağı çekin</string>
+    <string name="hypercraft_notice">Kısayol anahtarlarını ve sistem bildirimlerini görüntülemek için durum çubuğunu aşağı çekin</string>
     <string name="delete_all_dexkit_cache_desc">Tüm DexKit önbelleğini silmek istediğinize emin misiniz?</string>
     <string name="delete_all_dexkit_cache_success">Tüm DexKit önbelleği silindi</string>
     <string name="set_homepage_entrance">Ana sayfa girişini ayarla</string>
     <string name="set_homepage_entrance_about">Not: Bu ayarın değiştirilmesi yalnızca özelliğin ana sayfadaki görünürlüğünü gizler ve açık olan özellikler kapatılmaz.\nÖzelliğin ana sayfada gizlenmesi hemen etkili olur ve yeniden görünmesi için uygulamanın yeniden başlatılması gerekir.</string>
     <string name="help_cant_see_apps_guide">Uygulama özelliklerini bulamıyor musunuz?</string>
     <string name="help_cant_see_apps_title">Ana ekranda uygulama özelliklerini bulamıyor musunuz?</string>
-    <string name="help_cant_see_apps_desc">Ana sayfanın sadeliğini ve işlevselliğini korumak için, aşağıdaki uygulama özelliklerine erişimi gizledik:\n\n - Şu anda devre dışı veya gizli olanlar\n - Cihazınızda bulunmayanlar\n - Sistemin veya uygulamanın geçerli sürümüyle uyumlu olmayanlar\n - Kapsamlı olarak seçilmemiş olanlar\n\nLütfen yukarıdaki bilgilere göre sorun giderin, HyperCeiler\'ı yeniden başlatın ve tekrar deneyin. Uygulama özelliklerini hala bulamıyorsanız, bu bir hata yada böcek olabilir. Lütfen bize zamanında ve etkili geri bildirim sağlayın.\n\nŞu anda gizli uygulama özellikleri:</string>
+    <string name="help_cant_see_apps_desc">Ana sayfanın sadeliğini ve işlevselliğini korumak için, aşağıdaki uygulama özelliklerine erişimi gizledik:\n\n - Şu anda devre dışı veya gizli olanlar\n - Cihazınızda bulunmayanlar\n - Sistemin veya uygulamanın geçerli sürümüyle uyumlu olmayanlar\n - Kapsamlı olarak seçilmemiş olanlar\n\nLütfen yukarıdaki bilgilere göre sorun giderin, HyperCraft\'ı yeniden başlatın ve tekrar deneyin. Uygulama özelliklerini hala bulamıyorsanız, bu bir hata yada böcek olabilir. Lütfen bize zamanında ve etkili geri bildirim sağlayın.\n\nŞu anda gizli uygulama özellikleri:</string>
     <string name="help_cant_see_apps_uninstall">Kaldırılmış uygulamalar:\n</string>
     <string name="help_cant_see_apps_disable">Devre dışı veya gizli uygulamalar:\n</string>
     <string name="help_cant_see_apps_scope">Kapsamlı olarak seçilmedi:\n</string>
-    <string name="help_cant_see_apps_desc_no_hidden">Ana sayfanın sadeliğini ve işlevselliğini korumak için, aşağıdaki uygulama özelliklerine erişimi gizledik:\n\n - Şu anda devre dışı veya gizli olanlar\n - Cihazınızda bulunmayanlar\n - Sistemin veya uygulamanın geçerli sürümüyle uyumlu olmayanlar\n - Kapsamlı olarak seçilmemiş olanlar\n\nLütfen yukarıdaki bilgilere göre sorun giderin, HyperCeiler\'ı yeniden başlatın ve tekrar deneyin. Uygulama özelliklerini hala bulamıyorsanız, bu bir hata yada böcek olabilir. Lütfen bize zamanında ve etkili geri bildirim sağlayın.\n\nŞu anda gizli özellik yok!</string>
+    <string name="help_cant_see_apps_desc_no_hidden">Ana sayfanın sadeliğini ve işlevselliğini korumak için, aşağıdaki uygulama özelliklerine erişimi gizledik:\n\n - Şu anda devre dışı veya gizli olanlar\n - Cihazınızda bulunmayanlar\n - Sistemin veya uygulamanın geçerli sürümüyle uyumlu olmayanlar\n - Kapsamlı olarak seçilmemiş olanlar\n\nLütfen yukarıdaki bilgilere göre sorun giderin, HyperCraft\'ı yeniden başlatın ve tekrar deneyin. Uygulama özelliklerini hala bulamıyorsanız, bu bir hata yada böcek olabilir. Lütfen bize zamanında ve etkili geri bildirim sağlayın.\n\nŞu anda gizli özellik yok!</string>
     <string name="help_cant_see_apps_switch">Ana sayfada bu yardımı gizle</string>
     <string name="help_cant_see_apps_switch_desc">Bu sayfayı Hakkında &gt; Yardım bölümünden bulabilirsiniz. Uygulamak için uygulamayı yeniden başlatın.</string>
     <string name="help_support_version_title">Geçerli uygulama sürümü destek sistemi versiyon listesi</string>
@@ -133,7 +133,7 @@
     <string name="about_github_desc">AGPL-3.0 lisansına dayalı olan bu proje açık kaynaklıdır</string>
     <string name="about_offical">Resmi site</string>
     <string name="about_crwd">Crowdin.</string>
-    <string name="about_crwd_desc">HyperCeiler uygulamasını dilinize çevirmemize yardım edin</string>
+    <string name="about_crwd_desc">HyperCraft uygulamasını dilinize çevirmemize yardım edin</string>
     <string name="about_privacy">Gizlilik Politikası</string>
     <string name="about_protocol">Kullanıcı Sözleşmesi</string>
     <!--Pop-up window/miuix part-->

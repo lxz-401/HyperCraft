@@ -57,7 +57,7 @@
 
 namespace home_layout {
 
-inline constexpr const char *kLogTag = "HyperCeiler.HomeLayout";
+inline constexpr const char *kLogTag = "HyperCraft.HomeLayout";
 
 /** Enough of an image to hold the ELF header together with its whole program header table. */
 inline constexpr size_t kImageHeadBytes = 16 * 1024;

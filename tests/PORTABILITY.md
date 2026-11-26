@@ -4,40 +4,40 @@ Run commands from the repository root. Python scripts resolve production sources
 from their own checkout, so the checkout can have any directory name and the
 caller's current directory does not select a different source tree.
 
-`hyperceiler_test_paths.py` centralizes tool and external-input locations. Importing
+`hypercraft_test_paths.py` centralizes tool and external-input locations. Importing
 it does not download tools, create directories, or start Android services.
 
 | Environment variable | Default when unset |
 | --- | --- |
-| `HYPERCEILER_BUILD_CACHE` | `~/.cache/hyperceiler-build` |
+| `HYPERCRAFT_BUILD_CACHE` | `~/.cache/hypercraft-build` |
 | `JAVA_HOME` | `<build cache>/jdk-25.0.4.1` |
 | `ANDROID_HOME` | `ANDROID_SDK_ROOT`, then `<build cache>/android-sdk` |
 | `ANDROID_NDK_HOME` | `<Android SDK>/ndk/28.2.13676358` |
-| `HYPERCEILER_TEST_DATA` | Parent directory of the current checkout |
+| `HYPERCRAFT_TEST_DATA` | Parent directory of the current checkout |
 | `KOTLIN_HOME` | `<test data>/tools-cache/kotlin-2.4.10/kotlinc` |
-| `HYPERCEILER_ROM_ROOT` | `<test data>/firmware` |
-| `HYPERCEILER_EXTRACTED_ROM_ROOT` | `<ROM root>/extracted` |
-| `HYPERCEILER_SNAPSHOT_ROOT` | Build cache |
+| `HYPERCRAFT_ROM_ROOT` | `<test data>/firmware` |
+| `HYPERCRAFT_EXTRACTED_ROM_ROOT` | `<ROM root>/extracted` |
+| `HYPERCRAFT_SNAPSHOT_ROOT` | Build cache |
 
 Use absolute paths for environment overrides. `~` is expanded. Existing CLI
 options remain available: `--build-cache` selects that runner's cache, while an
-explicit `JAVA_HOME`, `ANDROID_HOME`, or `HYPERCEILER_SNAPSHOT_ROOT` still selects
+explicit `JAVA_HOME`, `ANDROID_HOME`, or `HYPERCRAFT_SNAPSHOT_ROOT` still selects
 the corresponding tool or input. `native-remaining-audit/audit.py --project`
-selects its external data/output root; `HYPERCEILER_ROM_ROOT` can independently
+selects its external data/output root; `HYPERCRAFT_ROM_ROOT` can independently
 select its ROM inputs.
 
 For example, with tools and inputs already installed:
 
 ```sh
-export HYPERCEILER_BUILD_CACHE="$HOME/.cache/hyperceiler-build"
+export HYPERCRAFT_BUILD_CACHE="$HOME/.cache/hypercraft-build"
 export JAVA_HOME="/opt/jdk-25"
 export KOTLIN_HOME="/opt/kotlinc"
 export ANDROID_HOME="/opt/android-sdk"
 export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/28.2.13676358"
-export HYPERCEILER_TEST_DATA="/data/hyperceiler-inputs"
+export HYPERCRAFT_TEST_DATA="/data/hypercraft-inputs"
 
-python3 tests/os4-pin-layout/run.py --output /tmp/hyperceiler-pin-results
-python3 tests/os4-custom-background-renderer/run.py --output /tmp/hyperceiler-renderer-results
+python3 tests/os4-pin-layout/run.py --output /tmp/hypercraft-pin-results
+python3 tests/os4-custom-background-renderer/run.py --output /tmp/hypercraft-renderer-results
 ```
 
 Choose an unused output directory where a runner requires a new directory.

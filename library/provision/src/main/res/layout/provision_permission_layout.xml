@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -14,7 +14,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -26,7 +26,7 @@
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/miuix_theme_padding_horizontal_common">
 
-        <com.sevtinge.hyperceiler.provision.widget.PermissionItemView
+        <com.sevtinge.hypercraft.provision.widget.PermissionItemView
             android:id="@+id/network"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -41,18 +41,18 @@
             android:text="@string/provision_set_permission_later"
             android:textSize="13sp" />
 
-        <com.sevtinge.hyperceiler.provision.widget.PermissionItemView
+        <com.sevtinge.hypercraft.provision.widget.PermissionItemView
             android:id="@+id/root"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <com.sevtinge.hyperceiler.provision.widget.PermissionItemView
+        <com.sevtinge.hypercraft.provision.widget.PermissionItemView
             android:id="@+id/installed_apps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp" />
 
-        <com.sevtinge.hyperceiler.provision.widget.PermissionItemView
+        <com.sevtinge.hypercraft.provision.widget.PermissionItemView
             android:id="@+id/lsp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

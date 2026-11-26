@@ -3,8 +3,8 @@ package fixture;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
-import com.sevtinge.hyperceiler.libhook.rules.systemui.statusbar.icon.all.StatusBarIcon;
-import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
+import com.sevtinge.hypercraft.libhook.rules.systemui.statusbar.icon.all.StatusBarIcon;
+import com.sevtinge.hypercraft.common.utils.PrefsBridge;
 import com.android.systemui.statusbar.phone.MiuiIconManagerUtils;
 
 public final class StereoKeyTest {

@@ -1,4 +1,4 @@
-import com.sevtinge.hyperceiler.common.diagnostics.DiagnosticExport;
+import com.sevtinge.hypercraft.common.diagnostics.DiagnosticExport;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;

@@ -5,11 +5,11 @@ import argparse,hashlib,json,re,subprocess,xml.etree.ElementTree as ET
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 ROOT=test_paths.TEST_DATA_ROOT;SRC=test_paths.SOURCE_ROOT;ROM=test_paths.TEST_DATA_ROOT / 'acceptance/java-test12/barrage-v1/rom-v1';SM=ROM/'smali/com/xiaomi/barrage'
-RULE=SRC/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/barrage/CustomBarrageLength.kt'
-PRODUCTION=[RULE,SRC/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/app/Barrage.java',*[SRC/'library/core/src/main/res'/p for p in ['xml/barrage.xml','values/strings_app.xml','values-zh-rCN/strings_app.xml']]]
+RULE=SRC/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/barrage/CustomBarrageLength.kt'
+PRODUCTION=[RULE,SRC/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/app/Barrage.java',*[SRC/'library/core/src/main/res'/p for p in ['xml/barrage.xml','values/strings_app.xml','values-zh-rCN/strings_app.xml']]]
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 def main(out):
  out.mkdir(parents=True,exist_ok=False); checks=[]; methods=[]
@@ -55,7 +55,7 @@ def main(out):
  refs=(ROM/'all-dex-xrefs.txt').read_text().splitlines();ck('all_DEX_xref_count_45',len(refs)==45);ck('exact_single_notification_caller',sum('INVOKE_'in x and x.split('\t')[-1].startswith('Lcom/xiaomi/barrage/utils/BarrageWindowUtils;->addBarrageNotification(') for x in refs)==1);ck('no_encoded_send_caller_in_actual_DEX',not any(x.split('\t')[-1].startswith('Lcom/xiaomi/barrage/utils/BarrageWindowUtils;->sendBarrage(') for x in refs))
  xml=ET.parse(PRODUCTION[2]).getroot();android='{http://schemas.android.com/apk/res/android}';app='{http://schemas.android.com/apk/res-auto}';node=[e for e in xml.iter()if e.get(android+'key')=='prefs_key_barrage_custom_barrage_length'];ck('one_actual_UI_key',len(node)==1);node=node[0];ck('UI_range_sentinel_and_no_dp',node.get(android+'defaultValue')=='36'and node.get(app+'minValue')=='12'and node.get(app+'maxValue')=='108'and node.get(app+'format')=='%s')
  rule=RULE.read_text();route=PRODUCTION[1].read_text();ck('route_correctkey_and_range','getInt("barrage_custom_barrage_length", 36)'in route and 'length >= 12 && length <= 108 && length != 36'in route);ck('OS4_exact_version_branch','if (!isMoreHyperOSVersion(4f)) {\n            initLegacy()\n            return'in rule)
- old=subprocess.check_output(['git','show','HEAD:library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/barrage/CustomBarrageLength.kt'],cwd=SRC,text=True);expected=old[old.index('    private val barrageLength by lazy'):].replace('"barrage_length"','"barrage_custom_barrage_length"').replace('    override fun init() {','    private fun initLegacy() {');ck('OS3_legacy_body_exact_except_correct_UI_key_and_method_name',rule[rule.index('    private val barrageLength by lazy'):]==expected)
+ old=subprocess.check_output(['git','show','HEAD:library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/barrage/CustomBarrageLength.kt'],cwd=SRC,text=True);expected=old[old.index('    private val barrageLength by lazy'):].replace('"barrage_length"','"barrage_custom_barrage_length"').replace('    override fun init() {','    private fun initLegacy() {');ck('OS3_legacy_body_exact_except_correct_UI_key_and_method_name',rule[rule.index('    private val barrageLength by lazy'):]==expected)
  for p in PRODUCTION[3:]:ck(p.parent.name+'_summary_default_units_restart',any(e.get('name')=='barrage_custom_barrage_length_desc'and e.text for e in ET.parse(p).getroot()))
  inputs=[Path(__file__),ROM/'extract_rom.py',ROM/'rom-extraction.json',ROM/'DexRefs.java',ROM/'all-dex-xrefs.txt',*PRODUCTION,*[ROM/p for p in extraction['files']]]
  report={'passed':all(x['passed']for x in checks),'checks':checks,'sources':{str(p.relative_to(SRC)):sha(p)for p in PRODUCTION},'inputs':{str(test_paths.report_path(p, ROOT)):sha(p)for p in inputs},'actual_apk':{'path':extraction['apk'],'sha256':extraction['sha256']},'complete_methods':methods,'extracted_classes':len(extraction['files']),'xref_scope':'Every instruction in every DEX in this APK; only five named methods plus BaseBarrage.text/barrageMsg selected. 45 references. Not reflection/native/dynamic-code completeness.','scope':'Finite deterministic anchors plus saved complete method bodies, supplementing the manual chain review. No ART, LSPosed or device execution.','device_status':'NOT_TESTED'}

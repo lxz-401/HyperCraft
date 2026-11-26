@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -15,7 +15,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   -->
 <resources>
     <string name="app_name" translatable="false">HyperCraft</string>
@@ -77,7 +77,7 @@
     <string name="volume_style_preview_percent">%1$d%%</string>
 
     <string name="version_update">New version found</string>
-    <string name="about_copy_right" translatable="false">© 2023-2026 Sevtinge &amp; HyperCeiler Contributors.</string>
+    <string name="about_copy_right" translatable="false">© 2023-2026 Sevtinge &amp; HyperCraft Contributors.</string>
     <string name="empty_lable" translatable="false" />
     <string name="system_ui_status_bar_icon_nfc" translatable="false">NFC</string>
     <string name="system_ui_status_bar_icon_vpn" translatable="false">VPN</string>
@@ -113,41 +113,41 @@
     <string name="new_cta_agree_desc">During usage, in order to provide you with more features, we may apply for root permission from you. You can go to Permission Management at any time to adjust the authorization status of all permissions, and please go to your root manager to grant root permissions.</string>
     <string name="new_cta_app_main_purpose">Modify system apps</string>
     <string name="new_cta_app_all_purpose_welcome">User Agreement &amp; Privacy Policy</string>
-    <string name="new_cta_app_all_purpose_title">Welcome to HyperCeiler! This app relies on the Xposed framework to run. You can use this app to hijack and modify other supported apps to enhance the system. During usage, in order to provide you with more functions, we may apply for root permissions from you. You can manage it at any time by going to your root manager.\nBy continuing to use HyperCeiler, you agree to our <annotation key="protocol">User Agreement</annotation> and <annotation key="privacy">Privacy Policy</annotation>.</string>
+    <string name="new_cta_app_all_purpose_title">Welcome to HyperCraft! This app relies on the Xposed framework to run. You can use this app to hijack and modify other supported apps to enhance the system. During usage, in order to provide you with more functions, we may apply for root permissions from you. You can manage it at any time by going to your root manager.\nBy continuing to use HyperCraft, you agree to our <annotation key="protocol">User Agreement</annotation> and <annotation key="privacy">Privacy Policy</annotation>.</string>
     <string name="new_cta_app_all_purpose_agree">Agree &amp; Continue</string>
     <string name="new_cta_app_all_purpose_reject">Reject &amp; Exit</string>
-    <!--HyperCeiler Settings/About Page-->
+    <!--HyperCraft Settings/About Page-->
     <string name="language">English</string>
-    <string name="translator">HyperCeiler Official</string>
+    <string name="translator">HyperCraft Official</string>
     <string name="translator_url">https://github.com/ReChronoRain</string>
     <string name="home">Home</string>
     <string name="help">Help</string>
     <string name="settings">Settings</string>
     <string name="about">About</string>
     <string name="about_use">References</string>
-    <string name="about_use_desc">HyperCeiler uses some or all of the following projects, thanks to the developers of these projects for their support (in no particular order)</string>
+    <string name="about_use_desc">HyperCraft uses some or all of the following projects, thanks to the developers of these projects for their support (in no particular order)</string>
     <string name="about_contributer">Contributors</string>
-    <string name="about_contributer_desc">Thanks to the following contributors for their help in the development of HyperCeiler (in no particular order)</string>
+    <string name="about_contributer_desc">Thanks to the following contributors for their help in the development of HyperCraft (in no particular order)</string>
     <string name="about_donation">Sponsor</string>
     <string name="about_donation_desc">You can support us by donating here</string>
     <string name="about_device_info_device">Device</string>
     <string name="about_device_info_android">Android version</string>
     <string name="about_device_info_os">OS version</string>
-    <string name="hyperceiler_notice">Pull down the status bar to display shortcut switches and system notifications</string>
+    <string name="hypercraft_notice">Pull down the status bar to display shortcut switches and system notifications</string>
     <string name="debug_info">Cannot get debug info.</string>
     <string name="delete_all_dexkit_cache_desc">Are you sure you want to clear all DexKit cache?</string>
     <string name="delete_all_dexkit_cache_success">Successfully cleared all DexKit cache</string>
-    <string name="clear_app_properties_desc">Are you sure you want to reset the Props for HyperCeiler-related services?</string>
-    <string name="clear_app_properties_success">Props for HyperCeiler-related services have been reset</string>
+    <string name="clear_app_properties_desc">Are you sure you want to reset the Props for HyperCraft-related services?</string>
+    <string name="clear_app_properties_success">Props for HyperCraft-related services have been reset</string>
     <string name="set_homepage_entrance">Set up the homepage entry</string>
     <string name="set_homepage_entrance_about">Note: Modifying this setting only hides the visibility of the feature on the homepage, and features that have been turned on won\'t be turned off!\nHiding the feature on the homepage will take effect immediately, and the app will need to be restarted to reappear.</string>
     <string name="help_cant_see_apps_guide">Can\'t find the app features?</string>
     <string name="help_cant_see_apps_title">Can\'t find the app features on the homepage?</string>
-    <string name="help_cant_see_apps_desc">To maintain the simplicity and usability of the homepage, we\'ve hidden access to the following types of app features:\n\n • Those currently disabled or hidden\n • Those not found in your device\n • Those incompatible with the current version of the system or the app\n • Not selected as scoped\n\nPlease troubleshoot based on the above information, restart HyperCeiler, and try again. If you still can\'t find the app features, it may be a bug. Please provide timely and effective feedback to us.\n\nCurrently hidden app features:</string>
+    <string name="help_cant_see_apps_desc">To maintain the simplicity and usability of the homepage, we\'ve hidden access to the following types of app features:\n\n • Those currently disabled or hidden\n • Those not found in your device\n • Those incompatible with the current version of the system or the app\n • Not selected as scoped\n\nPlease troubleshoot based on the above information, restart HyperCraft, and try again. If you still can\'t find the app features, it may be a bug. Please provide timely and effective feedback to us.\n\nCurrently hidden app features:</string>
     <string name="help_cant_see_apps_uninstall">Uninstalled or disabled apps:\n</string>
     <string name="help_cant_see_apps_disable">Hidden apps:\n</string>
     <string name="help_cant_see_apps_scope">Not selected as scoped:\n</string>
-    <string name="help_cant_see_apps_desc_no_hidden">To maintain the simplicity and usability of the homepage, we\'ve hidden access to the following types of app features:\n\n • Those currently disabled or hidden\n • Those not found in your device\n • Those incompatible with the current version of the system or the app\n • Not selected as scoped\n\nPlease troubleshoot based on the above information, restart HyperCeiler, and try again. If you still can\'t find the app features, it may be a bug. Please provide timely and effective feedback to us.\n\nThere are currently no hidden features!</string>
+    <string name="help_cant_see_apps_desc_no_hidden">To maintain the simplicity and usability of the homepage, we\'ve hidden access to the following types of app features:\n\n • Those currently disabled or hidden\n • Those not found in your device\n • Those incompatible with the current version of the system or the app\n • Not selected as scoped\n\nPlease troubleshoot based on the above information, restart HyperCraft, and try again. If you still can\'t find the app features, it may be a bug. Please provide timely and effective feedback to us.\n\nThere are currently no hidden features!</string>
     <string name="help_cant_see_apps_switch">Hide this help in homepage</string>
     <string name="help_cant_see_apps_switch_desc">You can still find this page in About > Help. Return to the homepage to apply.</string>
     <!-- Scope -->
@@ -210,7 +210,7 @@
     <string name="development_delete_all_dexkit_cache">Delete all DexKit cache</string>
     <string name="development_close_log_alert_dialog">Disable logger live alert dialog</string>
     <string name="development_fix_lsposed_log">Try to fix LSPosed log service</string>
-    <string name="development_clear_app_properties">Reset the Prop for services related to HyperCeiler</string>
+    <string name="development_clear_app_properties">Reset the Prop for services related to HyperCraft</string>
     <string name="settings_hot_reload">Hot reload process</string>
     <string name="settings_hot_reload_desc">Select framework-scope apps and hot reload all of their currently injected processes. Requires Xposed framework API 102 or higher.</string>
     <string name="settings_hot_reload_unsupported">Hot reload is not supported on the current Xposed framework. Requires libxposed API 102 or higher.</string>
@@ -284,7 +284,7 @@
     <string name="about_github_desc">This project is open source based on the AGPL-3.0 license</string>
     <string name="about_offical">Official website</string>
     <string name="about_crwd">Translate</string>
-    <string name="about_crwd_desc">Help us translate HyperCeiler into you language</string>
+    <string name="about_crwd_desc">Help us translate HyperCraft into you language</string>
     <string name="about_privacy">Privacy Policy</string>
     <string name="about_protocol">User Agreement</string>
     <!--Pop-up window/miuix part-->
@@ -657,7 +657,7 @@
     <string name="community">Xiaomi Community</string>
     <string name="community_device_modify">Spoof model</string>
     <string name="community_fuck_detection">Block detection</string>
-    <string name="community_fuck_detection_desc">Prevent detection of HyperCeiler and upload it while giving feedback. Please ensure that the problem isn\'t caused by you, but a real system issue before providing feedback, to avoid unnecessary trouble.</string>
+    <string name="community_fuck_detection_desc">Prevent detection of HyperCraft and upload it while giving feedback. Please ensure that the problem isn\'t caused by you, but a real system issue before providing feedback, to avoid unnecessary trouble.</string>
     <!--File Manager-->
     <string name="fileexplorer">File Manager</string>
     <string name="file_explorer_can_selectable">Allow directly long press folder name and do action</string>

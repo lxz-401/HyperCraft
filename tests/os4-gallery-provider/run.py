@@ -9,7 +9,7 @@ import tempfile
 import shutil
 
 ROOT = Path(__file__).resolve().parents[2]
-PACKAGE = "com/sevtinge/hyperceiler/libhook/"
+PACKAGE = "com/sevtinge/hypercraft/libhook/"
 p = argparse.ArgumentParser(description=__doc__)
 p.add_argument("--source-root", type=Path, default=ROOT)
 a = p.parse_args()
@@ -27,13 +27,13 @@ public void putBoolean(String key,boolean value){values.put(key,value);} }""",
 public class Log {public static int warnings; public static int w(String t,String m,Throwable e){warnings++;return 0;} }""",
     "com/hchen/database/HookBase.java": """package com.hchen.database;
 public @interface HookBase {String targetPackage();}""",
-    "com/sevtinge/hyperceiler/common/utils/PrefsBridge.java": """package com.sevtinge.hyperceiler.common.utils;
+    "com/sevtinge/hypercraft/common/utils/PrefsBridge.java": """package com.sevtinge.hypercraft.common.utils;
 import java.util.HashSet;
 public class PrefsBridge {public static final HashSet<String> enabled=new HashSet<>();public static boolean fail;public static int reads;
 public static boolean getBoolean(String key){reads++;if(fail)throw new IllegalStateException("preferences unavailable");return enabled.contains(key);}
 public static String getString(String key,String fallback){return fallback;} }""",
     PACKAGE
-    + "utils/api/DeviceHelper.java": """package com.sevtinge.hyperceiler.libhook.utils.api;
+    + "utils/api/DeviceHelper.java": """package com.sevtinge.hypercraft.libhook.utils.api;
 public class DeviceHelper {public static class System {public static float version=4f;
 public static boolean isMoreHyperOSVersion(float v){return version>=v;}}}""",
     "io/github/lingqiqi5211/ezhooktool/xposed/common/HookParam.java": """package io.github.lingqiqi5211.ezhooktool.xposed.common;
@@ -45,7 +45,7 @@ public boolean getHasThrowable(){return throwable!=null;}public boolean isSkippe
     "io/github/lingqiqi5211/ezhooktool/xposed/java/IMethodHook.java": """package io.github.lingqiqi5211.ezhooktool.xposed.java;
 import io.github.lingqiqi5211.ezhooktool.xposed.common.HookParam;
 public interface IMethodHook {default void before(HookParam p){}default void after(HookParam p){}}""",
-    PACKAGE + "base/BaseHook.java": """package com.sevtinge.hyperceiler.libhook.base;
+    PACKAGE + "base/BaseHook.java": """package com.sevtinge.hypercraft.libhook.base;
 import io.github.lingqiqi5211.ezhooktool.xposed.java.IMethodHook;
 public abstract class BaseHook {public static IMethodHook registered; public abstract void init();
 public static void findAndHookMethod(String cls,String method,Object... params){
@@ -54,7 +54,7 @@ if(!cls.equals("com.miui.mediaeditor.provider.MediaEditorProviderForGallery")||!
 throw new AssertionError("unexpected lookup");
 registered=(IMethodHook)params[3];} }""",
     PACKAGE
-    + "base/BaseLoad.java": """package com.sevtinge.hyperceiler.libhook.base;
+    + "base/BaseLoad.java": """package com.sevtinge.hypercraft.libhook.base;
 import java.util.ArrayList;
 public abstract class BaseLoad {public static final ArrayList<String> installed=new ArrayList<>();public abstract void onPackageLoaded();
 public static void initHook(BaseHook rule,boolean enabled){if(enabled){installed.add(rule.getClass().getSimpleName());rule.init();}} }""",
@@ -68,9 +68,9 @@ for name in [
     "UnlockMinimumCropLimit2",
 ]:
     STUBS[PACKAGE + "rules/mediaeditor/" + name + ".java"] = (
-        "package com.sevtinge.hyperceiler.libhook.rules.mediaeditor; public class "
+        "package com.sevtinge.hypercraft.libhook.rules.mediaeditor; public class "
         + name
-        + " extends com.sevtinge.hyperceiler.libhook.base.BaseHook { public static final "
+        + " extends com.sevtinge.hypercraft.libhook.base.BaseHook { public static final "
         + name
         + " INSTANCE=new "
         + name

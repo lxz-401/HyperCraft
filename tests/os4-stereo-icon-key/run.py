@@ -20,7 +20,7 @@ HERE = Path(__file__).resolve().parent
 SOURCE = HERE.parents[1]
 PRODUCTION = (
     SOURCE
-    / "library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/systemui/statusbar/icon/all/StatusBarIcon.java"
+    / "library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemui/statusbar/icon/all/StatusBarIcon.java"
 )
 XML = SOURCE / "library/core/src/main/res/xml/system_ui_status_bar_icon_manage_new.xml"
 KEY = "prefs_key_system_ui_status_bar_icon_soundbox_group_stereo"

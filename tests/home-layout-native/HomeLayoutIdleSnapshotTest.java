@@ -1,8 +1,8 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
-package com.sevtinge.hyperceiler.libhook.rules.home.dock;
+package com.sevtinge.hypercraft.libhook.rules.home.dock;
 
 import android.content.ContentResolver;
-import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
+import com.sevtinge.hypercraft.common.utils.PrefsBridge;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;

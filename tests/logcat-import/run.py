@@ -6,7 +6,7 @@ import subprocess
 import tempfile
 
 root = Path(__file__).resolve().parents[2]
-parser = root / 'app/src/main/java/com/sevtinge/hyperceiler/log/LogcatParser.java'
+parser = root / 'app/src/main/java/com/sevtinge/hypercraft/log/LogcatParser.java'
 
 # Device runtimes can provide a newer Java language level than their Core Library.
 # Keep these desktop-Java conveniences out of production sources.
@@ -20,7 +20,7 @@ with tempfile.TemporaryDirectory(prefix='hc-logcat-test-') as temp:
     subprocess.run(['javac', '-encoding', 'UTF-8', '-d', temp, str(parser),
                     str(parser.with_name('HomeLayoutEngineLogNames.java')),
                     str(Path(__file__).with_name('LogcatParserTest.java'))], check=True)
-    subprocess.run(['java', '-ea', '-cp', temp, 'com.sevtinge.hyperceiler.log.LogcatParserTest'], check=True)
+    subprocess.run(['java', '-ea', '-cp', temp, 'com.sevtinge.hypercraft.log.LogcatParserTest'], check=True)
 
 # Compile the real Room model; only annotation declarations are host stubs.
 with tempfile.TemporaryDirectory(prefix='hc-log-names-') as temp:
@@ -38,11 +38,11 @@ with tempfile.TemporaryDirectory(prefix='hc-log-names-') as temp:
     sources += [str(parser.with_name('HomeLayoutEngineLogNames.java')),
                 str(parser.parent / 'db/LogEntry.java'), str(Path(__file__).with_name('HomeLayoutEngineLogNamesTest.java'))]
     subprocess.run(['javac', '-encoding', 'UTF-8', '-d', temp] + sources, check=True)
-    subprocess.run(['java', '-ea', '-cp', temp, 'com.sevtinge.hyperceiler.log.HomeLayoutEngineLogNamesTest'], check=True)
+    subprocess.run(['java', '-ea', '-cp', temp, 'com.sevtinge.hypercraft.log.HomeLayoutEngineLogNamesTest'], check=True)
 
 # Execute the actual DAO SQL to ensure a LSPosed refresh does not erase imported logs
 # and the existing current-log export includes both sources without schema migration.
-dao = (root / 'app/src/main/java/com/sevtinge/hyperceiler/log/db/LogDao.java').read_text()
+dao = (root / 'app/src/main/java/com/sevtinge/hypercraft/log/db/LogDao.java').read_text()
 queries = {name: ''.join(re.findall(r'"([^"\n]*)"', query))
            for query, name in re.findall(r'@Query\((.*?)\)\s*(?:List<LogEntry>|LogEntry|void)\s+(\w+)\(', dao, re.S)}
 db = sqlite3.connect(':memory:')

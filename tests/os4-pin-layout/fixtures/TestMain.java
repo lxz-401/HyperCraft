@@ -1,6 +1,6 @@
 import java.lang.reflect.*;import java.util.*;import android.view.*;
 import io.github.libxposed.api.XposedInterface;import io.github.lingqiqi5211.ezhooktool.xposed.EzXposed;
-import com.sevtinge.hyperceiler.libhook.base.BaseHook;import com.sevtinge.hyperceiler.libhook.rules.systemui.lockscreen.ScramblePIN;import com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper;
+import com.sevtinge.hypercraft.libhook.base.BaseHook;import com.sevtinge.hypercraft.libhook.rules.systemui.lockscreen.ScramblePIN;import com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper;
 import com.android.keyguard.*;
 public class TestMain{
  static final Map<Method,XposedInterface.Hooker>hooks=new LinkedHashMap<>();static int passes,failures,originalCalls;

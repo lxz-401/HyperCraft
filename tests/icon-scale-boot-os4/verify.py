@@ -46,7 +46,7 @@ for cmd in [[str(zig),'c++','-std=c++20','-I'+str(out),'-I'+str(H),'-I'+str(W/'a
  p=subprocess.run(cmd,capture_output=True,text=True);print(p.stdout+p.stderr,end='')
  if p.returncode and cmd[0]==str(zig):sys.exit(p.returncode)
  total|=p.returncode
-hooks=(H/'home_layout_hooks.cpp').read_text(encoding='utf8');entry=(H/'tweaks/entry.cpp').read_text(encoding='utf8');native=(H/'hyperceiler_home.cpp').read_text(encoding='utf8');new='bool PrimeLayoutConfig(' in entry;render=(H/'home_icon_render.h').exists()
+hooks=(H/'home_layout_hooks.cpp').read_text(encoding='utf8');entry=(H/'tweaks/entry.cpp').read_text(encoding='utf8');native=(H/'hypercraft_home.cpp').read_text(encoding='utf8');new='bool PrimeLayoutConfig(' in entry;render=(H/'home_icon_render.h').exists()
 prefix=r'''#include "home_layout_config.h"
 #include "tweaks/blob.h"
 #include <atomic>

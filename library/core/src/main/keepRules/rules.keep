@@ -13,11 +13,11 @@
 # --- AndroidX ---
 -keep class androidx.preference.** { *; }
 
-# --- HyperCeiler ---
--keep class com.sevtinge.hyperceiler.hooker.** { *; }
--keep class com.sevtinge.hyperceiler.sub.** { *; }
--keep class com.sevtinge.hyperceiler.holiday.** { *; }
--keep class * extends com.sevtinge.hyperceiler.common.base.BasePreferenceFragment { *; }
+# --- HyperCraft ---
+-keep class com.sevtinge.hypercraft.hooker.** { *; }
+-keep class com.sevtinge.hypercraft.sub.** { *; }
+-keep class com.sevtinge.hypercraft.holiday.** { *; }
+-keep class * extends com.sevtinge.hypercraft.common.base.BasePreferenceFragment { *; }
 
 # --- UI / fan ---
 -keep class fan.** { *; }

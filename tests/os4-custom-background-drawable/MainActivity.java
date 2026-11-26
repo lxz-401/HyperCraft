@@ -1,4 +1,4 @@
-package local.hyperceiler.custombgdrawableprobe;
+package local.hypercraft.custombgdrawableprobe;
 import android.app.Activity;
 import android.graphics.*;
 import android.graphics.drawable.*;
@@ -8,8 +8,8 @@ import android.widget.*;
 import org.json.*;
 import java.io.*;
 import java.util.*;
-import com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.media3.CustomBackgroundDrawableOS4;
-import com.sevtinge.hyperceiler.libhook.utils.hookapi.systemui.controlcenter.media.MediaViewColorConfig;
+import com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.media3.CustomBackgroundDrawableOS4;
+import com.sevtinge.hypercraft.libhook.utils.hookapi.systemui.controlcenter.media.MediaViewColorConfig;
 
 public final class MainActivity extends Activity {
  private final Handler main=new Handler(Looper.getMainLooper());

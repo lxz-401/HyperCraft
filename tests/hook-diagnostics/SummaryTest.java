@@ -1,4 +1,4 @@
-import com.sevtinge.hyperceiler.common.diagnostics.*;
+import com.sevtinge.hypercraft.common.diagnostics.*;
 import java.util.*;
 
 public final class SummaryTest {

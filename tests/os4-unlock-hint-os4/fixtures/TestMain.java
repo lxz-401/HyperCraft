@@ -1,12 +1,12 @@
 import java.lang.reflect.*;import java.util.*;import android.os.Looper;
 import io.github.libxposed.api.XposedInterface;import io.github.lingqiqi5211.ezhooktool.xposed.EzXposed;
-import com.sevtinge.hyperceiler.libhook.base.BaseHook;import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
-import com.sevtinge.hyperceiler.libhook.rules.systemui.lockscreen.*;
+import com.sevtinge.hypercraft.libhook.base.BaseHook;import com.sevtinge.hypercraft.common.utils.PrefsBridge;
+import com.sevtinge.hypercraft.libhook.rules.systemui.lockscreen.*;
 public class TestMain {
  static final Map<Method,XposedInterface.Hooker> hooks=new LinkedHashMap<>();static int passes,failures,originalCalls;static boolean failUnhook;static Runnable onInstall;
  static void check(boolean b){if(!b)throw new AssertionError();}interface Test{void run()throws Throwable;}
  static void test(String n,Test t){reset();try{t.run();passes++;System.out.println("PASS "+n);}catch(Throwable x){failures++;System.out.println("FAIL "+n+": "+x);x.printStackTrace(System.out);}}
- static void reset(){hooks.clear();BaseHook.classes.clear();BaseHook.lookups.clear();BaseHook.cleanups.clear();BaseHook.errors.clear();BaseHook.preSkipped=BaseHook.lateSkipped=BaseHook.failInstall=BaseHook.throwInstall=BaseHook.failCleanup=false;BaseHook.duringCleanup=null;BaseHook.seen=null;PrefsBridge.enabled=true;originalCalls=0;onInstall=null;failUnhook=false;Targets.Theme.type="default";Targets.Theme.fail=false;Looper.local.set(Looper.MAIN);com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.version=4;
+ static void reset(){hooks.clear();BaseHook.classes.clear();BaseHook.lookups.clear();BaseHook.cleanups.clear();BaseHook.errors.clear();BaseHook.preSkipped=BaseHook.lateSkipped=BaseHook.failInstall=BaseHook.throwInstall=BaseHook.failCleanup=false;BaseHook.duringCleanup=null;BaseHook.seen=null;PrefsBridge.enabled=true;originalCalls=0;onInstall=null;failUnhook=false;Targets.Theme.type="default";Targets.Theme.fail=false;Looper.local.set(Looper.MAIN);com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper.System.version=4;
  BaseHook.classes.put("com.android.systemui.keyguard.KeyguardIndicationRotateTextViewController",Targets.Rotate.class);BaseHook.classes.put("com.android.systemui.keyguard.KeyguardIndication",Targets.Indication.class);BaseHook.classes.put("com.android.systemui.statusbar.phone.KeyguardIndicationTextView",Targets.Bottom.class);BaseHook.classes.put("com.android.systemui.util.ViewController",Targets.VC.class);BaseHook.classes.put("com.miui.systemui.util.CommonUtil",Targets.Theme.class);}
  static void start(){HideLockScreenHintOS4.INSTANCE.init();}static Object send(Targets.Rotate r,int t,Targets.Indication i,boolean now)throws Throwable{return dispatch(r,"updateIndication",new Class<?>[]{int.class,Targets.Indication.class,boolean.class},t,i,now);}
  static void unchecked(Test t){try{t.run();}catch(Throwable e){throw new RuntimeException(e);}}
@@ -49,7 +49,7 @@ public class TestMain {
  test("rollback_failure_remaining_hook_inactive",()->{BaseHook.failCleanup=true;failUnhook=true;try{start();throw new AssertionError();}catch(IllegalStateException e){check(e.getSuppressed().length==1);}var r=new Targets.Rotate();var i=new Targets.Indication();send(r,13,i,true);check(r.received==i);});
  test("hook_inactive_until_commit",()->{onInstall=()->unchecked(()->{var r=new Targets.Rotate();var i=new Targets.Indication();send(r,13,i,true);check(r.received==i);});start();var r=new Targets.Rotate();send(r,13,new Targets.Indication(),true);check(r.received==null);});
  test("OS4_route_never_legacy_fingerprint",()->{HideLockScreenHint.INSTANCE.init();check(hooks.size()==1&&hooks.keySet().iterator().next().getName().equals("updateIndication"));});
- test("OS3_route_does_not_resolve_OS4",()->{com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.version=3;BaseHook.classes.clear();HideLockScreenHint.INSTANCE.init();check(BaseHook.lookups.isEmpty()&&hooks.size()==1&&hooks.keySet().iterator().next().getName().equals("fingerprintFeedback"));});
+ test("OS3_route_does_not_resolve_OS4",()->{com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper.System.version=3;BaseHook.classes.clear();HideLockScreenHint.INSTANCE.init();check(BaseHook.lookups.isEmpty()&&hooks.size()==1&&hooks.keySet().iterator().next().getName().equals("fingerprintFeedback"));});
  System.out.println("RESULT passes="+passes+" failures="+failures);if(failures!=0)System.exit(1);
  }
 }

@@ -1,10 +1,10 @@
 import android.app.admin.DevicePolicyManager;
 import android.content.Context;
 import com.android.settings.KeyguardTimeoutDropDownPreference;
-import com.sevtinge.hyperceiler.libhook.base.BaseHook;
-import com.sevtinge.hyperceiler.libhook.rules.systemsettings.UnlockNeverSleepScreenOS4;
-import com.sevtinge.hyperceiler.libhook.rules.systemsettings.UnlockNeverSleepScreen;
-import com.sevtinge.hyperceiler.common.log.XposedLog;
+import com.sevtinge.hypercraft.libhook.base.BaseHook;
+import com.sevtinge.hypercraft.libhook.rules.systemsettings.UnlockNeverSleepScreenOS4;
+import com.sevtinge.hypercraft.libhook.rules.systemsettings.UnlockNeverSleepScreen;
+import com.sevtinge.hypercraft.common.log.XposedLog;
 import io.github.lingqiqi5211.ezhooktool.xposed.common.HookParam;
 import java.util.*;
 public class TestMain {

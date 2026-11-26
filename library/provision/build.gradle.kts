@@ -4,7 +4,7 @@ plugins {
 }
 android {
 
-    namespace = "com.sevtinge.hyperceiler.provision"
+    namespace = "com.sevtinge.hypercraft.provision"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

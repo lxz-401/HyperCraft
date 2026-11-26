@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
-import com.sevtinge.hyperceiler.libhook.rules.home.recent.HomeRecentsHapticPattern;
-import com.sevtinge.hyperceiler.libhook.rules.home.recent.HomeRecentsHapticProtocol;
+import com.sevtinge.hypercraft.libhook.rules.home.recent.HomeRecentsHapticPattern;
+import com.sevtinge.hypercraft.libhook.rules.home.recent.HomeRecentsHapticProtocol;
 import java.util.Arrays;
 public final class PatternTest {
     static void check(boolean value){if(!value)throw new AssertionError();}

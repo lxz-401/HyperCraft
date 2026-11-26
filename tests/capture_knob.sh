@@ -3,9 +3,9 @@
 # the assistant capsule. If the screenshot diff cannot see THAT move, the A/B method is the problem,
 # not the indicator knob. $1 = knob key stem, $2 = value, $3 = output png.
 ADB="${ADB:-adb}"
-URI="content://com.sevtinge.hyperceiler.provider.sharedprefs"
+URI="content://com.sevtinge.hypercraft.provider.sharedprefs"
 KEY="$1"; VALUE="$2"; OUT="$3"
-"$ADB" shell setprop debug.hyperceiler.prefs_write 1
+"$ADB" shell setprop debug.hypercraft.prefs_write 1
 "$ADB" shell content call --uri "$URI" --method hc_debug_put --arg boolean:${KEY}_enable:true
 "$ADB" shell content call --uri "$URI" --method hc_debug_put --arg integer:$KEY:"$VALUE"
 "$ADB" logcat -c
@@ -14,4 +14,4 @@ sleep 3
 "$ADB" shell input keyevent KEYCODE_HOME
 sleep 12
 "$ADB" exec-out screencap -p > "$OUT"
-"$ADB" logcat -d -s HyperCeiler.HomeLayout:I | grep -E "hook hits" | tail -1
+"$ADB" logcat -d -s HyperCraft.HomeLayout:I | grep -E "hook hits" | tail -1

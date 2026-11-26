@@ -2,10 +2,10 @@ import java.lang.reflect.*;import java.util.*;
 import android.content.res.Resources;
 import io.github.libxposed.api.XposedInterface;
 import io.github.lingqiqi5211.ezhooktool.xposed.EzXposed;
-import com.sevtinge.hyperceiler.libhook.base.BaseHook;
-import com.sevtinge.hyperceiler.libhook.app.SystemUI.SystemUIB;
-import com.sevtinge.hyperceiler.libhook.rules.systemui.statusbar.icon.all.DataSaverIconOS4;
-import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
+import com.sevtinge.hypercraft.libhook.base.BaseHook;
+import com.sevtinge.hypercraft.libhook.app.SystemUI.SystemUIB;
+import com.sevtinge.hypercraft.libhook.rules.systemui.statusbar.icon.all.DataSaverIconOS4;
+import com.sevtinge.hypercraft.common.utils.PrefsBridge;
 public class TestMain {
  static final String P="com.android.systemui.statusbar.";
  static final Map<Method,XposedInterface.Hooker> hooks=new LinkedHashMap<>();
@@ -40,7 +40,7 @@ public class TestMain {
  static void check(boolean b){if(!b)throw new AssertionError();}
  interface Test {void run()throws Throwable;}
  static void test(String name,Test f){reset();try{f.run();passes++;System.out.println("PASS "+name);}catch(Throwable t){failures++;System.out.println("FAIL "+name+": "+t);t.printStackTrace(System.out);}}
- static void reset(){hooks.clear();BaseHook.classes.clear();BaseHook.errors.clear();BaseHook.installs=0;BaseHook.failAt=0;BaseHook.throwInstall=false;PrefsBridge.mode=0;Resources.noSlot=false;Resources.slot="data_saver";Resources.SYSTEM.lookups=0;com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.version=4f;originalCalls=0;
+ static void reset(){hooks.clear();BaseHook.classes.clear();BaseHook.errors.clear();BaseHook.installs=0;BaseHook.failAt=0;BaseHook.throwInstall=false;PrefsBridge.mode=0;Resources.noSlot=false;Resources.slot="data_saver";Resources.SYSTEM.lookups=0;com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper.System.version=4f;originalCalls=0;
   BaseHook.classes.put(P+"phone.PhoneStatusBarPolicy",Policy.class);BaseHook.classes.put(P+"phone.ui.StatusBarIconControllerImpl",Controller.class);BaseHook.classes.put(P+"phone.ui.StatusBarIconController",ControllerInterface.class);BaseHook.classes.put(P+"phone.ui.IconManager",Manager.class);BaseHook.classes.put(P+"phone.StatusBarLocation",Location.class);BaseHook.classes.put(P+"phone.ui.StatusBarIconList",IconList.class);BaseHook.classes.put(P+"phone.StatusBarIconHolder",Holder.class);BaseHook.classes.put("com.android.internal.statusbar.StatusBarIcon",Icon.class);
  }
  static void start(int mode){PrefsBridge.mode=mode;new SystemUIB().onPackageLoaded();}
@@ -59,7 +59,7 @@ public class TestMain {
  static void setup(){XposedInterface api=(XposedInterface)proxy(XposedInterface.class,(p,m,a)->{if(m.getName().equals("hook")){Method target=(Method)a[0];return proxy(XposedInterface.HookBuilder.class,(builder,b,ba)->{if(b.getName().equals("intercept")){check(!hooks.containsKey(target));hooks.put(target,(XposedInterface.Hooker)ba[0]);return proxy(XposedInterface.HookHandle.class,(handle,hm,ha)->{if(hm.getName().equals("unhook"))hooks.remove(target);if(hm.getName().equals("getExecutable"))return target;return null;});}return builder;});}if(m.getReturnType()==int.class)return 102;if(m.getReturnType()==long.class)return 0L;if(m.getReturnType()==boolean.class)return false;if(m.getReturnType()==String.class)return "host-api102";return null;});EzXposed.setBase$hook_xposed_102(api);EzXposed.setHotReloadEnabled(false);}
  public static void main(String[]args){setup();
   for(int mode:new int[]{0,3,-1,10,13,99})test("default_or_invalid_no_hook_"+mode,()->{start(mode);check(hooks.isEmpty()&&BaseHook.installs==0&&Resources.SYSTEM.lookups==0);});
-  for(int mode:new int[]{1,2,11,12})test("os3_route_unchanged_"+mode,()->{com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.version=3f;start(mode);check(hooks.isEmpty()&&BaseHook.installs==0);});
+  for(int mode:new int[]{1,2,11,12})test("os3_route_unchanged_"+mode,()->{com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper.System.version=3f;start(mode);check(hooks.isEmpty()&&BaseHook.installs==0);});
   for(int mode:new int[]{1,2,11,12}){
    test("three_exact_hooks_"+mode,()->{start(mode);check(hooks.size()==3);check(hooks.keySet().stream().map(Method::getName).collect(java.util.stream.Collectors.toSet()).equals(Set.of("setBlockList","addIconGroup","onDataSaverChanged")));});
    for(boolean actual:new boolean[]{false,true})test("initial_callback_and_missing_holder_"+mode+"_"+actual,()->{start(mode);Controller c=new Controller();Policy policy=new SubPolicy(c);boolean want=mode==1||(mode!=2&&actual);change(policy,actual);check(policy.callbacks==1&&policy.lastArg==want&&c.visibilityCalls==1);check(c.creations==(want?1:0));if(want)check(c.mStatusBarIconList.holder.icon.visible&&c.drawable==0x7f081a1e&&c.description.equals("流量节省模式"));});

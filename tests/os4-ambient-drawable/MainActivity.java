@@ -1,4 +1,4 @@
-package local.hyperceiler.ambientprobe;
+package local.hypercraft.ambientprobe;
 
 import android.app.Activity;
 import android.graphics.*;
@@ -10,7 +10,7 @@ import org.json.*;
 import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
-import com.sevtinge.hyperceiler.libhook.utils.hookapi.systemui.controlcenter.drawable.AmbientLightDrawable;
+import com.sevtinge.hypercraft.libhook.utils.hookapi.systemui.controlcenter.drawable.AmbientLightDrawable;
 
 public final class MainActivity extends Activity {
  private final Handler main = new Handler(Looper.getMainLooper());

@@ -1,8 +1,8 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
-package com.sevtinge.hyperceiler.log;
-import com.sevtinge.hyperceiler.log.db.*;
-import com.sevtinge.hyperceiler.common.utils.ShellUtils;
-import com.sevtinge.hyperceiler.common.log.ModuleLog;
+package com.sevtinge.hypercraft.log;
+import com.sevtinge.hypercraft.log.db.*;
+import com.sevtinge.hypercraft.common.utils.ShellUtils;
+import com.sevtinge.hypercraft.common.log.ModuleLog;
 import java.util.*;
 public class LogSyncDiagnosticsTest {
     static class Dao implements LogDao {

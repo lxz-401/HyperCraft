@@ -60,7 +60,7 @@ icons on the initial workspace/Dock without first launching each application;
 check minimum/70/maximum Dock margin and switch reset; open the drawer with search
 hiding on/off and verify scrolling, keyboard focus, gestures and accessibility.
 Compare first-render/config endpoint diagnostics and drawer hits/applied counters
-in HyperCeiler's built-in log. Hook installation alone is not visual proof.
+in HyperCraft's built-in log. Hook installation alone is not visual proof.
 
 ## Device verification (2026-10-24)
 
@@ -80,7 +80,7 @@ non-incrementally and its installed APK SHA-256 matched
   without changing the launcher PID. Tapping the previous search location left
   `mInputShown=false`. Turning the switch off restored search and tapping it gave
   `mInputShown=true`.
-- The drawer-page switch was present and enabled. HyperCeiler's built-in database
+- The drawer-page switch was present and enabled. HyperCraft's built-in database
   contained the first-render and drawer-applied records after normal log import.
 - All five temporary preference changes were restored exactly (the originally
   absent drawer key was removed), debug preference writing was disabled again,

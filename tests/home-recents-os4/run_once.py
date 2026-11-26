@@ -5,7 +5,7 @@ import argparse,hashlib,json,os,subprocess
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 ROOT=test_paths.TEST_DATA_ROOT;HERE=Path(__file__).resolve().parent
 EMU=test_paths.BUILD_CACHE / 'arm64-emulation/root'

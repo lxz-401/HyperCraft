@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -15,7 +15,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   --><resources>
     <string name="version_update">Có phiên bản mới</string>
     <!--Introduction to Xposed Modules-->
@@ -24,38 +24,38 @@
     <string name="new_cta_agree_desc">Trong quá trình sử dụng, để cung cấp cho bạn nhiều tính năng hơn, chúng tôi có thể xin quyền Root/Su. Bạn có thể truy cập Quản lý quyền bất kỳ lúc nào để điều chỉnh trạng thái ủy quyền của tất cả các quyền và vui lòng truy cập trình quản lý Root/Su của bạn để cấp quyền Root/Su.</string>
     <string name="new_cta_app_main_purpose">sửa đổi ứng dụng hệ thống</string>
     <string name="new_cta_app_all_purpose_welcome">Thỏa thuận người dùng &amp; Chính sách quyền riêng tư</string>
-    <string name="new_cta_app_all_purpose_title">Chào mừng đến với HyperCeiler! Ứng dụng này dựa vào framework Xposed để chạy. Bạn có thể sử dụng ứng dụng này để toàn quyền điều khiển và sửa đổi các ứng dụng được hỗ trợ khác nhằm nâng cao hệ thống. Trong quá trình sử dụng, để cung cấp cho bạn nhiều chức năng hơn, chúng tôi có thể yêu cầu quyền Root từ bạn. Bạn có thể quản lý nó bất cứ lúc nào bằng cách vào trình quản lý Root của bạn.\nBằng cách tiếp tục sử dụng HyperCeiler, bạn đồng ý với <annotation key="protocol">Thỏa thuận người dùng</annotation> và <annotation key="privacy">Chính sách bảo mật</annotation> của chúng tôi.</string>
+    <string name="new_cta_app_all_purpose_title">Chào mừng đến với HyperCraft! Ứng dụng này dựa vào framework Xposed để chạy. Bạn có thể sử dụng ứng dụng này để toàn quyền điều khiển và sửa đổi các ứng dụng được hỗ trợ khác nhằm nâng cao hệ thống. Trong quá trình sử dụng, để cung cấp cho bạn nhiều chức năng hơn, chúng tôi có thể yêu cầu quyền Root từ bạn. Bạn có thể quản lý nó bất cứ lúc nào bằng cách vào trình quản lý Root của bạn.\nBằng cách tiếp tục sử dụng HyperCraft, bạn đồng ý với <annotation key="protocol">Thỏa thuận người dùng</annotation> và <annotation key="privacy">Chính sách bảo mật</annotation> của chúng tôi.</string>
     <string name="new_cta_app_all_purpose_agree">Đồng ý &amp; Tiếp tục</string>
     <string name="new_cta_app_all_purpose_reject">Từ chối &amp; Thoát</string>
-    <!--HyperCeiler Settings/About Page-->
+    <!--HyperCraft Settings/About Page-->
     <string name="language">Tiếng Việt</string>
-    <string name="translator">HyperCeiler chính thức</string>
+    <string name="translator">HyperCraft chính thức</string>
     <string name="translator_url">https://github.com/ReChronoRain</string>
     <string name="home">Trang chủ</string>
     <string name="help">Trợ giúp</string>
     <string name="settings">Cài đặt</string>
     <string name="about">Giới thiệu</string>
     <string name="about_use">Trích dẫn</string>
-    <string name="about_use_desc">HyperCeiler sử dụng một số hoặc tất cả các dự án mã nguồn mở sau, cảm ơn các nhà phát triển của các dự án này đã hỗ trợ (Thứ tự ngẫu nhiên)</string>
+    <string name="about_use_desc">HyperCraft sử dụng một số hoặc tất cả các dự án mã nguồn mở sau, cảm ơn các nhà phát triển của các dự án này đã hỗ trợ (Thứ tự ngẫu nhiên)</string>
     <string name="about_contributer">Người đóng góp</string>
-    <string name="about_contributer_desc">Cảm ơn những người đóng góp sau đây vì sự giúp đỡ của họ trong quá trình phát triển HyperCeiler (Thứ tự ngẫu nhiên)</string>
+    <string name="about_contributer_desc">Cảm ơn những người đóng góp sau đây vì sự giúp đỡ của họ trong quá trình phát triển HyperCraft (Thứ tự ngẫu nhiên)</string>
     <string name="about_donation">Tài trợ</string>
     <string name="about_donation_desc">Bạn có thể hỗ trợ chúng tôi bằng cách quyên góp tại đây</string>
     <string name="about_device_info_device">Thiết bị</string>
     <string name="about_device_info_android">Phiên bản Android</string>
     <string name="about_device_info_os">Phiên bản hệ thống</string>
-    <string name="hyperceiler_notice">Kéo thanh trạng thái xuống để hiển thị đồng thời các công tắc phím tắt và thông báo hệ thống</string>
+    <string name="hypercraft_notice">Kéo thanh trạng thái xuống để hiển thị đồng thời các công tắc phím tắt và thông báo hệ thống</string>
     <string name="delete_all_dexkit_cache_desc">Bạn có chắc chắn muốn xóa tất cả bộ đệm DexKit không?</string>
     <string name="delete_all_dexkit_cache_success">Đã xóa thành công tất cả bộ đệm DexKit</string>
     <string name="set_homepage_entrance">Thiết lập lối vào trang chủ</string>
     <string name="set_homepage_entrance_about">Lưu ý:\nCài đặt này chỉ là cài đặt hiển thị lối vào trang chủ và các chức năng đã bật sẽ không bị tắt!\nViệc đóng cổng sẽ có hiệu lực trong thời gian thực và ứng dụng cần được khởi động lại để xuất hiện lại.</string>
     <string name="help_cant_see_apps_guide">Không thể tìm thấy các tính năng của ứng dụng?</string>
     <string name="help_cant_see_apps_title">Không thể tìm thấy các tính năng của ứng dụng trên trang chủ?</string>
-    <string name="help_cant_see_apps_desc">Để duy trì tính đơn giản và khả năng sử dụng của trang chủ, chúng tôi đã ẩn quyền truy cập vào các loại tính năng ứng dụng sau:\n\n - Các tính năng hiện đang bị tắt hoặc ẩn\n - Các tính năng không tìm thấy trên thiết bị của bạn\n - Các tính năng không tương thích với phiên bản hiện tại của hệ thống hoặc ứng dụng\n\nVui lòng khắc phục sự cố dựa trên thông tin trên, khởi động lại HyperCeiler và thử lại. Nếu bạn vẫn không tìm thấy các tính năng ứng dụng, thì có thể đó là lỗi. Vui lòng cung cấp phản hồi kịp thời và hiệu quả cho chúng tôi.\n\nCác tính năng ứng dụng hiện đang bị ẩn:</string>
+    <string name="help_cant_see_apps_desc">Để duy trì tính đơn giản và khả năng sử dụng của trang chủ, chúng tôi đã ẩn quyền truy cập vào các loại tính năng ứng dụng sau:\n\n - Các tính năng hiện đang bị tắt hoặc ẩn\n - Các tính năng không tìm thấy trên thiết bị của bạn\n - Các tính năng không tương thích với phiên bản hiện tại của hệ thống hoặc ứng dụng\n\nVui lòng khắc phục sự cố dựa trên thông tin trên, khởi động lại HyperCraft và thử lại. Nếu bạn vẫn không tìm thấy các tính năng ứng dụng, thì có thể đó là lỗi. Vui lòng cung cấp phản hồi kịp thời và hiệu quả cho chúng tôi.\n\nCác tính năng ứng dụng hiện đang bị ẩn:</string>
     <string name="help_cant_see_apps_uninstall">Ứng dụng đã gỡ cài đặt:\n</string>
     <string name="help_cant_see_apps_disable">Ứng dụng bị tắt hoặc bị ẩn:\n</string>
     <string name="help_cant_see_apps_scope">Không được chọn là phạm vi:\n</string>
-    <string name="help_cant_see_apps_desc_no_hidden">Để duy trì tính đơn giản và khả năng sử dụng của trang chủ, chúng tôi đã ẩn quyền truy cập vào các loại tính năng ứng dụng sau:\n\n - Các tính năng hiện đang bị tắt hoặc ẩn\n - Các tính năng không tìm thấy trên thiết bị của bạn\n - Các tính năng không tương thích với phiên bản hiện tại của hệ thống hoặc ứng dụng\n\nVui lòng khắc phục sự cố dựa trên thông tin trên, khởi động lại HyperCeiler và thử lại. Nếu bạn vẫn không tìm thấy các tính năng ứng dụng, thì có thể đó là lỗi. Vui lòng cung cấp phản hồi kịp thời và hiệu quả cho chúng tôi.\n\nHiện tại không có tính năng ẩn nào!</string>
+    <string name="help_cant_see_apps_desc_no_hidden">Để duy trì tính đơn giản và khả năng sử dụng của trang chủ, chúng tôi đã ẩn quyền truy cập vào các loại tính năng ứng dụng sau:\n\n - Các tính năng hiện đang bị tắt hoặc ẩn\n - Các tính năng không tìm thấy trên thiết bị của bạn\n - Các tính năng không tương thích với phiên bản hiện tại của hệ thống hoặc ứng dụng\n\nVui lòng khắc phục sự cố dựa trên thông tin trên, khởi động lại HyperCraft và thử lại. Nếu bạn vẫn không tìm thấy các tính năng ứng dụng, thì có thể đó là lỗi. Vui lòng cung cấp phản hồi kịp thời và hiệu quả cho chúng tôi.\n\nHiện tại không có tính năng ẩn nào!</string>
     <string name="help_cant_see_apps_switch">Ẩn trợ giúp này trong trang chủ</string>
     <string name="help_cant_see_apps_switch_desc">Bạn vẫn có thể tìm thấy trang này trong mục Giới thiệu &gt; Trợ giúp. Quay lại trang chủ để áp dụng.</string>
     <string name="help_support_version_title">Danh sách phiên bản hệ thống hỗ trợ phiên bản ứng dụng hiện tại</string>
@@ -134,7 +134,7 @@
     <string name="about_github_desc">Dự án này là mã nguồn mở dựa trên giấy phép AGPL-3.0</string>
     <string name="about_offical">Website chính thức</string>
     <string name="about_crwd">Crowdin</string>
-    <string name="about_crwd_desc">Giúp chúng tôi dịch HyperCeiler sang ngôn ngữ của bạn</string>
+    <string name="about_crwd_desc">Giúp chúng tôi dịch HyperCraft sang ngôn ngữ của bạn</string>
     <string name="about_privacy">Chính sách bảo mật</string>
     <string name="about_protocol">Thoả thuận người dùng</string>
     <!--Pop-up window/miuix part-->
@@ -491,7 +491,7 @@
     <string name="community">Cộng đồng Xiaomi</string>
     <string name="community_device_modify">Giả mạo dòng máy</string>
     <string name="community_fuck_detection">Chặn phát hiện</string>
-    <string name="community_fuck_detection_desc">Chặn phát hiện HyperCeiler và tải nó lên trong khi cung cấp phản hồi. Vui lòng đảm bảo rằng sự cố không phải do bạn gây ra mà là sự cố thực sự của hệ thống trước khi cung cấp phản hồi để tránh rắc rối không cần thiết.</string>
+    <string name="community_fuck_detection_desc">Chặn phát hiện HyperCraft và tải nó lên trong khi cung cấp phản hồi. Vui lòng đảm bảo rằng sự cố không phải do bạn gây ra mà là sự cố thực sự của hệ thống trước khi cung cấp phản hồi để tránh rắc rối không cần thiết.</string>
     <!--File Manager-->
     <string name="fileexplorer">Tập tin</string>
     <string name="file_explorer_can_selectable">Có thể lựa chọn Trình quản lý tập tin</string>
@@ -1613,9 +1613,9 @@
     <string name="open_source">Dự án mã nguồn mở</string>
     <string name="close_source">Dự án mã nguồn đóng</string>
     <string name="debug_info">Không thể lấy thông tin gỡ lỗi.</string>
-    <string name="clear_app_properties_desc">Bạn có chắc chắn muốn đặt lại Prop cho các dịch vụ liên quan đến HyperCeiler không?</string>
-    <string name="clear_app_properties_success">Đã đặt lại Prop cho các dịch vụ liên quan đến HyperCeiler</string>
-    <string name="development_clear_app_properties">Đặt lại Prop cho các dịch vụ liên quan đến HyperCeiler</string>
+    <string name="clear_app_properties_desc">Bạn có chắc chắn muốn đặt lại Prop cho các dịch vụ liên quan đến HyperCraft không?</string>
+    <string name="clear_app_properties_success">Đã đặt lại Prop cho các dịch vụ liên quan đến HyperCraft</string>
+    <string name="development_clear_app_properties">Đặt lại Prop cho các dịch vụ liên quan đến HyperCraft</string>
     <string name="system_ui_lock_screen_keep_notification_title">Giữ thông báo sau khi mở khóa</string>
     <string name="system_ui_lock_screen_keep_notification_desc">Sau khi mở khóa, thông báo trên màn hình khóa sẽ không tự động xóa cho đến khi được xóa thủ công.</string>
     <string name="system_ui_status_bar_hide_icon_desc">Cần chọn thêm phạm vi “Chụp màn hình” để có hiệu lực</string>

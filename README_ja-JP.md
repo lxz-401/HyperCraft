@@ -2,7 +2,7 @@
 
 <img src="\imgs\icon.webp" width="160" height="160" style="display: block; margin: 0 auto;" alt="icon" />
 
-# HyperCeiler
+# HyperCraft
 
 ### Make HyperOS Great Again!
 
@@ -16,19 +16,19 @@ Android 15-16 の HyperOS
 
 ## 使用前の説明
 
-[LSPosed](https://github.com/LSPosed/LSPosed/releases) で HyperCeiler を有効にしてから、HyperCeiler のアプリで該当する機能を有効にし、スコープを再起動してください（root 権限が必要です）。
+[LSPosed](https://github.com/LSPosed/LSPosed/releases) で HyperCraft を有効にしてから、HyperCraft のアプリで該当する機能を有効にし、スコープを再起動してください（root 権限が必要です）。
 
 このモジュールは、`大幅に改変されたサードパーティの Xiaomi HyperOS ROM`、`大幅に改変されたシステムソフトウェア`、および一部の `グローバル版の Xiaomi HyperOS ROM` には<b>対応していません</b>。
 
-現在、HyperCeiler は Android 16 をベースにした Xiaomi HyperOS 3.0 のモバイル端末に対応しています。対応範囲はまだ十分とはいえず、継続的なテストと改善が必要です。
+現在、HyperCraft は Android 16 をベースにした Xiaomi HyperOS 3.0 のモバイル端末に対応しています。対応範囲はまだ十分とはいえず、継続的なテストと改善が必要です。
 
 フィードバックを送る前に、同じフィードバックがすでにないかを確認し、開発者に手間をかけさせないようにしてください。同じフィードバックを読むために同じ労力を使うのは、時間の無駄です。
 
-HyperCeiler は、Android 11-13 の MIUI ROM と、Android 13/14 の HyperOS 1.0/2.0 の ROM のメンテナンスを終了しました。
+HyperCraft は、Android 11-13 の MIUI ROM と、Android 13/14 の HyperOS 1.0/2.0 の ROM のメンテナンスを終了しました。
 
 > Android 11-12 の MIUI ROM には、[こちらのバージョン](https://github.com/ReChronoRain/Cemiuiler/releases/tag/1.3.130)をお使いください。
 >
-> Android 13 の MIUI ROM と HyperOS 1.0 の ROM には、[こちらのバージョン](https://github.com/Xposed-Modules-Repo/com.sevtinge.hyperceiler/releases/download/3866-2.5.156_20250118/HyperCeiler_2.5.156_20250118_3866_release_miui.apk)をお使いください。
+> Android 13 の MIUI ROM と HyperOS 1.0 の ROM には、[こちらのバージョン](https://github.com/Xposed-Modules-Repo/com.sevtinge.hypercraft/releases/download/3866-2.5.156_20250118/HyperCraft_2.5.156_20250118_3866_release_miui.apk)をお使いください。
 >
 > Android 14 の HyperOS 1.0/2.0 はアーカイブされており、Android 14 への対応はバージョン 2.6.162 から削除されます。
 
@@ -125,17 +125,17 @@ Xiaomi HyperOS 3 または 4 が、このプロジェクトの終着点になり
 
 ## 翻訳への貢献
 
-プロジェクトの翻訳の同期には Hosted Weblate を使っています。HyperCeiler プロジェクトの翻訳には、[こちら](https://hosted.weblate.org/engage/hyperceiler/)から貢献できます
+プロジェクトの翻訳の同期には Hosted Weblate を使っています。HyperCraft プロジェクトの翻訳には、[こちら](https://hosted.weblate.org/engage/hypercraft/)から貢献できます
 
-<a href="https://hosted.weblate.org/engage/hyperceiler/">
-<img src="https://hosted.weblate.org/widget/hyperceiler/multi-auto.svg" alt="Translation status" />
+<a href="https://hosted.weblate.org/engage/hypercraft/">
+<img src="https://hosted.weblate.org/widget/hypercraft/multi-auto.svg" alt="Translation status" />
 </a>
 
 > 注：新しい言語の翻訳の進捗が 85% 以上になると、マージの手続きに入ります。追加された言語の翻訳の進捗が原文の 30% 以下の場合は、翻訳の進捗が 85% 以上になるまで一時的に削除されます。
 
 ## 謝辞
 
-> <b>HyperCeiler</b> は、以下のプロジェクトの一部またはすべてを使用しています。これらのプロジェクトの開発者の皆さまのご支援に感謝します（順不同）。
+> <b>HyperCraft</b> は、以下のプロジェクトの一部またはすべてを使用しています。これらのプロジェクトの開発者の皆さまのご支援に感謝します（順不同）。
 
 - [「Accompanist」 by Android Open Source Project, Google Inc.](https://google.github.io/accompanist)
 - [「Android」 by Android Open Source Project, Google Inc.](https://source.android.google.cn/license)

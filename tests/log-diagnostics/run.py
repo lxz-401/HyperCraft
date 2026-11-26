@@ -7,20 +7,20 @@ with tempfile.TemporaryDirectory(prefix='hc-log-diagnostics-') as temp:
     temp=Path(temp)
     stubs={
         'android/os/Build.java':'''package android.os; public class Build {public static final String MANUFACTURER="fixture",MODEL="device",DISPLAY="build"; public static class VERSION {public static final int SDK_INT=37;}}''',
-        'android/content/Context.java':'''package android.content; public class Context {public String getPackageName(){return "com.sevtinge.hyperceiler";} public android.content.pm.PackageManager getPackageManager(){return new android.content.pm.PackageManager();}}''',
+        'android/content/Context.java':'''package android.content; public class Context {public String getPackageName(){return "com.sevtinge.hypercraft";} public android.content.pm.PackageManager getPackageManager(){return new android.content.pm.PackageManager();}}''',
         'android/content/pm/PackageManager.java':'''package android.content.pm; public class PackageManager {public PackageInfo getPackageInfo(String name,int flags){return new PackageInfo();}}''',
         'android/content/pm/PackageInfo.java':'''package android.content.pm; public class PackageInfo {public String versionName="fixture";public long lastUpdateTime=123;public long getLongVersionCode(){return 4779;}}''',
-        'com/sevtinge/hyperceiler/common/utils/ShellUtils.java':'''package com.sevtinge.hyperceiler.common.utils;public class ShellUtils {public static int result=1;public static boolean fail; public static int checkRootPermission(){if(fail)throw new IllegalStateException("su unavailable");return result;}}''',
-        'com/sevtinge/hyperceiler/common/log/ModuleLog.java':'''package com.sevtinge.hyperceiler.common.log; public class ModuleLog {public static int failures;public static void e(String tag,String message,Throwable error){failures++;}}''',
-        'com/sevtinge/hyperceiler/log/db/LogDao.java':'''package com.sevtinge.hyperceiler.log.db;public interface LogDao {LogEntry latestSyncDiagnostic(String tag);void insert(LogEntry entry);}''',
-        'com/sevtinge/hyperceiler/log/db/LogEntry.java':'''package com.sevtinge.hyperceiler.log.db;public class LogEntry {public final String module,level,tag,message,source;public LogEntry(String module,String level,String tag,String message,long time,String source,String pid){this.module=module;this.level=level;this.tag=tag;this.message=message;this.source=source;}public String getLevel(){return level;}public String getMessage(){return message;}}'''
+        'com/sevtinge/hypercraft/common/utils/ShellUtils.java':'''package com.sevtinge.hypercraft.common.utils;public class ShellUtils {public static int result=1;public static boolean fail; public static int checkRootPermission(){if(fail)throw new IllegalStateException("su unavailable");return result;}}''',
+        'com/sevtinge/hypercraft/common/log/ModuleLog.java':'''package com.sevtinge.hypercraft.common.log; public class ModuleLog {public static int failures;public static void e(String tag,String message,Throwable error){failures++;}}''',
+        'com/sevtinge/hypercraft/log/db/LogDao.java':'''package com.sevtinge.hypercraft.log.db;public interface LogDao {LogEntry latestSyncDiagnostic(String tag);void insert(LogEntry entry);}''',
+        'com/sevtinge/hypercraft/log/db/LogEntry.java':'''package com.sevtinge.hypercraft.log.db;public class LogEntry {public final String module,level,tag,message,source;public LogEntry(String module,String level,String tag,String message,long time,String source,String pid){this.module=module;this.level=level;this.tag=tag;this.message=message;this.source=source;}public String getLevel(){return level;}public String getMessage(){return message;}}'''
     }
     sources=[]
     for name,text in stubs.items():
         p=temp/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(text,encoding='utf-8');sources.append(p)
-    sources += [root/'app/src/main/java/com/sevtinge/hyperceiler/log/LogSyncDiagnostics.java',Path(__file__).with_name('LogSyncDiagnosticsTest.java')]
+    sources += [root/'app/src/main/java/com/sevtinge/hypercraft/log/LogSyncDiagnostics.java',Path(__file__).with_name('LogSyncDiagnosticsTest.java')]
     subprocess.run(['javac','-encoding','UTF-8','-d',str(temp/'classes')]+[str(p) for p in sources],check=True)
-    subprocess.run(['java','-ea','-cp',str(temp/'classes'),'com.sevtinge.hyperceiler.log.LogSyncDiagnosticsTest'],check=True)
+    subprocess.run(['java','-ea','-cp',str(temp/'classes'),'com.sevtinge.hypercraft.log.LogSyncDiagnosticsTest'],check=True)
     hooks=(root/'app/src/main/cpp/targets/home/home_layout_hooks.cpp').read_text(encoding='utf-8')
     begin=re.search(r'std::array<std::atomic_uint32_t,\d+> g_scale_bind_failure',hooks).start()
     end=hooks.index('bool bind_icon_render()',begin)
@@ -32,7 +32,7 @@ with tempfile.TemporaryDirectory(prefix='hc-log-diagnostics-') as temp:
         assert 'scale_bind_failure' in body,name
     subprocess.run(['c++','-std=c++20','-Wall','-Wextra','-Werror','-I'+str(root/'app/src/main/cpp'),'-I'+str(temp),str(Path(__file__).with_name('native.cpp')),'-o',str(temp/'native')],check=True)
     subprocess.run([str(temp/'native')],check=True)
-    java=(root/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock/HomeLayoutNativeEndpointOS4.java').read_text(encoding='utf-8')
+    java=(root/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock/HomeLayoutNativeEndpointOS4.java').read_text(encoding='utf-8')
     header=(root/'app/src/main/cpp/targets/home/home_endpoint_diagnostics.h').read_text(encoding='utf-8')
     for j,c in [('ENDPOINT_DIAGNOSTICS_MAGIC','kEndpointDiagnosticsMagic'),('ENDPOINT_DIAGNOSTICS_SCHEMA','kEndpointDiagnosticsSchema'),('ENDPOINT_REVISION','kEndpointRevision')]:
         a=int(re.search(j+r'\s*=\s*(0x[0-9a-fA-F]+|\d+)',java)[1],0)
@@ -49,7 +49,7 @@ print('endpoint writer/reader revision and capability contract: PASS')
 # Copy/chmod failures must be explicit and must retain the previous target contents.
 with tempfile.TemporaryDirectory(prefix='hc-lspd-copy-') as temp:
     temp=Path(temp)
-    loader=(root/'app/src/main/java/com/sevtinge/hyperceiler/log/XposedLogLoader.java').read_text(encoding='utf-8')
+    loader=(root/'app/src/main/java/com/sevtinge/hypercraft/log/XposedLogLoader.java').read_text(encoding='utf-8')
     constants='\n'.join(re.findall(r'    private static final int LSPD_[A-Z_]+ = \d+;',loader))
     script_method=re.search(r'    static String buildLspdCopyScript\(.*?\n    \}',loader,re.S)[0]
     quote_method=re.search(r'    private static String shellQuote\(.*?\n    \}',loader,re.S)[0]
@@ -101,7 +101,7 @@ with tempfile.TemporaryDirectory(prefix='hc-lspd-copy-') as temp:
     assert 'if (copyLspdLogs()) persistFilteredLogsToDatabase();' in loader
     for access in ('DIRECT','PROC_ROOT','NSENTER_MOUNT','NSENTER_TARGET'):
         assert access in loader,access
-    health=(root/'library/common/src/main/java/com/sevtinge/hyperceiler/common/log/LoggerHealthChecker.kt').read_text(encoding='utf-8')
+    health=(root/'library/common/src/main/java/com/sevtinge/hypercraft/common/log/LoggerHealthChecker.kt').read_text(encoding='utf-8')
     assert 'PAGE_MARKER_REGEX.matches(firstNonBlankLine)' in health
     assert 'LSPD_ENTRY_REGEX.containsMatchIn(firstNonBlankLine)' in health
 print('LSPosed capture compatibility: PASS (direct/proc-root/nsenter strategies; empty/success/copy denied/chmod denied/source unavailable; failed staging retains target)')

@@ -1,7 +1,7 @@
 # Experimental HyperOS 4 adaptation: popsicle
 
 Target: Xiaomi 17 Pro Max (`popsicle`), `OS4.0.0.44.XPBCNXM`, Android 17 / API 37.
-Base: HyperCeiler r4669, `5e4686069dd7ab1f3697e256d5fc7d68fb73e317`.
+Base: HyperCraft r4669, `5e4686069dd7ab1f3697e256d5fc7d68fb73e317`.
 
 This draft proposes target-specific compatibility changes for upstream review.
 The scope below counts modified feature groups: related switches and parameters,

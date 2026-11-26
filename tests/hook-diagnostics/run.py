@@ -3,8 +3,8 @@ from pathlib import Path
 import subprocess,tempfile
 R=Path(__file__).resolve().parents[2]
 with tempfile.TemporaryDirectory(prefix='hc-hook-diagnostics-')as temp:
- sources=list((R/'library/common/src/main/java/com/sevtinge/hyperceiler/common/diagnostics').glob('*.java'))
- sources += [R/'app/src/main/java/com/sevtinge/hyperceiler/diagnostics/ElfBuildId.java',Path(__file__).with_name('RulesTest.java'),Path(__file__).with_name('SummaryTest.java'),Path(__file__).with_name('ExportTest.java')]
+ sources=list((R/'library/common/src/main/java/com/sevtinge/hypercraft/common/diagnostics').glob('*.java'))
+ sources += [R/'app/src/main/java/com/sevtinge/hypercraft/diagnostics/ElfBuildId.java',Path(__file__).with_name('RulesTest.java'),Path(__file__).with_name('SummaryTest.java'),Path(__file__).with_name('ExportTest.java')]
  subprocess.run(['javac','-encoding','UTF-8','-d',temp,*map(str,sources)],check=True)
  subprocess.run(['java','-ea','-cp',temp,'RulesTest'],check=True)
  subprocess.run(['java','-ea','-cp',temp,'SummaryTest'],check=True)
@@ -20,12 +20,12 @@ import sqlite3,re
 with sqlite3.connect(':memory:')as db:
  db.execute('CREATE TABLE logs (id INTEGER PRIMARY KEY,module TEXT,level TEXT,tag TEXT,message TEXT,timestamp INTEGER,source_group TEXT,process_ids TEXT)')
  db.execute("INSERT INTO logs VALUES (1,'Xposed','I','fixture','existing evidence',1,'logcat','10139:123:123')")
- schema=(R/'app/src/main/java/com/sevtinge/hyperceiler/log/db/LogDatabase.java').read_text()
+ schema=(R/'app/src/main/java/com/sevtinge/hypercraft/log/db/LogDatabase.java').read_text()
  sql=re.search(r'db.execSQL\("(CREATE TABLE IF NOT EXISTS hook_diagnostics.*?)"\)',schema)[1]
  db.execute(sql)
  assert db.execute('SELECT message FROM logs').fetchone()[0]=='existing evidence'
  for i in range(24):db.execute('INSERT OR REPLACE INTO hook_diagnostics VALUES (?,?,?)',(str(i),i,'bounded report'))
- dao=(R/'app/src/main/java/com/sevtinge/hyperceiler/diagnostics/DiagnosticDao.java').read_text()
+ dao=(R/'app/src/main/java/com/sevtinge/hypercraft/diagnostics/DiagnosticDao.java').read_text()
  trim=re.search(r'@Query\("(DELETE FROM hook_diagnostics WHERE.*?)"\)',dao)[1]
  db.execute(trim);assert db.execute('SELECT count(*) FROM hook_diagnostics').fetchone()[0]==16
  print('Room migration/retention SQL PASS: old logs preserved, bounded 16 snapshots')
@@ -47,7 +47,7 @@ assert monitor.count('hc_home_diagnostic_sample();')==1
 assert hooks.count('hc_home_diagnostic_sample();')==1  # forward declaration only; no competing publisher
 print('Production sampling PASS: one existing monitor, neutral settings covered, 5s cap, read-only counters outside runtime locks')
 
-repository=(R/'app/src/main/java/com/sevtinge/hyperceiler/diagnostics/DiagnosticsRepository.java').read_text()
+repository=(R/'app/src/main/java/com/sevtinge/hypercraft/diagnostics/DiagnosticsRepository.java').read_text()
 assert repository.count('service.getScope()')==1
 assert 'boolean complete=process.complete&&scopeSnapshot!=null;' in repository
 print('Scope snapshot integration PASS: provenance, current-state and collection completeness use one batch snapshot')

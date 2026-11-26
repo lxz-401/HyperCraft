@@ -7,13 +7,13 @@ val statusBarFollowBuildAvailable = providers.gradleProperty("statusBarFollow").
 val statusBarFollowServerBuildAvailable = providers.gradleProperty("statusBarFollowServer").map(String::toBoolean).getOrElse(false)
 
 android {
-    namespace = "com.sevtinge.hyperceiler.common"
+    namespace = "com.sevtinge.hypercraft.common"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         minSdk = 35
 
-        buildConfigField("String", "APP_MODULE_ID", "\"com.sevtinge.hyperceiler\"")
+        buildConfigField("String", "APP_MODULE_ID", "\"com.sevtinge.hypercraft\"")
         buildConfigField("boolean", "STATUS_BAR_FOLLOW_AVAILABLE", "true")
         buildConfigField("boolean", "STATUS_BAR_FOLLOW_SERVER_AVAILABLE", "true")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

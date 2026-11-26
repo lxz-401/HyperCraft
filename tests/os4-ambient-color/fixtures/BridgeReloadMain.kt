@@ -1,5 +1,5 @@
 import android.os.Looper
-import com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.media3.AmbientNativeColorOS4 as N
+import com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.media3.AmbientNativeColorOS4 as N
 import java.lang.reflect.Modifier
 import java.util.concurrent.*
 

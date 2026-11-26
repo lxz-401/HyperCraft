@@ -7,10 +7,10 @@ import argparse,hashlib,json,os,re,subprocess,tempfile
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 BASE=Path(__file__).resolve().parent;SOURCE=BASE.parents[1];ROOT=test_paths.TEST_DATA_ROOT
-PKG=SOURCE/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook'
+PKG=SOURCE/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook'
 RULE=PKG/'rules/systemui/statusbar/icon/all/DataSaverIconOS4.java';ROUTE=PKG/'app/SystemUI/SystemUIB.java'
 CACHE=test_paths.BUILD_CACHE;JAVA=test_paths.JAVA_HOME / 'bin'
 DEPS=[CACHE/'changed-hooks-compile'/x for x in ['hook-xposed-102-1.3.0.jar','api-102.0.0.jar']]+list((CACHE/'gradle-home/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.4.10').rglob('*.jar'))+[test_paths.ANDROID_HOME / 'platforms/android-37.0/android.jar']
@@ -23,7 +23,7 @@ def replace_once(s,old,new):
  return s.replace(old,new)
 MUTANTS={
  'drop_route':('route','initHook(new DataSaverIconOS4(),','initHook(new DataSaverIconOS4(), false &&'),
- 'drop_os4_gate':('route','initHook(new DataSaverIconOS4(),\n            com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.isMoreHyperOSVersion(4f));','initHook(new DataSaverIconOS4(), true);'),
+ 'drop_os4_gate':('route','initHook(new DataSaverIconOS4(),\n            com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper.System.isMoreHyperOSVersion(4f));','initHook(new DataSaverIconOS4(), true);'),
  'force_region_modes':('rule','mode == 1 || (mode != 2 && (boolean) param.getArgs()[0])','mode != 2'),
  'remove_creation':('rule','setIcon.invoke(owner, resources.getString(description), slot, drawable);','/* missing icon holder intentionally not initialized */'),
  'swap_regions':('rule','if (value == qs) return 2;','if (value == qs) return 1;'),
@@ -44,15 +44,15 @@ def run(out,mutation=None):
   w=Path(tmp)
   for p in (BASE/'fixtures').rglob('*.java'):
    dest=w/p.relative_to(BASE/'fixtures');dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(p.read_bytes())
-  write(w,'com.sevtinge.hyperceiler.libhook.rules.systemui.statusbar.icon.all.DataSaverIconOS4',rule)
-  write(w,'com.sevtinge.hyperceiler.libhook.app.SystemUI.SystemUIB',route)
+  write(w,'com.sevtinge.hypercraft.libhook.rules.systemui.statusbar.icon.all.DataSaverIconOS4',rule)
+  write(w,'com.sevtinge.hypercraft.libhook.app.SystemUI.SystemUIB',route)
   write(w,'com.hchen.database.HookBase','package com.hchen.database;public @interface HookBase{String targetPackage();int minSdk();}')
-  write(w,'com.sevtinge.hyperceiler.common.utils.PrefsBridge','''package com.sevtinge.hyperceiler.common.utils;public class PrefsBridge{public static int mode;public static int getStringAsInt(String k,int d){return k.equals("system_ui_status_bar_icon_data_saver")?mode:d;}public static boolean getBoolean(String k){return false;}public static boolean getBoolean(String k,boolean d){return false;}public static int getInt(String k,int d){return d;}public static String getString(String k,String d){return d;}public static java.util.Set<String>getStringSet(String k){return java.util.Set.of();}}''')
-  write(w,'com.sevtinge.hyperceiler.libhook.base.BaseLoad','package com.sevtinge.hyperceiler.libhook.base;public abstract class BaseLoad{public abstract void onPackageLoaded();protected void initHook(BaseHook h){h.init();}protected void initHook(BaseHook h,boolean b){if(b)h.init();}}')
-  write(w,'com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper','package com.sevtinge.hyperceiler.libhook.utils.api;public class DeviceHelper{public static class Miui{public static boolean isPad(){return false;}}public static class System{public static float version=4f;public static boolean isMoreHyperOSVersion(float v){if(v!=4f)throw new AssertionError();return version>=v;}}}')
+  write(w,'com.sevtinge.hypercraft.common.utils.PrefsBridge','''package com.sevtinge.hypercraft.common.utils;public class PrefsBridge{public static int mode;public static int getStringAsInt(String k,int d){return k.equals("system_ui_status_bar_icon_data_saver")?mode:d;}public static boolean getBoolean(String k){return false;}public static boolean getBoolean(String k,boolean d){return false;}public static int getInt(String k,int d){return d;}public static String getString(String k,String d){return d;}public static java.util.Set<String>getStringSet(String k){return java.util.Set.of();}}''')
+  write(w,'com.sevtinge.hypercraft.libhook.base.BaseLoad','package com.sevtinge.hypercraft.libhook.base;public abstract class BaseLoad{public abstract void onPackageLoaded();protected void initHook(BaseHook h){h.init();}protected void initHook(BaseHook h,boolean b){if(b)h.init();}}')
+  write(w,'com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper','package com.sevtinge.hypercraft.libhook.utils.api;public class DeviceHelper{public static class Miui{public static boolean isPad(){return false;}}public static class System{public static float version=4f;public static boolean isMoreHyperOSVersion(float v){if(v!=4f)throw new AssertionError();return version>=v;}}}')
   for name in re.findall(r'^import (com\.[\w.]+);',route,re.M):
    if(w/(name.replace('.','/')+'.java')).exists():continue
-   package,short=name.rsplit('.',1);write(w,name,f'package {package};public class {short} extends com.sevtinge.hyperceiler.libhook.base.BaseHook{{public static final {short} INSTANCE=new {short}();public void init(){{}}public static void createHook(){{}}}}')
+   package,short=name.rsplit('.',1);write(w,name,f'package {package};public class {short} extends com.sevtinge.hypercraft.libhook.base.BaseHook{{public static final {short} INSTANCE=new {short}();public void init(){{}}public static void createHook(){{}}}}')
   cmd=[str(JAVA/'javac'),'--release','21','-proc:none','-encoding','UTF-8','-cp',cp,'-d',str(w/'classes'),*map(str,w.rglob('*.java'))]
   z=subprocess.run(cmd,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT);(out/'build.txt').write_text(z.stdout)
   if z.returncode:print(z.stdout);raise RuntimeError('fixture compile failed')

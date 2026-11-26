@@ -13,11 +13,11 @@ struct ApiEntries {
 };
 }
 extern "C" home_native::LibraryLoaded native_init(const home_native::ApiEntries *entries);
-void hyperceiler_home_runtime_options(bool high_models, bool disable_prestart,
+void hypercraft_home_runtime_options(bool high_models, bool disable_prestart,
                                      bool soft_glass, bool dock_enabled, bool hide_report);
 // Hyos control-worker only, after the one-shot first-layout phase terminates.
-void hyperceiler_home_after_startup();
+void hypercraft_home_after_startup();
 // Hyos control-worker only. Rust back regions can bind before Dart first layout.
-void hyperceiler_home_maintain_back_gesture(home_native::HookFunction hook, home_native::UnhookFunction unhook);
+void hypercraft_home_maintain_back_gesture(home_native::HookFunction hook, home_native::UnhookFunction unhook);
 // Local authoritative lease check only; no Binder, discovery or Dart call.
-bool hyperceiler_home_prestart_disabled();
+bool hypercraft_home_prestart_disabled();

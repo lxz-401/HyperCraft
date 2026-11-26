@@ -1,0 +1,87 @@
+/*
+ * This file is part of HyperCraft.
+
+ * HyperCraft is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License.
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+ * Copyright (C) 2023-2026 HyperCraft Contributions
+ */
+package com.sevtinge.hypercraft.hooker.systemui;
+
+
+import static com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper.System.isMoreSmallVersion;
+import static com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper.System.isSupportTelephony;
+
+import android.os.Bundle;
+
+import androidx.preference.Preference;
+import androidx.preference.SwitchPreference;
+
+import com.sevtinge.hypercraft.core.R;
+import com.sevtinge.hypercraft.dashboard.DashboardFragment;
+import com.sevtinge.hypercraft.common.utils.PrefsBridge;
+import com.sevtinge.hypercraft.prefs.RecommendPreference;
+import java.util.UUID;
+
+public class StatusBarSettings extends DashboardFragment {
+
+    Preference mMobileNetwork;
+    RecommendPreference mRecommend;
+    SwitchPreference mHideStatusBarOnLockScreen;
+
+    @Override
+    public int getPreferenceScreenResId() {
+        return R.xml.system_ui_status_bar;
+    }
+
+    @Override
+    public void initPrefs() {
+
+        mHideStatusBarOnLockScreen = findPreference("prefs_key_system_ui_status_bar_hide_icon");
+        Preference bootFuseReset = findPreference("prefs_key_system_ui_status_bar_boot_fuse_reset_request");
+        if (bootFuseReset != null) {
+            bootFuseReset.setVisible(com.sevtinge.hypercraft.common.BuildConfig.STATUS_BAR_FOLLOW_AVAILABLE);
+            bootFuseReset.setOnPreferenceClickListener(preference -> {
+                PrefsBridge.putString("system_ui_status_bar_boot_fuse_reset_request", UUID.randomUUID().toString());
+                return true;
+            });
+        }
+        SwitchPreference statusBarFollow = findPreference("prefs_key_system_ui_status_bar_follow_enable");
+        if (statusBarFollow != null) {
+            statusBarFollow.setVisible(com.sevtinge.hypercraft.common.BuildConfig.STATUS_BAR_FOLLOW_AVAILABLE);
+        }
+        if (isMoreSmallVersion(200, 2f)) {
+            mHideStatusBarOnLockScreen.setSummary(R.string.system_ui_status_bar_hide_icon_desc);
+        }
+
+        mMobileNetwork = findPreference("prefs_key_statubar_mobile_network");
+        if (getContext() != null) {
+            if (!isSupportTelephony(getContext())) {
+                setFuncHint(mMobileNetwork, 1);
+            }
+        }
+
+        Bundle args1 = new Bundle();
+        mRecommend = new RecommendPreference(requireContext());
+        getPreferenceScreen().addPreference(mRecommend);
+
+        args1.putString(":settings:fragment_args_key", "prefs_key_system_ui_lock_screen_hide_status_bar");
+        mRecommend.addRecommendView(getString(R.string.system_ui_lock_screen_hide_status_bar),
+                null,
+                LockScreenSettings.class,
+                args1,
+                R.string.system_ui_lockscreen_title
+        );
+
+    }
+}

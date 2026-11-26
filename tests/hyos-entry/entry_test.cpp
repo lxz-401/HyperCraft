@@ -113,8 +113,8 @@ static void *fixture_symbol(void *,const char *name){
  if(std::strcmp(name,"__loader_dlsym")==0)return test::missing_sym?nullptr:reinterpret_cast<void *>(test::symbol);
  assert(false&&"Only explicit-caller loader APIs may be hooked");return nullptr;
 }
-bool hyperceiler_hyos_start_home_control(const ZygiskNextAPI *api){assert(api==&test::api);++test::starts;return true;}
-void hyperceiler_hyos_record_home_library(const char *name){assert(name);++test::records;}
+bool hypercraft_hyos_start_home_control(const ZygiskNextAPI *api){assert(api==&test::api);++test::starts;return true;}
+void hypercraft_hyos_record_home_library(const char *name){assert(name);++test::records;}
 static int fixture_close(void *handle){assert(handle==test::handle);++test::closed;return 0;}
 namespace home_recents {
 bool prepare_before_entry(uintptr_t base,ReadFresh read,PinImage pin) noexcept {

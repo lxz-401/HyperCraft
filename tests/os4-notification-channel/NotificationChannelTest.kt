@@ -5,7 +5,7 @@ import android.provider.Settings
 import android.service.notification.Notification
 import android.service.notification.StatusBarNotification
 import android.widget.ImageView
-import com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.RedirectToNotificationChannelSetting
+import com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.RedirectToNotificationChannelSetting
 import io.github.lingqiqi5211.ezhooktool.xposed.EzXposed
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.HookParam
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.Hooks

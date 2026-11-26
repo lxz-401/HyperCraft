@@ -1,6 +1,6 @@
-# Contributing to HyperCeiler
+# Contributing to HyperCraft
 
-Thank you for your interest in contributing to HyperCeiler! This document provides guidelines for contributing to the project.
+Thank you for your interest in contributing to HyperCraft! This document provides guidelines for contributing to the project.
 
 ## Table of Contents
 - [Code of Conduct](#code-of-conduct)
@@ -204,7 +204,7 @@ docs: add CONTRIBUTING.md
 ## Architecture Overview
 
 ```
-HyperCeiler (Xposed Module)
+HyperCraft (Xposed Module)
 ├── app (UI + Settings)
 │   ├── SettingsFragment → migrating to Kotlin + ViewModel
 │   ├── Backup/Restore → service layer
@@ -224,9 +224,9 @@ HyperCeiler (Xposed Module)
 ```
 
 ## Getting Help
-- **Discord**: [HyperCeiler Community](https://discord.gg/hyperceiler)
-- **Telegram**: @HyperCeilerChat
+- **Discord**: [HyperCraft Community](https://discord.gg/hypercraft)
+- **Telegram**: @HyperCraftChat
 - **Issues**: Use the bug report/feature request templates
 
 ## License
-HyperCeiler is licensed under **GNU AGPL v3**. By contributing, you agree that your contributions will be licensed under the same license.
+HyperCraft is licensed under **GNU AGPL v3**. By contributing, you agree that your contributions will be licensed under the same license.

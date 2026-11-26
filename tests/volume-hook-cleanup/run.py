@@ -15,7 +15,7 @@ if compiler is None:
         compiler = str(bundled)
 if compiler is None:
     raise SystemExit('Set KOTLINC or install a Kotlin compiler')
-source = ROOT / 'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/systemui/plugin/systemui/VolumeHookCleanup.kt'
+source = ROOT / 'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemui/plugin/systemui/VolumeHookCleanup.kt'
 with tempfile.TemporaryDirectory(prefix='hypercraft-volume-cleanup-') as directory:
     jar = str(Path(directory) / 'test.jar')
     subprocess.run([compiler, str(source), str(HERE / 'AndroidMainStub.kt'), str(HERE / 'CleanupTest.kt'), '-include-runtime', '-d', jar], check=True)

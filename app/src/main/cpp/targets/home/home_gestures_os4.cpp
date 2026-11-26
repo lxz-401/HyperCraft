@@ -15,7 +15,7 @@
 #include <atomic>
 #include <mutex>
 
-#if defined(HYPERCEILER_DOCK_NATIVE_MOTION)
+#if defined(HYPERCRAFT_DOCK_NATIVE_MOTION)
 extern "C" std::atomic<uint64_t> dock_edit_packed;
 #endif
 
@@ -91,7 +91,7 @@ void send(Request request) {
     else ok=false;
     if(in)AParcel_delete(in);if(out)AParcel_delete(out);
     if(status!=STATUS_OK) {AIBinder_decStrong(window);window=nullptr;}
-    __android_log_print(ANDROID_LOG_INFO,"HyperCeiler.HomeGesture","action event=%d accepted=%d status=%d",request.event,ok,status);
+    __android_log_print(ANDROID_LOG_INFO,"HyperCraft.HomeGesture","action event=%d accepted=%d status=%d",request.event,ok,status);
 }
 void *action_worker(void*) {
     for(;;) {
@@ -136,7 +136,7 @@ home_gestures::Decision observe(void *owner,void *event,bool back) {
     std::lock_guard guard(lock);
     if(!api.masked||(!settings.mask&&!settings.quick))return {};
     if(!back) {
-#if defined(HYPERCEILER_DOCK_NATIVE_MOTION)
+#if defined(HYPERCRAFT_DOCK_NATIVE_MOTION)
         if(dock_edit_packed.load(std::memory_order_acquire)&1u) {home_state.reset();return {};}
 #endif
         uint32_t mode=0;std::memcpy(&mode,static_cast<std::byte*>(owner)+api.home_mode,4);
@@ -146,7 +146,7 @@ home_gestures::Decision observe(void *owner,void *event,bool back) {
     auto &state=back?back_state:home_state;
     const int action=api.masked(event);
     if(action==3||action<0||action>6||action==4) {
-        if(probe.load(std::memory_order_relaxed))__android_log_print(ANDROID_LOG_INFO,"HyperCeiler.HomeGesture","probe back=%d a=%d reset owner=%p",back,action,owner);
+        if(probe.load(std::memory_order_relaxed))__android_log_print(ANDROID_LOG_INFO,"HyperCraft.HomeGesture","probe back=%d a=%d reset owner=%p",back,action,owner);
         state.reset();return {};
     }
     const size_t pointers=api.pointers(event);
@@ -158,7 +158,7 @@ home_gestures::Decision observe(void *owner,void *event,bool back) {
     // The Rust recents/window route must not emit a second copy of that action.
     if(!back)effective.mask=0; // normal workspace is owned by its real scene, never recents
     const auto decision=state.accept(e,effective,back);
-    if(probe.load(std::memory_order_relaxed))__android_log_print(ANDROID_LOG_INFO,"HyperCeiler.HomeGesture",
+    if(probe.load(std::memory_order_relaxed))__android_log_print(ANDROID_LOG_INFO,"HyperCraft.HomeGesture",
         "probe back=%d a=%d n=%zu x=%.1f y=%.1f t=%lld owner=%p decision=%d/%d/%d rv=%llu",
         back,action,pointers,e.x,e.y,static_cast<long long>(e.time),owner,
         decision.cancel,decision.consume,decision.gesture,static_cast<unsigned long long>(settings.revision));
@@ -221,7 +221,7 @@ bool hc_gestures_bind(uintptr_t base,const home_gestures::Targets&t) {
 }
 void hc_gestures_config(const home_gestures::Config &config) {
     char diagnostic[PROP_VALUE_MAX]{};
-    probe.store(__system_property_get("debug.hyperceiler.gesture_probe",diagnostic)>0&&diagnostic[0]=='1',std::memory_order_relaxed);
+    probe.store(__system_property_get("debug.hypercraft.gesture_probe",diagnostic)>0&&diagnostic[0]=='1',std::memory_order_relaxed);
     std::lock_guard guard(lock);
     const unsigned mask=config.enabled?config.mask:0;
     const float density=float(config.density_dpi)/160.f,width=float(config.width);
@@ -229,7 +229,7 @@ void hc_gestures_config(const home_gestures::Config &config) {
         settings={mask,config.quick,density,width,settings.revision+1};
         home_state.reset();back_state.reset();
         publish_workspace_locked();
-        __android_log_print(ANDROID_LOG_INFO,"HyperCeiler.HomeGesture","config mask=%u quick=%d dpi=%d width=%d",mask,config.quick,config.density_dpi,config.width);
+        __android_log_print(ANDROID_LOG_INFO,"HyperCraft.HomeGesture","config mask=%u quick=%d dpi=%d width=%d",mask,config.quick,config.density_dpi,config.width);
     }
 }
 
@@ -242,7 +242,7 @@ void hc_workspace_gestures_ready(bool ready) {
 extern "C" void hc_workspace_double_emit() {
     uint64_t revision=0;
     {std::lock_guard guard(lock);if(!workspace_ready||!(settings.mask&1u))return;revision=settings.revision;}
-    if(probe.load(std::memory_order_relaxed))__android_log_print(ANDROID_LOG_INFO,"HyperCeiler.HomeGesture","workspace original double accepted rv=%llu",static_cast<unsigned long long>(revision));
+    if(probe.load(std::memory_order_relaxed))__android_log_print(ANDROID_LOG_INFO,"HyperCraft.HomeGesture","workspace original double accepted rv=%llu",static_cast<unsigned long long>(revision));
     emit(home_gestures::DoubleTap,revision);
 }
 
@@ -264,7 +264,7 @@ extern "C" uintptr_t hc_workspace_status_result(uintptr_t frame,uint64_t heap,ui
     int64_t time=0;bool block=value==null+0x20&&stock_block_start>0
         &&home_workspace_gesture::event_timestamp(event,heap,table,scope_contract,read,time)
         &&time>=stock_block_start&&time<=stock_block_end;
-    if(block&&probe.load(std::memory_order_relaxed))__android_log_print(ANDROID_LOG_INFO,"HyperCeiler.HomeGesture",
+    if(block&&probe.load(std::memory_order_relaxed))__android_log_print(ANDROID_LOG_INFO,"HyperCraft.HomeGesture",
         "workspace stock status interception suppressed kind=%u time=%lld",kind,static_cast<long long>(time));
     return block?null+0x30:value;
 }
@@ -278,7 +278,7 @@ extern "C" void hc_workspace_scope_authorize(uintptr_t frame,uint64_t heap,uintp
     auto read=[](uintptr_t p,auto& value){if(p<4096)return false;std::memcpy(&value,reinterpret_cast<const void*>(p),sizeof(value));return true;};
     bool decoded=home_workspace_gesture::timestamp(frame,heap,table,scope_contract,read,stamp);
     bool accepted=decoded&&workspace_state.authorize(stamp,settings.revision);
-    if(probe.load(std::memory_order_relaxed))__android_log_print(ANDROID_LOG_INFO,"HyperCeiler.HomeGesture",
+    if(probe.load(std::memory_order_relaxed))__android_log_print(ANDROID_LOG_INFO,"HyperCraft.HomeGesture",
         "workspace scope decoded=%d accepted=%d time=%lld",decoded,accepted,static_cast<long long>(stamp));
 }
 extern "C" void hc_workspace_scene(void* owner,void* event) {
@@ -301,12 +301,12 @@ extern "C" void hc_workspace_scene(void* owner,void* event) {
             if(e.action==0){workspace_start=e.time;stock_block_start=stock_block_end=0;}
             for(int i=0;i<std::min(e.count,2);++i){e.id[i]=api.pointer_id(event,i);e.x[i]=api.x(event,i);e.y[i]=api.y(event,i);}
             bool editing=!can_claim;
-#if defined(HYPERCEILER_DOCK_NATIVE_MOTION)
+#if defined(HYPERCRAFT_DOCK_NATIVE_MOTION)
             editing|=(dock_edit_packed.load(std::memory_order_acquire)&1u)!=0;
 #endif
             decision=workspace_state.accept(e,settings,editing);
             if(decision.consume){stock_block_start=workspace_start;stock_block_end=e.time;}
-            if(probe.load(std::memory_order_relaxed)&&(settings.mask&30u))__android_log_print(ANDROID_LOG_INFO,"HyperCeiler.HomeGesture",
+            if(probe.load(std::memory_order_relaxed)&&(settings.mask&30u))__android_log_print(ANDROID_LOG_INFO,"HyperCraft.HomeGesture",
                 "workspace scene a=%d n=%d x=%.1f y=%.1f t=%lld decision=%d/%d/%d",e.action,e.count,e.x[0],e.y[0],
                 static_cast<long long>(e.time),decision.cancel,decision.consume,decision.gesture);
         }

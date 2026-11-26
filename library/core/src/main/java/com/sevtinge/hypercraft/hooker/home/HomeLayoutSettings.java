@@ -1,0 +1,125 @@
+/*
+  * This file is part of HyperCraft.
+
+  * HyperCraft is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU Affero General Public License as
+  * published by the Free Software Foundation, either version 3 of the
+  * License.
+
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU Affero General Public License for more details.
+
+  * You should have received a copy of the GNU Affero General Public License
+  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+  * Copyright (C) 2023-2026 HyperCraft Contributions
+*/
+package com.sevtinge.hypercraft.hooker.home;
+
+import static com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper.Miui.isPad;
+import static com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper.System.isHyperOSVersion;
+import static com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper.System.isMoreHyperOSVersion;
+
+import androidx.preference.PreferenceCategory;
+import androidx.preference.SwitchPreference;
+
+import com.sevtinge.hypercraft.core.R;
+import com.sevtinge.hypercraft.dashboard.DashboardFragment;
+
+import java.util.function.BiConsumer;
+
+import fan.preference.SeekBarPreferenceCompat;
+
+public class HomeLayoutSettings extends DashboardFragment {
+
+    PreferenceCategory mSearch;
+    SwitchPreference mIconLayoutNew;
+    SwitchPreference mLayoutH;
+    SwitchPreference mWidth;
+    SwitchPreference mPadding;
+    SeekBarPreferenceCompat mPhone;
+    SeekBarPreferenceCompat mPadH;
+    SeekBarPreferenceCompat mPadV;
+
+    @Override
+    public int getPreferenceScreenResId() {
+        return R.xml.home_layout;
+    }
+
+    @Override
+    public void initPrefs() {
+        findPreference("prefs_key_home_layout_hotseats_margin_horizontal_enable").setVisible(isHyperOSVersion(4f));
+        findPreference("prefs_key_home_layout_hotseats_margin_horizontal").setVisible(isHyperOSVersion(4f));
+        if (isHyperOSVersion(4f)) {
+            // OS4's existing native keys now have a single entry on their respective pages.
+            findPreference("prefs_key_home_layout_icon_scale_enable").setVisible(false);
+            findPreference("prefs_key_home_layout_icon_scale").setVisible(false);
+            findPreference("prefs_key_home_layout_recents_hide_clear").setVisible(false);
+            findPreference("prefs_key_home_layout_recents_no_clear").setVisible(false);
+        }
+
+        boolean mWidthEnable = getSharedPreferences().getBoolean("prefs_key_home_folder_width", false);
+        boolean mPaddingEnable = getSharedPreferences().getBoolean("prefs_key_home_folder_horizontal_padding_enable", false);
+
+        mSearch = findPreference("prefs_key_home_layout_searchbar_title");
+        mIconLayoutNew = findPreference("prefs_key_home_layout_unlock_grids_new");
+        mLayoutH = findPreference("prefs_key_home_layout_workspace_padding_horizontal_enable");
+        mWidth = findPreference("prefs_key_home_folder_width");
+        mPadding = findPreference("prefs_key_home_folder_horizontal_padding_enable");
+        mPhone = findPreference("prefs_key_home_folder_horizontal_padding");
+        mPadH = findPreference("prefs_key_home_folder_horizontal_padding_pad_h");
+        mPadV = findPreference("prefs_key_home_folder_horizontal_padding_pad_v");
+
+        // fan.miuix 1.0.13.0 clamps XML minValue below zero in its constructor, but its
+        // setter supports signed bounds. Apply it after inflation so both the slider and
+        // the value-entry dialog expose -300..700 without shifting persisted dp values.
+        SeekBarPreferenceCompat indicatorMargin =
+            findPreference("prefs_key_home_layout_indicator_margin_bottom");
+        indicatorMargin.setMinValue(-300);
+
+        if (isPad()) {
+            if (isMoreHyperOSVersion(4f)) mSearch.setVisible(false);
+            else setPreVisible(mSearch, false);
+            setFuncHint(mLayoutH, 1);
+            setFuncHint(mIconLayoutNew, 1);
+        }
+
+        if (isMoreHyperOSVersion(4f)) {
+            // The OS4 capsule has its own Indicator controls. Remove the obsolete
+            // search-bar group from this screen without changing persisted choices.
+            getPreferenceScreen().removePreference(mSearch);
+        }
+
+        BiConsumer<Boolean, Boolean> updateVisibility = (widthEnabled, paddingEnabled) -> {
+            mPadding.setVisible(widthEnabled);
+            if (isPad()) {
+                boolean showPad = widthEnabled && paddingEnabled;
+                mPadH.setVisible(showPad);
+                mPadV.setVisible(showPad);
+                mPhone.setVisible(false);
+            } else {
+                mPhone.setVisible(widthEnabled && paddingEnabled);
+                mPadH.setVisible(false);
+                mPadV.setVisible(false);
+            }
+        };
+
+        updateVisibility.accept(mWidthEnable, mPaddingEnable);
+
+        mWidth.setOnPreferenceChangeListener((preference, o) -> {
+            boolean newWidth = (boolean) o;
+            boolean curPaddingEnable = getSharedPreferences().getBoolean("prefs_key_home_folder_horizontal_padding_enable", false);
+            updateVisibility.accept(newWidth, curPaddingEnable);
+            return true;
+        });
+
+        mPadding.setOnPreferenceChangeListener((p, v) -> {
+            boolean newPadding = (boolean) v;
+            boolean curWidth = getSharedPreferences().getBoolean("prefs_key_home_folder_width", false);
+            updateVisibility.accept(curWidth, newPadding);
+            return true;
+        });
+    }
+}

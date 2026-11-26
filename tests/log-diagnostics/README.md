@@ -19,7 +19,7 @@ shell-copy method is compiled from the Java source and run in disposable directo
 empty/success/cp-failure/chmod-failure cases. The capture path tries direct root, `/proc/1/root`,
 and both common `nsenter` syntaxes, and accepts both `modules_*.log`/`verbose_*.log` and legacy
 `modules.log`/`verbose.log` names. Health checks accept both raw LSPosed timestamp headers and
-HyperCeiler export page markers. A failed staged capture leaves the previous app-local copy intact.
+HyperCraft export page markers. A failed staged capture leaves the previous app-local copy intact.
 
 In the built-in **Xposed** log tab, refresh with the level/tag filters set to All:
 
@@ -34,9 +34,9 @@ In the built-in **Xposed** log tab, refresh with the level/tag filters set to Al
   ordinary module records are not imported twice.
 - `LogSync.Environment`: installed module/launcher versions, update times and Android build;
   installed versions do not prove that running processes loaded them.
-- `HyperCeiler.HomeConfig`: transport, accepted endpoint revision/capabilities/PID,
+- `HyperCraft.HomeConfig`: transport, accepted endpoint revision/capabilities/PID,
   missing old extensions, version mismatch and live/cache/fallback config source.
-- `HyperCeiler.HomeLayout`: six scale binding families report the unavailable symbol,
+- `HyperCraft.HomeLayout`: six scale binding families report the unavailable symbol,
   producer/consumer instruction guard or replay-window failure, only when the failure
   stage changes. Requests include switches/percentages even at neutral 100%.
 
@@ -48,7 +48,7 @@ extra background poller or database schema migration is introduced.
 ## Device installation
 
 Use `adb install --no-incremental -r <release.apk>` for module testing. On the
-October 19 device boot, HyperCeiler's APK was on `incremental-fs` under
+October 19 device boot, HyperCraft's APK was on `incremental-fs` under
 `/data/app`; LSPosed reported two early-boot APK parse failures with `No such
 file or directory`. The WMS endpoint was absent and SystemUI reported
 `Dock broker not installed`, leaving Dock icons visible without the background.

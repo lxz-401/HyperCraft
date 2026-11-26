@@ -1,20 +1,20 @@
 #!/bin/bash
 # Differential experiment.
 #   slot 0 (hotseat margin)  = +delta   -> moves dock icons + capsule + dock window
-#   slot 5 retargeted via debug.hyperceiler.layout.hook5 to a dock-window-only accessor with
+#   slot 5 retargeted via debug.hypercraft.layout.hook5 to a dock-window-only accessor with
 #   -delta              -> moves only whatever that accessor feeds
 # If the capsule snaps back to the baseline while the dock stays moved, the capsule's Y comes from
 # the dock-window side, and the inverse combination is the independent capsule lever.
 #   $1 = slot5 symbol ("off" = no retarget), $2 = slot5 value, $3 = hotseat value, $4 = output png
 ADB="${ADB:-adb}"
-URI="content://com.sevtinge.hyperceiler.provider.sharedprefs"
+URI="content://com.sevtinge.hypercraft.provider.sharedprefs"
 SYMBOL="$1"; IND_VALUE="$2"; HS_VALUE="$3"; OUT="$4"
-"$ADB" shell setprop debug.hyperceiler.prefs_write 1
-"$ADB" shell setprop debug.hyperceiler.layout.override 1
+"$ADB" shell setprop debug.hypercraft.prefs_write 1
+"$ADB" shell setprop debug.hypercraft.layout.override 1
 if [ "$SYMBOL" = "off" ]; then
-  "$ADB" shell setprop debug.hyperceiler.layout.hook5 off
+  "$ADB" shell setprop debug.hypercraft.layout.hook5 off
 else
-  "$ADB" shell setprop debug.hyperceiler.layout.hook5 "$SYMBOL"
+  "$ADB" shell setprop debug.hypercraft.layout.hook5 "$SYMBOL"
 fi
 "$ADB" shell content call --uri "$URI" --method hc_debug_put --arg boolean:home_layout_indicator_margin_bottom_enable:true
 "$ADB" shell content call --uri "$URI" --method hc_debug_put --arg integer:home_layout_indicator_margin_bottom:"$IND_VALUE"
@@ -36,4 +36,4 @@ sleep 4
 "$ADB" shell input keyevent KEYCODE_HOME
 sleep 5
 "$ADB" exec-out screencap -p > "$OUT"
-"$ADB" logcat -d -s HyperCeiler.HomeLayout:I | grep -E "hook hits" | tail -1
+"$ADB" logcat -d -s HyperCraft.HomeLayout:I | grep -E "hook hits" | tail -1

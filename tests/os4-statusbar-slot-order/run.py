@@ -12,7 +12,7 @@ p.add_argument('--production', type=Path)
 a = p.parse_args()
 test = Path(__file__).resolve().parent
 root = test.parents[1]
-production = a.production or root / 'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/systemui/statusbar/icon/all/SwapWiFiAndMobileNetwork.kt'
+production = a.production or root / 'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemui/statusbar/icon/all/SwapWiFiAndMobileNetwork.kt'
 with tempfile.TemporaryDirectory(prefix='hc-slot-order-') as output:
     jar = Path(output) / 'test.jar'
     subprocess.run([a.java, '-cp', str(a.kotlin_home/'lib/kotlin-compiler.jar'),

@@ -5,7 +5,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#define HOME_LAYOUT_ENGINE_LOG_TAG "HyperCeiler.HomeLayoutEngine"
+#define HOME_LAYOUT_ENGINE_LOG_TAG "HyperCraft.HomeLayoutEngine"
 
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, HOME_LAYOUT_ENGINE_LOG_TAG, __VA_ARGS__)
 #define LOGW(...) __android_log_print(ANDROID_LOG_WARN, HOME_LAYOUT_ENGINE_LOG_TAG, __VA_ARGS__)

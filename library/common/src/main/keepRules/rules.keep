@@ -10,5 +10,5 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
--keep class com.sevtinge.hyperceiler.common.utils.prefs.** { *; }
+-keep class com.sevtinge.hypercraft.common.utils.prefs.** { *; }
 

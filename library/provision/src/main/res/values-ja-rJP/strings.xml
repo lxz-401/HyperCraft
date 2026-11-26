@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -15,7 +15,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   --><resources>
     <string name="provision_back_description">戻る</string>
     <string name="provision_start_content_description">スタート</string>
@@ -27,14 +27,14 @@
     <string name="provision_agree_and_next">同意する</string>
     <string name="provision_agree_terms">利用規約とプライバシーポリシーを読んで同意しました。</string>
     <string name="provision_terms_of_use">利用規約</string>
-    <string name="provision_terms_of_use_label_use_network_china">より良いサービスを提供するため、HyperCeiler を引き続きご利用いただくには、 <annotation key="user_agreement">利用規約</annotation>および<annotation key="privacy_policy">プライバシーポリシー</annotation>をお読みいただき、同意していただく必要があります。当社は、お客様の個人情報を保護するため、関連する法令およびプライバシーポリシーを厳守いたします。</string>
+    <string name="provision_terms_of_use_label_use_network_china">より良いサービスを提供するため、HyperCraft を引き続きご利用いただくには、 <annotation key="user_agreement">利用規約</annotation>および<annotation key="privacy_policy">プライバシーポリシー</annotation>をお読みいただき、同意していただく必要があります。当社は、お客様の個人情報を保護するため、関連する法令およびプライバシーポリシーを厳守いたします。</string>
     <string name="provision_protect_persoanl_info_statement">私達は、ご利用者の個人情報を関連する法令およびプライバシーポリシーに従って保護します。</string>
     <string name="provision_service_agreement">利用規約を読んで、これらに同意しました。</string>
     <string name="provision_service_name_download">ダウンロード</string>
     <string name="provision_service_policy_download"><Data><a href="%1$s">Thunder プライバシーポリシー</a> と <a href="%2$s">Thunder 社ネットワークサービス利用契約</a> を読み、同意します</Data></string>
     <string name="provision_congratulation_title">セットアップが完了しました</string>
-    <string name="provision_congratulation_label">HyperCeiler へようこそ</string>
-    <string name="provision_complete_text">HyperCeiler を使い始める</string>
+    <string name="provision_congratulation_label">HyperCraft へようこそ</string>
+    <string name="provision_complete_text">HyperCraft を使い始める</string>
     <string name="provision_back">戻る</string>
     <string name="provision_set_permission_later">以下の必要な権限は後で設定できます</string>
     <string name="provision_permission_internet">インターネットへの接続を許可</string>
@@ -64,5 +64,5 @@
     <string name="provision_basic_settings_scope">スコープ</string>
     <string name="provision_basic_settings_scope_sync">スコープと同期</string>
     <string name="provision_basic_settings_scope_sync_desc">ホームページのリストのチェック状態はスコープと同期されます</string>
-    <string name="provision_get_md_failed">## コンテンツの取得に失敗しました \n - 元のコンテンツを表示するには、[こちら](%URL%)にアクセスしてください。 \n - または、このページを[更新](hyperceiler://refresh)してみてください。</string>
+    <string name="provision_get_md_failed">## コンテンツの取得に失敗しました \n - 元のコンテンツを表示するには、[こちら](%URL%)にアクセスしてください。 \n - または、このページを[更新](hypercraft://refresh)してみてください。</string>
 </resources>

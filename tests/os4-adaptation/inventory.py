@@ -4,7 +4,7 @@ from pathlib import Path
 import json,re,xml.etree.ElementTree as E
 ROOT=Path(__file__).resolve().parents[2]
 BASE=ROOT/'library/core/src/main'
-source=(BASE/'java/com/sevtinge/hyperceiler/hooker/home/HomeOS4AdaptationGate.java').read_text()
+source=(BASE/'java/com/sevtinge/hypercraft/hooker/home/HomeOS4AdaptationGate.java').read_text()
 sets={name:set(re.findall(r'"(prefs_key_[^"]+)"',body))for name,body in re.findall(r'Set<String>\s+(\w+)\s*=\s*Set.of\((.*?)\);',source,re.S)}
 strings={}
 for file in ('strings_app.xml','strings.xml'):

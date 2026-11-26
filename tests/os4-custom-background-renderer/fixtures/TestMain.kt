@@ -4,8 +4,8 @@ import android.graphics.drawable.*
 import android.os.Looper
 import com.android.systemui.media.controls.shared.model.MediaData
 import com.android.systemui.monet.ColorScheme
-import com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.media3.CustomBackgroundRendererOS4
-import com.sevtinge.hyperceiler.libhook.utils.hookapi.systemui.controlcenter.media.MediaViewColorConfig
+import com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.media3.CustomBackgroundRendererOS4
+import com.sevtinge.hypercraft.libhook.utils.hookapi.systemui.controlcenter.media.MediaViewColorConfig
 import kotlin.concurrent.thread
 
 private fun pixels(f:CustomBackgroundRendererOS4.Frame):Bitmap{val x=f.javaClass.getDeclaredField("background");x.isAccessible=true;return x.get(f) as Bitmap}

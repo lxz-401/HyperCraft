@@ -1,6 +1,6 @@
-package com.sevtinge.hyperceiler.tests.dock;
+package com.sevtinge.hypercraft.tests.dock;
 
-import com.sevtinge.hyperceiler.libhook.rules.home.dock.DockGlassPreset;
+import com.sevtinge.hypercraft.libhook.rules.home.dock.DockGlassPreset;
 
 public class DockGlassPresetTest {
     private static void check(boolean condition, String message) {

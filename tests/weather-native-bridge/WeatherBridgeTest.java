@@ -1,13 +1,13 @@
-package com.sevtinge.hyperceiler.libhook.rules.weather;
+package com.sevtinge.hypercraft.libhook.rules.weather;
 
 import android.content.*;
 import android.content.pm.PackageManager;
 import android.database.*;
 import android.net.Uri;
 import android.os.*;
-import com.sevtinge.hyperceiler.libhook.base.*;
-import com.sevtinge.hyperceiler.libhook.provider.*;
-import com.sevtinge.hyperceiler.libhook.utils.api.ContextUtils;
+import com.sevtinge.hypercraft.libhook.base.*;
+import com.sevtinge.hypercraft.libhook.provider.*;
+import com.sevtinge.hypercraft.libhook.utils.api.ContextUtils;
 import io.github.lingqiqi5211.ezhooktool.xposed.common.HookParam;
 import java.nio.*;
 import java.nio.file.*;
@@ -55,9 +55,9 @@ public class WeatherBridgeTest {
   for(int level=0;level<=3;level++){final int l=level;run("raw UI device value unchanged "+l,()->{var e=endpoint();publish(e,prefs("allow_hook",true,"weather_device_level",""+l,"weather_card_display_type","2","weather_unlock_blur",true));var s=read(e);eq(s.deviceLevel(),l);eq(s.cardType(),2);eq(s.blur(),1);});}
   for(String card:new String[]{"0","2","3"})run("raw card domain "+card,()->{var e=endpoint();publish(e,prefs("allow_hook",true,"weather_card_display_type",card));eq(read(e).cardType(),Integer.parseInt(card));});
   run("exact 48B field offsets and int64 preservation",()->{var e=endpoint();set(e,"epoch",0x1122334455667788L);set(e,"revision",0x2233445566778800L);publish(e,prefs("allow_hook",true,"weather_device_level","1","weather_card_display_type","3","weather_unlock_blur",true));var b=ByteBuffer.wrap(wire(read(e))).order(ByteOrder.LITTLE_ENDIAN);eq(b.getLong(12),0x1122334455667788L);eq(b.getLong(20),0x2233445566778801L);eq(b.getLong(28),15_000_000_000L);eq(b.getInt(36),1);eq(b.getInt(40),3);eq(b.getInt(44),1);});
-  run("provider one getAll contains all three settings and six auth columns",()->{String[] names={"schema","weather_device_level","weather_card_display_type","weather_unlock_blur","allow_hook","framework_api_allow_hook","framework_check_reason","framework_check_name","framework_check_version","framework_check_version_code"};ContentResolver.values=prefs("allow_hook",true);SharedPrefsProvider p=new SharedPrefsProvider();check(p.onCreate());Cursor c=p.query(Uri.parse("content://com.sevtinge.hyperceiler.provider.sharedprefs/weather_config"),null,null,null,null);eq(c.getCount(),1);eq(c.getColumnCount(),10);for(int i=0;i<10;i++)eq(c.getColumnName(i),names[i]);eq(ContentResolver.reads.get(),1);});
+  run("provider one getAll contains all three settings and six auth columns",()->{String[] names={"schema","weather_device_level","weather_card_display_type","weather_unlock_blur","allow_hook","framework_api_allow_hook","framework_check_reason","framework_check_name","framework_check_version","framework_check_version_code"};ContentResolver.values=prefs("allow_hook",true);SharedPrefsProvider p=new SharedPrefsProvider();check(p.onCreate());Cursor c=p.query(Uri.parse("content://com.sevtinge.hypercraft.provider.sharedprefs/weather_config"),null,null,null,null);eq(c.getCount(),1);eq(c.getColumnCount(),10);for(int i=0;i<10;i++)eq(c.getColumnName(i),names[i]);eq(ContentResolver.reads.get(),1);});
   run("provider wrong authority cannot access weather route",()->{SharedPrefsProvider p=new SharedPrefsProvider();p.onCreate();Cursor c=p.query(Uri.parse("content://other/weather_config"),null,null,null,null);check(c==null||c.getCount()==0);eq(ContentResolver.reads.get(),0);});
-  run("existing Home schema4 still 90 columns and unchanged route",()->{SharedPrefsProvider p=new SharedPrefsProvider();p.onCreate();Cursor c=p.query(Uri.parse("content://com.sevtinge.hyperceiler.provider.sharedprefs/home_layout"),null,null,null,null);check(c.moveToFirst());eq(c.getInt(0),4);eq(c.getColumnCount(),90);eq(c.getColumnName(0),"schema");eq(c.getColumnName(1),"home_drawer_hide_search");});
+  run("existing Home schema4 still 90 columns and unchanged route",()->{SharedPrefsProvider p=new SharedPrefsProvider();p.onCreate();Cursor c=p.query(Uri.parse("content://com.sevtinge.hypercraft.provider.sharedprefs/home_layout"),null,null,null,null);check(c.moveToFirst());eq(c.getInt(0),4);eq(c.getColumnCount(),90);eq(c.getColumnName(0),"schema");eq(c.getColumnName(1),"home_drawer_hide_search");});
   run("installed route needs verified demand to start worker",()->{var e=endpoint();new WeatherNativeBridgeOS4(e).init();Binder.setCallingIdentityForTest(10101,42);inactive(read(e),0);Binder.setCallingIdentityForTest(10100,42);inactive(e.receive(new Parcel(DESC),IBinder.FLAG_ONEWAY),0);inactive(e.receive(new Parcel(DESC,8),0),0);inactive(e.readSnapshot(Binder.getCallingPid()),0);eq(get(null,"worker"),null);eq(ContentResolver.queries.get(),0);});
   run("interactive refresh needs a new request and picks up changed settings",()->{var e=endpoint();e.activate();ContentResolver.values=prefs("allow_hook",true,"weather_device_level","0");read(e);parked(e);eq(e.readSnapshot(Binder.getCallingPid()).deviceLevel(),0);ContentResolver.values=prefs("allow_hook",true,"weather_device_level","2");now.addAndGet(1_499_999_999L);eq(read(e).deviceLevel(),0);eq(ContentResolver.queries.get(),1);now.incrementAndGet();parked(e);eq(ContentResolver.queries.get(),1);read(e);parked(e);eq(e.readSnapshot(Binder.getCallingPid()).deviceLevel(),2);eq(ContentResolver.queries.get(),2);});
   run("requested failures back off without scheduling their own retries",()->{var e=endpoint();e.activate();ContentResolver.failure="query";read(e);parked(e);eq(ContentResolver.queries.get(),1);for(long delay:new long[]{250,3000,6000,12000,24000,30000,30000}){int before=ContentResolver.queries.get();now.addAndGet(delay*1_000_000L-1);inactive(read(e),0);eq(ContentResolver.queries.get(),before);now.incrementAndGet();parked(e);eq(ContentResolver.queries.get(),before);read(e);parked(e);eq(ContentResolver.queries.get(),before+1);}});

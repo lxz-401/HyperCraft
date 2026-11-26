@@ -1,4 +1,4 @@
-package com.sevtinge.hyperceiler.libhook.rules.home.dock;
+package com.sevtinge.hypercraft.libhook.rules.home.dock;
 
 public final class DockGeometryRefreshGateTest {
     static int checks;

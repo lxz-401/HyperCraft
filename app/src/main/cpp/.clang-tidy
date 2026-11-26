@@ -1,5 +1,5 @@
 ---
-# clang-tidy configuration for HyperCeiler native code
+# clang-tidy configuration for HyperCraft native code
 # Applied to nativehook/ and targets/home/ (excluding third-party tweaks/)
 
 Checks: >

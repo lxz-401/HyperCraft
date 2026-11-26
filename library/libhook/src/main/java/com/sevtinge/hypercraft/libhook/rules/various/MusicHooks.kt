@@ -1,0 +1,78 @@
+/*
+ * This file is part of HyperCraft.
+
+ * HyperCraft is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License.
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+ * Copyright (C) 2023-2026 HyperCraft Contributions
+ */
+package com.sevtinge.hypercraft.libhook.rules.various
+
+import com.hchen.superlyricapi.SuperLyricData
+import com.sevtinge.hypercraft.common.utils.PrefsBridge
+import com.sevtinge.hypercraft.libhook.appbase.systemui.MusicBaseHook
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+
+object MusicHooks : MusicBaseHook() {
+    private val notificationScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+    private val notificationJobLock = Any()
+    private var notificationJob: Job? = null
+
+    override fun init() {
+        registerHotReloadCleanup(notificationScope::cancel)
+        /*if (lpparam.packageName == "com.salt.music") {
+            val clazz = loadClassOrNull("cn.lyric.getter.api.API")
+            clazz?.constructorFinder()?.first()?.createHook {
+                before { hookParam ->
+                    if ((hookParam.thisObject.objectHelper().getObjectOrNullAs<Int>("API_VERSION")
+                            ?: 0) >= 6
+                    ) {
+                        clazz.findMethod { name("sendLyric") }.createHook {
+                            before { hookParam ->
+                                val extra = (hookParam.args[1]).objectHelper()
+                                    .getObjectOrNullAs<HashMap<String, Any>>("extra")
+                                extra?.put("packageName", "com.salt.music")
+                            }
+                        }
+                    }
+                }
+            }
+            logI(TAG, lpparam.packageName, "LyricGetter API6 Fixed")
+        }*/
+    }
+
+    override fun onSuperLyric(packageName: String?, data: SuperLyricData) {
+        if (packageName == context.packageName && PrefsBridge.getBoolean("system_ui_statusbar_music_show_app")) {
+            if (data.lyric!!.text.isNotEmpty()) {
+                synchronized(notificationJobLock) {
+                    notificationJob?.cancel()
+                    notificationJob = notificationScope.launch {
+                        sendNotification(data.lyric!!.text, data)
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onStop() {
+        if (packageName == context.packageName && PrefsBridge.getBoolean("system_ui_statusbar_music_show_app")) {
+            cancelNotification()
+        }
+    }
+
+}

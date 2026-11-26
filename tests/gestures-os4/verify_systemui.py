@@ -3,14 +3,14 @@ from pathlib import Path
 import sys, subprocess
 W=Path(__file__).resolve().parents[2]
 R=Path(sys.argv[1]).resolve() if len(sys.argv)>1 else W
-J=R/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/gesture'
+J=R/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/gesture'
 p=J/'HomeQuickSwitchState.java'
 if not p.exists():
  print('SYSTEMUI_LIFECYCLE=missing production state; FAILED=1');sys.exit(1)
 out=W/'handover/gestures-os4-20261014'/('systemui-state-'+R.name);out.mkdir(parents=True,exist_ok=True)
 (out/p.name).write_text(p.read_text(encoding='utf8'),encoding='utf8')
 (out/'StateTest.java').write_text(r'''
-package com.sevtinge.hyperceiler.libhook.rules.home.gesture;
+package com.sevtinge.hypercraft.libhook.rules.home.gesture;
 public class StateTest {
  static int checks,failed;
  static void ok(boolean x){checks++;if(!x){failed++;System.out.println("failed check="+checks);}}
@@ -41,6 +41,6 @@ public class StateTest {
  }
 }
 ''',encoding='utf8')
-for cmd in [['javac','-d',str(out),str(out/p.name),str(out/'StateTest.java')],['java','-cp',str(out),'com.sevtinge.hyperceiler.libhook.rules.home.gesture.StateTest']]:
+for cmd in [['javac','-d',str(out),str(out/p.name),str(out/'StateTest.java')],['java','-cp',str(out),'com.sevtinge.hypercraft.libhook.rules.home.gesture.StateTest']]:
  x=subprocess.run(cmd,capture_output=True,text=True);print(x.stdout+x.stderr,end='')
  if x.returncode:sys.exit(x.returncode)

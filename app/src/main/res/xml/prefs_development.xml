@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -14,22 +14,22 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/development_tools">
         <Preference
             android:key="prefs_key_development_debug_info"
             android:title="@string/development_debug_info"
-            android:fragment="com.sevtinge.hyperceiler.settings.development.DevelopmentDebugInfoFragment" />
+            android:fragment="com.sevtinge.hypercraft.settings.development.DevelopmentDebugInfoFragment" />
 
         <Preference
             android:key="prefs_key_development_debug_mode"
             android:title="@string/debug_mode"
-            android:fragment="com.sevtinge.hyperceiler.settings.development.DevelopmentDebugModeFragment" />
+            android:fragment="com.sevtinge.hypercraft.settings.development.DevelopmentDebugModeFragment" />
 
         <Preference
-            android:fragment="com.sevtinge.hyperceiler.settings.development.DevelopmentUIFragment"
+            android:fragment="com.sevtinge.hypercraft.settings.development.DevelopmentUIFragment"
             android:key="prefs_key_development_ui"
             android:title="@string/development_ui" />
 
@@ -44,12 +44,12 @@
         <Preference
             android:key="prefs_key_development_kill"
             android:title="@string/kill"
-            android:fragment="com.sevtinge.hyperceiler.settings.development.DevelopmentKillFragment" />
+            android:fragment="com.sevtinge.hypercraft.settings.development.DevelopmentKillFragment" />
 
         <Preference
             android:key="prefs_key_development_prefs"
             android:title="@string/development_prefs"
-            android:fragment="com.sevtinge.hyperceiler.settings.development.DevelopmentPrefsFragment" />
+            android:fragment="com.sevtinge.hypercraft.settings.development.DevelopmentPrefsFragment" />
 
         <Preference
             android:key="prefs_key_development_cmd_r"

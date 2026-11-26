@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -15,14 +15,14 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   --><resources>
     <!--Introduction to Xposed Modules-->
     <string name="new_permission_wifi_state_desc">menambah dan menghapus file pada penyimpanan internal perangkat</string>
     <string name="new_permission_location_desc">digunakan untuk menyediakan layanan latitude dan longitude</string>
     <string name="new_cta_agree_desc">Selama penggunaan, untuk memberi Anda lebih banyak fitur, kami mungkin meminta izin Root/Su dari Anda. Anda dapat membuka Manajemen Izin kapan saja untuk menyesuaikan status otorisasi semua izin, dan silakan buka manajer Root/Su Anda untuk meng-izinkan.</string>
     <string name="new_cta_app_main_purpose">midifikasi sistem aplikasi</string>
-    <!--HyperCeiler Settings/About Page-->
+    <!--HyperCraft Settings/About Page-->
     <string name="language">Bahasa Indonesia</string>
     <string name="translator">Local Lion</string>
     <string name="translator_url">https://t.me/lokallion</string>
@@ -31,18 +31,18 @@
     <string name="settings">Pengaturan</string>
     <string name="about">Tentang</string>
     <string name="about_use">Kutipan</string>
-    <string name="about_use_desc">HyperCeiler menggunakan beberapa atau semua proyek berikut, terima kasih kepada pengembang proyek ini atas dukungan mereka (tanpa urutan tertentu)</string>
+    <string name="about_use_desc">HyperCraft menggunakan beberapa atau semua proyek berikut, terima kasih kepada pengembang proyek ini atas dukungan mereka (tanpa urutan tertentu)</string>
     <string name="about_contributer">Kontributor</string>
-    <string name="about_contributer_desc">Terima kasih kepada kontributor berikut atas bantuannya dalam pengembangan HyperCeiler (tanpa urutan tertentu)</string>
+    <string name="about_contributer_desc">Terima kasih kepada kontributor berikut atas bantuannya dalam pengembangan HyperCraft (tanpa urutan tertentu)</string>
     <string name="about_donation_desc">Anda bisa mendukung kami dengan donasi di sini</string>
-    <string name="hyperceiler_notice">Tarik bilah status ke bawah untuk menampilkan sakelar pintasan dan pemberitahuan sistem</string>
+    <string name="hypercraft_notice">Tarik bilah status ke bawah untuk menampilkan sakelar pintasan dan pemberitahuan sistem</string>
     <string name="set_homepage_entrance">Siapkan entri beranda</string>
     <string name="help_cant_see_apps_guide">Tidak dapat menemukan fungsi aplikasi?</string>
     <string name="help_cant_see_apps_title">Tidak dapat menemukan fungsi aplikasi di beranda?</string>
-    <string name="help_cant_see_apps_desc">Untuk menjaga kesederhanaan dan kegunaan beranda, kami memiliki akses tersembunyi ke jenis fungsi aplikasi berikut:\n\n - Aplikasi yang saat ini dinonaktifkan atau disembunyikan\n - Aplikasi yang tidak ditemukan di perangkat Anda\n - Aplikasi yang tidak kompatibel dengan aplikasi saat ini versi sistem atau aplikasi\n\nHarap pecahkan masalah berdasarkan informasi di atas, mulai ulang HyperCeiler, dan coba lagi. Jika Anda masih tidak dapat menemukan fungsionalitas aplikasi, mungkin ada bug. Harap berikan masukan yang tepat waktu dan efektif kepada kami.\n\nFungsi aplikasi yang saat ini tersembunyi:</string>
+    <string name="help_cant_see_apps_desc">Untuk menjaga kesederhanaan dan kegunaan beranda, kami memiliki akses tersembunyi ke jenis fungsi aplikasi berikut:\n\n - Aplikasi yang saat ini dinonaktifkan atau disembunyikan\n - Aplikasi yang tidak ditemukan di perangkat Anda\n - Aplikasi yang tidak kompatibel dengan aplikasi saat ini versi sistem atau aplikasi\n\nHarap pecahkan masalah berdasarkan informasi di atas, mulai ulang HyperCraft, dan coba lagi. Jika Anda masih tidak dapat menemukan fungsionalitas aplikasi, mungkin ada bug. Harap berikan masukan yang tepat waktu dan efektif kepada kami.\n\nFungsi aplikasi yang saat ini tersembunyi:</string>
     <string name="help_cant_see_apps_uninstall">Aplikasi yang diuninstall:\n</string>
     <string name="help_cant_see_apps_disable">Dinonaktifkan atau aplikasi tersembunyi:\n</string>
-    <string name="help_cant_see_apps_desc_no_hidden">Untuk menjaga kesederhanaan dan kegunaan beranda, kami memiliki akses tersembunyi ke jenis fungsi aplikasi berikut:\n\n - Aplikasi yang saat ini dinonaktifkan atau disembunyikan\n - Aplikasi yang tidak ditemukan di perangkat Anda\n - Aplikasi yang tidak kompatibel dengan aplikasi saat ini versi sistem atau aplikasi\n\nHarap pecahkan masalah berdasarkan informasi di atas, mulai ulang HyperCeiler, dan coba lagi. Jika Anda masih tidak dapat menemukan fungsionalitas aplikasi, mungkin ada bug. Harap berikan masukan yang tepat waktu dan efektif kepada kami.\n\nSaat ini tidak ada pintu masuk tersembunyi!</string>
+    <string name="help_cant_see_apps_desc_no_hidden">Untuk menjaga kesederhanaan dan kegunaan beranda, kami memiliki akses tersembunyi ke jenis fungsi aplikasi berikut:\n\n - Aplikasi yang saat ini dinonaktifkan atau disembunyikan\n - Aplikasi yang tidak ditemukan di perangkat Anda\n - Aplikasi yang tidak kompatibel dengan aplikasi saat ini versi sistem atau aplikasi\n\nHarap pecahkan masalah berdasarkan informasi di atas, mulai ulang HyperCraft, dan coba lagi. Jika Anda masih tidak dapat menemukan fungsionalitas aplikasi, mungkin ada bug. Harap berikan masukan yang tepat waktu dan efektif kepada kami.\n\nSaat ini tidak ada pintu masuk tersembunyi!</string>
     <string name="help_cant_see_apps_switch">Sembunyikan bantuan ini di beranda</string>
     <string name="location_add">Menambahkan</string>
     <string name="location_delete">Menghapus</string>
@@ -109,7 +109,7 @@
     <string name="about_github">Kode sumber</string>
     <string name="about_github_desc">Proyek ini adalah sumber terbuka berdasarkan lisensi AGPL-3.0</string>
     <string name="about_offical">Website resmi</string>
-    <string name="about_crwd_desc">Bantu kami menerjemahkan HyperCeiler ke dalam bahasa Anda</string>
+    <string name="about_crwd_desc">Bantu kami menerjemahkan HyperCraft ke dalam bahasa Anda</string>
     <string name="about_privacy">Kebijakan Privasi</string>
     <string name="about_protocol">Perjanjian Pengguna</string>
     <!--Pop-up window/miuix part-->

@@ -5,7 +5,7 @@ import argparse,subprocess,json,hashlib,os
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 p=argparse.ArgumentParser();p.add_argument('--output',required=True,type=Path);a=p.parse_args();o=a.output;o.mkdir(parents=True,exist_ok=False)
 r=test_paths.TEST_DATA_ROOT;c=test_paths.BUILD_CACHE;s=test_paths.SNAPSHOT_ROOT / 'source-os4-hyos-test10-20261009-r1'
@@ -13,7 +13,7 @@ cp=[s/f'library/{m}/build/intermediates/javac/debug/compileDebugJavaWithJavac/cl
 cp += list((c/'gradle-home/caches').glob('*/transforms/*/transformed/dexkit-*/jars/classes.jar'))
 cp += [s/'library/processor/build/classes/java/main']
 assert all(p.exists()for p in cp)
-kh=test_paths.KOTLIN_HOME;src=test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/barrage/CustomBarrageLength.kt';sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();route=test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/app/Barrage.java';before={str(test_paths.report_path(p, r)):sha(p)for p in[src,route]}
+kh=test_paths.KOTLIN_HOME;src=test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/barrage/CustomBarrageLength.kt';sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();route=test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/app/Barrage.java';before={str(test_paths.report_path(p, r)):sha(p)for p in[src,route]}
 cp += [kh/'lib/kotlin-stdlib.jar']
 cmd=[str(test_paths.JAVA_HOME / 'bin/java'),'-cp',str(kh/'lib/kotlin-compiler.jar'),'org.jetbrains.kotlin.cli.jvm.K2JVMCompiler','-kotlin-home',str(kh),'-jvm-target','21','-classpath',os.pathsep.join(map(str,cp)),'-d',str(o/'classes'),str(src)];z=subprocess.run(cmd,capture_output=True,text=True);(o/'compile.txt').write_text(z.stdout+z.stderr)
 commands=[cmd]

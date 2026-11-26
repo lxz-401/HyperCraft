@@ -9,7 +9,7 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = Path(os.environ.get(
     "HC_ISSUE1_SOURCE",
-    ROOT / "app/src/main/java/com/sevtinge/hyperceiler/log/db/LogRepository.java",
+    ROOT / "app/src/main/java/com/sevtinge/hypercraft/log/db/LogRepository.java",
 ))
 
 STUBS = {
@@ -36,7 +36,7 @@ public class Log {
     "androidx/room/Room.java": """
 package androidx.room;
 import android.content.Context;
-import com.sevtinge.hyperceiler.log.db.LogDatabase;
+import com.sevtinge.hypercraft.log.db.LogDatabase;
 public class Room {
     public static <T> Builder<T> databaseBuilder(Context context, Class<T> type, String name) {
         if (!context.getDatabasePath(name).getParentFile().isDirectory())
@@ -50,27 +50,27 @@ public class Room {
     }
 }
 """,
-    "com/sevtinge/hyperceiler/common/log/AndroidLog.java": """
-package com.sevtinge.hyperceiler.common.log;
+    "com/sevtinge/hypercraft/common/log/AndroidLog.java": """
+package com.sevtinge.hypercraft.common.log;
 public class AndroidLog {
     public static int errors;
     public static void e(String tag, String text) { errors++; }
     public static void e(String tag, String text, Throwable error) { errors++; }
 }
 """,
-    "com/sevtinge/hyperceiler/log/XposedLogLoader.java": """
-package com.sevtinge.hyperceiler.log;
+    "com/sevtinge/hypercraft/log/XposedLogLoader.java": """
+package com.sevtinge.hypercraft.log;
 import android.content.Context;
 public class XposedLogLoader {
     public static void syncLogsToDatabase(Context context) { throw new RuntimeException("sync failed"); }
 }
 """,
-    "com/sevtinge/hyperceiler/log/db/LogEntry.java": """
-package com.sevtinge.hyperceiler.log.db;
+    "com/sevtinge/hypercraft/log/db/LogEntry.java": """
+package com.sevtinge.hypercraft.log.db;
 public class LogEntry {}
 """,
-    "com/sevtinge/hyperceiler/log/db/LogDao.java": """
-package com.sevtinge.hyperceiler.log.db;
+    "com/sevtinge/hypercraft/log/db/LogDao.java": """
+package com.sevtinge.hypercraft.log.db;
 import java.util.Collections;
 import java.util.List;
 public class LogDao {
@@ -87,8 +87,8 @@ public class LogDao {
     public List<LogEntry> getLogsByModuleAndSourceGroupPageForExport(String module, String group, int limit, int offset) { return Collections.emptyList(); }
 }
 """,
-    "com/sevtinge/hyperceiler/log/db/LogDatabase.java": """
-package com.sevtinge.hyperceiler.log.db;
+    "com/sevtinge/hypercraft/log/db/LogDatabase.java": """
+package com.sevtinge.hypercraft.log.db;
 public class LogDatabase {
     public static final LogDao DAO = new LogDao();
     public LogDao logDao() { return DAO; }
@@ -97,10 +97,10 @@ public class LogDatabase {
     "TestMain.java": """
 import android.content.Context;
 import android.util.Log;
-import com.sevtinge.hyperceiler.common.log.AndroidLog;
-import com.sevtinge.hyperceiler.log.db.LogDatabase;
-import com.sevtinge.hyperceiler.log.db.LogEntry;
-import com.sevtinge.hyperceiler.log.db.LogRepository;
+import com.sevtinge.hypercraft.common.log.AndroidLog;
+import com.sevtinge.hypercraft.log.db.LogDatabase;
+import com.sevtinge.hypercraft.log.db.LogEntry;
+import com.sevtinge.hypercraft.log.db.LogRepository;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
@@ -135,10 +135,10 @@ with tempfile.TemporaryDirectory(prefix="hc-issue1-") as temporary:
         target = work / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(source, encoding="utf-8")
-    target = work / "com/sevtinge/hyperceiler/log/db/LogRepository.java"
+    target = work / "com/sevtinge/hypercraft/log/db/LogRepository.java"
     target.write_text(SOURCE.read_text(encoding="utf-8"), encoding="utf-8")
-    (work / "com/sevtinge/hyperceiler/common/log/ModuleLog.java").write_text(
-        (ROOT / "library/common/src/main/java/com/sevtinge/hyperceiler/common/log/ModuleLog.java").read_text(),
+    (work / "com/sevtinge/hypercraft/common/log/ModuleLog.java").write_text(
+        (ROOT / "library/common/src/main/java/com/sevtinge/hypercraft/common/log/ModuleLog.java").read_text(),
         encoding="utf-8",
     )
     files = [str(path) for path in work.rglob("*.java")]

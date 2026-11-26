@@ -2,11 +2,11 @@ from pathlib import Path
 import subprocess, sys, tempfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 root = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else Path(__file__).resolve().parents[2]
 tests = Path(__file__).resolve().parent
-libhook = root / 'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook'
+libhook = root / 'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook'
 rule = libhook / 'rules/systemui/statusbar/HideStatusBarBeforeScreenshot.java'
 failed = 0
 
@@ -22,7 +22,7 @@ with tempfile.TemporaryDirectory(prefix='hc-hide-statusbar-') as out:
         print(z.stderr, end='')
         sys.exit(z.returncode)
     z = subprocess.run([str(test_paths.java_tool('java')), '-ea', '-cp', out,
-                        'com.sevtinge.hyperceiler.libhook.rules.systemui.statusbar'
+                        'com.sevtinge.hypercraft.libhook.rules.systemui.statusbar'
                         '.HideStatusBarScreenshotRuleTest'],
                        capture_output=True, text=True, encoding='utf-8', errors='replace')
     print(z.stdout, end='')

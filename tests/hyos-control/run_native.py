@@ -9,7 +9,7 @@ files += [base/'control_test.cpp'] + sorted((base/'stubs').rglob('*.h'))
 before={str(f):hashlib.sha256(f.read_bytes()).hexdigest() for f in files}
 with tempfile.TemporaryDirectory(prefix='hc-hyos-control-') as t:
  binary=Path(t)/'control-test'
- cmd=['g++','-std=c++20','-Wall','-Wextra','-Werror','-pthread','-DHC_REAL_CONFIG','-DHYPERCEILER_HYOS_BACKEND','-I'+str(a.sdk.resolve()),'-I'+str(base/'stubs'),'-I'+str(root/'app/src/main/cpp'),str(base/'control_test.cpp'),str(root/'app/src/main/cpp/targets/home/home_layout_config.cpp'),'-o',str(binary)]
+ cmd=['g++','-std=c++20','-Wall','-Wextra','-Werror','-pthread','-DHC_REAL_CONFIG','-DHYPERCRAFT_HYOS_BACKEND','-I'+str(a.sdk.resolve()),'-I'+str(base/'stubs'),'-I'+str(root/'app/src/main/cpp'),str(base/'control_test.cpp'),str(root/'app/src/main/cpp/targets/home/home_layout_config.cpp'),'-o',str(binary)]
  build=subprocess.run(cmd,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT);(a.output/'build.txt').write_text(build.stdout)
  if build.returncode:print(build.stdout);raise SystemExit(build.returncode)
  run=subprocess.run([str(binary)],text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=60);(a.output/'native.txt').write_text(run.stdout);print(run.stdout,end='')

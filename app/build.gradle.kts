@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.detekt)
 }
 
-val apkId = "HyperCeiler"
+val apkId = "HyperCraft"
 val gitHash: String by lazy { runGitCommand("rev-parse", "--short", "HEAD") ?: "unknown" }
 val gitHashLong: String by lazy { runGitCommand("rev-parse", "HEAD") ?: "unknown" }
 val gitCommitCount: Int by lazy { runGitCommand("rev-list", "--count", "HEAD")?.toIntOrNull() ?: 0 }
@@ -35,7 +35,7 @@ fun loadPropertiesFromFile(fileName: String): Properties? =
     }
 
 android {
-    namespace = "com.sevtinge.hyperceiler"
+    namespace = "com.sevtinge.hypercraft"
     compileSdk = libs.versions.compileSdk.get().toInt()
     compileSdkMinor = libs.versions.compileSdkMinor.get().toInt()
     buildToolsVersion = libs.versions.buildToolsVersion.get()

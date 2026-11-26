@@ -1,4 +1,4 @@
-package com.sevtinge.hyperceiler.common.utils
+package com.sevtinge.hypercraft.common.utils
 
 object PrefsBridge {
     fun getInt(key: String, default: Int): Int {

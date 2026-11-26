@@ -23,18 +23,18 @@
 -keep class org.lsposed.** { *; }
 -keep class io.github.lingqiqi5211.ezhooktool.** { *; }
 
-# --- HyperCeiler Core ---
--keep class com.sevtinge.hyperceiler.libhook.app.** { *; }
--keep class com.sevtinge.hyperceiler.libhook.rules.** { *; }
--keep class com.sevtinge.hyperceiler.libhook.safecrash.** { *; }
--keep class * extends com.sevtinge.hyperceiler.libhook.base.BaseHook { <init>(...); }
+# --- HyperCraft Core ---
+-keep class com.sevtinge.hypercraft.libhook.app.** { *; }
+-keep class com.sevtinge.hypercraft.libhook.rules.** { *; }
+-keep class com.sevtinge.hypercraft.libhook.safecrash.** { *; }
+-keep class * extends com.sevtinge.hypercraft.libhook.base.BaseHook { <init>(...); }
 
 # --- Tool ---
--keep class com.sevtinge.hyperceiler.libhook.utils.hookapi.miuiStringToast.res.** { *; }
--keep class com.sevtinge.hyperceiler.libhook.utils.hookapi.blur.** { *; }
--keep class com.sevtinge.hyperceiler.libhook.utils.hookapi.dexkit.** { *; }
--keep class com.sevtinge.hyperceiler.libhook.utils.hookapi.effect.** { *; }
--keep class com.sevtinge.hyperceiler.libhook.utils.hookapi.tool.** { *; }
+-keep class com.sevtinge.hypercraft.libhook.utils.hookapi.miuiStringToast.res.** { *; }
+-keep class com.sevtinge.hypercraft.libhook.utils.hookapi.blur.** { *; }
+-keep class com.sevtinge.hypercraft.libhook.utils.hookapi.dexkit.** { *; }
+-keep class com.sevtinge.hypercraft.libhook.utils.hookapi.effect.** { *; }
+-keep class com.sevtinge.hypercraft.libhook.utils.hookapi.tool.** { *; }
 
 # --- Warnning ---
 -dontwarn android.os.ServiceManager

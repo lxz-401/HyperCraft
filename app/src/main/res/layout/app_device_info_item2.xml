@@ -17,7 +17,7 @@
         android:textAppearance="@style/TextAppearance.PreferenceList"
         android:textColor="@color/textview_black_title"
         android:textSize="24sp"
-        android:text="HyperCeiler User's Device"/>
+        android:text="HyperCraft User's Device"/>
 
     <LinearLayout
         android:id="@+id/info_device"
@@ -36,7 +36,7 @@
             android:textAppearance="@style/TextAppearance.PreferenceList"
             android:textColor="@color/textview_black_title"
             android:textSize="14dp"
-            android:text="HyperCeiler Device"/>
+            android:text="HyperCraft Device"/>
 
         <TextView
             android:id="@+id/device_info_device_summary"

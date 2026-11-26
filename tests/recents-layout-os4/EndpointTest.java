@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
-package com.sevtinge.hyperceiler.libhook.rules.home.dock;
+package com.sevtinge.hypercraft.libhook.rules.home.dock;
 import android.content.ContentResolver;
 import android.os.Parcel;
 import java.util.*;
@@ -12,20 +12,20 @@ public class EndpointTest {
         prefs.put("prefs_key_home_recent_modify_animation",true);
         prefs.put("prefs_key_home_recent_remove_icon",true);
         prefs.put("prefs_key_home_recent_hide_text",false);
-        var cursor = com.sevtinge.hyperceiler.libhook.provider.HomeLayoutPrefsSnapshot.cursor(() -> prefs);
+        var cursor = com.sevtinge.hypercraft.libhook.provider.HomeLayoutPrefsSnapshot.cursor(() -> prefs);
         check(cursor != null && cursor.getExtras().getInt("hc_recent_header_flags",-1)==1);
         check(cursor.getExtras().getInt("hc_recent_dismiss_version",0)==1
             && cursor.getExtras().getInt("home_recent_modify_animation",-1)==1);
-        check(cursor.getColumnCount()==com.sevtinge.hyperceiler.libhook.provider.HomeLayoutPrefsSnapshot.specs().length+1);
+        check(cursor.getColumnCount()==com.sevtinge.hypercraft.libhook.provider.HomeLayoutPrefsSnapshot.specs().length+1);
         prefs.put("prefs_key_home_recent_hide_text",true);
         check(cursor.getExtras().getInt("hc_recent_header_flags",-1)==1);
-        cursor = com.sevtinge.hyperceiler.libhook.provider.HomeLayoutPrefsSnapshot.cursor(() -> prefs);
+        cursor = com.sevtinge.hypercraft.libhook.provider.HomeLayoutPrefsSnapshot.cursor(() -> prefs);
         check(cursor != null && cursor.getExtras().getInt("hc_recent_header_flags",-1)==3);
         prefs.put("prefs_key_home_recent_hide_text","true");
-        cursor = com.sevtinge.hyperceiler.libhook.provider.HomeLayoutPrefsSnapshot.cursor(() -> prefs);
+        cursor = com.sevtinge.hypercraft.libhook.provider.HomeLayoutPrefsSnapshot.cursor(() -> prefs);
         check(cursor != null && cursor.getExtras().getInt("hc_recent_header_version",0)==0);
         var worker=HomeLayoutNativeEndpointOS4.class.getDeclaredField("refresher");worker.setAccessible(true);worker.set(null,new Thread());
-        ContentResolver.setSpecs(com.sevtinge.hyperceiler.libhook.provider.HomeLayoutPrefsSnapshot.specs());
+        ContentResolver.setSpecs(com.sevtinge.hypercraft.libhook.provider.HomeLayoutPrefsSnapshot.specs());
         ContentResolver.recentHeaderExtras=true;
         ContentResolver.recentDismissExtras=true;
         ContentResolver.setRows(Map.of());check(HomeLayoutNativeEndpointOS4.refreshFromProvider());

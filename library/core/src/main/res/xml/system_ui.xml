@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -14,33 +14,33 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory>
     <Preference
-        android:fragment="com.sevtinge.hyperceiler.hooker.systemui.VolumeStyleSettings"
+        android:fragment="com.sevtinge.hypercraft.hooker.systemui.VolumeStyleSettings"
         android:title="@string/system_ui_volume_style_title"
         android:summary="@string/system_ui_volume_style_summary" />
 
     <Preference
-        android:fragment="com.sevtinge.hyperceiler.hooker.systemui.LockScreenSettings"
+        android:fragment="com.sevtinge.hypercraft.hooker.systemui.LockScreenSettings"
         android:title="@string/system_ui_lockscreen_title" />
 
     <Preference
-        android:fragment="com.sevtinge.hyperceiler.hooker.systemui.StatusBarSettings"
+        android:fragment="com.sevtinge.hypercraft.hooker.systemui.StatusBarSettings"
         android:title="@string/system_ui_statusbar_title" />
 
     <Preference
-        android:fragment="com.sevtinge.hyperceiler.hooker.systemui.NavigationSettings"
+        android:fragment="com.sevtinge.hypercraft.hooker.systemui.NavigationSettings"
         android:title="@string/system_ui_navigation_title" />
 
     <Preference
-        android:fragment="com.sevtinge.hyperceiler.hooker.systemui.ControlCenterSettings"
+        android:fragment="com.sevtinge.hypercraft.hooker.systemui.ControlCenterSettings"
         android:title="@string/system_ui_controlcenter_title" />
 
     <Preference
-        android:fragment="com.sevtinge.hyperceiler.hooker.systemui.OtherSettings"
+        android:fragment="com.sevtinge.hypercraft.hooker.systemui.OtherSettings"
         android:title="@string/system_ui_other_title" />
 
     </PreferenceCategory>

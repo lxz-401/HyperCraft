@@ -30,7 +30,7 @@ libxposed API 102 明确规定返回 false 取消热重载，返回 true 前应�
 
 官方接口 https://libxposed.github.io/api/io/github/libxposed/api/XposedModuleInterface.html
 
-重新读取先前提供的 LSPosed_20261026_142550.zip，tombstones/tombstone_22 记录 2026-10-26 14:04:14 system_server SIGABRT，ByteBucketArray.editItemAt(index=18446744073709551615) 检查失败，堆栈位于 AssetManager 资源配置及窗口收尾。AOSP 在 system_server 退出时会结束 zygote，让 init 拉起新运行时，因此系统资源崩溃能够产生类似反馈。该日志没有证明本次新反馈的安装时间，不能确认此崩溃由 HyperCeiler 引起，也不能把桌面探测重试直接当作 zygote 重启原因。
+重新读取先前提供的 LSPosed_20261026_142550.zip，tombstones/tombstone_22 记录 2026-10-26 14:04:14 system_server SIGABRT，ByteBucketArray.editItemAt(index=18446744073709551615) 检查失败，堆栈位于 AssetManager 资源配置及窗口收尾。AOSP 在 system_server 退出时会结束 zygote，让 init 拉起新运行时，因此系统资源崩溃能够产生类似反馈。该日志没有证明本次新反馈的安装时间，不能确认此崩溃由 HyperCraft 引起，也不能把桌面探测重试直接当作 zygote 重启原因。
 
 系统机制 https://android.googlesource.com/platform/frameworks/base/+/master/core/jni/com_android_internal_os_Zygote.cpp
 
@@ -39,8 +39,8 @@ libxposed API 102 明确规定返回 false 取消热重载，返回 true 前应�
 - app/src/main/cpp/targets/home/tweaks/entry.cpp
 - app/src/main/cpp/targets/home/home_layout_hooks.cpp
 - app/src/main/cpp/targets/home/home_binding_retry.h
-- library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/base/XposedInitEntry.java
-- library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/other/NativeHomeHooksOS4.kt
+- library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/base/XposedInitEntry.java
+- library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/other/NativeHomeHooksOS4.kt
 - tests/home-render-performance 下新增 loader_lookup.py，binding_retry.py，hot_reload.py，并接入 run.py
 
 ## 验证

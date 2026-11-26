@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
-package com.sevtinge.hyperceiler.log;
+package com.sevtinge.hypercraft.log;
 
-import com.sevtinge.hyperceiler.log.db.LogEntry;
+import com.sevtinge.hypercraft.log.db.LogEntry;
 
 public final class HomeLayoutEngineLogNamesTest {
     public static void main(String[] args) {
@@ -9,7 +9,7 @@ public final class HomeLayoutEngineLogNamesTest {
         LogEntry historical = new LogEntry("Xposed", "W", "HomeTweaks",
             "HomeTweaks 已启动 hometweaks::Config /files/hometweaks.bin", 1234, "logcat", "1000:12:34");
         historical.setId(-42);
-        assert historical.getTag().equals("HyperCeiler.HomeLayoutEngine");
+        assert historical.getTag().equals("HyperCraft.HomeLayoutEngine");
         assert historical.getMessage().equals("HomeLayoutEngine 已启动 home_layout_engine::Config /files/home_layout_engine.bin");
         assert historical.getId() == -42 && historical.getTimestamp() == 1234;
         assert historical.getLevel().equals("W") && historical.getProcessIds().equals("1000:12:34");

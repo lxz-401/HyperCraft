@@ -1,6 +1,6 @@
-package com.sevtinge.hyperceiler.tests.dock;
+package com.sevtinge.hypercraft.tests.dock;
 
-import com.sevtinge.hyperceiler.libhook.rules.home.dock.DockUnlockReveal;
+import com.sevtinge.hypercraft.libhook.rules.home.dock.DockUnlockReveal;
 
 public final class DockUnlockRevealTest {
     private static void check(boolean value, String message) {

@@ -61,7 +61,7 @@ uses `SetPassBlurSurface` and `setUpdateTextureFlag` on its own SurfaceControl t
 request the background texture. It can return false when the View is unattached,
 when unsupported/filtered, or when the requested state is already set.
 
-A windowless HWUI host in the HyperCeiler process is a possible design, not yet
+A windowless HWUI host in the HyperCraft process is a possible design, not yet
 proven. It needs verification of background-texture delivery, correct surface
 position/visibility, lifecycle cleanup and input transparency. Do not claim that
 calling `setMiGlass` on a detached View adapts the native Flutter launcher.
@@ -88,14 +88,14 @@ into either the app or system_server.
 
 ## Device smoke-test result
 
-The first app-only self-test failed with the HyperCeiler-process log:
-`enablePassWindowBlur not set, because com.sevtinge.hyperceiler not allow!`.
+The first app-only self-test failed with the HyperCraft-process log:
+`enablePassWindowBlur not set, because com.sevtinge.hypercraft not allow!`.
 Both capability getters returned true. `DockGlassHost` now extends only its own
 windowless ViewRoot's instance field `mPassWindowBlurFilterData` with its own
 package name when necessary. No static filter flag, persistent/global setting,
 system property or other app's ViewRoot is changed.
 
-After rebuilding and reinstalling HyperCeiler with data preserved, the fixed
+After rebuilding and reinstalling HyperCraft with data preserved, the fixed
 unparented self-test returned `frameCommitted=true`. Host geometry and preset
 tests passed, and APK v2 signature verification passed. This is not a screenshot
 or a visual comparison, and does not test wallpaper delivery. The phone has not
@@ -157,7 +157,7 @@ native background-texture delivery verification remain required.
 
 The Control Center preset build was compiled, APK-v2 verified and installed with
 `adb install -r`. The app-only smoke test returned `frameCommitted=true`; the
-HyperCeiler PID log recorded a native glass frame commit without an enhancement
+HyperCraft PID log recorded a native glass frame commit without an enhancement
 API fallback or AndroidRuntime error in the captured log. This still does not
 verify the actual Dock's background texture or visual equivalence. Recreate the
 Dock host by toggling its background off/on to pick up the new app-side renderer;
@@ -165,7 +165,7 @@ no additional device reboot was performed for this preset update.
 
 ## Gaussian-looking result: rendering-path investigation
 
-After a user-triggered Dock toggle, HyperCeiler logged an actual (non-self-test)
+After a user-triggered Dock toggle, HyperCraft logged an actual (non-self-test)
 host frame commit at 14:35:23.583. Thus the app-side renderer was reached; absence
 of earlier host logs was not evidence of a permanently missing hook. The user
 still reported Gaussian-looking output. At that point the logs did not expose
@@ -178,14 +178,14 @@ Previously one View had both roles. This is a rendering-path hypothesis under
 test, not a visually confirmed root cause. The exact Control Center preset is
 unchanged in this experiment.
 
-`content call --uri content://com.sevtinge.hyperceiler.provider.sharedprefs
+`content call --uri content://com.sevtinge.hypercraft.provider.sharedprefs
 --method dock_glass_diagnostics` is a read-only, app/system/ADB-shell-only
 diagnostic. It reports this app process's host count, Dock create count,
 last status/release and timestamps (never background pixels). It allows a real
 host to be distinguished from an unparented smoke test and records missing
 textures without modifying the global system log level or other applications.
 
-After the next user-confirmed toggle, diagnostics from HyperCeiler PID 6398
+After the next user-confirmed toggle, diagnostics from HyperCraft PID 6398
 reported `pipeline=container+glassChild`, one Dock create request, one active
 host, no release, and `backgroundReady=true` with texture timestamp
 `2008074045325`. This verifies background-texture delivery to a real Dock host

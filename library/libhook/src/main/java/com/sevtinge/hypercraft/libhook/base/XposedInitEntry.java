@@ -1,0 +1,599 @@
+/*
+ * This file is part of HyperCraft.
+ *
+ * HyperCraft is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * Copyright (C) 2023-2026 HyperCraft Contributions
+ */
+package com.sevtinge.hypercraft.libhook.base;
+
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.os.Build;
+import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.sevtinge.hypercraft.common.log.LogStatusManager;
+import com.sevtinge.hypercraft.common.log.ModuleLog;
+import com.sevtinge.hypercraft.common.log.XposedLog;
+import com.sevtinge.hypercraft.common.utils.PrefsBridge;
+import com.sevtinge.hypercraft.libhook.app.CorePatch.CorePatch;
+import com.sevtinge.hypercraft.libhook.rules.home.dock.HomeLayoutNativeEndpointOS4;
+import com.sevtinge.hypercraft.libhook.rules.home.other.NativeHomeHooksOS4;
+import com.sevtinge.hypercraft.libhook.rules.systemframework.others.FlagSecure;
+import com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.media3.AmbientNativeColorOS4;
+import com.sevtinge.hypercraft.libhook.safecrash.CrashMonitor;
+import com.sevtinge.hypercraft.libhook.utils.api.ContextUtils;
+import com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper;
+import com.sevtinge.hypercraft.libhook.utils.api.ThreadPoolManager;
+
+import java.util.HashMap;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+
+import io.github.libxposed.api.XposedModule;
+import io.github.lingqiqi5211.ezhooktool.xposed.AutomaticHotReloadResult;
+import io.github.lingqiqi5211.ezhooktool.xposed.EzXposed;
+
+/**
+ * Xposed 模块入口（libxposed API 102）。
+ *
+ * @author HyperCraft
+ */
+public class XposedInitEntry extends XposedModule {
+
+    private static final String TAG = "HyperCraft";
+    /** Unconditional logcat tag for launcher-entry stages; raw {@link Log} bypasses the log-level gate. */
+    private static final String LAUNCHER_ENTRY_TAG = "HyperCraft.HomeEntry";
+    private static final String LAUNCHER_PACKAGE = "com.miui.home";
+    private static final String PREF_ALLOW_HOOK = "allow_hook";
+    private static final String PREF_FRAMEWORK_ALLOW_HOOK = "framework_api_allow_hook";
+    private static final String PREF_FRAMEWORK_REASON = "framework_check_reason";
+    private static final String PREF_FRAMEWORK_NAME = "framework_check_name";
+    private static final String PREF_FRAMEWORK_VERSION = "framework_check_version";
+    private static final String PREF_FRAMEWORK_VERSION_CODE = "framework_check_version_code";
+
+    /**
+     * EzHookTool snapshot 之外、本项目需要跨代恢复的宿主状态。
+     *
+     * <p>热重载语义是「旧代码写、新代码读」，槽位布局一旦变化就会被跨版本误读，
+     * 因此和 EzHookTool 的 snapshot 一样带 MAGIC + VERSION 头：布局变更时必须递增
+     * {@link #EXTRA_VERSION}，恢复端校验不通过就整体拒绝，不做部分降级。</p>
+     */
+    private static final String EXTRA_MAGIC = "HyperCraft.HotReloadExtras";
+    private static final int EXTRA_VERSION = 1;
+    private static final int EXTRA_INDEX_MAGIC = 0;
+    private static final int EXTRA_INDEX_VERSION = 1;
+    private static final int EXTRA_INDEX_APP_INFO = 2;
+    private static final int EXTRA_INDEX_APP_CONTEXT = 3;
+    private static final int EXTRA_INDEX_RUNTIME_STATE = 4;
+    private static final int EXTRA_LENGTH = 5;
+
+    protected String processName;
+    private final Object prefsInitLock = new Object();
+    private volatile boolean prefsInited = false;
+    private volatile boolean runtimeInitialized = false;
+    private final java.util.Set<ClassLoader> secondaryPluginLoaders =
+        java.util.Collections.newSetFromMap(new java.util.WeakHashMap<>());
+    private volatile boolean secondaryPluginHooksLoaded;
+
+    @Nullable
+    private volatile PackageTarget mTarget;
+
+    @Override
+    public void onModuleLoaded(@NonNull ModuleLoadedParam param) {
+        XposedLog.d(TAG, "onModuleLoaded: process=" + param.getProcessName());
+        initModule(param);
+    }
+
+    private void initModule(@NonNull ModuleLoadedParam param) {
+        initializeRuntime(param, true);
+    }
+
+    /**
+     * 初始化当前 generation 的项目运行时。
+     *
+     * <p>状态 snapshot、默认自动 hook ID 分配与旧 handle 收尾交给 EzHookTool 的 API 102 热重载入口。
+     * 所有同步规则初始化统一注册为 {@code onTargetReady} 回调，因此初次加载与热重载使用同一条路径；
+     * 个别需要稳定语义 ID 的规则仍可自行声明 {@code reloadKey}。</p>
+     */
+    private void initializeRuntime(@NonNull ModuleLoadedParam param, boolean initializeEzXposed) {
+        processName = param.getProcessName();
+        try { HookDiagnostics.bootstrap(processName,getModuleApplicationInfo().sourceDir); } catch (Throwable ignored) { /* observation only */ }
+        try {
+            initPrefs();
+        } catch (Throwable t) {
+            HookDiagnostics.failure("module.preferences","PREFERENCES",t);
+            XposedLog.w(TAG, processName,
+                "Failed to initialize prefs during module bootstrap; will retry before target hook initialization.", t);
+        }
+        probeLauncherNativeEntry();
+        if (initializeEzXposed) {
+            EzXposed.initOnModuleLoaded(this, param);
+        }
+        BaseLoad.init(this);
+        if (!runtimeInitialized) {
+            EzXposed.onTargetReady(this::installCurrentTargetHooks);
+            runtimeInitialized = true;
+        }
+    }
+
+    @Override
+    public void onSystemServerStarting(@NonNull SystemServerStartingParam lpparam) {
+        mTarget = PackageTarget.ofSystemServer(lpparam);
+        EzXposed.initOnSystemServerStarting(lpparam);
+    }
+
+    @Override
+    public void onPackageLoaded(@NonNull PackageLoadedParam lpparam) {
+        super.onPackageLoaded(lpparam);
+        XposedLog.d(TAG, "onPackageLoaded: pkg=" + lpparam.getPackageName() + " isFirst=" + lpparam.isFirstPackage());
+    }
+
+    @Override
+    public void onPackageReady(@NonNull PackageReadyParam lpparam) {
+        super.onPackageReady(lpparam);
+        XposedLog.d(TAG, "onPackageReady: pkg=" + lpparam.getPackageName() + " isFirst=" + lpparam.isFirstPackage());
+        if (!lpparam.isFirstPackage()) {
+            installSecondaryPackageHooks(lpparam);
+            return;
+        }
+        mTarget = PackageTarget.ofPackageReady(lpparam);
+        EzXposed.initOnPackageReady(lpparam);
+    }
+
+    private void installSecondaryPackageHooks(PackageReadyParam param) {
+        PackageTarget primary = mTarget;
+        if (primary == null || !"com.android.systemui".equals(primary.getPackageName())
+                || !"miui.systemui.plugin".equals(param.getPackageName())) return;
+        initPrefs();
+        if (prepareHookLoad(param.getPackageName())) return;
+        synchronized (secondaryPluginLoaders) {
+            if (secondaryPluginLoaders.contains(param.getClassLoader())) return;
+            invokeSecondaryInit(PackageTarget.ofPackageReady(param));
+            secondaryPluginLoaders.add(param.getClassLoader());
+            secondaryPluginHooksLoaded = true;
+        }
+    }
+
+    protected void invokeSecondaryInit(PackageTarget target) {
+        invokeInitInternal(target.getPackageName(), module -> module.onLoadSecondary(target));
+    }
+
+    @Override
+    public boolean onHotReloading(@NonNull HotReloadingParam param) {
+        // Reject before capture/cleanup or pausing the live config publisher. On OS4/SDK37,
+        // even an identical APK's resource migration reproduced a later native resource crash.
+        // Keep the old generation intact until normal process startup loads the new APK.
+        if (HotReloadCompatibility.requiresProcessRestart(
+                Build.VERSION.SDK_INT, DeviceHelper.System.isHyperOSVersion(4f))) {
+            ModuleLog.w("HyperCraft.HotReload", "RESTART_REQUIRED: keeping live hooks/resources intact"
+                + " sdk=" + Build.VERSION.SDK_INT + " process=" + processName);
+            return false;
+        }
+        // Native hooks and permanent workers have no generation-retirement API.
+        // The synchronous module-entry probe claims native loading before the
+        // framework can request this transition. Reject before Java cleanup on
+        // other SDKs too; keep the live generation until normal process restart.
+        if (processName != null && processName.startsWith(LAUNCHER_PACKAGE)
+                && NativeHomeHooksOS4.INSTANCE.hasNativeLoadStarted()) {
+            ModuleLog.w("HyperCraft.HotReload", "HOT_RELOAD_DEFERRED: launcher native runtime retained"
+                + " process=" + processName + " automatic_restart=false");
+            return false;
+        }
+        // The framework only snapshots/replays the primary package lifecycle. Keep live plugin
+        // hooks intact until a process restart can replay its secondary-package callback too.
+        if (secondaryPluginHooksLoaded) {
+            XposedLog.w(TAG, processName,
+                "Hot reload deferred: secondary SystemUI plugin hooks require a process restart.");
+            return false;
+        }
+        final PackageTarget target = BaseLoad.getTarget();
+        final boolean layoutHost = target != null && target.isSystemServer();
+        if (layoutHost && !HomeLayoutNativeEndpointOS4.pauseForHotReload()) {
+            HomeLayoutNativeEndpointOS4.resumeAfterRejectedHotReload();
+            XposedLog.w(TAG, processName, "Hot reload rejected: layout provider query is still in flight.");
+            return false;
+        }
+        final boolean ambientHost = target != null && "com.android.systemui".equals(target.getPackageName());
+        // ART does not bind an already loaded JNI library to a new module classloader.
+        // Freeze a not-yet-loaded backend before cleanup so a background task cannot
+        // load it between this check and the classloader transition.
+        if (ambientHost && !AmbientNativeColorOS4.pauseForHotReload()) {
+            if (layoutHost) HomeLayoutNativeEndpointOS4.resumeAfterRejectedHotReload();
+            XposedLog.w(TAG, processName,
+                "Hot reload rejected: the ambient native backend is loaded; restart SystemUI to update it.");
+            return false;
+        }
+        boolean accepted = false;
+        try {
+            accepted = prepareHotReloadState(param);
+            return accepted;
+        } finally {
+            if (layoutHost && !accepted) HomeLayoutNativeEndpointOS4.resumeAfterRejectedHotReload();
+            if (ambientHost && !accepted) AmbientNativeColorOS4.resumeAfterRejectedHotReload();
+        }
+    }
+
+    private boolean prepareHotReloadState(@NonNull HotReloadingParam param) {
+        String initializationBlockReason = BaseLoad.getHotReloadBlockReason();
+        if (initializationBlockReason != null) {
+            XposedLog.w(TAG, processName, "Hot reload rejected: " + initializationBlockReason);
+            return false;
+        }
+
+        Object[] extras;
+        try {
+            extras = buildHotReloadExtras();
+        } catch (Throwable t) {
+            XposedLog.e(TAG, processName, "Hot reload rejected: failed to capture process state", t);
+            return false;
+        }
+        if (extras == null) {
+            XposedLog.w(TAG, processName, "Hot reload rejected: process state is incomplete.");
+            return false;
+        }
+        try {
+            // 复用 EzHookTool 的 target snapshot；extras 只承载项目自己的宿主状态。
+            if (!EzXposed.handleHotReloading(param, extras)) {
+                XposedLog.w(TAG, processName,
+                    "Hot reload rejected by EzXposed; see the preceding EzXposed log for details.");
+                return false;
+            }
+        } catch (Throwable t) {
+            XposedLog.e(TAG, processName, "Hot reload rejected: failed to save state", t);
+            return false;
+        }
+
+        if (!prepareForHotReload()) {
+            XposedLog.w(TAG, processName,
+                "Hot reload rejected: old generation cleanup did not complete safely.");
+            return false;
+        }
+        XposedLog.i(TAG, processName, "Hot reload accepted.");
+        return true;
+    }
+
+    @Override
+    public void onHotReloaded(@NonNull HotReloadedParam param) {
+        // API 102 不会为热重载自动重放 onModuleLoaded；这里重建新 generation 的运行时并注册
+        // onTargetReady。重复调用保持幂等，避免重复注册回调。
+        initializeRuntime(param, true);
+        HookDiagnostics.deferred(true);
+        BaseLoad.beginHotReloadVerification();
+        try {
+            AutomaticHotReloadResult result = EzXposed.restoreHotReloadedAutomatically(
+                this,
+                param,
+                extras -> {
+                    HotReloadExtras restored = restoreHotReloadExtras(extras);
+                    if (restored == null) {
+                        throw new IllegalStateException("Hot reload state is missing or incompatible");
+                    }
+                    restoreEzXposedRuntime(restored);
+                }
+            );
+            BaseLoad.verifyHotReloadInitialization();
+            XposedLog.i(TAG, processName,
+                "Hot reload hook transition completed: " + result.getInstalledHookCount()
+                    + " logical hook(s), " + result.getAtomicallyReplacedHookCount()
+                    + " old physical hook(s) atomically replaced, " + result.getRemovedOldHookCount()
+                    + " obsolete physical hook(s) removed.");
+        } catch (Throwable t) {
+            HookDiagnostics.failure("module.hot_reload","HOT_RELOAD",t);
+            XposedLog.e(TAG, processName, "Hot reload re-init failed", t);
+            if (t instanceof RuntimeException runtimeException) {
+                throw runtimeException;
+            }
+            if (t instanceof Error error) {
+                throw error;
+            }
+            throw new IllegalStateException("Hot reload re-init failed", t);
+        } finally {
+            HookDiagnostics.deferred(false);
+            BaseLoad.endHotReloadVerification();
+        }
+    }
+
+    /**
+     * Start the launcher's native motion chain from the module entry instead of the launcher rule.
+     *
+     * <p>LSPosed only calls the module's {@code native_init} when the module itself dlopens the
+     * native library inside the target process; there is no framework-side automatic load. Until
+     * this change the only caller was {@code HomePhone.onPackageLoaded()}, which sits behind rule
+     * matching, crash safe mode and the per-package modification check. Whenever any of those
+     * refused, the library was never loaded, {@code native_init} never ran, system_server received
+     * no native sample and the Dock silently fell back to the {@code miui.wallpaper.animation}
+     * spring. Probing here — before rule selection, on the plain module entry — removes that whole
+     * class of failure and makes the outcome observable in logcat.</p>
+     */
+    private void probeLauncherNativeEntry() {
+        final String name = processName;
+        if (name == null || !name.startsWith(LAUNCHER_PACKAGE)) return;
+        try {
+            ModuleLog.i(LAUNCHER_ENTRY_TAG,
+                "stage=module-entry pkg=" + LAUNCHER_PACKAGE + " process=" + name);
+            NativeHomeHooksOS4.INSTANCE.ensureLoadedFromModuleEntry(name, prefsInited);
+        } catch (Throwable t) {
+            ModuleLog.w(LAUNCHER_ENTRY_TAG, "stage=module-entry probe failed", t);
+        }
+    }
+
+    private void restoreEzXposedRuntime(@NonNull HotReloadExtras extras) {
+        processName = EzXposed.getProcessName();
+        if (extras.appContext() != null) {
+            EzXposed.initAppContext(extras.appContext(), false, true);
+        }
+        BaseHook.restoreHotReloadRuntimeState(extras.runtimeState());
+
+        // 包名与 ClassLoader 由 EzHookTool 的 snapshot 恢复；ApplicationInfo 不在其公开
+        // API 内，因此仍由本项目的 extras 承载（DexKit 需要 dataDir / sourceDir）。
+        if (EzXposed.isSystemServer()) {
+            mTarget = PackageTarget.restored(BaseLoad.SYSTEM_SERVER, null,
+                EzXposed.getClassLoader(), true);
+            return;
+        }
+
+        String packageName = EzXposed.getPackageName();
+        if (TextUtils.isEmpty(packageName) || extras.applicationInfo() == null) {
+            throw new IllegalStateException("Restored package state is incomplete");
+        }
+        mTarget = PackageTarget.restored(packageName, extras.applicationInfo(),
+            EzXposed.getClassLoader(), false);
+    }
+
+    /** 初次加载与自动热重载共同使用的同步规则初始化入口。 */
+    private void installCurrentTargetHooks() {
+        PackageTarget target = mTarget;
+        if (target == null) {
+            throw new IllegalStateException("Target state is unavailable before hook initialization");
+        }
+        XposedLog.d(TAG, "installCurrentTargetHooks: target=" + target.getPackageName() + " process=" + processName);
+        HookDiagnostics.event("module.target","目标进程初始化","INITIALIZING","TARGET_READY","TARGET_READY",target.getPackageName());
+        BaseLoad.beginHookInitialization();
+        final boolean retryingPrefs = !prefsInited;
+        try {
+            // Bootstrap can run before the remote preference service is ready. Target-ready is
+            // the last synchronous opportunity before rules consume preferences; the dispatcher
+            // does not replay a failed generation, so do not defer this to a background task.
+            initPrefs();
+        } catch (Throwable t) {
+            HookDiagnostics.failure("module.preferences","PREFERENCES",t);
+            BaseLoad.recordHookInitializationFailure("PrefsBridge", t);
+            BaseLoad.recordHotReloadInitializationFailure("PrefsBridge", t);
+            throw new IllegalStateException("Remote preferences remain unavailable at target-ready", t);
+        }
+        if (!prepareHookLoad(target.getPackageName())) {
+            // Preferences are now known to be initialized. Let the launcher recovery slot decide
+            // internally whether a deferred load or bootstrap-config repair is still pending; this
+            // must not depend on whether bootstrap itself observed `prefsInited`.
+            if (retryingPrefs && processName != null && processName.startsWith(LAUNCHER_PACKAGE)) {
+                NativeHomeHooksOS4.INSTANCE.onPreferencesReadyAfterRetry();
+            }
+            attachHookLogLevelObserver(target.isSystemServer());
+            if (target.isSystemServer()) {
+                loadSystemEntryHooks(target);
+            }
+            invokeInit(target);
+        }
+        // 热重载时个别规则会自行捕获初始化异常并写入 BaseLoad；必须在 EzHookTool 批次
+        // 发布任何新物理 hook 前把它们转回失败，不能等旧 hook 已收尾后才发现。
+        BaseLoad.verifyHotReloadInitialization();
+    }
+
+    @Nullable
+    private Object[] buildHotReloadExtras() {
+        PackageTarget target = mTarget;
+        if (target == null) return null;
+        Context appContext = null;
+        try {
+            appContext = EzXposed.getAppContextOrNull();
+        } catch (Throwable t) {
+            XposedLog.d(TAG, processName, "Application context is unavailable during hot reload snapshot.");
+        }
+        ApplicationInfo appInfo = target.getApplicationInfo();
+        // 普通应用进程必须带上 ApplicationInfo，否则热重载后 DexKit 无法重建缓存路径。
+        if (!target.isSystemServer() && appInfo == null) return null;
+        Object[] extras = new Object[EXTRA_LENGTH];
+        extras[EXTRA_INDEX_MAGIC] = EXTRA_MAGIC;
+        extras[EXTRA_INDEX_VERSION] = EXTRA_VERSION;
+        extras[EXTRA_INDEX_APP_INFO] = appInfo;
+        extras[EXTRA_INDEX_APP_CONTEXT] = appContext;
+        extras[EXTRA_INDEX_RUNTIME_STATE] = BaseHook.snapshotHotReloadRuntimeState();
+        return extras;
+    }
+
+    private boolean prepareForHotReload() {
+        try {
+            // 先确认模块线程已经结束，避免随后清理引用时旧代码仍在并发执行。
+            if (!ThreadPoolManager.shutdownAndAwait(500, TimeUnit.MILLISECONDS)) {
+                XposedLog.w(TAG, processName,
+                    "Failed to stop all module background tasks before hot reload.");
+                return false;
+            }
+        } catch (Throwable t) {
+            XposedLog.w(TAG, processName, "Failed to stop background tasks before hot reload", t);
+            return false;
+        }
+        try {
+            BaseLoad.prepareHotReload();
+            LogStatusManager.detachHookLogLevelObserver();
+            return true;
+        } catch (Throwable t) {
+            XposedLog.w(TAG, processName,
+                "Failed to release module runtime state before hot reload", t);
+            return false;
+        }
+    }
+
+    /**
+     * 校验并还原本项目的跨代状态。
+     *
+     * <p>布局不符时返回 {@code null}，调用方会把本次热重载判为失败并要求重启目标进程，
+     * 而不是带着部分错位的状态继续运行。</p>
+     */
+    @Nullable
+    private HotReloadExtras restoreHotReloadExtras(@Nullable Object[] extras) {
+        if (extras == null || extras.length != EXTRA_LENGTH) {
+            return null;
+        }
+        if (!EXTRA_MAGIC.equals(extras[EXTRA_INDEX_MAGIC])
+            || !Integer.valueOf(EXTRA_VERSION).equals(extras[EXTRA_INDEX_VERSION])) {
+            return null;
+        }
+        ApplicationInfo appInfo = extras[EXTRA_INDEX_APP_INFO] instanceof ApplicationInfo info ? info : null;
+        Context appContext = extras[EXTRA_INDEX_APP_CONTEXT] instanceof Context context ? context : null;
+        return new HotReloadExtras(appInfo, appContext, extras[EXTRA_INDEX_RUNTIME_STATE]);
+    }
+
+    private record HotReloadExtras(
+        @Nullable ApplicationInfo applicationInfo,
+        @Nullable Context appContext,
+        @Nullable Object runtimeState
+    ) {
+    }
+
+    protected void invokeInit(PackageTarget target) {
+        invokeInitInternal(target.getPackageName(), module -> module.onLoad(target));
+    }
+
+    private void loadSystemEntryHooks(PackageTarget target) {
+        try {
+            new CrashMonitor(target);
+        } catch (Exception e) {
+            XposedLog.e(TAG, "system", "Crash Hook load failed, " + e);
+            BaseLoad.recordHookInitializationFailure("CrashMonitor", e);
+            BaseLoad.recordHotReloadInitializationFailure("CrashMonitor", e);
+        }
+
+        if (PrefsBridge.getBoolean("system_framework_core_patch_enable")) {
+            new CorePatch().onLoad(target);
+            XposedLog.d(TAG, "system", "CorePatch loaded");
+        }
+        if (PrefsBridge.getBoolean("system_other_flag_secure")) {
+            new FlagSecure().onLoad(target);
+            XposedLog.d(TAG, "system", "FlagSecure loaded");
+        }
+    }
+
+    private void invokeInitInternal(String packageName, ModuleLoader loader) {
+        HashMap<String, DataBase> dataMap = DataBase.get();
+
+        ClassLoader classLoader = getClass().getClassLoader();
+        if (classLoader == null) {
+            XposedLog.e(TAG, "ClassLoader is null, skip loading modules for: " + packageName);
+            return;
+        }
+
+        ModuleMatcher.MatchContext context = buildMatchContext(packageName, dataMap);
+        ModuleMatcher matcher = new ModuleMatcher(context);
+
+        XposedLog.d(TAG, "invokeInitInternal for " + packageName + ", total dataMap: " + dataMap.size());
+
+        dataMap.forEach((className, data) -> {
+            boolean should = matcher.shouldLoad(data, packageName);
+            if (!should) return;
+            try {
+                Class<?> clazz = classLoader.loadClass(className);
+                BaseLoad module = (BaseLoad) clazz.getDeclaredConstructor().newInstance();
+                loader.load(module);
+            } catch (ReflectiveOperationException e) {
+                XposedLog.e(TAG, "Failed to load module: " + className, e);
+                BaseLoad.recordHookInitializationFailure(className, e);
+                BaseLoad.recordHotReloadInitializationFailure(className, e);
+            }
+        });
+    }
+
+    private ModuleMatcher.MatchContext buildMatchContext(String packageName, HashMap<String, DataBase> dataMap) {
+        boolean isSystemServer = BaseLoad.SYSTEM_SERVER.equals(packageName);
+        boolean hasExactMatch = dataMap.values().stream()
+            .anyMatch(data -> packageName.equals(data.targetPackage));
+
+        return ModuleMatcher.MatchContext.builder()
+            .systemServer(isSystemServer)
+            .exactMatch(hasExactMatch)
+            .debugMode(PrefsBridge.getBoolean("development_debug_mode"))
+            .build();
+    }
+
+    @FunctionalInterface
+    private interface ModuleLoader {
+        void load(BaseLoad module);
+    }
+
+    protected void initPrefs() {
+        if (prefsInited) {
+            return;
+        }
+        synchronized (prefsInitLock) {
+            if (prefsInited) {
+                return;
+            }
+            PrefsBridge.initForHook(Objects.requireNonNull(
+                getRemotePreferences(PrefsBridge.REMOTE_PREFS_GROUP), "Remote preferences are unavailable"));
+            LogStatusManager.syncLogLevelFromPrefs();
+            prefsInited = true;
+            HookDiagnostics.event("module.preferences","模块配置","INITIALIZED","PREFERENCES","CONFIG_READY","Remote preferences initialized");
+        }
+    }
+
+    private boolean prepareHookLoad(String packageName) {
+        if (!isHookEnabled()) {
+            HookDiagnostics.event("module.target","目标进程初始化","DISABLED","CONFIGURATION","MODULE_DISABLED","Hook loading disabled by existing app state");
+            XposedLog.w(TAG, packageName, "Skip loading hooks because hook loading is disabled by app state.");
+            return true;
+        }
+        return false;
+    }
+
+    private void attachHookLogLevelObserver(boolean isSystem) {
+        ContextUtils.getWaitContext(context -> {
+            if (context != null) {
+                LogStatusManager.attachHookLogLevelObserver(context);
+            }
+        }, isSystem);
+    }
+
+    private boolean isHookEnabled() {
+        return PrefsBridge.getBoolean(PREF_ALLOW_HOOK, false)
+            && isFrameworkAllowedForCurrentRuntime();
+    }
+
+    private boolean isFrameworkAllowedForCurrentRuntime() {
+        boolean allowHook = PrefsBridge.getBoolean(PREF_FRAMEWORK_ALLOW_HOOK, true);
+        if (allowHook) {
+            return true;
+        }
+
+        boolean allowed = FrameworkHookGate.isAllowed(false,
+            PrefsBridge.getString(PREF_FRAMEWORK_REASON, null),
+            () -> new FrameworkHookGate.Fingerprint(getFrameworkName(), getFrameworkVersion(),
+                getFrameworkVersionCode()),
+            () -> new FrameworkHookGate.Fingerprint(PrefsBridge.getString(PREF_FRAMEWORK_NAME, null),
+                PrefsBridge.getString(PREF_FRAMEWORK_VERSION, null),
+                PrefsBridge.getLong(PREF_FRAMEWORK_VERSION_CODE, Long.MIN_VALUE)));
+        if (!allowed) return false;
+
+        XposedLog.i(
+            TAG,
+            processName,
+            "Allow loading hooks temporarily because the running framework differs from the last framework blocked by XposedService."
+        );
+        return true;
+    }
+
+}

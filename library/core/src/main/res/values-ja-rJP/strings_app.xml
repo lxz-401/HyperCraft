@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -15,7 +15,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   --><resources>
     <string name="version_update">新しいバージョンがあります</string>
     <!--Introduction to Xposed Modules-->
@@ -24,10 +24,10 @@
     <string name="new_cta_agree_desc">使用中、より多くの機能を提供するために root/su 権限の許可を求める場合があります。アクセス許可の管理に移動すると、いつでもすべてのアクセス許可を変更できます。root/su 権限については、お使いの root/su マネージャーにアクセスして変更してください。</string>
     <string name="new_cta_app_main_purpose">システムアプリの変更</string>
     <string name="new_cta_app_all_purpose_welcome">利用規約 &amp; プライバシーポリシー</string>
-    <string name="new_cta_app_all_purpose_title">HyperCeiler へようこそ！このアプリは Xposed フレームワークを使用して動作します。このアプリを使用すると、対応アプリを乗っ取ったり改変したりしてシステムを強化することができます。ご利用中に、より多くの機能を提供するために、Root 権限を申請する場合があります。この権限は Root マネージャーからいつでも管理できます。\nHyperCeiler を引き続きご利用いただくことで、<annotation key="protocol">利用規約</annotation>および<annotation key="privacy">プライバシーポリシー</annotation>に同意したものとみなされます。</string>
+    <string name="new_cta_app_all_purpose_title">HyperCraft へようこそ！このアプリは Xposed フレームワークを使用して動作します。このアプリを使用すると、対応アプリを乗っ取ったり改変したりしてシステムを強化することができます。ご利用中に、より多くの機能を提供するために、Root 権限を申請する場合があります。この権限は Root マネージャーからいつでも管理できます。\nHyperCraft を引き続きご利用いただくことで、<annotation key="protocol">利用規約</annotation>および<annotation key="privacy">プライバシーポリシー</annotation>に同意したものとみなされます。</string>
     <string name="new_cta_app_all_purpose_agree">同意 &amp; 続行</string>
     <string name="new_cta_app_all_purpose_reject">拒否 &amp; 終了</string>
-    <!--HyperCeiler Settings/About Page-->
+    <!--HyperCraft Settings/About Page-->
     <string name="language">Japanese (日本語)</string>
     <string name="translator">AndroPlus</string>
     <string name="translator_url">https://github.com/AndroPlus-org</string>
@@ -36,26 +36,26 @@
     <string name="settings">設定</string>
     <string name="about">アプリについて</string>
     <string name="about_use">引用</string>
-    <string name="about_use_desc">HyperCeiler は、以下のオープンソースプロジェクトのソースを一部または全部使用しています。これらのプロジェクトの開発者の方々に感謝をします。 (順不同)</string>
+    <string name="about_use_desc">HyperCraft は、以下のオープンソースプロジェクトのソースを一部または全部使用しています。これらのプロジェクトの開発者の方々に感謝をします。 (順不同)</string>
     <string name="about_contributer">貢献者</string>
-    <string name="about_contributer_desc">HyperCeiler の開発に協力をして頂いた以下の方々に感謝をします。 (順不同)</string>
+    <string name="about_contributer_desc">HyperCraft の開発に協力をして頂いた以下の方々に感謝をします。 (順不同)</string>
     <string name="about_donation">スポンサー</string>
     <string name="about_donation_desc">寄付はこちらから</string>
     <string name="about_device_info_device">デバイス</string>
     <string name="about_device_info_android">Android バージョン</string>
     <string name="about_device_info_os">OS バージョン</string>
-    <string name="hyperceiler_notice">ステータスバーをプルダウンして、ショートカットスイッチとシステム通知を表示します</string>
+    <string name="hypercraft_notice">ステータスバーをプルダウンして、ショートカットスイッチとシステム通知を表示します</string>
     <string name="delete_all_dexkit_cache_desc">DexKit キャッシュをすべて消去しますか？</string>
     <string name="delete_all_dexkit_cache_success">DexKit キャッシュをすべて消去しました</string>
     <string name="set_homepage_entrance">ホームページのエントリを設定</string>
     <string name="set_homepage_entrance_about">注意: この設定を変更してもホームページ上の機能の表示が非表示になるだけで、オンにした機能はオフになりません！\nホームページ上の機能を非表示にするとすぐに有効になり、アプリを再度表示するには再起動する必要があります。</string>
     <string name="help_cant_see_apps_guide">アプリの機能が見つかりませんか？</string>
     <string name="help_cant_see_apps_title">ホームページでアプリの機能が見つかりませんか？</string>
-    <string name="help_cant_see_apps_desc">ホームページのシンプルさと使いやすさを維持するため、以下のタイプのアプリ機能を非表示にしています:\n\n • 現在無効か非表示になっているアプリの機能\n • デバイスにないアプリの機能\n • 現在のシステムバージョンやアプリバージョンに非対応の機能\n • スコープとして選択されていないアプリの機能\n\n上記に当てはまるか確認し、修正したら HyperCeiler を再起動してください。それでも出てこなければバグかもしれません。タイムリーで効果的なフィードバックを提供してください。\n\n現在非表示になっているアプリ機能:</string>
+    <string name="help_cant_see_apps_desc">ホームページのシンプルさと使いやすさを維持するため、以下のタイプのアプリ機能を非表示にしています:\n\n • 現在無効か非表示になっているアプリの機能\n • デバイスにないアプリの機能\n • 現在のシステムバージョンやアプリバージョンに非対応の機能\n • スコープとして選択されていないアプリの機能\n\n上記に当てはまるか確認し、修正したら HyperCraft を再起動してください。それでも出てこなければバグかもしれません。タイムリーで効果的なフィードバックを提供してください。\n\n現在非表示になっているアプリ機能:</string>
     <string name="help_cant_see_apps_uninstall">アンインストールされたアプリ:\n</string>
     <string name="help_cant_see_apps_disable">無効または非表示のアプリ:\n</string>
     <string name="help_cant_see_apps_scope">スコープとして未選択:\n</string>
-    <string name="help_cant_see_apps_desc_no_hidden">ホームページのシンプルさと使いやすさを維持するため、以下のタイプのアプリ機能を非表示にしています:\n\n • 現在無効か非表示になっているアプリの機能\n • デバイスにないアプリの機能\n • 現在のシステムバージョンやアプリバージョンに非対応の機能\n • スコープとして選択されていないアプリの機能\n\n上記に当てはまるか確認し、修正したら HyperCeiler を再起動してください。それでも出てこなければバグかもしれません。タイムリーで効果的なフィードバックを提供してください。\n\n現在非表示になっているアプリ機能はありません！</string>
+    <string name="help_cant_see_apps_desc_no_hidden">ホームページのシンプルさと使いやすさを維持するため、以下のタイプのアプリ機能を非表示にしています:\n\n • 現在無効か非表示になっているアプリの機能\n • デバイスにないアプリの機能\n • 現在のシステムバージョンやアプリバージョンに非対応の機能\n • スコープとして選択されていないアプリの機能\n\n上記に当てはまるか確認し、修正したら HyperCraft を再起動してください。それでも出てこなければバグかもしれません。タイムリーで効果的なフィードバックを提供してください。\n\n現在非表示になっているアプリ機能はありません！</string>
     <string name="help_cant_see_apps_switch">ホームページでこのヘルプを隠す</string>
     <string name="help_cant_see_apps_switch_desc">このページは「アプリについて &gt; ヘルプ」で確認できます。適用するにはアプリを再起動してください。</string>
     <string name="help_support_version_title">現在のアプリバージョンとサポートしているシステムバージョンの一覧</string>
@@ -134,7 +134,7 @@
     <string name="about_github_desc">このプロジェクトは、AGPL-3.0 ライセンスに基づいたオープンソースです</string>
     <string name="about_offical">公式 Web サイト</string>
     <string name="about_crwd">翻訳</string>
-    <string name="about_crwd_desc">HyperCeiler の翻訳にご協力ください</string>
+    <string name="about_crwd_desc">HyperCraft の翻訳にご協力ください</string>
     <string name="about_privacy">プライバシーポリシー</string>
     <string name="about_protocol">利用規約</string>
     <!--Pop-up window/miuix part-->
@@ -491,7 +491,7 @@
     <string name="community">Xiaomi Community</string>
     <string name="community_device_modify">モデル名を偽装する</string>
     <string name="community_fuck_detection">検出をブロックする</string>
-    <string name="community_fuck_detection_desc">HyperCeiler の検出を防止し、フィードバックを行いながらアップロードしてください。不必要なトラブルを避けるため、フィードバックする前に、その問題があなたに起因するものではなく、実際のシステムの問題であることを確認してください。</string>
+    <string name="community_fuck_detection_desc">HyperCraft の検出を防止し、フィードバックを行いながらアップロードしてください。不必要なトラブルを避けるため、フィードバックする前に、その問題があなたに起因するものではなく、実際のシステムの問題であることを確認してください。</string>
     <!--File Manager-->
     <string name="fileexplorer">ファイルマネージャー</string>
     <string name="file_explorer_can_selectable">フォルダ名の長押しで選択可能にする</string>
@@ -1613,9 +1613,9 @@
     <string name="contacts_disable_offline_info_manager">ビジネスホールのオフライン設定を無効化</string>
     <string name="health_disable_splash_ad">スプラッシュ広告を無効化</string>
     <string name="health">Mi Fitness</string>
-    <string name="clear_app_properties_desc">HyperCeiler 関連サービスのプロパティをリセットしてもよろしいですか？</string>
-    <string name="clear_app_properties_success">HyperCeiler 関連サービスのプロパティがリセットされました</string>
-    <string name="development_clear_app_properties">HyperCeiler 関連サービスのプロパティをリセットする</string>
+    <string name="clear_app_properties_desc">HyperCraft 関連サービスのプロパティをリセットしてもよろしいですか？</string>
+    <string name="clear_app_properties_success">HyperCraft 関連サービスのプロパティがリセットされました</string>
+    <string name="development_clear_app_properties">HyperCraft 関連サービスのプロパティをリセットする</string>
     <string name="system_ui_status_bar_hide_icon_desc">「スクリーンショット」のスコープを追加で選択する必要があります。</string>
     <string name="gallery_longer_trashbin_time">最近削除したアイテムの保持期間を 365 日間に延長</string>
     <string name="gallery_longer_trashbin_time_desc">実験的な機能です。中国本土のユーザーのみが対象です。</string>

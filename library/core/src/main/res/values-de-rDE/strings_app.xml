@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -15,42 +15,42 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   --><resources>
     <string name="version_update">Neue Version gefunden</string>
     <!--Introduction to Xposed Modules-->
     <string name="new_permission_wifi_state_desc">Dateien auf dem internen Speicher des Geräts hinzufügen und löschen</string>
     <string name="new_permission_location_desc">Wird zur Bereitstellung von Diensten wie Breiten- und Längengraden verwendet</string>
     <string name="new_cta_app_main_purpose">Systemanwendungen ändern</string>
-    <!--HyperCeiler Settings/About Page-->
+    <!--HyperCraft Settings/About Page-->
     <string name="language">Deutsch</string>
-    <string name="translator">HyperCeiler Offiziell</string>
+    <string name="translator">HyperCraft Offiziell</string>
     <string name="translator_url">https://github.com/ReChronoRain</string>
     <string name="home">Hauptseite</string>
     <string name="help">Hilfe</string>
     <string name="settings">Einstellungen</string>
     <string name="about">Über</string>
     <string name="about_use">Referenzen</string>
-    <string name="about_use_desc">HyperCeiler verwendet einige oder alle der folgenden Projekte, vielen Dank an die Entwickler dieser Projekte für ihre Unterstützung (in keiner bestimmten Reihenfolge)</string>
+    <string name="about_use_desc">HyperCraft verwendet einige oder alle der folgenden Projekte, vielen Dank an die Entwickler dieser Projekte für ihre Unterstützung (in keiner bestimmten Reihenfolge)</string>
     <string name="about_contributer">Mitwirkende</string>
-    <string name="about_contributer_desc">Vielen Dank an die folgenden Mitwirkenden für ihre Hilfe bei der Entwicklung von HyperCeiler (in keiner bestimmten Reihenfolge)</string>
+    <string name="about_contributer_desc">Vielen Dank an die folgenden Mitwirkenden für ihre Hilfe bei der Entwicklung von HyperCraft (in keiner bestimmten Reihenfolge)</string>
     <string name="about_donation">Sponsern</string>
     <string name="about_donation_desc">Du kannst uns hier durch eine Spende unterstützen</string>
     <string name="about_device_info_device">Gerät</string>
     <string name="about_device_info_android">Android-Version</string>
     <string name="about_device_info_os">OS-Version</string>
-    <string name="hyperceiler_notice">Ziehe die Statusleiste nach unten, um Schnellschalter und Systembenachrichtigungen anzuzeigen</string>
+    <string name="hypercraft_notice">Ziehe die Statusleiste nach unten, um Schnellschalter und Systembenachrichtigungen anzuzeigen</string>
     <string name="delete_all_dexkit_cache_desc">Bist du sicher, dass du den gesamten DexKit-Cache löschen möchtest?</string>
     <string name="delete_all_dexkit_cache_success">DexKit-Cache erfolgreich gelöscht</string>
     <string name="set_homepage_entrance">Startseiten-Eintrag einrichten</string>
     <string name="set_homepage_entrance_about">Hinweis: Das Ändern dieser Einstellung verbirgt nur die Sichtbarkeit der Funktion auf der Startseite, bereits aktivierte Funktionen werden nicht deaktiviert!\nDas Verbergen der Funktion auf der Startseite wird sofort wirksam, die App muss neu gestartet werden, damit sie wieder erscheint.</string>
     <string name="help_cant_see_apps_guide">Findest du die App-Funktionen nicht?</string>
     <string name="help_cant_see_apps_title">Findest du die App-Funktionen auf der Startseite nicht?</string>
-    <string name="help_cant_see_apps_desc">Um die Einfachheit und Benutzerfreundlichkeit der Startseite zu erhalten, haben wir den Zugang zu den folgenden Arten von App-Funktionen verborgen:\n\n • Derzeit deaktivierte oder versteckte\n • Nicht auf deinem Gerät gefundene\n • Nicht kompatibel mit der aktuellen Version des Systems oder der App\n • Nicht als Geltungsbereich ausgewählt\n\nBitte behebe das Problem basierend auf den obigen Informationen, starte HyperCeiler neu und versuche es erneut. Wenn du die App-Funktionen immer noch nicht finden kannst, könnte es sich um einen Fehler handeln. Bitte gib uns zeitnah und effektiv Feedback.\n\nDerzeit versteckte App-Funktionen:</string>
+    <string name="help_cant_see_apps_desc">Um die Einfachheit und Benutzerfreundlichkeit der Startseite zu erhalten, haben wir den Zugang zu den folgenden Arten von App-Funktionen verborgen:\n\n • Derzeit deaktivierte oder versteckte\n • Nicht auf deinem Gerät gefundene\n • Nicht kompatibel mit der aktuellen Version des Systems oder der App\n • Nicht als Geltungsbereich ausgewählt\n\nBitte behebe das Problem basierend auf den obigen Informationen, starte HyperCraft neu und versuche es erneut. Wenn du die App-Funktionen immer noch nicht finden kannst, könnte es sich um einen Fehler handeln. Bitte gib uns zeitnah und effektiv Feedback.\n\nDerzeit versteckte App-Funktionen:</string>
     <string name="help_cant_see_apps_uninstall">Deinstallierte Apps:\n</string>
     <string name="help_cant_see_apps_disable">Deaktivierte oder versteckte Apps:\n</string>
     <string name="help_cant_see_apps_scope">Nicht als Geltungsbereich ausgewählt:\n</string>
-    <string name="help_cant_see_apps_desc_no_hidden">Um die Einfachheit und Benutzerfreundlichkeit der Startseite zu erhalten, haben wir den Zugang zu den folgenden Arten von App-Funktionen verborgen:\n\n • Derzeit deaktivierte oder versteckte\n • Nicht auf deinem Gerät gefundene\n • Nicht kompatibel mit der aktuellen Version des Systems oder der App\n • Nicht als Geltungsbereich ausgewählt\n\nBitte behebe das Problem basierend auf den obigen Informationen, starte HyperCeiler neu und versuche es erneut. Wenn du die App-Funktionen immer noch nicht finden kannst, könnte es sich um einen Fehler handeln. Bitte gib uns zeitnah und effektiv Feedback.\n\nEs gibt derzeit keine versteckten Funktionen!</string>
+    <string name="help_cant_see_apps_desc_no_hidden">Um die Einfachheit und Benutzerfreundlichkeit der Startseite zu erhalten, haben wir den Zugang zu den folgenden Arten von App-Funktionen verborgen:\n\n • Derzeit deaktivierte oder versteckte\n • Nicht auf deinem Gerät gefundene\n • Nicht kompatibel mit der aktuellen Version des Systems oder der App\n • Nicht als Geltungsbereich ausgewählt\n\nBitte behebe das Problem basierend auf den obigen Informationen, starte HyperCraft neu und versuche es erneut. Wenn du die App-Funktionen immer noch nicht finden kannst, könnte es sich um einen Fehler handeln. Bitte gib uns zeitnah und effektiv Feedback.\n\nEs gibt derzeit keine versteckten Funktionen!</string>
     <string name="help_cant_see_apps_switch">Diese Hilfe auf der Startseite ausblenden</string>
     <string name="help_cant_see_apps_switch_desc">Du kannst diese Seite immer noch unter Über &gt; Hilfe finden. App neu starten, um anzuwenden.</string>
     <string name="help_support_version_title">Aktuelle App-Version unterstützt Systemversions-Liste</string>
@@ -129,7 +129,7 @@
     <string name="about_github_desc">Dieses Projekt ist Open Source basierend auf der AGPL-3.0-Lizenz</string>
     <string name="about_offical">Offizielle Website</string>
     <string name="about_crwd">Crowdin</string>
-    <string name="about_crwd_desc">Hilf uns, HyperCeiler in deine Sprache zu übersetzen</string>
+    <string name="about_crwd_desc">Hilf uns, HyperCraft in deine Sprache zu übersetzen</string>
     <string name="about_privacy">Datenschutzrichtlinie</string>
     <string name="about_protocol">Benutzervereinbarung</string>
     <!--Pop-up window/miuix part-->
@@ -472,7 +472,7 @@
     <string name="community">Xiaomi Community</string>
     <string name="community_device_modify">Modell vortäuschen</string>
     <string name="community_fuck_detection">Erkennung blockieren</string>
-    <string name="community_fuck_detection_desc">Erkennung von HyperCeiler verhindern und beim Feedback hochladen. Bitte stelle sicher, dass das Problem nicht von dir verursacht wird, sondern ein echtes Systemproblem ist, bevor du Feedback gibst, um unnötige Probleme zu vermeiden.</string>
+    <string name="community_fuck_detection_desc">Erkennung von HyperCraft verhindern und beim Feedback hochladen. Bitte stelle sicher, dass das Problem nicht von dir verursacht wird, sondern ein echtes Systemproblem ist, bevor du Feedback gibst, um unnötige Probleme zu vermeiden.</string>
     <!--File Manager-->
     <string name="fileexplorer">Dateimanager</string>
     <string name="file_explorer_can_selectable">Direktes langes Drücken des Ordnernamens und Aktionen erlauben</string>

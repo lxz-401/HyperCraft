@@ -12,6 +12,6 @@ esac
 [ -f /system_ext/bin/hyos_spawner ] || abort "HyperOS Rust spawner is unavailable."
 set_perm_recursive "$MODPATH" 0 0 0755 0644
 ui_print "Experimental Home and Weather native companion installed."
-ui_print "Requires matching HyperCeiler APK, LSPosed system scope, and Zygisk Next API 4 / Hyos API 1."
+ui_print "Requires matching HyperCraft APK, LSPosed system scope, and Zygisk Next API 4 / Hyos API 1."
 ui_print "No framework is bundled or enabled by this installer. Reboot using your normal root-manager workflow."
 ui_print "Startup-only layouts and real-device stability have not passed device acceptance."

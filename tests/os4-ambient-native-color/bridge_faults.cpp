@@ -15,9 +15,9 @@ extern "C" void* __real_dlopen(const char*,int);
 extern "C" void* __real_android_dlopen_ext(const char*,int,const android_dlextinfo*);
 extern "C" void* __real_malloc(size_t);
 extern "C" ssize_t __real_pread(int,void*,size_t,off_t);
-extern "C" JNIEXPORT void JNICALL Java_local_hyperceiler_colorprobe_MainActivity_fault(JNIEnv*,jclass,jint s){scenario=s;}
-extern "C" JNIEXPORT jint JNICALL Java_local_hyperceiler_colorprobe_MainActivity_forceCalls(JNIEnv*,jclass){return force_calls;}
-extern "C" JNIEXPORT jint JNICALL Java_local_hyperceiler_colorprobe_MainActivity_initAttempts(JNIEnv*,jclass){return init_attempts;}
+extern "C" JNIEXPORT void JNICALL Java_local_hypercraft_colorprobe_MainActivity_fault(JNIEnv*,jclass,jint s){scenario=s;}
+extern "C" JNIEXPORT jint JNICALL Java_local_hypercraft_colorprobe_MainActivity_forceCalls(JNIEnv*,jclass){return force_calls;}
+extern "C" JNIEXPORT jint JNICALL Java_local_hypercraft_colorprobe_MainActivity_initAttempts(JNIEnv*,jclass){return init_attempts;}
 extern "C" void* __wrap_dlsym(void* h,const char* n){
  if(h==RTLD_DEFAULT&&strcmp(n,"_Z15getMainColorHCTP7_JNIEnvP7_jclassP10_jintArrayii")==0)++init_attempts;
  if(scenario==1&&h==RTLD_DEFAULT&&strcmp(n,"_ZN24material_color_utilities3HctC1Ej")==0)return reinterpret_cast<void*>(1);
@@ -39,7 +39,7 @@ extern "C" void* __wrap_android_dlopen_ext(const char* p,int f,const android_dle
 extern "C" void* __wrap_malloc(size_t size){if(scenario==8&&size==362752)return nullptr;return __real_malloc(size);}
 extern "C" ssize_t __wrap_pread(int fd,void* p,size_t n,off_t o){++pread_calls;if(scenario==9)return 0;if(scenario==10&&pread_calls==1){errno=EINTR;return -1;}return __real_pread(fd,p,n,o);}
 #include <stdexcept>
-extern "C" JNIEXPORT jlong JNICALL Java_com_sevtinge_hyperceiler_libhook_rules_systemui_controlcenter_media3_AmbientNativeColorOS4_nativeResolve(JNIEnv*,jclass,jintArray,jint,jint);
+extern "C" JNIEXPORT jlong JNICALL Java_com_sevtinge_hypercraft_libhook_rules_systemui_controlcenter_media3_AmbientNativeColorOS4_nativeResolve(JNIEnv*,jclass,jintArray,jint,jint);
 static const JNINativeInterface* saved_jni=nullptr;static int special_mode=0,throws=0;
 static int throw_algorithm(void*,int*,int,int,int*){++throws;throw std::runtime_error("injected vendor failure after histogram mutation");}
 static void JNICALL region(JNIEnv* env,jintArray a,jsize start,jsize len,jint* out){
@@ -50,14 +50,14 @@ static void JNICALL region(JNIEnv* env,jintArray a,jsize start,jsize len,jint* o
  if(special_mode==15){uint32_t words[2]={0x2a1f03e0,0xd65f03c0};alter(pc,words,sizeof(words),PROT_READ|PROT_EXEC);}
  __builtin___clear_cache(reinterpret_cast<char*>(pc),reinterpret_cast<char*>(pc+16));
 }
-extern "C" JNIEXPORT jlong JNICALL Java_local_hyperceiler_colorprobe_MainActivity_special(JNIEnv* env,jclass,jint mode,jintArray a){
+extern "C" JNIEXPORT jlong JNICALL Java_local_hypercraft_colorprobe_MainActivity_special(JNIEnv* env,jclass,jint mode,jintArray a){
  saved_jni=env->functions;JNINativeInterface table=*saved_jni;table.GetIntArrayRegion=region;special_mode=mode;env->functions=&table;
- const jlong result=Java_com_sevtinge_hyperceiler_libhook_rules_systemui_controlcenter_media3_AmbientNativeColorOS4_nativeResolve(env,nullptr,a,112,112);
+ const jlong result=Java_com_sevtinge_hypercraft_libhook_rules_systemui_controlcenter_media3_AmbientNativeColorOS4_nativeResolve(env,nullptr,a,112,112);
  const bool pending=env->ExceptionCheck();env->functions=saved_jni;
  // Only this test observer consumes the injected exception, after proving it survived.
  if(pending)env->ExceptionClear();
  if(mode==13)return result==0&&pending?1:0;
- if(mode==14){const jlong second=Java_com_sevtinge_hyperceiler_libhook_rules_systemui_controlcenter_media3_AmbientNativeColorOS4_nativeResolve(env,nullptr,a,112,112);return result==0&&second==0&&!pending&&throws==1?1:0;}
+ if(mode==14){const jlong second=Java_com_sevtinge_hypercraft_libhook_rules_systemui_controlcenter_media3_AmbientNativeColorOS4_nativeResolve(env,nullptr,a,112,112);return result==0&&second==0&&!pending&&throws==1?1:0;}
  return result;
 }
 

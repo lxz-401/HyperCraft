@@ -14,7 +14,7 @@ parser.add_argument(
     "--source",
     type=Path,
     default=ROOT
-    / "library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/systemui/statusbar/network/NetworkSpeedSpacing.java",
+    / "library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemui/statusbar/network/NetworkSpeedSpacing.java",
 )
 args = parser.parse_args()
 
@@ -32,7 +32,7 @@ with tempfile.TemporaryDirectory(prefix="hc-network-spacing-") as tmp:
         file.write_text(fixture.read_text())
     target = (
         work
-        / "com/sevtinge/hyperceiler/libhook/rules/systemui/statusbar/network/NetworkSpeedSpacing.java"
+        / "com/sevtinge/hypercraft/libhook/rules/systemui/statusbar/network/NetworkSpeedSpacing.java"
     )
     target.parent.mkdir(parents=True)
     target.write_text(args.source.read_text())

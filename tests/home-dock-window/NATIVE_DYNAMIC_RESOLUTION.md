@@ -120,7 +120,7 @@ premature scan therefore cannot remain stuck until another overview gesture.
   ownership, early PID rebinding, same-sample overview reinterpretation, fallback
   continuity, background-mode migration and glass presets.
 - The production assembly was cross-compiled and executed on the connected
-  phone using HyperCeiler-only synthetic fixtures. Registers x0-x15, NZCV,
+  phone using HyperCraft-only synthetic fixtures. Registers x0-x15, NZCV,
   Dart stack, unchanged fixtures, all five Hotseat classifications, raw `d0` preservation,
   scene guards and eventfd notifications passed.
   A second fixture changed the class-ID bit shift, mask, tagged-header offset,
@@ -136,8 +136,8 @@ Host artifact test (pass paths to extracted ELF files, not APKs):
 
 ```sh
 clang++ -std=c++20 -O2 -Wall -Wextra -Werror \
-  tests/home-dock-window/DockNativeResolverTest.cpp -o /tmp/HyperCeilerResolverTest
-/tmp/HyperCeilerResolverTest /path/to/6179/libapp.so /path/to/6236/libapp.so
+  tests/home-dock-window/DockNativeResolverTest.cpp -o /tmp/HyperCraftResolverTest
+/tmp/HyperCraftResolverTest /path/to/6179/libapp.so /path/to/6236/libapp.so
 ```
 
 ## Codacy PR 1686

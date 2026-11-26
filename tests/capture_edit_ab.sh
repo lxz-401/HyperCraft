@@ -2,9 +2,9 @@
 # A/B in edit mode: startIndictorAnimation is one of the two consumers, and edit mode is where the
 # page indicator is actually drawn. $1 = enable(0/1), $2 = value, $3 = output png.
 ADB="${ADB:-adb}"
-URI="content://com.sevtinge.hyperceiler.provider.sharedprefs"
+URI="content://com.sevtinge.hypercraft.provider.sharedprefs"
 ENABLE="$1"; VALUE="$2"; OUT="$3"
-"$ADB" shell setprop debug.hyperceiler.prefs_write 1
+"$ADB" shell setprop debug.hypercraft.prefs_write 1
 if [ "$ENABLE" = "1" ]; then
   "$ADB" shell content call --uri "$URI" --method hc_debug_put --arg integer:home_layout_indicator_margin_bottom:"$VALUE"
 fi
@@ -19,5 +19,5 @@ sleep 10
 sleep 6
 "$ADB" exec-out screencap -p > "$OUT"
 echo "=== last hits line ==="
-"$ADB" logcat -d -s HyperCeiler.HomeLayout:I | grep -E "hook hits" | tail -1 | tr ' ' '\n' | grep -A0 -E "indicatorOffsetBottomPortrait" -A4 | tr '\n' ' '
+"$ADB" logcat -d -s HyperCraft.HomeLayout:I | grep -E "hook hits" | tail -1 | tr ' ' '\n' | grep -A0 -E "indicatorOffsetBottomPortrait" -A4 | tr '\n' ' '
 echo

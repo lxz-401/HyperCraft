@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@android:color/transparent">
 
-    <com.sevtinge.hyperceiler.hooker.systemui.widget.VolumeStylePreviewView
+    <com.sevtinge.hypercraft.hooker.systemui.widget.VolumeStylePreviewView
         android:id="@+id/volume_preview_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

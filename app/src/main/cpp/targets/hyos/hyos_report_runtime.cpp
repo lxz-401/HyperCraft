@@ -15,7 +15,7 @@
 #include <vector>
 
 namespace {
-constexpr char kLogTag[] = "HyperCeiler.HomeReport";
+constexpr char kLogTag[] = "HyperCraft.HomeReport";
 bool g_installed = false; // The single control worker owns discovery/installation.
 int g_last_status = -1;
 struct Context {
@@ -70,7 +70,7 @@ void enumerate(void *opaque, home_report::SymbolVisitor visitor, void *data) {
 }
 } // namespace
 
-void hyperceiler_hyos_retry_home_report(const ZygiskNextAPI *api) {
+void hypercraft_hyos_retry_home_report(const ZygiskNextAPI *api) {
     if (g_installed || nhk::home_safe_mode::decision().blocked
         || !hyos_control::feature_enabled(hyos_control::kHideReport)
         || api == nullptr || api->newSymbolResolver == nullptr || api->freeSymbolResolver == nullptr

@@ -16,7 +16,7 @@ We recommend always using the latest release from the main branch.
 
 Instead, please report them via one of these channels:
 
-1. **Email**: security@hyperceiler.org (PGP key available on request)
+1. **Email**: security@hypercraft.org (PGP key available on request)
 2. **GitHub Security Advisories**: Use the "Report a vulnerability" tab in the Security section of this repository
 3. **Direct Message**: Contact maintainers via Discord/Telegram (links in README)
 
@@ -36,7 +36,7 @@ Instead, please report them via one of these channels:
 ## Security Model
 
 ### Threat Model
-HyperCeiler is an Xposed module that hooks into system processes (SystemUI, Home, Settings, etc.) on Xiaomi HyperOS/MIUI devices. The security model assumes:
+HyperCraft is an Xposed module that hooks into system processes (SystemUI, Home, Settings, etc.) on Xiaomi HyperOS/MIUI devices. The security model assumes:
 
 1. **User Intent**: The user explicitly installs and enables the module via LSPosed/KernelSU
 2. **Root Access**: The module runs with elevated privileges (via Xposed framework)
@@ -92,7 +92,7 @@ We follow **Coordinated Vulnerability Disclosure**:
 ## Contact
 
 For security questions or concerns not covered here:
-- **Email**: security@hyperceiler.org
+- **Email**: security@hypercraft.org
 - **PGP**: Available on request via email
 
 We appreciate responsible disclosure and will credit reporters in our security advisories.

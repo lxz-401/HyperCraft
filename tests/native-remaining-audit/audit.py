@@ -18,7 +18,7 @@ import sys
 import zipfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 
 sys.dont_write_bytecode = True
@@ -28,7 +28,7 @@ SPEC = importlib.util.spec_from_file_location(
 ELF = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(ELF)
 JAVA = ROOT / "library/libhook/src/main/java"
-APP = JAVA / "com/sevtinge/hyperceiler/libhook/app"
+APP = JAVA / "com/sevtinge/hypercraft/libhook/app"
 
 
 def sha(data):
@@ -227,7 +227,7 @@ def render(report):
 
 def audit(project, objdump):
     out = project / 'acceptance'
-    rom_root = test_paths.configured_path('HYPERCEILER_ROM_ROOT', project / 'firmware')
+    rom_root = test_paths.configured_path('HYPERCRAFT_ROM_ROOT', project / 'firmware')
     evidence = out / "native-evidence"
     evidence.mkdir(parents=True, exist_ok=True)
     inventory = json.loads((rom_root / 'component-inventory.json').read_text())
@@ -329,9 +329,9 @@ def audit(project, objdump):
     subprocess.run([str(objdump), "-D", "--no-show-raw-insn", f'--start-address={hdr["va"]}',
                     f'--stop-address={hdr["va"] + hdr["size"]}', str(gal_image)],
                    check=True, stdout=hdr_asm.open("w"))
-    snapshot = JAVA / "com/sevtinge/hyperceiler/libhook/provider/HomeLayoutPrefsSnapshot.java"
-    endpoint = JAVA / "com/sevtinge/hyperceiler/libhook/rules/home/dock/HomeLayoutNativeEndpointOS4.java"
-    entry = ROOT / "app/src/main/cpp/targets/home/hyperceiler_home.cpp"
+    snapshot = JAVA / "com/sevtinge/hypercraft/libhook/provider/HomeLayoutPrefsSnapshot.java"
+    endpoint = JAVA / "com/sevtinge/hypercraft/libhook/rules/home/dock/HomeLayoutNativeEndpointOS4.java"
+    entry = ROOT / "app/src/main/cpp/targets/home/hypercraft_home.cpp"
     protocol_keys = re.findall(r'\{"(boolean|integer|string)", "([^"]+)"\}', snapshot.read_text())
     report = {
         "schema": 1, "target": {"device": "Xiaomi 17 Pro Max", "codename": "popsicle",
@@ -353,11 +353,11 @@ def audit(project, objdump):
                               "snapshot_keys": [{"type": k, "key": v} for k, v in protocol_keys],
                               "authentication": "Endpoint requires application UID, positive PID, verified com.miui.home process and Binder interface token; retain all checks for future additions.",
                               "migration_rule": "Any new preference needs explicit snapshot/endpoint/native wire/cache handling, old-schema compatibility or rejection, missing-key safe default, bounds validation and unauthorized/partial/corrupt-packet rejection tests.",
-                              "process_scope": "Current hyperceiler_home.cpp native specialization checks com.miui.home; no Gallery/Weather native initializer is established."},
+                              "process_scope": "Current hypercraft_home.cpp native specialization checks com.miui.home; no Gallery/Weather native initializer is established."},
         "os4_mapping_sources": [source(ROOT / path) for path in [
-            "library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/gesture/HomeGestureOS4.kt",
-            "library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/other/NativeHomeHooksOS4.kt",
-            "library/core/src/main/java/com/sevtinge/hyperceiler/hooker/home/HomeTitleSettings.java",
+            "library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/gesture/HomeGestureOS4.kt",
+            "library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/other/NativeHomeHooksOS4.kt",
+            "library/core/src/main/java/com/sevtinge/hypercraft/hooker/home/HomeTitleSettings.java",
             "app/src/main/cpp/targets/home/home_layout_config.cpp",
             "app/src/main/cpp/targets/home/home_layout_hooks.cpp",
         ]],

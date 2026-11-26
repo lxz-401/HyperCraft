@@ -3,7 +3,7 @@ import hashlib,importlib.util,json,subprocess,sys,zipfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 sys.dont_write_bytecode=True
 ROOT=test_paths.TEST_DATA_ROOT
@@ -38,7 +38,7 @@ for member in ():
  p=subprocess.run([str(AAPT),'dump','xmltree',str(APK),'--file',member],capture_output=True);assert p.returncode==0,p.stdout+p.stderr
  (OUT/(Path(member).name+'.txt')).write_bytes(p.stdout)
  commands.append(dict(argv=[str(AAPT),'dump','xmltree',str(APK),'--file',member],exit_code=p.returncode))
-source=test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/systemui/lockscreen/HideLockScreenHint.kt'
+source=test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemui/lockscreen/HideLockScreenHint.kt'
 report=dict(device_status='NOT_TESTED',apk=str(APK),apk_sha256=sha(APK.read_bytes()),source={},
  extractor_sha256=sha(Path(__file__).read_bytes()),parser_sha256=sha(MODULE.read_bytes()),dependencies={str(p):sha(p.read_bytes())for p in jars+[AAPT,java]},
  complete_selected_class_count=len(selected),missing_requested_classes=sorted(EXACT-selected),dex=records,commands=commands,files={str(p.relative_to(OUT)):sha(p.read_bytes())for p in sorted((OUT/'smali').rglob('*.smali'))},

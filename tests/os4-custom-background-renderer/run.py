@@ -4,9 +4,9 @@ import argparse,hashlib,json,os,re,subprocess,tempfile
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
-HERE=Path(__file__).resolve().parent;ROOT=test_paths.TEST_DATA_ROOT;CACHE=test_paths.BUILD_CACHE;JAVA=test_paths.JAVA_HOME / 'bin';KH=test_paths.KOTLIN_HOME;SOURCE=test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/systemui/controlcenter/media3/CustomBackgroundRendererOS4.kt';CONFIG=test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/utils/hookapi/systemui/controlcenter/media/MediaViewColorConfig.kt';sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+HERE=Path(__file__).resolve().parent;ROOT=test_paths.TEST_DATA_ROOT;CACHE=test_paths.BUILD_CACHE;JAVA=test_paths.JAVA_HOME / 'bin';KH=test_paths.KOTLIN_HOME;SOURCE=test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemui/controlcenter/media3/CustomBackgroundRendererOS4.kt';CONFIG=test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/utils/hookapi/systemui/controlcenter/media/MediaViewColorConfig.kt';sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 MUTANTS={
  'wrong_palette_style':('newInstance(wallpaper, true, 6)','newInstance(wallpaper, true, 5)'),
  'drop_four_palette_size':('entries.size != 13 || entries.any { it !is Int }','entries.any { it !is Int }'),

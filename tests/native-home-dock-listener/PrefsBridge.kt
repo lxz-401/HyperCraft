@@ -1,4 +1,4 @@
-package com.sevtinge.hyperceiler.common.utils
+package com.sevtinge.hypercraft.common.utils
 import android.content.SharedPreferences
 object PrefsBridge {
     var preferences: SharedPreferences? = null

@@ -3,14 +3,14 @@ from pathlib import Path
 import argparse,hashlib,json,os,subprocess,zipfile,importlib.util,sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 sys.dont_write_bytecode=True
 BASE=Path(__file__).resolve().parent;SOURCE=BASE.parents[1];ROOT=test_paths.TEST_DATA_ROOT;CACHE=test_paths.BUILD_CACHE;JAVA=test_paths.JAVA_HOME / 'bin';KH=test_paths.KOTLIN_HOME;SDK=test_paths.ANDROID_HOME;BT=SDK/'build-tools/37.0.0';ANDROID=SDK/'platforms/android-37.0/android.jar';OTA=test_paths.ROM_ROOT / 'components/system_ext/priv-app/MiuiSystemUI/MiuiSystemUI.apk'
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
  p=argparse.ArgumentParser();p.add_argument('--output',type=Path,required=True);p.add_argument('--rule-source',type=Path);a=p.parse_args();o=a.output.resolve();o.mkdir(parents=True,exist_ok=False)
- original=SOURCE/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/systemui/lockscreen/HideLockScreenHintOS4.kt'
+ original=SOURCE/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemui/lockscreen/HideLockScreenHintOS4.kt'
  production=(a.rule_source or original).resolve()
  files=[q for q in BASE.rglob('*')if q.is_file()and q.suffix in {'.py','.java','.xml','.kt'}];inputs={str(q):sha(q)for q in files+[production]};commands=[]
  def run(c):
@@ -30,7 +30,7 @@ def main():
  with zipfile.ZipFile(o/'adapters.jar')as z:
   for n in z.namelist():classes.update(m.dex_classes(z.read(n)))
  assert not any(n.startswith(tuple(original_names))for n in classes),classes
- (o/'BuildMetadata.java').write_text('package local.hyperceiler.unlockhintoem; final class BuildMetadata { static final String OTA_SHA="'+sha(OTA)+'", ADAPTER_SHA="'+sha(o/'adapters.jar')+'", SOURCE_SHA="'+sha(BASE/'MainActivity.java')+'";}')
+ (o/'BuildMetadata.java').write_text('package local.hypercraft.unlockhintoem; final class BuildMetadata { static final String OTA_SHA="'+sha(OTA)+'", ADAPTER_SHA="'+sha(o/'adapters.jar')+'", SOURCE_SHA="'+sha(BASE/'MainActivity.java')+'";}')
  run([JAVA/'javac','--release','8','-proc:none','-cp',cp,'-d',o/'classes',*sorted((BASE/'probe-support').rglob('*.java'))])
  cp=os.pathsep.join(map(str,[ANDROID,o/'classes',*deps]))
  run([JAVA/'java','-cp',KH/'lib/kotlin-compiler.jar','org.jetbrains.kotlin.cli.jvm.K2JVMCompiler','-kotlin-home',KH,'-jvm-target','1.8','-classpath',cp,'-d',o/'classes',production])

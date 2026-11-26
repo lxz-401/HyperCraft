@@ -4,12 +4,12 @@ import argparse,hashlib,json,os,re,subprocess,tempfile
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 BASE=Path(__file__).resolve().parent;SOURCE=BASE.parents[1];ROOT=test_paths.TEST_DATA_ROOT;CACHE=test_paths.BUILD_CACHE;JAVA=test_paths.JAVA_HOME / 'bin';KH=test_paths.KOTLIN_HOME
-RULE=SOURCE/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/systemui/controlcenter/media3/MediaViewSize.kt'
+RULE=SOURCE/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemui/controlcenter/media3/MediaViewSize.kt'
 DEPS=[CACHE/'changed-hooks-compile'/x for x in ['hook-xposed-102-1.3.0.jar','core-1.3.0.jar','api-102.0.0.jar']]+[KH/'lib/kotlin-stdlib.jar',test_paths.ANDROID_HOME / 'platforms/android-37.0/android.jar']+list((CACHE/'gradle-home/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core-jvm/1.9.0').glob('*/*.jar'))
-ROUTE=SOURCE/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/app/SystemUI/SystemUIB.java'
+ROUTE=SOURCE/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/app/SystemUI/SystemUIB.java'
 XML=[SOURCE/'library/core/src/main/res/xml'/n for n in ['system_ui_control_center_media_cards.xml','system_ui_status_bar_island_media_card.xml']]
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 def inputs():return {str(test_paths.report_path(p, ROOT)):sha(p) for p in [RULE,ROUTE,*XML,Path(__file__),*sorted((BASE/'fixtures').rglob('*'))]if p.is_file()}
@@ -22,10 +22,10 @@ def run(out,mutation=None):
   old,new=MUTANTS[mutation];assert body.count(old)==1,(mutation,body.count(old));body=body.replace(old,new)
  with tempfile.TemporaryDirectory(prefix='hc-media-')as t:
   w=Path(t);classes=w/'classes';classes.mkdir();cp=os.pathsep.join(map(str,DEPS));allcp=str(classes)+os.pathsep+cp
-  route=SOURCE/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/app/SystemUI/SystemUIB.java'
+  route=SOURCE/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/app/SystemUI/SystemUIB.java'
   line=next(x.strip()for x in route.read_text().splitlines()if 'initHook(MediaViewSize.INSTANCE,'in x)
   if mutation=='outer_gate_NC_only':line=line.replace(' || PrefsBridge.getBoolean("system_ui_island_media_control_media_button_size_switch")','')
-  routejava=w/'Route.java';routejava.write_text('import com.sevtinge.hyperceiler.common.utils.PrefsBridge;import com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.media3.MediaViewSize; public class Route { public static boolean enabled; static void initHook(Object o,boolean b){enabled=b;} public static void run(){'+line+'}}')
+  routejava=w/'Route.java';routejava.write_text('import com.sevtinge.hypercraft.common.utils.PrefsBridge;import com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.media3.MediaViewSize; public class Route { public static boolean enabled; static void initHook(Object o,boolean b){enabled=b;} public static void run(){'+line+'}}')
   files=[p for p in(BASE/'fixtures').rglob('*.java')if p.name not in ['TestMain.java','Targets.java']];cmd=[str(JAVA/'javac'),'--release','21','-proc:none','-cp',cp,'-d',str(classes),*map(str,files)]
   commands=[cmd];r=subprocess.run(cmd,capture_output=True,text=True);logs=r.stdout+r.stderr;assert r.returncode==0,logs
   prod=w/RULE.name;prod.write_text(body);cmd=[str(JAVA/'java'),'-cp',str(KH/'lib/kotlin-compiler.jar'),'org.jetbrains.kotlin.cli.jvm.K2JVMCompiler','-kotlin-home',str(KH),'-jvm-target','21','-classpath',allcp,'-d',str(classes),str(prod),*map(str,(BASE/'fixtures').rglob('*.kt'))];commands.append(cmd);r=subprocess.run(cmd,capture_output=True,text=True);logs+=r.stdout+r.stderr;(out/'build.txt').write_text(logs);assert r.returncode==0,logs

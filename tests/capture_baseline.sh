@@ -1,11 +1,11 @@
 #!/bin/bash
 # Turn every layout knob off and take the control frame.
 ADB="${ADB:-adb}"
-URI="content://com.sevtinge.hyperceiler.provider.sharedprefs"
+URI="content://com.sevtinge.hypercraft.provider.sharedprefs"
 OUT="$1"
-"$ADB" shell setprop debug.hyperceiler.prefs_write 1
-"$ADB" shell setprop debug.hyperceiler.layout.override 0
-"$ADB" shell setprop debug.hyperceiler.layout.hook5 off
+"$ADB" shell setprop debug.hypercraft.prefs_write 1
+"$ADB" shell setprop debug.hypercraft.layout.override 0
+"$ADB" shell setprop debug.hypercraft.layout.hook5 off
 "$ADB" shell content call --uri "$URI" --method hc_debug_put --arg boolean:home_layout_indicator_margin_bottom_enable:false
 "$ADB" shell content call --uri "$URI" --method hc_debug_put --arg boolean:home_layout_hotseats_margin_bottom_enable:false
 "$ADB" logcat -c

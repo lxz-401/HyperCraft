@@ -1,4 +1,4 @@
-package com.sevtinge.hyperceiler.libhook.utils.api
+package com.sevtinge.hypercraft.libhook.utils.api
 object DeviceHelper {
     object System {
         var version = 4f

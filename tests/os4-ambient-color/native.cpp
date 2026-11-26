@@ -6,7 +6,7 @@ extern "C" JNIEXPORT jint JNICALL Java_miuix_mipalette_MiPalette_getMainColorHCT
  return first;
 }
 
-extern "C" JNIEXPORT jlong JNICALL Java_com_sevtinge_hyperceiler_libhook_rules_systemui_controlcenter_media3_AmbientNativeColorOS4_nativeResolve(JNIEnv* env,jclass cls,jintArray input,jint w,jint h){
+extern "C" JNIEXPORT jlong JNICALL Java_com_sevtinge_hypercraft_libhook_rules_systemui_controlcenter_media3_AmbientNativeColorOS4_nativeResolve(JNIEnv* env,jclass cls,jintArray input,jint w,jint h){
  const auto color=Java_miuix_mipalette_MiPalette_getMainColorHCT(env,cls,input,w,h);
  if(env->ExceptionCheck())return 0;
  if(color==0x11223344)return 0; // unavailable, not transparent success

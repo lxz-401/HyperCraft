@@ -98,7 +98,7 @@ and GC limitations still apply. Logcat parser/database import checks also passed
 The 2026-10-21 runtime diagnostics distinguished `wrapped`, neutral scale, invalid layout/input/
 scale, unavailable nursery and unavailable constants. Counts and scalar memory
 alignment/room are logged on state changes, capped at 16 records per process.
-The existing `LogcatLogLoader`/`LogcatParser` imports `HyperCeiler.HomeLayout` into
+The existing `LogcatLogLoader`/`LogcatParser` imports `HyperCraft.HomeLayout` into
 the built-in log database on refresh/export, including INFO and WARN records.
 
 ## Dynamic addressing audit (2026-10-23)

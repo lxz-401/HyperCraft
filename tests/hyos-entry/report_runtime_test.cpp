@@ -39,18 +39,18 @@ int main(int argc,char **argv){
  ZygiskNextAPI api{};api.newSymbolResolver=create;api.freeSymbolResolver=release;api.getBaseAddress=base;api.forEachSymbols=symbols;api.inlineHook=hook;api.inlineUnhook=unhook;
  nhk::home_safe_mode::set_reader_for_test(&normal_reader);nhk::home_safe_mode::set_pid_for_test(4001);
  const std::string scenario=argv[1];
- if(scenario=="safe-mode-blocked"){nhk::home_safe_mode::set_reader_for_test(&blocked_reader);nhk::home_safe_mode::set_pid_for_test(4002);hyperceiler_hyos_retry_home_report(&api);assert(new_count==0&&hook_count==0&&free_count==0);}
- else if(scenario=="disabled"){enabled=false;hyperceiler_hyos_retry_home_report(&api);assert(new_count==0&&hook_count==0);}
- else if(scenario=="null-api"){hyperceiler_hyos_retry_home_report(nullptr);api.getBaseAddress=nullptr;hyperceiler_hyos_retry_home_report(&api);assert(new_count==0);}
- else if(scenario=="not-loaded-then-retry"){loaded=false;hyperceiler_hyos_retry_home_report(&api);assert(new_count==1&&free_count==0&&hook_count==0);loaded=true;hyperceiler_hyos_retry_home_report(&api);assert(hook_count==1&&free_count==1);}
- else if(scenario=="wrong-note"){reinterpret_cast<unsigned char *>(bytes)[hyos_guard::kDartNoteVa+16]^=1;hyperceiler_hyos_retry_home_report(&api);assert(hook_count==0&&free_count==1);}
- else if(scenario=="wrong-elf"){reinterpret_cast<unsigned char *>(bytes)[18]^=1;hyperceiler_hyos_retry_home_report(&api);assert(hook_count==0&&free_count==1);}
- else if(scenario=="outside-executable"){outside=true;hyperceiler_hyos_retry_home_report(&api);assert(hook_count==0&&free_count==1);}
- else if(scenario=="wrong-size"){wrong_size=true;hyperceiler_hyos_retry_home_report(&api);assert(hook_count==0&&free_count==1);}
- else if(scenario=="duplicate"){duplicate=true;hyperceiler_hyos_retry_home_report(&api);assert(hook_count==0&&free_count==1);}
- else if(scenario=="expires-during-discovery"){expire=true;hyperceiler_hyos_retry_home_report(&api);assert(hook_count==0&&free_count==1);}
- else if(scenario=="exact-rom-installs-once"){hyperceiler_hyos_retry_home_report(&api);assert(hook_count==1&&free_count==1);hyperceiler_hyos_retry_home_report(&api);assert(hook_count==1&&new_count==1&&free_count==1);}
- else if(scenario=="body-mutated"){reinterpret_cast<unsigned char *>(bytes)[target_va+4]^=1;hyperceiler_hyos_retry_home_report(&api);assert(hook_count==0&&free_count==1);}
+ if(scenario=="safe-mode-blocked"){nhk::home_safe_mode::set_reader_for_test(&blocked_reader);nhk::home_safe_mode::set_pid_for_test(4002);hypercraft_hyos_retry_home_report(&api);assert(new_count==0&&hook_count==0&&free_count==0);}
+ else if(scenario=="disabled"){enabled=false;hypercraft_hyos_retry_home_report(&api);assert(new_count==0&&hook_count==0);}
+ else if(scenario=="null-api"){hypercraft_hyos_retry_home_report(nullptr);api.getBaseAddress=nullptr;hypercraft_hyos_retry_home_report(&api);assert(new_count==0);}
+ else if(scenario=="not-loaded-then-retry"){loaded=false;hypercraft_hyos_retry_home_report(&api);assert(new_count==1&&free_count==0&&hook_count==0);loaded=true;hypercraft_hyos_retry_home_report(&api);assert(hook_count==1&&free_count==1);}
+ else if(scenario=="wrong-note"){reinterpret_cast<unsigned char *>(bytes)[hyos_guard::kDartNoteVa+16]^=1;hypercraft_hyos_retry_home_report(&api);assert(hook_count==0&&free_count==1);}
+ else if(scenario=="wrong-elf"){reinterpret_cast<unsigned char *>(bytes)[18]^=1;hypercraft_hyos_retry_home_report(&api);assert(hook_count==0&&free_count==1);}
+ else if(scenario=="outside-executable"){outside=true;hypercraft_hyos_retry_home_report(&api);assert(hook_count==0&&free_count==1);}
+ else if(scenario=="wrong-size"){wrong_size=true;hypercraft_hyos_retry_home_report(&api);assert(hook_count==0&&free_count==1);}
+ else if(scenario=="duplicate"){duplicate=true;hypercraft_hyos_retry_home_report(&api);assert(hook_count==0&&free_count==1);}
+ else if(scenario=="expires-during-discovery"){expire=true;hypercraft_hyos_retry_home_report(&api);assert(hook_count==0&&free_count==1);}
+ else if(scenario=="exact-rom-installs-once"){hypercraft_hyos_retry_home_report(&api);assert(hook_count==1&&free_count==1);hypercraft_hyos_retry_home_report(&api);assert(hook_count==1&&new_count==1&&free_count==1);}
+ else if(scenario=="body-mutated"){reinterpret_cast<unsigned char *>(bytes)[target_va+4]^=1;hypercraft_hyos_retry_home_report(&api);assert(hook_count==0&&free_count==1);}
  else assert(false);
  munmap(bytes,st.st_size);std::printf("PASS %s\n",argv[1]);
 }

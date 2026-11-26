@@ -1,0 +1,218 @@
+/*
+ * This file is part of HyperCraft.
+
+ * HyperCraft is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License.
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+ * Copyright (C) 2023-2026 HyperCraft Contributions
+ */
+package com.sevtinge.hypercraft.libhook.rules.home;
+
+import android.content.Context;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.sevtinge.hypercraft.common.log.XposedLog;
+import com.sevtinge.hypercraft.common.utils.PrefsBridge;
+import com.sevtinge.hypercraft.libhook.appbase.systemframework.GlobalActionBridge;
+import com.sevtinge.hypercraft.libhook.base.BaseHook;
+import io.github.lingqiqi5211.ezhooktool.xposed.java.IMethodHook;
+
+import io.github.lingqiqi5211.ezhooktool.xposed.common.HookParam;
+
+public class ScreenSwipe extends BaseHook {
+
+    private static final String PREF_DOWN_SWIPE = "home_gesture_down_swipe";
+    private static final String PREF_DOWN_SWIPE_2 = "home_gesture_down_swipe2";
+    private static final String PREF_UP_SWIPE = "home_gesture_up_swipe";
+    private static final String PREF_UP_SWIPE_2 = "home_gesture_up_swipe2";
+    private static final String PREF_DOWN_SWIPE_ACTION = "home_gesture_down_swipe_action";
+    private static final String PREF_UP_SWIPE_ACTION = "home_gesture_up_swipe_action";
+
+    private static final int GESTURE_UP = 10;
+    private static final int GESTURE_DOWN = 11;
+
+    @Override
+    public void init() {
+        hookVerticalGesture();
+        hookStatusBarSwipe();
+        hookPullDownGesture();
+        hookSlideUpGesture();
+        hookGlobalSearch();
+    }
+
+    private void hookVerticalGesture() {
+        findAndHookMethod("com.miui.home.launcher.Workspace","onVerticalGesture", int.class, MotionEvent.class,
+            new IMethodHook() {
+                @Override
+                public void before(HookParam param) {
+                    if ((boolean) callMethod(param.getThisObject(), "isInNormalEditingMode")) {
+                        return;
+                    }
+
+                    int gestureType = (int) param.getArgs()[0];
+                    MotionEvent event = (MotionEvent) param.getArgs()[1];
+                    int fingerCount = event != null ? event.getPointerCount() : 1;
+                    Context context = ((ViewGroup) param.getThisObject()).getContext();
+
+                    String key = getGestureKey(gestureType, fingerCount);
+                    if (GlobalActionBridge.handleAction(context, key)) {
+                        param.setResult(true);
+                    }
+                }
+            });
+    }
+
+    private String getGestureKey(int gestureType, int fingerCount) {
+        if (gestureType == GESTURE_DOWN) {
+            return fingerCount == 2 ? PREF_DOWN_SWIPE_2 : PREF_DOWN_SWIPE;
+        } else if (gestureType == GESTURE_UP) {
+            return fingerCount == 2 ? PREF_UP_SWIPE_2 : PREF_UP_SWIPE;
+        }
+        return null;
+    }
+
+    private void hookStatusBarSwipe() {
+        findAndHookMethod("com.miui.home.launcher.uioverrides.StatusBarSwipeController",
+            "canInterceptTouch", MotionEvent.class,
+            new IMethodHook() {
+                @Override
+                public void before(HookParam param) {
+                    if (PrefsBridge.getInt("home_gesture_down_swipe_action", 0) > 0) {
+                        param.setResult(false);
+                    }
+                }
+            });
+    }
+
+    private void hookPullDownGesture() {
+        findAndHookMethod("com.miui.home.launcher.allapps.LauncherMode",
+            "getPullDownGesture", Context.class,
+            new IMethodHook() {
+                @Override
+                public void after(HookParam param) {
+                    Context context = (Context) param.getArgs()[0];
+                    if (PrefsBridge.getInt(PREF_DOWN_SWIPE_ACTION, 1) > 1) {
+                        param.setResult("no_action");
+                    }
+                }
+            });
+    }
+
+    private void hookSlideUpGesture() {
+        findAndHookMethod("com.miui.home.launcher.allapps.LauncherMode",
+            "getSlideUpGesture", Context.class,
+            new IMethodHook() {
+                @Override
+                public void before(HookParam param) {
+                    Context context = (Context) param.getArgs()[0];
+                    if (PrefsBridge.getInt(PREF_UP_SWIPE_ACTION, 0) > 0) {
+                        param.setResult("no_action");
+                    }
+                }
+            });
+    }
+
+    private void hookGlobalSearch() {
+        boolean hooked = tryHookGlobalSearchEnable();
+
+        if (hooked) {
+            hookSearchEdgeLayout();
+            hookGlobalSearchBottomEffect();
+        } else {
+            boolean fallbackHooked = tryHookAllowedSlidingUp();
+            if (!fallbackHooked && "com.miui.home".equals(getPackageName())) {
+                XposedLog.i(TAG, getPackageName(), "Cannot disable swipe up search");
+            }
+        }
+    }
+
+    private boolean tryHookGlobalSearchEnable() {
+        try {
+            findAndHookMethod("com.miui.home.launcher.DeviceConfig",
+                "isGlobalSearchEnable", Context.class,
+                new IMethodHook() {
+                    @Override
+                    public void before(HookParam param) {
+                        Context context = (Context) param.getArgs()[0];
+                        if (PrefsBridge.getInt(PREF_UP_SWIPE_ACTION, 0) > 0) {
+                            param.setResult(false);
+                        }
+                    }
+                });
+            return true;
+        } catch (Throwable t) {
+            return false;
+        }
+    }
+
+    private void hookSearchEdgeLayout() {
+        findAndHookMethod("com.miui.home.launcher.search.SearchEdgeLayout",
+            "isTopSearchEnable",
+            new IMethodHook() {
+                @Override
+                public void before(HookParam param) {
+                    View view = (View) param.getThisObject();
+                    if (PrefsBridge.getInt(PREF_DOWN_SWIPE_ACTION, 0) > 0) {
+                        param.setResult(false);
+                    }
+                }
+            });
+
+        findAndHookMethod("com.miui.home.launcher.search.SearchEdgeLayout",
+            "isBottomGlobalSearchEnable",
+            new IMethodHook() {
+                @Override
+                public void before(HookParam param) {
+                    View view = (View) param.getThisObject();
+                    if (PrefsBridge.getInt(PREF_UP_SWIPE_ACTION, 0) > 0) {
+                        param.setResult(false);
+                    }
+                }
+            });
+    }
+
+    private void hookGlobalSearchBottomEffect() {
+        findAndHookMethod("com.miui.home.launcher.DeviceConfig",
+            "isGlobalSearchBottomEffectEnable", Context.class,
+            new IMethodHook() {
+                @Override
+                public void before(HookParam param) {
+                    Context context = (Context) param.getArgs()[0];
+                    if (PrefsBridge.getInt(PREF_UP_SWIPE_ACTION, 0) > 0) {
+                        param.setResult(false);
+                    }
+                }
+            });
+    }
+
+    private boolean tryHookAllowedSlidingUp() {
+        try {
+            findAndHookMethod("com.miui.home.launcher.DeviceConfig",
+                "allowedSlidingUpToStartGolbalSearch", Context.class,
+                new IMethodHook() {
+                    @Override
+                    public void before(HookParam param) {
+                        Context context = (Context) param.getArgs()[0];
+                        if (PrefsBridge.getInt(PREF_UP_SWIPE_ACTION, 0) > 0) {
+                            param.setResult(false);
+                        }
+                    }
+                });
+            return true;
+        } catch (Throwable t) {
+            return false;
+        }
+    }
+}

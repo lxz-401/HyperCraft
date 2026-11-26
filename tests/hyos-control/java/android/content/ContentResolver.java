@@ -1,6 +1,6 @@
 package android.content;
 import android.database.Cursor;
-import com.sevtinge.hyperceiler.libhook.provider.HomeLayoutPrefsSnapshot;
+import com.sevtinge.hypercraft.libhook.provider.HomeLayoutPrefsSnapshot;
 /** Transport only; row/schema/type construction always uses the actual production snapshot class. */
 public class ContentResolver {
  private static volatile android.database.ContentObserver observer;
@@ -13,7 +13,7 @@ public class ContentResolver {
  public static final java.util.concurrent.atomic.AtomicInteger queries=new java.util.concurrent.atomic.AtomicInteger(),reads=new java.util.concurrent.atomic.AtomicInteger();
  public static Cursor cursor(){return HomeLayoutPrefsSnapshot.cursor(()->{reads.incrementAndGet();if(failure.equals("getAll"))throw new IllegalStateException("prefs unavailable");var result=new java.util.HashMap<>(values);afterSnapshot.run();return result;});}
  public Cursor query(android.net.Uri uri,String[] projection,String selection,String[] args,String order){
-  if(!uri.toString().equals("content://com.sevtinge.hyperceiler.provider.sharedprefs/home_layout"))throw new AssertionError("wrong URI");queries.incrementAndGet();
+  if(!uri.toString().equals("content://com.sevtinge.hypercraft.provider.sharedprefs/home_layout"))throw new AssertionError("wrong URI");queries.incrementAndGet();
   if(failure.equals("query"))throw new IllegalStateException("provider unavailable");if(failure.equals("null"))return null;
   final Cursor delegate=cursor();if(delegate==null)return null;final String mode=failure;
   return new Cursor(){public android.os.Bundle getExtras(){return delegate.getExtras();}public boolean moveToFirst(){return !mode.equals("empty")&&delegate.moveToFirst();}public int getColumnCount(){return delegate.getColumnCount()+(mode.equals("columns")?1:0);}

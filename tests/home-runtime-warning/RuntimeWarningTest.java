@@ -1,8 +1,8 @@
-package com.sevtinge.hyperceiler.hooker;
+package com.sevtinge.hypercraft.hooker;
 
-import com.sevtinge.hyperceiler.prefs.LayoutPreference;
+import com.sevtinge.hypercraft.prefs.LayoutPreference;
 import android.content.pm.PackageManager;
-import com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper;
+import com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper;
 
 public class RuntimeWarningTest {
     static final String API="prefs_key_framework_check_api_version";

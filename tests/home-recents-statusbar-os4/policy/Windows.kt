@@ -41,7 +41,7 @@ class InsetsPolicy {
   appliedTypes=caller.getRequestedVisibleTypes();calls++
   // Model the distinct source and surface control stages. A launcher retaining
   // its leash still shows its original request until the policy takes control.
-  val forced=if(com.sevtinge.hyperceiler.libhook.base.BaseHook.deoptimized.any {
+  val forced=if(com.sevtinge.hypercraft.libhook.base.BaseHook.deoptimized.any {
       it.name=="getStatusControlTargetInner" })areTypesForciblyHidden(1) else (forcedTypes and 1)!=0
   statusOwner=if(forced)"platform-hiding" else "client"
   statusSurfaceVisible=if(forced)false else ((caller as WindowState).types and 1)!=0

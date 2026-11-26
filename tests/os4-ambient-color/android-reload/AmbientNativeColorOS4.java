@@ -1,4 +1,4 @@
-package com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.media3;
+package com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.media3;
 
 /** Only the ART loader test entry: the production JNI bridge receives invalid input. */
 public final class AmbientNativeColorOS4 {

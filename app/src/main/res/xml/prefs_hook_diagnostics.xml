@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory>
-        <com.sevtinge.hyperceiler.diagnostics.DiagnosticsOverviewPreference
+        <com.sevtinge.hypercraft.diagnostics.DiagnosticsOverviewPreference
             android:key="diagnostics_summary" android:persistent="false" android:selectable="false"
             android:title="@string/hook_diagnostics_overview" android:summary="@string/hook_diagnostics_loading" />
     </PreferenceCategory>

@@ -1,4 +1,4 @@
-package com.sevtinge.hyperceiler.libhook.utils.api
+package com.sevtinge.hypercraft.libhook.utils.api
 object HostExecutor {
  data class Job(val tag:Any,val background:()->Any?,val result:(Any)->Unit)
  @JvmField val jobs=ArrayList<Job>();@JvmField val ready=ArrayList<Pair<Job,Any>>()

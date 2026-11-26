@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import com.sevtinge.hyperceiler.libhook.rules.home.dock.HomeRecentsBarState;
+import com.sevtinge.hypercraft.libhook.rules.home.dock.HomeRecentsBarState;
 public class StateTest {
     static int checks;
     static void c(boolean b) { if(!b)throw new AssertionError("check "+checks);checks++; }

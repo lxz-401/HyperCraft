@@ -9,4 +9,4 @@ sleep 4
 "$ADB" shell input keyevent KEYCODE_HOME
 sleep 4
 echo "=== hook hits ==="
-"$ADB" logcat -d -s HyperCeiler.HomeLayout:I | grep -E "hook hits" | tail -3
+"$ADB" logcat -d -s HyperCraft.HomeLayout:I | grep -E "hook hits" | tail -3

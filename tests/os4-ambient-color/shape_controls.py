@@ -25,7 +25,7 @@ for name,(file,old,new,normalFails,optFails)in CASES.items():
     # Keep unrelated adapter locals well formed when removing an argument.
     if name=='converter_wrong_arity':body=body.replace('{calls++;','{int h=0;calls++;')
    target.write_text(body)
-  main=w/'ShapeMain.kt';main.write_text('''import com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.media3.AmbientColorResolverOS4 as R
+  main=w/'ShapeMain.kt';main.write_text('''import com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.media3.AmbientColorResolverOS4 as R
 fun main(){val c=R::class.java.classLoader;check((R.create(c,true,false)==null)==%s);check((R.create(c,false,true)==null)==%s);println("PASS exact shape and unselected mode")}
 '''%(str(normalFails).lower(),str(optFails).lower()))
   cmds=[[h.JAVA/'javac','--release','21','-proc:none','-d',classes,*sorted(f.rglob('*.java'))],[h.JAVA/'java','-cp',h.KH/'lib/kotlin-compiler.jar','org.jetbrains.kotlin.cli.jvm.K2JVMCompiler','-kotlin-home',h.KH,'-jvm-target','21','-classpath',classes,'-d',classes,h.SOURCE,h.NATIVE_SOURCE,main],[h.JAVA/'java','-ea','-cp',os.pathsep.join(map(str,[classes,h.KH/'lib/kotlin-stdlib.jar'])),'ShapeMainKt']]

@@ -22,7 +22,7 @@ empty arm; no substitute managed object or allocation is introduced. Branches
 into the replacement window are rejected. The engine checks live preimages both
 at discovery and before later reapplication after reverting its own journal.
 Unknown/missing/ambiguous graphs preserve OEM behavior and produce a limited
-`HyperCeiler.HomeLayoutEngine` diagnostic.
+`HyperCraft.HomeLayoutEngine` diagnostic.
 
 The fixed frame/register roles, compressed-reference instruction widths and Dart
 bool bit are the verified ARM64 ABI. The linked control-flow shapes are semantic

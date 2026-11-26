@@ -2,7 +2,7 @@
 
 <img src="\imgs\icon.webp" width="160" height="160" style="display: block; margin: 0 auto;" alt="icon" />
 
-# HyperCeiler
+# HyperCraft
 
 ### Torne o HyperOS ótimo novamente!
 
@@ -10,13 +10,13 @@
 
 <p align="center">
   <a href="https://trendshift.io/repositories/6302?utm_source=repository-badge&amp;utm_medium=badge&amp;utm_campaign=badge-repository-6302" target="_blank" rel="noopener noreferrer">
-    <img src="https://trendshift.io/api/badge/repositories/6302" alt="ReChronoRain%2FHyperCeiler | Trendshift" width="250" height="55"/>
+    <img src="https://trendshift.io/api/badge/repositories/6302" alt="ReChronoRain%2FHyperCraft | Trendshift" width="250" height="55"/>
   </a>
   <a href="https://trendshift.io/repositories/6302?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-6302" target="_blank" rel="noopener noreferrer">
-    <img src="https://trendshift.io/api/badge/trendshift/repositories/6302/daily?language=Java" alt="ReChronoRain%2FHyperCeiler | Trendshift" width="250" height="55"/>
+    <img src="https://trendshift.io/api/badge/trendshift/repositories/6302/daily?language=Java" alt="ReChronoRain%2FHyperCraft | Trendshift" width="250" height="55"/>
   </a>
   <a href="https://trendshift.io/repositories/6302?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-6302" target="_blank" rel="noopener noreferrer">
-    <img src="https://trendshift.io/api/badge/trendshift/repositories/6302/weekly?language=Java" alt="ReChronoRain%2FHyperCeiler | Trendshift" width="250" height="55"/>
+    <img src="https://trendshift.io/api/badge/trendshift/repositories/6302/weekly?language=Java" alt="ReChronoRain%2FHyperCraft | Trendshift" width="250" height="55"/>
   </a>
 </p>
 
@@ -28,19 +28,19 @@ HyperOS para Android 15-16
 
 ## Instruções de pré-uso
 
-Por favor, ative o HyperCeiler no [LSPosed](https://github.com/LSPosed/LSPosed/releases), em seguida, ative o recurso correspondente no app HyperCeiler e reinicie o escopo (necessário root).
+Por favor, ative o HyperCraft no [LSPosed](https://github.com/LSPosed/LSPosed/releases), em seguida, ative o recurso correspondente no app HyperCraft e reinicie o escopo (necessário root).
 
 Este módulo <b>não suporta</b> `ROM Xiaomi HyperOS de terceiros com muitas modificações`, `software de sistema com muitas modificações` e algumas `ROM Xiaomi HyperOS internacionais`.
 
-Atualmente, o HyperCeiler está adaptado para dispositivos móveis Xiaomi HyperOS 3.0 baseados em Android 16. A cobertura não é muito abrangente e requer testes e melhorias contínuas.
+Atualmente, o HyperCraft está adaptado para dispositivos móveis Xiaomi HyperOS 3.0 baseados em Android 16. A cobertura não é muito abrangente e requer testes e melhorias contínuas.
 
 Antes de enviar feedback, preste atenção se já existe o mesmo feedback para evitar problemas aos desenvolvedores. Gastar a mesma energia lendo o mesmo feedback é uma perda de tempo.
 
-O HyperCeiler deixou de ser mantido em ROM MIUI para o Android 11-13 e ROM HyperOS 1.0/2.0 para Android 13/14.
+O HyperCraft deixou de ser mantido em ROM MIUI para o Android 11-13 e ROM HyperOS 1.0/2.0 para Android 13/14.
 
 > Para ROM MIUI no Android 11-12, use [esta versão](https://github.com/ReChronoRain/Cemiuiler/releases/tag/1.3.130).
 >
-> Para ROM MIUI no Android 13 e ROM HyperOS 1.0, use [esta versão](https://github.com/Xposed-Modules-Repo/com.sevtinge.hyperceiler/releases/download/3866-2.5.156_20250118/HyperCeiler_2.5.156_20250118_3866_release_miui.apk).
+> Para ROM MIUI no Android 13 e ROM HyperOS 1.0, use [esta versão](https://github.com/Xposed-Modules-Repo/com.sevtinge.hypercraft/releases/download/3866-2.5.156_20250118/HyperCraft_2.5.156_20250118_3866_release_miui.apk).
 >
 > O HyperOS 1.0/2.0 do Android 14 foi arquivado e o suporte para o Android 14 será removido a partir da versão 2.6.162.
 
@@ -134,17 +134,17 @@ Junte-se ao nosso grupo para relatar problemas ou obter as atualizações mais r
 
 ## Contribuições de tradução
 
-Você pode fornecer traduções para o projeto [aqui](https://hosted.weblate.org/engage/hyperceiler/).
+Você pode fornecer traduções para o projeto [aqui](https://hosted.weblate.org/engage/hypercraft/).
 
-<a href="https://hosted.weblate.org/engage/hyperceiler/">
-<img src="https://hosted.weblate.org/widget/hyperceiler/multi-auto.svg" alt="Translation status" />
+<a href="https://hosted.weblate.org/engage/hypercraft/">
+<img src="https://hosted.weblate.org/widget/hypercraft/multi-auto.svg" alt="Translation status" />
 </a>
 
 > Observação: Quando o progresso da tradução do novo idioma for maior ou igual a 85%, ele entrará no processo de mesclagem. Se o progresso da tradução do idioma adicionado for menor ou igual a 30% do texto original, ele será removido temporariamente até que o progresso da tradução seja maior ou igual a 85%.
 
 ## Obrigado!
 
-> O <b>HyperCeiler</b> usa alguns ou todos os projetos a seguir, graças ao apoio dos desenvolvedores desses projetos (em nenhuma ordem em particular).
+> O <b>HyperCraft</b> usa alguns ou todos os projetos a seguir, graças ao apoio dos desenvolvedores desses projetos (em nenhuma ordem em particular).
 
 - [「Accompanist」 por Android Open Source Project, Google Inc.](https://google.github.io/accompanist)
 - [「Android」 por Android Open Source Project, Google Inc.](https://source.android.google.cn/license)

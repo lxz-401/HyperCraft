@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -15,7 +15,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   --><resources>
     <string name="version_update">發現新版本</string>
     <!--Introduction to Xposed Modules-->
@@ -24,10 +24,10 @@
     <string name="new_cta_agree_desc">在使用過程中，為了提供您更多功能，我們可能會向您申請 Root/Su 權限。您可以隨時到權限管理調整所有權限的授權狀態，並請到您的 Root/Su 管理員管理 Root/Su 權限。</string>
     <string name="new_cta_app_main_purpose">修改系統應用程式</string>
     <string name="new_cta_app_all_purpose_welcome">使用者條款及隱私權政策</string>
-    <string name="new_cta_app_all_purpose_title">歡迎使用 HyperCeiler，本應用程式依賴 Xposed 框架運作，您可以使用本應用程式攔截並修改其他支援的應用程式，以增強系統功能。在使用過程中，為了提供更多功能給您，我們可能會向您請求 Root 權限。您可隨時前往您的 Root 管理器進行管理。\n繼續使用 HyperCeiler 即表示您同意我們的<annotation key="protocol">《使用者條款》</annotation>及<annotation key="privacy">《隱私權政策》</annotation>。</string>
+    <string name="new_cta_app_all_purpose_title">歡迎使用 HyperCraft，本應用程式依賴 Xposed 框架運作，您可以使用本應用程式攔截並修改其他支援的應用程式，以增強系統功能。在使用過程中，為了提供更多功能給您，我們可能會向您請求 Root 權限。您可隨時前往您的 Root 管理器進行管理。\n繼續使用 HyperCraft 即表示您同意我們的<annotation key="protocol">《使用者條款》</annotation>及<annotation key="privacy">《隱私權政策》</annotation>。</string>
     <string name="new_cta_app_all_purpose_agree">同意並繼續</string>
     <string name="new_cta_app_all_purpose_reject">拒絕並退出</string>
-    <!--HyperCeiler Settings/About Page-->
+    <!--HyperCraft Settings/About Page-->
     <string name="language">繁體中文 (台灣)</string>
     <string name="translator">聖小熊</string>
     <string name="translator_url">https://github.com/HolyBearTW</string>
@@ -36,26 +36,26 @@
     <string name="settings">設定</string>
     <string name="about">關於</string>
     <string name="about_use">項目引用</string>
-    <string name="about_use_desc">HyperCeiler 使用了以下開源項目的部分或全部內容，感謝這些項目的開發者提供的大力支持（排名順序不分先後）</string>
+    <string name="about_use_desc">HyperCraft 使用了以下開源項目的部分或全部內容，感謝這些項目的開發者提供的大力支持（排名順序不分先後）</string>
     <string name="about_contributer">貢獻者</string>
-    <string name="about_contributer_desc">感謝以下貢獻者為 HyperCeiler 的開發提供了不同程度的幫助（排名順序不分先後）</string>
+    <string name="about_contributer_desc">感謝以下貢獻者為 HyperCraft 的開發提供了不同程度的幫助（排名順序不分先後）</string>
     <string name="about_donation">贊助</string>
     <string name="about_donation_desc">您可以在此處贊助以支持我們</string>
     <string name="about_device_info_device">裝置</string>
     <string name="about_device_info_android">Android 版本</string>
     <string name="about_device_info_os">OS版本</string>
-    <string name="hyperceiler_notice">下拉狀態欄，同時顯示快捷開關和系統通知</string>
+    <string name="hypercraft_notice">下拉狀態欄，同時顯示快捷開關和系統通知</string>
     <string name="delete_all_dexkit_cache_desc">您確定要清除所有 DexKit 快取嗎？</string>
     <string name="delete_all_dexkit_cache_success">成功清除所有 DexKit 緩存</string>
     <string name="set_homepage_entrance">設定首頁入口</string>
     <string name="set_homepage_entrance_about">注意：\n此設定只是主頁入口可見性設定，已開啟的功能不會關閉！\n關閉入口會即時生效，需要重新啟動應用程式才能重新出現。</string>
     <string name="help_cant_see_apps_guide">找不到應用程式功能？</string>
     <string name="help_cant_see_apps_title">在主頁找不到應用程式功能？</string>
-    <string name="help_cant_see_apps_desc">為了保持主頁的簡單性和可用性，我們隱藏了對以下類型的應用程式功能的存取：\n\n - 目前已停用或隱藏的應用程式\n - 在您的裝置中未找到的應用程式\n -與目前版本不相容的應用程式系統或應用程式版本\n\n請根據上述資訊排查問題，重新啟動 HyperCeiler，然後重試。如果您仍然找不到應用程式功能，則可能是錯誤。請提供我們及時有效的回饋。\n\n目前隱藏的應用功能：</string>
+    <string name="help_cant_see_apps_desc">為了保持主頁的簡單性和可用性，我們隱藏了對以下類型的應用程式功能的存取：\n\n - 目前已停用或隱藏的應用程式\n - 在您的裝置中未找到的應用程式\n -與目前版本不相容的應用程式系統或應用程式版本\n\n請根據上述資訊排查問題，重新啟動 HyperCraft，然後重試。如果您仍然找不到應用程式功能，則可能是錯誤。請提供我們及時有效的回饋。\n\n目前隱藏的應用功能：</string>
     <string name="help_cant_see_apps_uninstall">已解除安裝的應用程式:\n</string>
     <string name="help_cant_see_apps_disable">停用或隱藏的應用程式:\n</string>
     <string name="help_cant_see_apps_scope">未選擇範圍:\n</string>
-    <string name="help_cant_see_apps_desc_no_hidden">為了保持主頁的簡單性和可用性，我們隱藏了對以下類型的應用程式功能的存取：\n\n - 目前已停用或隱藏的應用程式\n - 在您的裝置中未找到的應用程式\n -與目前版本不相容的應用程式系統或應用程式版本\n\n請根據上述資訊排查問題，重新啟動 HyperCeiler，然後重試。如果您仍然找不到應用程式功能，則可能是錯誤。請及時有效的回饋給我們。\n\n目前沒有隱藏入口！</string>
+    <string name="help_cant_see_apps_desc_no_hidden">為了保持主頁的簡單性和可用性，我們隱藏了對以下類型的應用程式功能的存取：\n\n - 目前已停用或隱藏的應用程式\n - 在您的裝置中未找到的應用程式\n -與目前版本不相容的應用程式系統或應用程式版本\n\n請根據上述資訊排查問題，重新啟動 HyperCraft，然後重試。如果您仍然找不到應用程式功能，則可能是錯誤。請及時有效的回饋給我們。\n\n目前沒有隱藏入口！</string>
     <string name="help_cant_see_apps_switch">在主頁中隱藏此幫助</string>
     <string name="help_cant_see_apps_switch_desc">您仍然可以在「關於-幫助」中找到此頁面，返回首頁即可套用。</string>
     <!-- Scope -->
@@ -534,7 +534,7 @@
     <string name="community">小米社區</string>
     <string name="community_device_modify">機型偽裝</string>
     <string name="community_fuck_detection">禁止偵測</string>
-    <string name="community_fuck_detection_desc">禁止在回饋的同時偵測 HyperCeiler 並上傳。請確認問題不是您自己造成的，而是真正的系統問題，然後回饋，以免造成不必要的麻煩。</string>
+    <string name="community_fuck_detection_desc">禁止在回饋的同時偵測 HyperCraft 並上傳。請確認問題不是您自己造成的，而是真正的系統問題，然後回饋，以免造成不必要的麻煩。</string>
     <!--File Manager-->
     <string name="fileexplorer">檔案管理</string>
     <string name="file_explorer_can_selectable">資料夾名稱可以選擇操作</string>

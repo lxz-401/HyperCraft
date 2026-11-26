@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -15,41 +15,41 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   --><resources>
     <string name="version_update">Знайдено нову версію</string>
     <!--Introduction to Xposed Modules-->
     <string name="new_permission_wifi_state_desc">Додавання та видалення файлів у внутрішній пам’яті пристрою</string>
     <string name="new_cta_app_main_purpose">Змінити системні додатки</string>
-    <!--HyperCeiler Settings/About Page-->
+    <!--HyperCraft Settings/About Page-->
     <string name="language">українська мова</string>
-    <string name="translator">Офіційна команда HyperCeiler</string>
+    <string name="translator">Офіційна команда HyperCraft</string>
     <string name="translator_url">https://github.com/ReChronoRain</string>
     <string name="home">Головна</string>
     <string name="help">Допомога</string>
     <string name="settings">Налаштування</string>
     <string name="about">Про додаток</string>
     <string name="about_use">Посилання</string>
-    <string name="about_use_desc">HyperCeiler використовує деякі або всі наступні проєкти, дякуємо розробникам цих проєктів за їхню підтримку (в довільному порядку)</string>
+    <string name="about_use_desc">HyperCraft використовує деякі або всі наступні проєкти, дякуємо розробникам цих проєктів за їхню підтримку (в довільному порядку)</string>
     <string name="about_contributer">Автори</string>
-    <string name="about_contributer_desc">Дякуємо наступним учасникам за їхню допомогу в розробці HyperCeiler (в довільному порядку)</string>
+    <string name="about_contributer_desc">Дякуємо наступним учасникам за їхню допомогу в розробці HyperCraft (в довільному порядку)</string>
     <string name="about_donation">Підтримка</string>
     <string name="about_donation_desc">Ви можете підтримати нас, зробивши пожертву тут</string>
     <string name="about_device_info_device">Пристрій</string>
     <string name="about_device_info_android">Версія Android</string>
     <string name="about_device_info_os">Версія ОС</string>
-    <string name="hyperceiler_notice">Потягніть панель стану вниз, щоб відобразити швидкі перемикачі та системні сповіщення</string>
+    <string name="hypercraft_notice">Потягніть панель стану вниз, щоб відобразити швидкі перемикачі та системні сповіщення</string>
     <string name="delete_all_dexkit_cache_desc">Ви впевнені, що хочете очистити весь кеш DexKit?</string>
     <string name="delete_all_dexkit_cache_success">Успішно очищено весь кеш DexKit</string>
     <string name="set_homepage_entrance">Налаштувати вхід на головну сторінку</string>
     <string name="set_homepage_entrance_about">Примітка: Зміна цього налаштування лише приховує видимість функції на головній сторінці, а вже увімкнені функції не будуть вимкнені!\nПриховування функції на головній сторінці набуде чинності негайно, а для повторного відображення додаток потрібно буде перезапустити.</string>
     <string name="help_cant_see_apps_guide">Не можете знайти функції додатка?</string>
     <string name="help_cant_see_apps_title">Не можете знайти функції додатка на головній сторінці?</string>
-    <string name="help_cant_see_apps_desc">Щоб зберегти простоту та зручність головної сторінки, ми приховали доступ до наступних типів функцій додатків:\n\n • Ті, що наразі вимкнені або приховані\n • Ті, що не знайдені на вашому пристрої\n • Ті, що несумісні з поточною версією системи або додатка\n • Не вибрані як область застосування\n\nБудь ласка, усуньте несправності на основі наведеної вище інформації, перезапустіть HyperCeiler і спробуйте ще раз. Якщо ви все ще не можете знайти функції додатка, це може бути помилка. Будь ласка, надайте нам своєчасний та ефективний відгук.\n\nНаразі приховані функції додатків:</string>
+    <string name="help_cant_see_apps_desc">Щоб зберегти простоту та зручність головної сторінки, ми приховали доступ до наступних типів функцій додатків:\n\n • Ті, що наразі вимкнені або приховані\n • Ті, що не знайдені на вашому пристрої\n • Ті, що несумісні з поточною версією системи або додатка\n • Не вибрані як область застосування\n\nБудь ласка, усуньте несправності на основі наведеної вище інформації, перезапустіть HyperCraft і спробуйте ще раз. Якщо ви все ще не можете знайти функції додатка, це може бути помилка. Будь ласка, надайте нам своєчасний та ефективний відгук.\n\nНаразі приховані функції додатків:</string>
     <string name="help_cant_see_apps_uninstall">Видалені додатки:\n</string>
     <string name="help_cant_see_apps_disable">Вимкнені або приховані додатки:\n</string>
     <string name="help_cant_see_apps_scope">Не вибрано як область застосування:\n</string>
-    <string name="help_cant_see_apps_desc_no_hidden">Щоб зберегти простоту та зручність головної сторінки, ми приховали доступ до наступних типів функцій додатків:\n\n • Ті, що наразі вимкнені або приховані\n • Ті, що не знайдені на вашому пристрої\n • Ті, що несумісні з поточною версією системи або додатка\n • Не вибрані як область застосування\n\nБудь ласка, усуньте несправності на основі наведеної вище інформації, перезапустіть HyperCeiler і спробуйте ще раз. Якщо ви все ще не можете знайти функції додатка, це може бути помилка. Будь ласка, надайте нам своєчасний та ефективний відгук.\n\nНаразі немає прихованих функцій!</string>
+    <string name="help_cant_see_apps_desc_no_hidden">Щоб зберегти простоту та зручність головної сторінки, ми приховали доступ до наступних типів функцій додатків:\n\n • Ті, що наразі вимкнені або приховані\n • Ті, що не знайдені на вашому пристрої\n • Ті, що несумісні з поточною версією системи або додатка\n • Не вибрані як область застосування\n\nБудь ласка, усуньте несправності на основі наведеної вище інформації, перезапустіть HyperCraft і спробуйте ще раз. Якщо ви все ще не можете знайти функції додатка, це може бути помилка. Будь ласка, надайте нам своєчасний та ефективний відгук.\n\nНаразі немає прихованих функцій!</string>
     <string name="help_cant_see_apps_switch">Приховати цю допомогу на головній сторінці</string>
     <string name="help_cant_see_apps_switch_desc">Ви все ще можете знайти цю сторінку в розділі Про додаток &gt; Допомога. Перезапустіть додаток, щоб застосувати.</string>
     <string name="help_support_version_title">Список версій системи, що підтримуються поточною версією додатка</string>
@@ -127,7 +127,7 @@
     <string name="about_github_desc">Цей проєкт є відкритим вихідним кодом на основі ліцензії AGPL-3.0</string>
     <string name="about_offical">Офіційний сайт</string>
     <string name="about_crwd">Crowdin</string>
-    <string name="about_crwd_desc">Допоможіть нам перекласти HyperCeiler вашою мовою</string>
+    <string name="about_crwd_desc">Допоможіть нам перекласти HyperCraft вашою мовою</string>
     <string name="about_privacy">Політика конфіденційності</string>
     <string name="about_protocol">Угода користувача</string>
     <!--Pop-up window/miuix part-->
@@ -465,7 +465,7 @@
     <string name="community">Спільнота Xiaomi</string>
     <string name="community_device_modify">Підміна моделі</string>
     <string name="community_fuck_detection">Блокувати виявлення</string>
-    <string name="community_fuck_detection_desc">Запобігати виявленню HyperCeiler та його завантаженню під час надання відгуку. Будь ласка, переконайтеся, що проблема не викликана вами, а є реальною системною проблемою, перш ніж надавати відгук, щоб уникнути непотрібних проблем.</string>
+    <string name="community_fuck_detection_desc">Запобігати виявленню HyperCraft та його завантаженню під час надання відгуку. Будь ласка, переконайтеся, що проблема не викликана вами, а є реальною системною проблемою, перш ніж надавати відгук, щоб уникнути непотрібних проблем.</string>
     <!--File Manager-->
     <string name="fileexplorer">Файловий менеджер</string>
     <string name="file_explorer_can_selectable">Дозволити довге натискання на назву папки для виконання дій</string>

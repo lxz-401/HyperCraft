@@ -2,9 +2,9 @@ import java.lang.reflect.*;
 import java.util.*;
 import io.github.libxposed.api.XposedInterface;
 import io.github.lingqiqi5211.ezhooktool.xposed.EzXposed;
-import com.sevtinge.hyperceiler.common.log.XposedLog;
-import com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper;
-import com.sevtinge.hyperceiler.libhook.rules.systemui.lockscreen.HideLockScreenHint;
+import com.sevtinge.hypercraft.common.log.XposedLog;
+import com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper;
+import com.sevtinge.hypercraft.libhook.rules.systemui.lockscreen.HideLockScreenHint;
 
 public class TestMain {
     static final List<Method> hooks = new ArrayList<>();

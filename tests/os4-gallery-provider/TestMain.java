@@ -3,12 +3,12 @@ package fixture;
 import android.content.ContentProvider;
 import android.os.Bundle;
 import android.util.Log;
-import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
-import com.sevtinge.hyperceiler.libhook.base.BaseHook;
-import com.sevtinge.hyperceiler.libhook.base.BaseLoad;
-import com.sevtinge.hyperceiler.libhook.app.MediaEditor;
-import com.sevtinge.hyperceiler.libhook.rules.mediaeditor.GalleryCreationAvailabilityOS4;
-import com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper;
+import com.sevtinge.hypercraft.common.utils.PrefsBridge;
+import com.sevtinge.hypercraft.libhook.base.BaseHook;
+import com.sevtinge.hypercraft.libhook.base.BaseLoad;
+import com.sevtinge.hypercraft.libhook.app.MediaEditor;
+import com.sevtinge.hypercraft.libhook.rules.mediaeditor.GalleryCreationAvailabilityOS4;
+import com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper;
 import io.github.lingqiqi5211.ezhooktool.xposed.common.HookParam;
 public class TestMain {
  static int passed;

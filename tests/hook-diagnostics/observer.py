@@ -5,18 +5,18 @@ R=Path(__file__).resolve().parents[2]
 stubs={
 'android/os/Build.java':'package android.os;public class Build {public static final String DISPLAY="test";public static class VERSION {public static final int SDK_INT=37;}}',
 'android/os/Process.java':'package android.os;public class Process {public static int myPid(){return 123;}}',
-'com/sevtinge/hyperceiler/libhook/base/BaseLoad.java':'package com.sevtinge.hyperceiler.libhook.base;public class BaseLoad {public static String getPackageName(){return "com.miui.home";}}',
-'com/sevtinge/hyperceiler/libhook/base/BaseHook.java':'package com.sevtinge.hyperceiler.libhook.base;public class BaseHook {public String TAG="Fixture";}',
-'com/sevtinge/hyperceiler/common/log/ModuleLog.java':'package com.sevtinge.hyperceiler.common.log;public class ModuleLog {public static java.util.List<String> logs=new java.util.ArrayList<>();public static boolean fail;public static void i(String tag,String line){if(fail)throw new IllegalStateException("logger unavailable");logs.add(line);}}',
+'com/sevtinge/hypercraft/libhook/base/BaseLoad.java':'package com.sevtinge.hypercraft.libhook.base;public class BaseLoad {public static String getPackageName(){return "com.miui.home";}}',
+'com/sevtinge/hypercraft/libhook/base/BaseHook.java':'package com.sevtinge.hypercraft.libhook.base;public class BaseHook {public String TAG="Fixture";}',
+'com/sevtinge/hypercraft/common/log/ModuleLog.java':'package com.sevtinge.hypercraft.common.log;public class ModuleLog {public static java.util.List<String> logs=new java.util.ArrayList<>();public static boolean fail;public static void i(String tag,String line){if(fail)throw new IllegalStateException("logger unavailable");logs.add(line);}}',
 'io/github/libxposed/api/XposedInterface.java':'package io.github.libxposed.api;public interface XposedInterface {interface Chain {}interface Hooker {Object intercept(Chain chain)throws Throwable;}}',
 'io/github/lingqiqi5211/ezhooktool/xposed/common/HookParam.java':'package io.github.lingqiqi5211.ezhooktool.xposed.common;public class HookParam {public final java.util.Map<String,Object> extras=new java.util.HashMap<>();}',
 'io/github/lingqiqi5211/ezhooktool/xposed/java/IMethodHook.java':'package io.github.lingqiqi5211.ezhooktool.xposed.java;import io.github.lingqiqi5211.ezhooktool.xposed.common.HookParam;public interface IMethodHook {default void before(HookParam p){}default void after(HookParam p){}default void setObjectExtra(HookParam p,String k,Object v){p.extras.put(k,v);}default Object getObjectExtra(HookParam p,String k){return p.extras.get(k);}}',
 'io/github/lingqiqi5211/ezhooktool/xposed/java/IReplaceHook.java':'package io.github.lingqiqi5211.ezhooktool.xposed.java;import io.github.lingqiqi5211.ezhooktool.xposed.common.HookParam;public interface IReplaceHook {Object replace(HookParam p);}',
 }
 test=r'''
-import com.sevtinge.hyperceiler.libhook.base.*;
-import com.sevtinge.hyperceiler.common.diagnostics.*;
-import com.sevtinge.hyperceiler.common.log.ModuleLog;
+import com.sevtinge.hypercraft.libhook.base.*;
+import com.sevtinge.hypercraft.common.diagnostics.*;
+import com.sevtinge.hypercraft.common.log.ModuleLog;
 import io.github.libxposed.api.XposedInterface;
 import io.github.lingqiqi5211.ezhooktool.xposed.java.*;
 import io.github.lingqiqi5211.ezhooktool.xposed.common.HookParam;
@@ -64,7 +64,7 @@ with tempfile.TemporaryDirectory(prefix='hc-hook-observer-')as temp:
  for name,text in stubs.items():
   p=d/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(text);sources.append(p)
  p=d/'ObserverTest.java';p.write_text(test);sources.append(p)
- sources+=list((R/'library/common/src/main/java/com/sevtinge/hyperceiler/common/diagnostics').glob('*.java'))
- sources.append(R/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/base/HookDiagnostics.java')
+ sources+=list((R/'library/common/src/main/java/com/sevtinge/hypercraft/common/diagnostics').glob('*.java'))
+ sources.append(R/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/base/HookDiagnostics.java')
  subprocess.run(['javac','-encoding','UTF-8','-d',temp,*map(str,sources)],check=True)
  subprocess.run(['java','-ea','-cp',temp,'ObserverTest'],check=True)

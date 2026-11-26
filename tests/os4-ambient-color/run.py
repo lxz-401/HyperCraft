@@ -4,10 +4,10 @@ import argparse,hashlib,json,os,re,subprocess,tempfile
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 HERE=Path(__file__).resolve().parent;ROOT=test_paths.TEST_DATA_ROOT;CACHE=test_paths.BUILD_CACHE;JAVA=test_paths.JAVA_HOME / 'bin';KH=test_paths.KOTLIN_HOME
-SOURCE=test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/systemui/controlcenter/media3/AmbientColorResolverOS4.kt';NATIVE_SOURCE=SOURCE.with_name('AmbientNativeColorOS4.kt');sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+SOURCE=test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemui/controlcenter/media3/AmbientColorResolverOS4.kt';NATIVE_SOURCE=SOURCE.with_name('AmbientNativeColorOS4.kt');sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 def inputs():return{str(test_paths.report_path(p, ROOT)):sha(p)for p in [SOURCE,NATIVE_SOURCE,Path(__file__),HERE/'native.cpp',*sorted((HERE/'fixtures').rglob('*'))]if p.is_file()}
 def run(out,mutation=None):
  out.mkdir(parents=True,exist_ok=False);before=inputs();body=SOURCE.read_text();commands=[]
@@ -16,7 +16,7 @@ def run(out,mutation=None):
  def command(cmd,name):
   commands.append(list(map(str,cmd)));r=subprocess.run(cmd,capture_output=True,text=True,timeout=90);(out/name).write_text(r.stdout+r.stderr);assert r.returncode==0,(name,r.stdout+r.stderr);return r
  with tempfile.TemporaryDirectory(prefix='hc-ambient-colors-')as t:
-  w=Path(t);classes=w/'classes';classes.mkdir();so=w/'libHyperCeilerAmbientOS4.so';jdk=JAVA.parent
+  w=Path(t);classes=w/'classes';classes.mkdir();so=w/'libHyperCraftAmbientOS4.so';jdk=JAVA.parent
   command(['g++','-shared','-fPIC','-std=c++20','-Wall','-Wextra','-Werror','-I'+str(jdk/'include'),'-I'+str(jdk/'include/linux'),str(HERE/'native.cpp'),'-o',str(so)],'jni-build.txt')
   command([JAVA/'javac','--release','21','-proc:none','-d',classes,*sorted((HERE/'fixtures').rglob('*.java'))],'java-build.txt')
   prod=w/SOURCE.name;prod.write_text(body);command([JAVA/'java','-cp',KH/'lib/kotlin-compiler.jar','org.jetbrains.kotlin.cli.jvm.K2JVMCompiler','-kotlin-home',KH,'-jvm-target','21','-classpath',classes,'-d',classes,prod,NATIVE_SOURCE,HERE/'fixtures/TestMain.kt'],'kotlin-build.txt')

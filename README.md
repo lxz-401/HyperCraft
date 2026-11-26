@@ -2,7 +2,7 @@
 
 <img src="\imgs\icon.webp" width="160" height="160" style="display: block; margin: 0 auto;" alt="icon" />
 
-# HyperCeiler
+# HyperCraft
 
 ### Make HyperOS Great Again!
 
@@ -10,13 +10,13 @@
 
 <p align="center">
   <a href="https://trendshift.io/repositories/6302?utm_source=repository-badge&amp;utm_medium=badge&amp;utm_campaign=badge-repository-6302" target="_blank" rel="noopener noreferrer">
-    <img src="https://trendshift.io/api/badge/repositories/6302" alt="ReChronoRain%2FHyperCeiler | Trendshift" width="250" height="55"/>
+    <img src="https://trendshift.io/api/badge/repositories/6302" alt="ReChronoRain%2FHyperCraft | Trendshift" width="250" height="55"/>
   </a>
   <a href="https://trendshift.io/repositories/6302?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-6302" target="_blank" rel="noopener noreferrer">
-    <img src="https://trendshift.io/api/badge/trendshift/repositories/6302/daily?language=Java" alt="ReChronoRain%2FHyperCeiler | Trendshift" width="250" height="55"/>
+    <img src="https://trendshift.io/api/badge/trendshift/repositories/6302/daily?language=Java" alt="ReChronoRain%2FHyperCraft | Trendshift" width="250" height="55"/>
   </a>
   <a href="https://trendshift.io/repositories/6302?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-6302" target="_blank" rel="noopener noreferrer">
-    <img src="https://trendshift.io/api/badge/trendshift/repositories/6302/weekly?language=Java" alt="ReChronoRain%2FHyperCeiler | Trendshift" width="250" height="55"/>
+    <img src="https://trendshift.io/api/badge/trendshift/repositories/6302/weekly?language=Java" alt="ReChronoRain%2FHyperCraft | Trendshift" width="250" height="55"/>
   </a>
 </p>
 
@@ -28,19 +28,19 @@ Android 15-16 的 HyperOS
 
 ## 使用前说明
 
-请在 [LSPosed](https://github.com/LSPosed/LSPosed/releases) 中启用 HyperCeiler，然后在 HyperCeiler 应用内启用对应的功能，重启作用域（需要 Root 权限）。
+请在 [LSPosed](https://github.com/LSPosed/LSPosed/releases) 中启用 HyperCraft，然后在 HyperCraft 应用内启用对应的功能，重启作用域（需要 Root 权限）。
 
 本模块<b>不支持</b>`修改较多的第三方 Xiaomi HyperOS ROM`、`修改较多的系统软件`，以及`部分国际 Xiaomi HyperOS ROM`。
 
-目前 HyperCeiler 是基于 Android 16 的 Xiaomi HyperOS 3.0 的手机端设备进行适配，覆盖不是很完整，需要不断测试和改进。
+目前 HyperCraft 是基于 Android 16 的 Xiaomi HyperOS 3.0 的手机端设备进行适配，覆盖不是很完整，需要不断测试和改进。
 
 提交反馈前请注意是否已有相同反馈，避免给开发者造成困扰。花相同精力看相同反馈是一件很浪费时间的事情。
 
-HyperCeiler 已停止维护 Android 11-13 的 MIUI ROM 和 Android 13/14 的 HyperOS 1.0/2.0 ROM。
+HyperCraft 已停止维护 Android 11-13 的 MIUI ROM 和 Android 13/14 的 HyperOS 1.0/2.0 ROM。
 
 > Android 11-12 的 MIUI ROM 请使用[此版本](https://github.com/ReChronoRain/Cemiuiler/releases/tag/1.3.130)。
 >
-> Android 13 的 MIUI ROM 和 HyperOS 1.0 ROM 请使用[此版本](https://github.com/Xposed-Modules-Repo/com.sevtinge.hyperceiler/releases/download/3866-2.5.156_20250118/HyperCeiler_2.5.156_20250118_3866_release_miui.apk)。
+> Android 13 的 MIUI ROM 和 HyperOS 1.0 ROM 请使用[此版本](https://github.com/Xposed-Modules-Repo/com.sevtinge.hypercraft/releases/download/3866-2.5.156_20250118/HyperCraft_2.5.156_20250118_3866_release_miui.apk)。
 >
 > Android 14 的 HyperOS 1.0/2.0 已归档，从 2.6.162 版本开始将移除对 Android 14 的支持。
 
@@ -135,19 +135,19 @@ Xiaomi HyperOS 3 or 4 将是本项目的一个终点，就目前来说，小米�
 [![badge_tcguild]][tcguild_url]
 [![badge_telegram]][telegram_url]
 
-## 为 HyperCeiler 贡献翻译
+## 为 HyperCraft 贡献翻译
 
-我们使用了 Hosted Weblate 进行项目翻译同步，您可以在[这里](https://hosted.weblate.org/engage/hyperceiler/)为 HyperCeiler 项目贡献翻译。
+我们使用了 Hosted Weblate 进行项目翻译同步，您可以在[这里](https://hosted.weblate.org/engage/hypercraft/)为 HyperCraft 项目贡献翻译。
 
-<a href="https://hosted.weblate.org/engage/hyperceiler/">
-<img src="https://hosted.weblate.org/widget/hyperceiler/multi-auto.svg" alt="翻译状态" />
+<a href="https://hosted.weblate.org/engage/hypercraft/">
+<img src="https://hosted.weblate.org/widget/hypercraft/multi-auto.svg" alt="翻译状态" />
 </a>
 
 > 注：当新语言翻译进度大于或等于 85% 时，将会进入合并流程，如果已添加的语言，翻译进度小于或等于源文本的 30%，将会暂时被移除，直到重新满足翻译进度大于或等于 85%。
 
 ## 感谢
 
-> HyperCeiler 使用了以下开源项目的部分或全部内容，感谢这些项目的开发者提供的大力支持（排名顺序不分先后）。
+> HyperCraft 使用了以下开源项目的部分或全部内容，感谢这些项目的开发者提供的大力支持（排名顺序不分先后）。
 
 - [「Accompanist」 by Android Open Source Project, Google Inc.](https://google.github.io/accompanist)
 - [「Android」 by Android Open Source Project, Google Inc.](https://source.android.google.cn/license)

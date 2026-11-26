@@ -1,8 +1,8 @@
-package local.hyperceiler.backgroundprobe;
+package local.hypercraft.backgroundprobe;
 import android.app.*;import android.os.*;import android.graphics.*;import android.graphics.drawable.*;import android.content.*;import android.widget.TextView;import dalvik.system.DexClassLoader;import org.json.*;import java.io.*;import java.lang.reflect.*;import java.util.*;import java.util.concurrent.*;
-import com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.media3.CustomBackgroundRendererOS4;
-import com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.media3.CustomBackgroundDrawableOS4;
-import com.sevtinge.hyperceiler.libhook.utils.hookapi.systemui.controlcenter.media.MediaViewColorConfig;
+import com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.media3.CustomBackgroundRendererOS4;
+import com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.media3.CustomBackgroundDrawableOS4;
+import com.sevtinge.hypercraft.libhook.utils.hookapi.systemui.controlcenter.media.MediaViewColorConfig;
 public class MainActivity extends Activity {
  final JSONArray rows=new JSONArray(),frames=new JSONArray();int failures;ClassLoader ota;File dir;Class<?> media;CustomBackgroundRendererOS4 renderer;
  interface Task{void run()throws Exception;}

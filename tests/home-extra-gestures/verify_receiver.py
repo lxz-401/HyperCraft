@@ -2,7 +2,7 @@
 from pathlib import Path
 import sys,subprocess,json
 W=Path(__file__).resolve().parents[2];R=Path(sys.argv[1]).resolve() if len(sys.argv)>1 else W
-J=R/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/gesture';D=W/'handover/gesture-extra-os4-20261017'/('receiver-'+R.name);D.mkdir(parents=True,exist_ok=True)
+J=R/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/gesture';D=W/'handover/gesture-extra-os4-20261017'/('receiver-'+R.name);D.mkdir(parents=True,exist_ok=True)
 if not (J/'HomeExtraGesturesOS4.java').exists():print('EXTRA_RECEIVER=missing implementation; failed=1');sys.exit(1)
 s=(J/'HomeExtraGesturesOS4.java').read_text()
 def block(start):
@@ -12,7 +12,7 @@ def block(start):
   elif s[i]=='}':depth-=1
   i+=1
  return s[a:i]
-code=r'''package com.sevtinge.hyperceiler.libhook.rules.home.gesture;
+code=r'''package com.sevtinge.hypercraft.libhook.rules.home.gesture;
 import java.lang.reflect.*;import java.util.*;
 public class ReceiverTest {
  static int checks,failed;static void ok(boolean b,String n){checks++;if(!b){failed++;System.out.println("FAIL="+n);}}
@@ -54,7 +54,7 @@ public class ReceiverTest {
 '''.replace(' RECEIVER',block('private final class Receiver extends InputEventReceiver')).replace(' APPLY',block('private boolean apply('))
 (D/'ReceiverTest.java').write_text(code)
 rows=[]
-for cmd in [['javac','-encoding','UTF-8','-d',str(D),str(D/'ReceiverTest.java'),str(J/'HomeExtraGestureState.java')],['java','-cp',str(D),'com.sevtinge.hyperceiler.libhook.rules.home.gesture.ReceiverTest']]:
+for cmd in [['javac','-encoding','UTF-8','-d',str(D),str(D/'ReceiverTest.java'),str(J/'HomeExtraGestureState.java')],['java','-cp',str(D),'com.sevtinge.hypercraft.libhook.rules.home.gesture.ReceiverTest']]:
  p=subprocess.run(cmd,capture_output=True,text=True,encoding='utf8',errors='replace');print(p.stdout+p.stderr,end='');rows.append(dict(command=cmd,input_root=str(R),stdout=p.stdout,stderr=p.stderr,exit=p.returncode))
  if p.returncode:break
 (D/'results.json').write_text(json.dumps(rows,indent=2));raise SystemExit(rows[-1]['exit'])

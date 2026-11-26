@@ -1,7 +1,7 @@
 Run `python3 tests/hook-runtime-lifecycle/run.py` with JDK 21+ and a Kotlin compiler
 (`KOTLIN_HOME`; the local Android Studio compiler is the default fallback).
 The Java regressions also compile the real Android SDK37 `org/json` sources from
-`ANDROID_HOME/sources/android-37.0/org/json` (or the `HYPERCEILER_JSON_SOURCE`
+`ANDROID_HOME/sources/android-37.0/org/json` (or the `HYPERCRAFT_JSON_SOURCE`
 override). Android compatibility annotations are the only adapters around JSON.
 
 The runner compiles the actual ContextUtils, ThreadPoolManager, BackupUtils,

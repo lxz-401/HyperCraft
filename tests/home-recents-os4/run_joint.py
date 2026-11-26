@@ -5,7 +5,7 @@ import argparse,hashlib,importlib.util,json,re,subprocess
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 ROOT=test_paths.TEST_DATA_ROOT;HERE=Path(__file__).resolve().parent;CPP=test_paths.SOURCE_ROOT / 'app/src/main/cpp'
 spec=importlib.util.spec_from_file_location('recents_linked_template',HERE/'run_installer.py');helper=importlib.util.module_from_spec(spec);spec.loader.exec_module(helper)
@@ -31,7 +31,7 @@ def main():
     assembly=out/'template.S';assembly.write_text('.section .rodata\n.global hc_home_recents_template,hc_home_recents_return_branch,hc_home_recents_lease_literal,hc_home_recents_template_end\nhc_home_recents_template:\n.incbin "'+str(out/'template.bin')+'",0,284\nhc_home_recents_return_branch:\n.incbin "'+str(out/'template.bin')+'",284,4\nhc_home_recents_lease_literal:\n.incbin "'+str(out/'template.bin')+'",288,692\nhc_home_recents_template_end:\n.section .note.GNU-stack,"",@progbits\n')
     def build(name,fixture):
         binary=out/name
-        run(name+'-compile',['g++','-std=c++20','-O2','-Wall','-Wextra','-Werror','-pthread','-DHC_REAL_CONFIG','-DHYPERCEILER_HYOS_BACKEND',
+        run(name+'-compile',['g++','-std=c++20','-O2','-Wall','-Wextra','-Werror','-pthread','-DHC_REAL_CONFIG','-DHYPERCRAFT_HYOS_BACKEND',
             '-I'+str(sdk),'-I'+str(stubs),'-I'+str(CPP),'-I'+str(CPP/'targets/hyos'),'-I'+str(CPP/'targets/home'),fixture,
             CPP/'targets/home/home_layout_config.cpp',assembly,'-o',binary]);return binary
     positive=run('joint',[build('joint-host',HERE/'joint_test.cpp'),helper.ROM]);assert 'SCENARIOS=11 FAILED=0' in positive.stdout

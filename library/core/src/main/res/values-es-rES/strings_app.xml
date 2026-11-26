@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -15,7 +15,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   --><resources>
     <string name="version_update">Nueva versión encontrada</string>
     <!--Introduction to Xposed Modules-->
@@ -23,7 +23,7 @@
     <string name="new_permission_location_desc">se usa para proporcionar servicios como ajustar latitud y longitud</string>
     <string name="new_cta_agree_desc">En el uso, para proporcionarle más características, es posible que solicitemos permiso de Root/Su. Puede ir a administración de permisos en cualquier momento para ajustar el estado de autorización de todos los permisos, y por favor vaya a su administrador de Root/Su para obtener permisos.</string>
     <string name="new_cta_app_main_purpose">modificar aplicaciones del sistema</string>
-    <!--HyperCeiler Settings/About Page-->
+    <!--HyperCraft Settings/About Page-->
     <string name="language">Español</string>
     <string name="translator">Mateo795</string>
     <string name="translator_url">https://weibo.com/u/2212837665</string>
@@ -32,15 +32,15 @@
     <string name="settings">Configuraciones</string>
     <string name="about">Sobre nosotros</string>
     <string name="about_use">Referencias</string>
-    <string name="about_use_desc">HyperCeiler utiliza algunos o todos de los siguientes proyectos de código abierto. Agradecimos a sus desarrolladores por los apoyos (en ningún orden particular)</string>
+    <string name="about_use_desc">HyperCraft utiliza algunos o todos de los siguientes proyectos de código abierto. Agradecimos a sus desarrolladores por los apoyos (en ningún orden particular)</string>
     <string name="about_contributer">Colaborador</string>
-    <string name="about_contributer_desc">Gracias a los siguientes colaboradores por su ayuda en el desarrollo de HyperCeiler (en ningún orden particular)</string>
+    <string name="about_contributer_desc">Gracias a los siguientes colaboradores por su ayuda en el desarrollo de HyperCraft (en ningún orden particular)</string>
     <string name="about_donation">Donar</string>
     <string name="about_donation_desc">Usted puede ayudarnos donando aquí</string>
     <string name="about_device_info_device">Dispositivo</string>
     <string name="about_device_info_android">Versión de Android</string>
     <string name="about_device_info_os">Versión del sistema operativo</string>
-    <string name="hyperceiler_notice">Tirar hacia abajo la barra de estado para mostrar los accesos directos y las notificaciones del sistema</string>
+    <string name="hypercraft_notice">Tirar hacia abajo la barra de estado para mostrar los accesos directos y las notificaciones del sistema</string>
     <string name="delete_all_dexkit_cache_desc">¿Está seguro de que quiere borrar toda la caché de DexKit?</string>
     <string name="delete_all_dexkit_cache_success">Se ha limpiado correctamente toda la caché de DexKit</string>
     <string name="set_homepage_entrance">Configurar entrada de la página de inicio</string>
@@ -123,7 +123,7 @@
     <string name="about_github_desc">Este proyecto se basa en los códigos abiertos bajo la licencia de AGPL-3.0</string>
     <string name="about_offical">Página Web Oficial</string>
     <string name="about_crwd">Traducir en Crowdin</string>
-    <string name="about_crwd_desc">Ayúdenos a traducir HyperCeiler a su idioma</string>
+    <string name="about_crwd_desc">Ayúdenos a traducir HyperCraft a su idioma</string>
     <string name="about_privacy">Políticas de privacidad</string>
     <string name="about_protocol">Acuerdo de usuario</string>
     <!--Pop-up window/miuix part-->

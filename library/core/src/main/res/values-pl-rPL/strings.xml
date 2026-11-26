@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -15,7 +15,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   --><resources>
     <!--Pop-up window/miuix part-->
     <string name="miuix_appcompat_action_mode_select_all">Zaznacz wszystko</string>
@@ -28,18 +28,18 @@
     <string name="miuix_appcompat_search_input_description">Szukaj</string>
     <string name="miuix_appcompat_actionbar_immersion_button_more_description">Więcej</string>
     <string name="miuix_appcompat_action_mode_inverse">Odwróć</string>
-    <!--HyperCeiler Settings/About Page-->
+    <!--HyperCraft Settings/About Page-->
     <string name="tip">Rada</string>
     <string name="root">Niektóre funkcje nie są dostępne bez uprawnień Root/SU</string>
     <string name="soft_reboot">Zrestartuj</string>
     <string name="restart_app_desc">Czy na pewno chcesz teraz zrestartować %1$s?</string>
-    <string name="hyperceiler_restart_quick">Szybki restart aplikacji</string>
+    <string name="hypercraft_restart_quick">Szybki restart aplikacji</string>
     <string name="hook_failed">Moduł nie jest jeszcze aktywny. Proszę sprawdzić, czy LSPosed jest włączony. Jeśli tak, proszę zrestartować lub ponownie zoptymalizować moduł.</string>
-    <string name="kill_failed">Nie udało się zakończyć procesu. Sprawdź, czy HyperCeiler otrzymał uprawnienia Root/SU.</string>
-    <string name="start_failed">Nie udało się rozpocząć aktywności. Sprawdź, czy HyperCeiler otrzymał uprawnienia Root/SU.</string>
+    <string name="kill_failed">Nie udało się zakończyć procesu. Sprawdź, czy HyperCraft otrzymał uprawnienia Root/SU.</string>
+    <string name="start_failed">Nie udało się rozpocząć aktywności. Sprawdź, czy HyperCraft otrzymał uprawnienia Root/SU.</string>
     <string name="pid_failed">Aplikacja docelowa nie jest uruchomiona i nie trzeba jej restartować.</string>
-    <string name="reboot_failed">Restart się nie powiódł. Sprawdź, czy HyperCeiler otrzymał uprawnienia Root/SU.</string>
-    <!--HyperCeiler Tips-->
+    <string name="reboot_failed">Restart się nie powiódł. Sprawdź, czy HyperCraft otrzymał uprawnienia Root/SU.</string>
+    <!--HyperCraft Tips-->
     <string name="warn">Uwaga</string>
     <string name="safe_mode_history">Wyświetl zapisy wyjątków</string>
     <string name="safe_mode_cancel">Wyłącz tryb awaryjny</string>
@@ -52,12 +52,12 @@
     <string name="safe_mode_recorder_line">Wiersz</string>
     <string name="safe_mode_recorder_msg">Komunikat wyjątku</string>
     <string name="safe_mode_recorder_st">Śledzenie błędów</string>
-    <string name="tip_default">Rada: Oto domyślna rada. Jeśli to widzisz, oznacza to, że wystąpił problem z HyperCeilerem. Prosimy o terminowe i skuteczne zgłoszenie tego deweloperowi.</string>
+    <string name="tip_default">Rada: Oto domyślna rada. Jeśli to widzisz, oznacza to, że wystąpił problem z HyperCraftem. Prosimy o terminowe i skuteczne zgłoszenie tego deweloperowi.</string>
     <string name="headtip_tip_auto_safe_mode">Automatyczny tryb awaryjny może tymczasowo odłączyć niektóre aplikacje, które wielokrotnie ulegają awarii, aby zapewnić bezpieczeństwo. Funkcja ta wymaga zakresu \"System Framework\" do działania, dlatego zdecydowanie zalecamy, aby sprawdzić zaznaczenie tego zakresu i aktywacje automatycznynego trybu awaryjnynego.</string>
-    <string name="happy_birthday_hyperceiler">Dzisiaj są urodziny HyperCeilera!\nDziękujemy za wsparcie w ciągu ostatniego roku i zacznijmy współpracować w tym roku!</string>
+    <string name="happy_birthday_hypercraft">Dzisiaj są urodziny HyperCrafta!\nDziękujemy za wsparcie w ciągu ostatniego roku i zacznijmy współpracować w tym roku!</string>
     <string name="headtip_tip_fuck_coolapk">Dzisiaj w historii: Sevtinge wygłosił ważne przemówienie 14 lipca 2022 r.</string>
-    <string name="headtip_notice_dead_logger_errcode">Obecna usługa dziennika urządzenia działa nieprawidłowo, co ograniczy funkcje HyperCeiler. Przywróć usługę dziennika, aby mogła działać poprawnie.\nKod błędu: %1$s</string>
-    <string name="headtip_notice_dead_logger">Obecna usługa dziennika urządzenia działa nieprawidłowo, co ograniczy funkcje HyperCeiler. Przywróć usługę dziennika, aby mogła działać poprawnie.</string>
+    <string name="headtip_notice_dead_logger_errcode">Obecna usługa dziennika urządzenia działa nieprawidłowo, co ograniczy funkcje HyperCraft. Przywróć usługę dziennika, aby mogła działać poprawnie.\nKod błędu: %1$s</string>
+    <string name="headtip_notice_dead_logger">Obecna usługa dziennika urządzenia działa nieprawidłowo, co ograniczy funkcje HyperCraft. Przywróć usługę dziennika, aby mogła działać poprawnie.</string>
     <!--System UI-->
     <string name="system_ui">Interfejs systemu</string>
     <!--System launcher-->
@@ -73,5 +73,5 @@
     <string name="enable_suggest">Włącz sugestie</string>
     <string name="experimental_features">Eksperymentalne funkcje</string>
     <string name="module_title_1">Podstawowe wiadomości</string>
-    <string name="app_error_desc">Aplikacja HyperCeiler została nieoczekiwanie zamknięta. Aby pomóc nam to naprawić, podaj poniższe informacje:\n\nNaciśnij i przytrzymaj dowolną wiadomość, aby skopiować całą jej treść.</string>
+    <string name="app_error_desc">Aplikacja HyperCraft została nieoczekiwanie zamknięta. Aby pomóc nam to naprawić, podaj poniższe informacje:\n\nNaciśnij i przytrzymaj dowolną wiadomość, aby skopiować całą jej treść.</string>
 </resources>

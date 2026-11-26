@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -15,7 +15,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   --><resources>
     <string name="provision_back_description">Geri</string>
     <string name="provision_start_content_description">Başla</string>
@@ -33,8 +33,8 @@
     <string name="provision_service_agreement">Şartlar ve koşulları kabul ediyorum.</string>
     <string name="provision_service_name_download">İndirilenler</string>
     <string name="provision_congratulation_title">Kurulum tamamlandı</string>
-    <string name="provision_congratulation_label">HyperCeiler\'e hoş geldiniz</string>
-    <string name="provision_complete_text">HyperCeiler\'a girin</string>
+    <string name="provision_congratulation_label">HyperCraft\'e hoş geldiniz</string>
+    <string name="provision_complete_text">HyperCraft\'a girin</string>
     <string name="provision_back">Geri</string>
     <string name="provision_service_policy_download">&lt;Data&gt;&lt;a href=\"%1$s\"&gt;Thunder Gizlilik Politikası&lt;/a&gt; ile &lt;a href=\"%2$s\"&gt;Thunder Şirket Ağı Hizmet Kullanım Sözleşmesi&lt;/a&gt;&lt;/Data&gt;\'ni okuyun ve kabul edin&lt;/a&gt;&lt;/Data&gt;</string>
     <string name="provision_set_permission_later">Bu gerekli izinleri daha sonra ayarlayabilirsiniz</string>
@@ -66,5 +66,5 @@
     <string name="provision_system_preparing">Sistem hazırlanıyor…</string>
     <string name="provision_system_complete">Kurulum tamamlandı</string>
     <string name="provision_scope_open_failed">Sayfa açılamıyor</string>
-    <string name="provision_get_md_failed">## İçerik alınamadı\n - Orijinal içeriği görüntülemek için [buraya](%URL%) tıklayabilirsiniz.\n- Ya da bu sayfayı [yenilemeyi](hyperceiler://refresh) deneyin.</string>
+    <string name="provision_get_md_failed">## İçerik alınamadı\n - Orijinal içeriği görüntülemek için [buraya](%URL%) tıklayabilirsiniz.\n- Ya da bu sayfayı [yenilemeyi](hypercraft://refresh) deneyin.</string>
 </resources>

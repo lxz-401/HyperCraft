@@ -5,7 +5,7 @@ import argparse,hashlib,json
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 HERE=Path(__file__).resolve().parent;ROOT=test_paths.TEST_DATA_ROOT;sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 p=argparse.ArgumentParser();p.add_argument('--output',required=True,type=Path);a=p.parse_args();assert not a.output.exists();base=test_paths.TEST_DATA_ROOT / 'acceptance/java-test14/renderer-v1'
@@ -13,14 +13,14 @@ paths={'host':base/'host-v5/report.json','mutations':base/'host-v5/negative-cont
 reports={k:json.loads(v.read_text())for k,v in paths.items()};checks=[]
 def check(n,b):checks.append({'name':n,'passed':bool(b)})
 check('each named current report passed',all(r.get('passed')is True for r in reports.values()))
-source=test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/systemui/controlcenter/media3/CustomBackgroundRendererOS4.kt';sourcekey=str(source.relative_to(test_paths.SOURCE_ROOT));sources={sourcekey:sha(source)}
+source=test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemui/controlcenter/media3/CustomBackgroundRendererOS4.kt';sourcekey=str(source.relative_to(test_paths.SOURCE_ROOT));sources={sourcekey:sha(source)}
 check('host45 exact zero failures and stable inputs',reports['host']['tests']=={'passed':45,'failed':0}and reports['host']['inputs_unchanged']is True)
 check('host production exact current bytes',reports['host']['inputs_before'][str(test_paths.report_path(source, ROOT))]==sha(source))
 check('all nine source mutations compile and fail assertions',len(reports['mutations']['checks'])==9 and all(c['passed']is True and c['failed_tests']>0 for c in reports['mutations']['checks']))
 check('SDK37 exact production bytes',reports['sdk37']['sources'][sourcekey]==sha(source))
 check('fresh actual OTA DEX evidence14',reports['rom']['check_count']==14 and reports['rom']['sources'][sourcekey]==sha(source))
 check('actual Android53 zero failures exact source',reports['art']['android_check_count']==53 and reports['art_detail']['failures']==0 and reports['art']['source_sha256']==sha(source))
-check('Android drawer and immutable color type match compiled inputs',all(reports['sdk37']['sources'][str(q.relative_to(test_paths.SOURCE_ROOT))]==sha(q)for q in [source.with_name('CustomBackgroundDrawableOS4.kt'),test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/utils/hookapi/systemui/controlcenter/media/MediaViewColorConfig.kt']))
+check('Android drawer and immutable color type match compiled inputs',all(reports['sdk37']['sources'][str(q.relative_to(test_paths.SOURCE_ROOT))]==sha(q)for q in [source.with_name('CustomBackgroundDrawableOS4.kt'),test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/utils/hookapi/systemui/controlcenter/media/MediaViewColorConfig.kt']))
 check('temporary hidden API policy restored',reports['hidden_api_restore']['original']==reports['hidden_api_restore']['restored'])
 check('current sources checked across stable host inputs',all((ROOT/q).is_file()and sha(ROOT/q)==h for q,h in reports['host']['inputs_after'].items()))
 check('device remains untested',all(r.get('device_status')=='NOT_TESTED'for r in [reports['host'],reports['art'],reports['rom']]))

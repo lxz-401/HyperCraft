@@ -12,13 +12,13 @@ import zipfile
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 
 ROOT = Path(__file__).resolve().parents[2]
 TESTS = Path(__file__).resolve().parent
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument("--source", type=Path, default=ROOT / "library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/base/XposedInitEntry.java")
+parser.add_argument("--source", type=Path, default=ROOT / "library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/base/XposedInitEntry.java")
 parser.add_argument("--build-cache", type=Path, default=test_paths.BUILD_CACHE)
 parser.add_argument("--cases", help="Comma-separated scenario names; default runs the full regression")
 args = parser.parse_args()
@@ -39,39 +39,39 @@ if not android_jar.exists():
 jars = [deps / "api-102.0.0.jar", deps / "hook-xposed-102-1.3.0.jar", stdlib, android_jar]
 
 STUBS = {
-    "com/sevtinge/hyperceiler/common/log/ModuleLog.java": "package com.sevtinge.hyperceiler.common.log; public class ModuleLog { public static void i(Object... x){} public static void w(Object... x){} }",
+    "com/sevtinge/hypercraft/common/log/ModuleLog.java": "package com.sevtinge.hypercraft.common.log; public class ModuleLog { public static void i(Object... x){} public static void w(Object... x){} }",
     "android/os/Build.java": "package android.os; public class Build { public static class VERSION { public static int SDK_INT=35; } }",
-    "com/sevtinge/hyperceiler/libhook/utils/api/DeviceHelper.java": "package com.sevtinge.hyperceiler.libhook.utils.api; public class DeviceHelper { public static class System { public static boolean isHyperOSVersion(float v){return false;} } }",
-    "com/sevtinge/hyperceiler/libhook/base/HookDiagnostics.java": """package com.sevtinge.hyperceiler.libhook.base;
+    "com/sevtinge/hypercraft/libhook/utils/api/DeviceHelper.java": "package com.sevtinge.hypercraft.libhook.utils.api; public class DeviceHelper { public static class System { public static boolean isHyperOSVersion(float v){return false;} } }",
+    "com/sevtinge/hypercraft/libhook/base/HookDiagnostics.java": """package com.sevtinge.hypercraft.libhook.base;
 public class HookDiagnostics { public static void bootstrap(Object... x){} public static void failure(Object... x){} public static void event(Object... x){} public static void lifecycle(Object... x){} public static void deferred(boolean b){} public static Scope scope(Object x){return new Scope();} public static class Scope implements AutoCloseable { public void close(){} } }""",
     "android/content/pm/ApplicationInfo.java": "package android.content.pm; public class ApplicationInfo { public String dataDir, sourceDir; }",
     "android/util/Log.java": "package android.util; public class Log { public static int i(String a,String b){return 0;} public static int w(String a,String b,Throwable t){return 0;} }",
-    "com/sevtinge/hyperceiler/common/log/XposedLog.java": """package com.sevtinge.hyperceiler.common.log;
+    "com/sevtinge/hypercraft/common/log/XposedLog.java": """package com.sevtinge.hypercraft.common.log;
 public class XposedLog {
  public static void init(io.github.libxposed.api.XposedInterface x){}
  public static void w(Object... x){} public static void e(Object... x){}
  public static void d(Object... x){} public static void i(Object... x){}
 }""",
-    "com/sevtinge/hyperceiler/common/log/LogStatusManager.java": """package com.sevtinge.hyperceiler.common.log;
+    "com/sevtinge/hypercraft/common/log/LogStatusManager.java": """package com.sevtinge.hypercraft.common.log;
 public class LogStatusManager {
  public static int syncs;
  // Same preference read and exception boundary as LogLevelManager/LogStatusManager.
- public static void syncLogLevelFromPrefs(){syncs++; try {com.sevtinge.hyperceiler.common.utils.PrefsBridge.getStringAsInt("log_level_v2",1);}catch(IllegalStateException ignored){}}
+ public static void syncLogLevelFromPrefs(){syncs++; try {com.sevtinge.hypercraft.common.utils.PrefsBridge.getStringAsInt("log_level_v2",1);}catch(IllegalStateException ignored){}}
  public static void detachHookLogLevelObserver(){}
  public static void attachHookLogLevelObserver(android.content.Context c){}
 }""",
-    "com/sevtinge/hyperceiler/common/utils/api/ProjectApi.java": "package com.sevtinge.hyperceiler.common.utils.api; public class ProjectApi { public static String mAppModulePkg=\"com.sevtinge.hyperceiler\"; }",
-    "com/sevtinge/hyperceiler/libhook/utils/api/ContextUtils.java": """package com.sevtinge.hyperceiler.libhook.utils.api;
+    "com/sevtinge/hypercraft/common/utils/api/ProjectApi.java": "package com.sevtinge.hypercraft.common.utils.api; public class ProjectApi { public static String mAppModulePkg=\"com.sevtinge.hypercraft\"; }",
+    "com/sevtinge/hypercraft/libhook/utils/api/ContextUtils.java": """package com.sevtinge.hypercraft.libhook.utils.api;
 public class ContextUtils { public static void getWaitContext(java.util.function.Consumer<android.content.Context> c,boolean system){} }""",
-    "com/sevtinge/hyperceiler/libhook/utils/api/ThreadPoolManager.java": """package com.sevtinge.hyperceiler.libhook.utils.api;
+    "com/sevtinge/hypercraft/libhook/utils/api/ThreadPoolManager.java": """package com.sevtinge.hypercraft.libhook.utils.api;
 public class ThreadPoolManager {
  public static int shutdowns; public static boolean shutdownOk=true;
  public static boolean shutdownAndAwait(long n,java.util.concurrent.TimeUnit u){shutdowns++;return shutdownOk;}
  public static java.util.concurrent.ExecutorService getInstance(){throw new AssertionError("DexKit work is outside this fixture");}
 }""",
-    "com/sevtinge/hyperceiler/libhook/utils/hookapi/dexkit/DexKit.java": """package com.sevtinge.hyperceiler.libhook.utils.hookapi.dexkit;
-public class DexKit { public static void ready(com.sevtinge.hyperceiler.libhook.base.PackageTarget t,String s){} public static void close(){} }""",
-    "com/sevtinge/hyperceiler/libhook/base/BaseHook.java": """package com.sevtinge.hyperceiler.libhook.base;
+    "com/sevtinge/hypercraft/libhook/utils/hookapi/dexkit/DexKit.java": """package com.sevtinge.hypercraft.libhook.utils.hookapi.dexkit;
+public class DexKit { public static void ready(com.sevtinge.hypercraft.libhook.base.PackageTarget t,String s){} public static void close(){} }""",
+    "com/sevtinge/hypercraft/libhook/base/BaseHook.java": """package com.sevtinge.hypercraft.libhook.base;
 public class BaseHook {
  public String TAG="FixtureHook";
  public boolean useDexKit(){return false;} public boolean initDexKit(){return true;}
@@ -80,25 +80,25 @@ public class BaseHook {
  public static int cleanups;
  public static void restoreHotReloadRuntimeState(Object state){} public static void prepareHotReload(){cleanups++;}
 }""",
-    "com/sevtinge/hyperceiler/libhook/base/DataBase.java": """package com.sevtinge.hyperceiler.libhook.base;
+    "com/sevtinge/hypercraft/libhook/base/DataBase.java": """package com.sevtinge.hypercraft.libhook.base;
 public class DataBase { public String targetPackage; public static java.util.HashMap<String,DataBase> get(){return new java.util.HashMap<>();} }""",
-    "com/sevtinge/hyperceiler/libhook/base/ModuleMatcher.java": """package com.sevtinge.hyperceiler.libhook.base;
+    "com/sevtinge/hypercraft/libhook/base/ModuleMatcher.java": """package com.sevtinge.hypercraft.libhook.base;
 public class ModuleMatcher {
  public ModuleMatcher(MatchContext c){} public boolean shouldLoad(DataBase d,String p){throw new AssertionError("Rule discovery not exercised");}
  public static class MatchContext { public static Builder builder(){return new Builder();}
  public static class Builder { public Builder systemServer(boolean v){return this;} public Builder exactMatch(boolean v){return this;} public Builder debugMode(boolean v){return this;} public MatchContext build(){return new MatchContext();} }}
 }""",
-    "com/sevtinge/hyperceiler/libhook/app/CorePatch/CorePatch.java": """package com.sevtinge.hyperceiler.libhook.app.CorePatch;
-public class CorePatch { public void onLoad(com.sevtinge.hyperceiler.libhook.base.PackageTarget t){throw new AssertionError("Unrelated core patch must stay disabled");} }""",
-    "com/sevtinge/hyperceiler/libhook/rules/systemframework/others/FlagSecure.java": """package com.sevtinge.hyperceiler.libhook.rules.systemframework.others;
-public class FlagSecure { public void onLoad(com.sevtinge.hyperceiler.libhook.base.PackageTarget t){throw new AssertionError("Unrelated flag hook must stay disabled");} }""",
-    "com/sevtinge/hyperceiler/libhook/safecrash/CrashMonitor.java": """package com.sevtinge.hyperceiler.libhook.safecrash;
-public class CrashMonitor { public static int instances; public CrashMonitor(com.sevtinge.hyperceiler.libhook.base.PackageTarget t){instances++;} }""",
-    "com/sevtinge/hyperceiler/libhook/rules/home/other/NativeHomeHooksOS4.java": """package com.sevtinge.hyperceiler.libhook.rules.home.other;
+    "com/sevtinge/hypercraft/libhook/app/CorePatch/CorePatch.java": """package com.sevtinge.hypercraft.libhook.app.CorePatch;
+public class CorePatch { public void onLoad(com.sevtinge.hypercraft.libhook.base.PackageTarget t){throw new AssertionError("Unrelated core patch must stay disabled");} }""",
+    "com/sevtinge/hypercraft/libhook/rules/systemframework/others/FlagSecure.java": """package com.sevtinge.hypercraft.libhook.rules.systemframework.others;
+public class FlagSecure { public void onLoad(com.sevtinge.hypercraft.libhook.base.PackageTarget t){throw new AssertionError("Unrelated flag hook must stay disabled");} }""",
+    "com/sevtinge/hypercraft/libhook/safecrash/CrashMonitor.java": """package com.sevtinge.hypercraft.libhook.safecrash;
+public class CrashMonitor { public static int instances; public CrashMonitor(com.sevtinge.hypercraft.libhook.base.PackageTarget t){instances++;} }""",
+    "com/sevtinge/hypercraft/libhook/rules/home/other/NativeHomeHooksOS4.java": """package com.sevtinge.hypercraft.libhook.rules.home.other;
 public class NativeHomeHooksOS4 { public static final NativeHomeHooksOS4 INSTANCE=new NativeHomeHooksOS4(); public static int recoveries; public static boolean bootstrapReady=true; public boolean hasNativeLoadStarted(){return false;} public void ensureLoadedFromModuleEntry(String p){} public void ensureLoadedFromModuleEntry(String p,boolean ready){bootstrapReady=ready;} public void onPreferencesReadyAfterRetry(){recoveries++;} }""",
-    "com/sevtinge/hyperceiler/libhook/rules/home/dock/HomeLayoutNativeEndpointOS4.java": """package com.sevtinge.hyperceiler.libhook.rules.home.dock;
+    "com/sevtinge/hypercraft/libhook/rules/home/dock/HomeLayoutNativeEndpointOS4.java": """package com.sevtinge.hypercraft.libhook.rules.home.dock;
 public class HomeLayoutNativeEndpointOS4 { public static boolean pauseForHotReload(){return true;} public static void resumeAfterRejectedHotReload(){} }""",
-    "com/sevtinge/hyperceiler/libhook/rules/systemui/controlcenter/media3/AmbientNativeColorOS4.java": """package com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.media3;
+    "com/sevtinge/hypercraft/libhook/rules/systemui/controlcenter/media3/AmbientNativeColorOS4.java": """package com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.media3;
 /** JNI backend state is a fixture here; actual Kotlin/ART evidence is separate. */
 public class AmbientNativeColorOS4 {
  public static boolean loaded,paused; public static int pauses,resumes;
@@ -129,7 +129,7 @@ public class EzXposed {
  public static void initOnSystemServerStarting(SystemServerStartingParam p){packageName="system";dispatch(false);}
  public static AutomaticHotReloadResult restoreHotReloadedAutomatically(XposedInterface e,HotReloadedParam p,java.util.function.Consumer<Object[]> restore){
   packageName=system?"system":"com.android.systemui";
-  restore.accept(new Object[]{"HyperCeiler.HotReloadExtras",1,system?null:new android.content.pm.ApplicationInfo(),null,new java.util.HashMap<>()});
+  restore.accept(new Object[]{"HyperCraft.HotReloadExtras",1,system?null:new android.content.pm.ApplicationInfo(),null,new java.util.HashMap<>()});
   dispatch(true);publishedReloads++;
   return new AutomaticHotReloadResult(0,0,0);
  }
@@ -158,8 +158,8 @@ with tempfile.TemporaryDirectory(prefix="hc-init-prefs-") as work:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(text)
         generated.append(path)
-    common = ROOT / "library/common/src/main/java/com/sevtinge/hyperceiler/common"
-    base = ROOT / "library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/base"
+    common = ROOT / "library/common/src/main/java/com/sevtinge/hypercraft/common"
+    base = ROOT / "library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/base"
     sources = generated + list((ROOT / "tests/dock-style-refresh/stubs").rglob("*.java")) + [
         args.source, base / "BaseLoad.java", base / "PackageTarget.java", base / "FrameworkHookGate.java", base / "HotReloadCompatibility.java",
         common / "utils/PrefsBridge.java", common / "utils/prefs/PrefType.java", TESTS / "InitPrefsTest.java"]

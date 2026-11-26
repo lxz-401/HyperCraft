@@ -2,7 +2,7 @@
 from pathlib import Path
 import sys,subprocess,re,json
 W=Path(__file__).resolve().parents[2];R=Path(sys.argv[1]).resolve() if len(sys.argv)>1 else W
-J=R/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/gesture'
+J=R/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/gesture'
 D=W/'handover/gesture-extra-os4-20261017'/('host-'+R.name);D.mkdir(parents=True,exist_ok=True)
 if not (J/'HomeExtraGestureState.java').exists():print('EXTRA_GESTURES=missing implementation; failed=1');sys.exit(1)
 files=[]
@@ -31,7 +31,7 @@ stubs={
 }
 for n,s in stubs.items():write(n,s)
 endpoint=(J/'HomeQuickSwitchOS4.java').read_text();mapping=re.search(r'static int actionIndex\(int event\)\s*\{[^}]*\}',endpoint).group()
-code=r'''package com.sevtinge.hyperceiler.libhook.rules.home.gesture;
+code=r'''package com.sevtinge.hypercraft.libhook.rules.home.gesture;
 import android.view.*;import java.util.*;
 public class ExtraTest {
  static int checks,failed;static void ok(boolean b,String n){checks++;if(!b){failed++;System.out.println("FAIL="+n);}}
@@ -87,7 +87,7 @@ public class ExtraTest {
 write('ExtraTest.java',code)
 files.extend(str(J/n) for n in ['HomeExtraGestureState.java','HomeGestureRegionsOS4.java'])
 rows=[]
-for cmd in [['javac','-encoding','UTF-8','-d',str(D)]+files,['java','-cp',str(D),'com.sevtinge.hyperceiler.libhook.rules.home.gesture.ExtraTest']]:
+for cmd in [['javac','-encoding','UTF-8','-d',str(D)]+files,['java','-cp',str(D),'com.sevtinge.hypercraft.libhook.rules.home.gesture.ExtraTest']]:
  p=subprocess.run(cmd,capture_output=True,text=True,encoding='utf8',errors='replace');print(p.stdout+p.stderr,end='');rows.append(dict(command=cmd,input_root=str(R),stdout=p.stdout,stderr=p.stderr,exit=p.returncode))
  if p.returncode:break
 (D/'results.json').write_text(json.dumps(rows,indent=2));raise SystemExit(rows[-1]['exit'])

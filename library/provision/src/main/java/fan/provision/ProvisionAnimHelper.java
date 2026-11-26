@@ -1,7 +1,7 @@
 /*
- * This file is part of HyperCeiler.
+ * This file is part of HyperCraft.
 
- * HyperCeiler is free software: you can redistribute it and/or modify
+ * HyperCraft is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License.
@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2026 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCraft Contributions
  */
 package fan.provision;
 
@@ -27,10 +27,10 @@ import android.content.ServiceConnection;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
-import com.sevtinge.hyperceiler.common.log.ModuleLog;
+import com.sevtinge.hypercraft.common.log.ModuleLog;
 
-import com.sevtinge.hyperceiler.provision.IAnimCallback;
-import com.sevtinge.hyperceiler.provision.IProvisionAnim;
+import com.sevtinge.hypercraft.provision.IAnimCallback;
+import com.sevtinge.hypercraft.provision.IProvisionAnim;
 
 public class ProvisionAnimHelper {
 
@@ -161,7 +161,7 @@ public class ProvisionAnimHelper {
         if (mContext != null) {
             mContext.registerReceiver(mReceiver, new IntentFilter("fan.action.PROVISION_ANIM_END"), Context.RECEIVER_EXPORTED);
             Intent intent = new Intent("fan.intent.action.OOBSERVICE");
-            intent.setPackage("com.sevtinge.hyperceiler");
+            intent.setPackage("com.sevtinge.hypercraft");
             mContext.bindService(intent, mConnection, 1);
         } else {
             ModuleLog.e(TAG, "registerAnimService context is null");

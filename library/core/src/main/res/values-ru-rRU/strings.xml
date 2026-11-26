@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -15,7 +15,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   --><resources>
     <!--Pop-up window/miuix part-->
     <string name="miuix_appcompat_action_mode_select_all">Выбрать все</string>
@@ -28,23 +28,23 @@
     <string name="miuix_appcompat_search_input_description">Поиск</string>
     <string name="miuix_appcompat_actionbar_immersion_button_more_description">Другое</string>
     <string name="miuix_appcompat_action_mode_inverse">Отменить выбор</string>
-    <!--HyperCeiler Settings/About Page-->
+    <!--HyperCraft Settings/About Page-->
     <string name="tip">Совет</string>
     <string name="root">Некоторые функции недоступны без Root прав</string>
     <string name="soft_reboot">Перезагрузка</string>
     <string name="restart_app_desc">Вы точно хотите перезагрузить %1$s?</string>
-    <string name="hyperceiler_restart_quick">Быстрый перезапуск приложений</string>
+    <string name="hypercraft_restart_quick">Быстрый перезапуск приложений</string>
     <string name="hook_failed">Модуль не активирован. Пожалуйста, убедитесь, что вы активировали модуль в LSPosed и перезапустите приложение.</string>
-    <string name="kill_failed">Не удалось закончить процесс. Проверьте, предоставлены ли HyperCeiler разрешения Root/Su.</string>
-    <string name="start_failed">Не удалось начать работу. Проверьте, предоставлен ли HyperCeiler Root доступ.</string>
+    <string name="kill_failed">Не удалось закончить процесс. Проверьте, предоставлены ли HyperCraft разрешения Root/Su.</string>
+    <string name="start_failed">Не удалось начать работу. Проверьте, предоставлен ли HyperCraft Root доступ.</string>
     <string name="pid_failed">Целевое приложение не запущено и не требует перезапуска.</string>
-    <string name="reboot_failed">Перезагрузка не удалась. Проверьте, предоставлено ли HyperCeiler разрешение Root/Su.</string>
+    <string name="reboot_failed">Перезагрузка не удалась. Проверьте, предоставлено ли HyperCraft разрешение Root/Su.</string>
     <string name="experimental_features">Экспериментальные функции</string>
-    <!--HyperCeiler Tips-->
+    <!--HyperCraft Tips-->
     <string name="warn">Предупреждение</string>
     <string name="module_title_1">Основное сообщение</string>
     <string name="module_title_2">Объединение сообщения</string>
-    <string name="app_error_desc">Произошла критическая ошибка HyperCeiler! Пожалуйста, предоставьте нам следующую информацию об ошибке для обратной связи:\n\n Зажмите текст, чтобы его скопировать.</string>
+    <string name="app_error_desc">Произошла критическая ошибка HyperCraft! Пожалуйста, предоставьте нам следующую информацию об ошибке для обратной связи:\n\n Зажмите текст, чтобы его скопировать.</string>
     <string name="safe_mode_history">Посмотреть записи</string>
     <string name="safe_mode_cancel">Отключить безопасный режим</string>
     <string name="safe_mode_ok">Отмена</string>
@@ -63,12 +63,12 @@
     <string name="error_version_name">Название версии</string>
     <string name="error_git_hash">Git хеш</string>
     <string name="error_build_time">Время сборки</string>
-    <string name="tip_default">Совет: Здесь находится совет по умолчанию. Если вы видите это, значит, что в HyperCeiler возникла проблема. Пожалуйста, сообщите об этом разработчику.</string>
+    <string name="tip_default">Совет: Здесь находится совет по умолчанию. Если вы видите это, значит, что в HyperCraft возникла проблема. Пожалуйста, сообщите об этом разработчику.</string>
     <string name="headtip_tip_auto_safe_mode">Безопасный режим может отцепить некоторые приложения во время нескольких сбоев для обеспечения безопасности. Для запуска этой функции требуется включённый перехват для приложения Системный фреймворк. Для включения безопасного режима настоятельно рекомендуем проверить галочку в Xposed фреймворк.</string>
-    <string name="happy_birthday_hyperceiler">Сегодня день рождения HyperCeiler!\nСпасибо за вашу поддержку в течение прошлого года, давайте продолжим работать вместе в этом году!</string>
+    <string name="happy_birthday_hypercraft">Сегодня день рождения HyperCraft!\nСпасибо за вашу поддержку в течение прошлого года, давайте продолжим работать вместе в этом году!</string>
     <string name="headtip_tip_fuck_coolapk">14 июля 2022 года Sevtinge выступил с важной речью.</string>
-    <string name="headtip_notice_dead_logger_errcode">Текущая служба журнала устройства ненормальна, и функции HyperCeiler будут ограничены. Пожалуйста, восстановите службу журнала, чтобы она могла работать нормально.\nКод ошибки: %1$s</string>
-    <string name="headtip_notice_dead_logger">Текущая служба журнала устройства ненормальна, и функции HyperCeiler будут ограничены. Пожалуйста, восстановите службу журнала, чтобы она могла работать нормально.</string>
+    <string name="headtip_notice_dead_logger_errcode">Текущая служба журнала устройства ненормальна, и функции HyperCraft будут ограничены. Пожалуйста, восстановите службу журнала, чтобы она могла работать нормально.\nКод ошибки: %1$s</string>
+    <string name="headtip_notice_dead_logger">Текущая служба журнала устройства ненормальна, и функции HyperCraft будут ограничены. Пожалуйста, восстановите службу журнала, чтобы она могла работать нормально.</string>
     <string name="unsupported_system_func">Эта функция не поддерживается в текущей версии системы</string>
     <string name="supported_system_func">Эта функция официально поддерживается в текущей версии системы</string>
     <string name="feature_doing_func">Текущая функция находится в разработке, следите за обновлениями.</string>

@@ -5,12 +5,12 @@ import argparse, hashlib, json
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 
 ROOT = test_paths.TEST_DATA_ROOT
 BASE = test_paths.TEST_DATA_ROOT / 'acceptance/java-test13/ambient-color-v1'
-PREFIX = 'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/systemui/controlcenter/media3/'
+PREFIX = 'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemui/controlcenter/media3/'
 SOURCES = [PREFIX+'AmbientColorResolverOS4.kt', PREFIX+'AmbientNativeColorOS4.kt']
 sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
 sources = {p: sha(test_paths.SOURCE_ROOT/p) for p in SOURCES}

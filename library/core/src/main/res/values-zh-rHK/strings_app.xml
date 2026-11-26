@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -15,7 +15,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   --><resources>
     <!--Introduction to Xposed Modules-->
     <string name="new_permission_wifi_state_desc">用於xxx</string>
@@ -23,38 +23,38 @@
     <string name="new_cta_agree_desc">在使用過程中，為了向您提供更多功能，我們可能會向您申請 Root/Su 權限。您可隨時前往權限管理調整所有權限的授權情况，Root 權限請前往您的 Root 管理器進行管理.</string>
     <string name="new_cta_app_main_purpose">修改系統應用程式</string>
     <string name="new_cta_app_all_purpose_welcome">使用者協議及私隱政策</string>
-    <string name="new_cta_app_all_purpose_title">歡迎使用 HyperCeiler，該應用依賴 Xposed 框架運行，您可以使用該應用程式劫持並修改其他受支持的應用以實現對系統的增強功能。在使用過程中，為了向您提供更多功能，我們可能會向您申請 Root 權限。您可隨時前往您的 Root 管理器進行管理。\n繼續使用 HyperCeiler 即代表您同意我們的<annotation key="protocol">《使用者協議》</annotation>及<annotation key="privacy">《私隱政策》</annotation>。</string>
+    <string name="new_cta_app_all_purpose_title">歡迎使用 HyperCraft，該應用依賴 Xposed 框架運行，您可以使用該應用程式劫持並修改其他受支持的應用以實現對系統的增強功能。在使用過程中，為了向您提供更多功能，我們可能會向您申請 Root 權限。您可隨時前往您的 Root 管理器進行管理。\n繼續使用 HyperCraft 即代表您同意我們的<annotation key="protocol">《使用者協議》</annotation>及<annotation key="privacy">《私隱政策》</annotation>。</string>
     <string name="new_cta_app_all_purpose_agree">同意並繼續</string>
     <string name="new_cta_app_all_purpose_reject">拒絕並退出</string>
-    <!--HyperCeiler Settings/About Page-->
+    <!--HyperCraft Settings/About Page-->
     <string name="language">繁體中文（香港）</string>
-    <string name="translator">HyperCeiler 官方</string>
+    <string name="translator">HyperCraft 官方</string>
     <string name="translator_url">https://github.com/ReChronoRain</string>
     <string name="home">首頁</string>
     <string name="help">幫助</string>
     <string name="settings">設定</string>
     <string name="about">關於</string>
     <string name="about_use">引用</string>
-    <string name="about_use_desc">HyperCeiler 使用了以下項目的部分或全部内容，感謝這些項目的開發者提供的大力支持（排名順序不分先後）</string>
+    <string name="about_use_desc">HyperCraft 使用了以下項目的部分或全部内容，感謝這些項目的開發者提供的大力支持（排名順序不分先後）</string>
     <string name="about_contributer">貢獻者</string>
-    <string name="about_contributer_desc">感謝以下貢獻者為 HyperCeiler 的開發提供了不同程度的援助（排名順序不分先後）</string>
+    <string name="about_contributer_desc">感謝以下貢獻者為 HyperCraft 的開發提供了不同程度的援助（排名順序不分先後）</string>
     <string name="about_donation">支持</string>
     <string name="about_donation_desc">您可以在此處捐贈以支持我們</string>
     <string name="about_device_info_device">裝置型號</string>
     <string name="about_device_info_android">Android 版本</string>
     <string name="about_device_info_os">系統版本</string>
-    <string name="hyperceiler_notice">下拉狀態欄，同時展示快捷開關和系統通知</string>
+    <string name="hypercraft_notice">下拉狀態欄，同時展示快捷開關和系統通知</string>
     <string name="delete_all_dexkit_cache_desc">確定要刪除全部 DexKit 緩存嗎？</string>
     <string name="delete_all_dexkit_cache_success">已刪除全部 DexKit 緩存</string>
     <string name="set_homepage_entrance">首頁入口設定</string>
     <string name="set_homepage_entrance_about">僅首頁設定生效，已經開啟的功能不會被關閉。\n關閉後實時生效，重新顯示需重新啟動應用程式。</string>
     <string name="help_cant_see_apps_guide">列表中沒有您想要找的應用程式？</string>
     <string name="help_cant_see_apps_title">無法在首頁找到應用程式功能入口</string>
-    <string name="help_cant_see_apps_desc">為了保持首頁的簡潔和易用性，我們對以下類型的應用程式功能入口進行了隱藏：\n\n - 當前應用程式被禁用或隱藏的\n - 裝置上不存在當前應用程式的\n - 當前系統或應用程式版本不適合使用功能的\n - 未被選擇為作用域的\n\n請根據以上内容排查後，重新啟動 HyperCeiler 再試。若仍然找不到應用程式功能入口，那可能是一個錯誤，請及時且有效的向我們回饋。\n\n當前被隱藏的應用程式功能入口：</string>
+    <string name="help_cant_see_apps_desc">為了保持首頁的簡潔和易用性，我們對以下類型的應用程式功能入口進行了隱藏：\n\n - 當前應用程式被禁用或隱藏的\n - 裝置上不存在當前應用程式的\n - 當前系統或應用程式版本不適合使用功能的\n - 未被選擇為作用域的\n\n請根據以上内容排查後，重新啟動 HyperCraft 再試。若仍然找不到應用程式功能入口，那可能是一個錯誤，請及時且有效的向我們回饋。\n\n當前被隱藏的應用程式功能入口：</string>
     <string name="help_cant_see_apps_uninstall">裝置上不存在的應用程式：\n</string>
     <string name="help_cant_see_apps_disable">被禁用或隱藏的應用程式：\n</string>
     <string name="help_cant_see_apps_scope">未被選擇為作用域的：\n</string>
-    <string name="help_cant_see_apps_desc_no_hidden">為了保持首頁的簡潔及易用性，我們對以下類型的應用程式功能入口進行了隱藏：\n\n - 當前應用程式被禁用或隱藏的\n - 裝置上不存在當前應用程式的\n - 當前系統或應用程式版本不適合使用功能的\n - 未被選擇為作用域的\n\n請根據以上内容排查後，重新啟動 HyperCeiler 再試。若仍然找不到應用程式功能入口，那可能是一個錯誤，請及時且有效的向我們回饋。</string>
+    <string name="help_cant_see_apps_desc_no_hidden">為了保持首頁的簡潔及易用性，我們對以下類型的應用程式功能入口進行了隱藏：\n\n - 當前應用程式被禁用或隱藏的\n - 裝置上不存在當前應用程式的\n - 當前系統或應用程式版本不適合使用功能的\n - 未被選擇為作用域的\n\n請根據以上内容排查後，重新啟動 HyperCraft 再試。若仍然找不到應用程式功能入口，那可能是一個錯誤，請及時且有效的向我們回饋。</string>
     <string name="help_cant_see_apps_switch">在主頁隱藏此幫助</string>
     <string name="help_cant_see_apps_switch_desc">您仍可以在「關於-幫助」找到此幫助，返回首頁即可生效</string>
     <!-- Scope -->
@@ -512,7 +512,7 @@
     <string name="community">小米社區</string>
     <string name="community_device_modify">機型偽裝</string>
     <string name="community_fuck_detection">禁止檢測</string>
-    <string name="community_fuck_detection_desc">禁止在回饋時檢測 HyperCeiler 並上傳。請確保問題不是由自身引起，而是確實的系統問題，再進行回饋，以免帶來不必要的麻煩</string>
+    <string name="community_fuck_detection_desc">禁止在回饋時檢測 HyperCraft 並上傳。請確保問題不是由自身引起，而是確實的系統問題，再進行回饋，以免帶來不必要的麻煩</string>
     <!--File Manager-->
     <string name="fileexplorer">檔案管理</string>
     <string name="file_explorer_can_selectable">資料夾名稱允許長按選擇操作</string>
@@ -1657,9 +1657,9 @@
     <string name="close_source">閉源項目</string>
     <string name="version_update">發現新版本</string>
     <string name="debug_info">無法獲取調試資訊。</string>
-    <string name="clear_app_properties_desc">確定重置 HyperCeiler 相關服務的 Prop 嗎？</string>
-    <string name="clear_app_properties_success">已重設 HyperCeiler 相關服務的 Prop</string>
-    <string name="development_clear_app_properties">重置 HyperCeiler 相關服務的 Prop</string>
+    <string name="clear_app_properties_desc">確定重置 HyperCraft 相關服務的 Prop 嗎？</string>
+    <string name="clear_app_properties_success">已重設 HyperCraft 相關服務的 Prop</string>
+    <string name="development_clear_app_properties">重置 HyperCraft 相關服務的 Prop</string>
 
     <string name="settings_hot_reload">熱重載進程</string>
     <string name="settings_hot_reload_desc">選擇框架作用域中的應用程式，並重載其目前全部已注入的進程。需要 Xposed 框架 API 102 或更高版本。</string>

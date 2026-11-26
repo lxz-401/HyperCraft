@@ -1,7 +1,7 @@
 package fixture
 import java.util.Collections
-import com.sevtinge.hyperceiler.libhook.rules.systemui.statusbar.icon.all.SwapWiFiAndMobileNetwork
-import com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper
+import com.sevtinge.hypercraft.libhook.rules.systemui.statusbar.icon.all.SwapWiFiAndMobileNetwork
+import com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.Hooks
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.Param
 

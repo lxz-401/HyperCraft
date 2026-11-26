@@ -1,9 +1,9 @@
-package com.sevtinge.hyperceiler.libhook.rules.home.dock;
+package com.sevtinge.hypercraft.libhook.rules.home.dock;
 import android.content.ContentResolver;
 import android.os.Binder;
 import android.os.Parcel;
 import java.util.*;
-import com.sevtinge.hyperceiler.libhook.provider.HomeLayoutPrefsSnapshot;
+import com.sevtinge.hypercraft.libhook.provider.HomeLayoutPrefsSnapshot;
 public final class BackGestureEndpointTest {
  static int checks; static void check(boolean b){++checks;if(!b)throw new AssertionError("check "+checks);}
  public static void main(String[] args) throws ReflectiveOperationException {

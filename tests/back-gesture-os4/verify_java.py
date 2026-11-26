@@ -7,7 +7,7 @@ def java_tool(name):
     jdk=os.environ.get('JAVA_HOME')
     return str(Path(jdk)/'bin'/(name+('.exe' if os.name=='nt' else ''))) if jdk else name
 
-source_root=R/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook'
+source_root=R/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook'
 sources=list((W/'tests/home-layout-native/stubs').rglob('*.java'))
 sources+=list((W/'tests/home-dock-window/stubs').rglob('*.java'))
 sources+=[source_root/'base/FrameworkHookGate.java',
@@ -17,22 +17,22 @@ sources+=[source_root/'base/FrameworkHookGate.java',
     D/'BackGestureEndpointTest.java']
 r=subprocess.run([java_tool('javac'),'-encoding','UTF-8','-d',str(out)]+list(map(str,sources)),capture_output=True,text=True);print(r.stdout+r.stderr,end='')
 if r.returncode:sys.exit(r.returncode)
-r=subprocess.run([java_tool('java'),'-ea','-cp',str(out),'com.sevtinge.hyperceiler.libhook.rules.home.dock.BackGestureEndpointTest'],capture_output=True,text=True);print(r.stdout+r.stderr,end='')
+r=subprocess.run([java_tool('java'),'-ea','-cp',str(out),'com.sevtinge.hypercraft.libhook.rules.home.dock.BackGestureEndpointTest'],capture_output=True,text=True);print(r.stdout+r.stderr,end='')
 if r.returncode:sys.exit(r.returncode)
 # Run actual settings and adaptation gate with Android preference stubs.
 ui_stubs=W/'tests/home-os4-gate-controls/stubs.json'
 if not ui_stubs.is_file():
     print('BACK_GESTURE_UI=skipped (no settings stubs)')
     sys.exit(0)
-stubs=json.loads(ui_stubs.read_text(encoding="utf8"));base=R/'library/core/src/main/java/com/sevtinge/hyperceiler/hooker/home';sources=[base/(n+'.java') for n in ['HomeGestureSettings','HomeOS4AdaptationGate']]
+stubs=json.loads(ui_stubs.read_text(encoding="utf8"));base=R/'library/core/src/main/java/com/sevtinge/hypercraft/hooker/home';sources=[base/(n+'.java') for n in ['HomeGestureSettings','HomeOS4AdaptationGate']]
 res={}
 for kind,name in re.findall(r'R\.(\w+)\.(\w+)', ''.join(p.read_text(encoding="utf8") for p in sources)):res.setdefault(kind,set()).add(name)
-stubs['com/sevtinge/hyperceiler/core/R.java']='package com.sevtinge.hyperceiler.core;public class R {'+''.join('public static class '+k+'{'+''.join('public static final int '+n+'='+str(i)+';' for i,n in enumerate(sorted(v),1))+'}' for k,v in res.items())+'}'
+stubs['com/sevtinge/hypercraft/core/R.java']='package com.sevtinge.hypercraft.core;public class R {'+''.join('public static class '+k+'{'+''.join('public static final int '+n+'='+str(i)+';' for i,n in enumerate(sorted(v),1))+'}' for k,v in res.items())+'}'
 stubs['BackGestureGateTest.java']=r'''
 import androidx.preference.*;import fan.preference.*;
-import com.sevtinge.hyperceiler.hooker.home.HomeGestureSettings;
-import com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper;
-import com.sevtinge.hyperceiler.common.utils.PrefsBridge;
+import com.sevtinge.hypercraft.hooker.home.HomeGestureSettings;
+import com.sevtinge.hypercraft.libhook.utils.api.DeviceHelper;
+import com.sevtinge.hypercraft.common.utils.PrefsBridge;
 public class BackGestureGateTest {
  static int checks;static void check(boolean b){checks++;if(!b)throw new AssertionError("check "+checks);}
  static Preference add(HomeGestureSettings f,String k,Preference p){p.key="prefs_key_home_"+k;f.prefs.put(p.key,p);f.screen.addPreference(p);return p;}

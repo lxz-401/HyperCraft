@@ -1,0 +1,1 @@
+package com.sevtinge.hypercraft.libhook.rules.getapps;import com.sevtinge.hypercraft.libhook.base.BaseHook;public class DisablePackageMonitor extends BaseHook{public static final DisablePackageMonitor INSTANCE=new DisablePackageMonitor(); public void init(){}}

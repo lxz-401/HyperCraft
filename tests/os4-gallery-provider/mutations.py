@@ -21,7 +21,7 @@ p = argparse.ArgumentParser()
 p.add_argument("--output", required=True, type=Path)
 a = p.parse_args()
 a.output.mkdir(parents=True, exist_ok=True)
-rel = Path("library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook")
+rel = Path("library/libhook/src/main/java/com/sevtinge/hypercraft/libhook")
 original = (
     ROOT / rel / "rules/mediaeditor/GalleryCreationAvailabilityOS4.java"
 ).read_text()

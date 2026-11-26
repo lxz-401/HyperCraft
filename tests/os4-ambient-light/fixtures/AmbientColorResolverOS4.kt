@@ -1,5 +1,5 @@
-package com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.media3
-import com.sevtinge.hyperceiler.libhook.base.BaseHook
+package com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.media3
+import com.sevtinge.hypercraft.libhook.base.BaseHook
 internal class AmbientColorResolverOS4(val mediaDataClass:Class<*>) {
  data class Colors(val light:Int,val dark:Int)
  companion object { @JvmField var available=true; @JvmField var failure=false; @JvmField var throwing=false; @JvmField var calls=0; @JvmField val needs=ArrayList<Pair<Boolean,Boolean>>()

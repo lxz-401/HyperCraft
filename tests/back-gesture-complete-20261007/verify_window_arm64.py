@@ -4,7 +4,7 @@ D=Path(__file__).resolve().parent;W=D.parents[1];sys.path[:0]=[str(W/'tests/back
 from unicorn import *
 from unicorn.arm64_const import *
 from dart_dump import Elf
-native=next((W/'app/build/intermediates/cxx/RelWithDebInfo').rglob('obj/arm64-v8a/libHyperCeilerNative.so'));e=Elf(native)
+native=next((W/'app/build/intermediates/cxx/RelWithDebInfo').rglob('obj/arm64-v8a/libHyperCraftNative.so'));e=Elf(native)
 nm='D:/build-tools/android-sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/windows-x86_64/bin/llvm-nm.exe'
 symbols={f[2]:int(f[0],16) for l in subprocess.check_output([nm,str(native)],text=True).splitlines() if len(f:=l.split())==3}
 entry=symbols['hc_back_window_entry'];body=symbols['hc_back_window_body'];slot=symbols['hc_back_window_original']

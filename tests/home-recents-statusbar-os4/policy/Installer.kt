@@ -1,4 +1,4 @@
-package com.sevtinge.hyperceiler.libhook.base
+package com.sevtinge.hypercraft.libhook.base
 import java.lang.reflect.Method
 import io.github.libxposed.api.XposedInterface
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.Hooks

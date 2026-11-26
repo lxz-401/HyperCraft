@@ -18,14 +18,14 @@
   `folder_original_body_matches`。现有 `bind_folder_geometry` 始终调用
   `folder_geometry_contract`；完整语义 profile、命名 callee、原始 helper、字段、分支目的地
   和补丁窗口校验保留，没有恢复旧函数地址或降低校验。
-- `library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/dock/HomeLayoutNativeEndpointOS4.java`：
+- `library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/dock/HomeLayoutNativeEndpointOS4.java`：
   恢复 PublishedSnapshot、CombinedSnapshot、预取、失效发布、epoch／revision／租约、
   typed provider 查询、统一 decodeLayout 和 readBit。查询只返回完整 ProviderSnapshot 或 null；
   decoder 返回完整扩展 Snapshot，tweak decoder 只返回 int[]。授权与布局从同一次 getAll
   发布；拒绝旧查询、查询期间的偏好变化、热重载退休和超过原始五秒租约的响应。
   数组及自定义标题记录做防御性复制。恢复 1.5 秒续期，避免原合并结果的“无限等待通知”
   与五秒授权租约冲突。通知同时使旧 combined 授权失效，legacy 布局仍保留最后完整缓存。
-- `library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/provider/HomeLayoutPrefsSnapshot.java`：
+- `library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/provider/HomeLayoutPrefsSnapshot.java`：
   补回 stringset switch 分支缺失的闭合括号，保留 text／long 元数据及标题字符串集协议。
 
 `HomeDockWindow.kt` 无需删除或替换调用：补回真实 Java API 后已通过实际 Kotlin/Android 编译。
@@ -80,7 +80,7 @@ HCL4 扩展布局与 HCY1 兼容接口的交易码、顺序和确认值未变；
 资源格式与 MIUIX D8/R8 stack-map 等现有警告仍有输出，未阻断构建。
 隔离工作区未复制发布签名，构建使用仓库原有的默认签名选择逻辑。
 
-Release：`app/build/outputs/apk/release/HyperCeiler-2.10.166-20261022-release.apk`。
+Release：`app/build/outputs/apk/release/HyperCraft-2.10.166-20261022-release.apk`。
 SHA-256：`c9129caa5561445e09a7e96d8b5ec13f4471546a8c61fe5ee147700c58015519`。
 本机完整日志和机器报告保留在 `/tmp/hc-pr1731/`；测试输出不含构建凭据。
 

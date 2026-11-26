@@ -1,7 +1,7 @@
-package com.sevtinge.hyperceiler.tests.notification
+package com.sevtinge.hypercraft.tests.notification
 
 import android.os.Handler
-import com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.AutoDismissExpandedPopupsHook
+import com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.AutoDismissExpandedPopupsHook
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.RegisteredHooks
 
 class NotificationEntry(@JvmField val mKey: String, var pinned: Boolean = true) {

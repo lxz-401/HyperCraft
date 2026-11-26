@@ -4,7 +4,7 @@ import sys,subprocess,struct
 W=Path(__file__).resolve().parents[2]
 R=Path(sys.argv[1]).resolve() if len(sys.argv)>1 else W
 D=W/'handover/gestures-os4-20261014'; out=D/('host-'+R.name);out.mkdir(exist_ok=True)
-H=R/'app/src/main/cpp/targets/home';J=R/'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/gesture'
+H=R/'app/src/main/cpp/targets/home';J=R/'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/gesture'
 if not (H/'home_gestures_os4.h').exists():
     print('OS4_GESTURES=missing native resolver/recognizer; failed=1');sys.exit(1)
 code=r'''

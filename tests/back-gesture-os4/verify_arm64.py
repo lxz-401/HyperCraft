@@ -5,7 +5,7 @@ sys.path[:0]=[str(D/'runtime'),str(W/'tests/home-layout-native')]
 from unicorn import *
 from unicorn.arm64_const import *
 from dart_dump import Elf
-native=next((W/'app/build/intermediates/cxx/RelWithDebInfo').rglob('obj/arm64-v8a/libHyperCeilerNative.so'))
+native=next((W/'app/build/intermediates/cxx/RelWithDebInfo').rglob('obj/arm64-v8a/libHyperCraftNative.so'))
 nm='D:/build-tools/android-sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/windows-x86_64/bin/llvm-nm.exe'
 symbols={}
 for line in subprocess.check_output([nm,str(native)],text=True).splitlines():

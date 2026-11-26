@@ -14,5 +14,5 @@ text=fixture[:at]+source[a:b]+fixture[at:]
 for name in ('template<class F> void forward(', 'void hc_workspace_scene_ready(', 'void hc_workspace_gestures_ready(', 'extern "C" void hc_workspace_scene('):text+='\n'+block(name)+'\n'
 with tempfile.TemporaryDirectory(prefix='hc-touch-lifecycle-')as work:
  work=Path(work);src=work/'test.cpp';binary=work/'test';src.write_text(text+(HERE/'test.inc').read_text())
- subprocess.run(['c++','-std=c++20','-O2','-DHYPERCEILER_DOCK_NATIVE_MOTION','-I'+str(ROOT/'app/src/main/cpp'),str(src),'-o',str(binary)],check=True)
+ subprocess.run(['c++','-std=c++20','-O2','-DHYPERCRAFT_DOCK_NATIVE_MOTION','-I'+str(ROOT/'app/src/main/cpp'),str(src),'-o',str(binary)],check=True)
  subprocess.run([str(binary)],check=True)

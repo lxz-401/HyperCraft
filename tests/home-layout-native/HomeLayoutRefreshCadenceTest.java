@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
-package com.sevtinge.hyperceiler.libhook.rules.home.dock;
+package com.sevtinge.hypercraft.libhook.rules.home.dock;
 
 import android.content.ContentResolver;
 
@@ -32,14 +32,14 @@ public final class HomeLayoutRefreshCadenceTest {
         Thread.sleep(1800);
         check(ContentResolver.queryCount() == 1, "idle endpoint still polls at 1.5 seconds");
 
-        ContentResolver.signalChange("content://com.sevtinge.hyperceiler.provider.sharedprefs/"
+        ContentResolver.signalChange("content://com.sevtinge.hypercraft.provider.sharedprefs/"
             + "pref/integer/prefs_key_unrelated_setting");
         Thread.sleep(200);
         check(ContentResolver.queryCount() == 1, "unrelated setting woke layout reader");
 
         ContentResolver.putRow("prefs_key_home_layout_workspace_padding_top", 90);
         for (int index = 0; index < 20; ++index) {
-            ContentResolver.signalChange("content://com.sevtinge.hyperceiler.provider.sharedprefs/"
+            ContentResolver.signalChange("content://com.sevtinge.hypercraft.provider.sharedprefs/"
                 + "pref/integer/prefs_key_home_layout_workspace_padding_top");
         }
         awaitQueries(2);
@@ -52,7 +52,7 @@ public final class HomeLayoutRefreshCadenceTest {
         check(ContentResolver.queryCount() <= 3, "change burst was not rate-limited");
         check(HomeLayoutNativeEndpointOS4.pauseForHotReload(), "worker failed to retire");
         check(ContentResolver.unregistrationCount() == 1, "observer leaked after retirement");
-        ContentResolver.signalChange("content://com.sevtinge.hyperceiler.provider.sharedprefs/"
+        ContentResolver.signalChange("content://com.sevtinge.hypercraft.provider.sharedprefs/"
             + "pref/integer/prefs_key_home_layout_workspace_padding_top");
         Thread.sleep(100);
         check(ContentResolver.queryCount() <= 3, "retired endpoint still queried provider");

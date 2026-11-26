@@ -1,1 +1,1 @@
--keepnames class * extends com.sevtinge.hyperceiler.libhook.base.BaseHook
+-keepnames class * extends com.sevtinge.hypercraft.libhook.base.BaseHook

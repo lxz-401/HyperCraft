@@ -1,0 +1,1 @@
+package com.sevtinge.hypercraft.libhook.rules.getapps;import com.sevtinge.hypercraft.libhook.base.BaseHook;public class DisableAds extends BaseHook{public static final DisableAds INSTANCE=new DisableAds(); public void init(){}}

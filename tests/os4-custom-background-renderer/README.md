@@ -28,7 +28,7 @@ python3 source/tests/os4-custom-background-renderer/android/build.py --output va
 python3 source/tests/os4-custom-background-renderer/android/with_hidden_policy.py --build validation/_local-only/<new-build> --output <new-evidence-directory>
 ```
 
-Only run the latter on the dedicated `hyperceiler_os4_api37` emulator at 5580 after
+Only run the latter on the dedicated `hypercraft_os4_api37` emulator at 5580 after
 coordinating foreground ownership. The wrapper temporarily permits hidden framework
 API access for the ordinary app probe and restores/readbacks the original value in
 finally. This is not SystemUI/LSPosed permission evidence. Fancy construction is

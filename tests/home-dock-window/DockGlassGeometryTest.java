@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
-package com.sevtinge.hyperceiler.tests.dock;
+package com.sevtinge.hypercraft.tests.dock;
 
-import com.sevtinge.hyperceiler.libhook.rules.home.dock.DockGlassGeometry;
+import com.sevtinge.hypercraft.libhook.rules.home.dock.DockGlassGeometry;
 
 /**
  * Regression checks for the display/vendor blur-rotation contract.

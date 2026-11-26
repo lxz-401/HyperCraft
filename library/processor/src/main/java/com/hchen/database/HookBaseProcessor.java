@@ -1,7 +1,7 @@
 /*
- * This file is part of HyperCeiler.
+ * This file is part of HyperCraft.
 
- * HyperCeiler is free software: you can redistribute it and/or modify
+ * HyperCraft is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License.
@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2026 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCraft Contributions
  */
 package com.hchen.database;
 
@@ -51,7 +51,7 @@ public class HookBaseProcessor extends AbstractProcessor {
         if (++count > 1) return true;
 
         try (Writer writer = processingEnv.getFiler()
-            .createSourceFile("com.sevtinge.hyperceiler.libhook.base.DataBase")
+            .createSourceFile("com.sevtinge.hypercraft.libhook.base.DataBase")
             .openWriter()) {
 
             writeHeader(writer);
@@ -70,9 +70,9 @@ public class HookBaseProcessor extends AbstractProcessor {
     private void writeHeader(Writer writer) throws IOException {
         writer.write("""
                 /*
-                 * This file is part of HyperCeiler.
+                 * This file is part of HyperCraft.
 
-                 * HyperCeiler is free software: you can redistribute it and/or modify
+                 * HyperCraft is free software: you can redistribute it and/or modify
                  * it under the terms of the GNU Affero General Public License as
                  * published by the Free Software Foundation, either version 3 of the
                  * License.
@@ -85,9 +85,9 @@ public class HookBaseProcessor extends AbstractProcessor {
                  * You should have received a copy of the GNU Affero General Public License
                  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-                 * Copyright (C) 2023-2026 HyperCeiler Contributions
+                 * Copyright (C) 2023-2026 HyperCraft Contributions
                  */
-                package com.sevtinge.hyperceiler.libhook.base;
+                package com.sevtinge.hypercraft.libhook.base;
 
                 import java.util.HashMap;
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ This file is part of HyperCeiler.
+  ~ This file is part of HyperCraft.
   ~
-  ~ HyperCeiler is free software: you can redistribute it and/or modify
+  ~ HyperCraft is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU Affero General Public License as
   ~ published by the Free Software Foundation, either version 3 of the
   ~ License.
@@ -14,7 +14,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCraft Contributions
   -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -31,14 +31,14 @@
             android:enabled="false"
             android:key="prefs_key_about_device_name"
             android:layout="@layout/preference_big_title"
-            android:title="HyperCeiler User's Device" />
+            android:title="HyperCraft User's Device" />
 
         <Preference
             android:enabled="false"
             android:key="prefs_key_about_device_info_device"
             android:layout="@layout/preference_second_title"
             android:summary="@string/about_device_info_device"
-            android:title="HyperCeiler Device" />
+            android:title="HyperCraft Device" />
 
         <Preference
             android:enabled="false"
@@ -82,12 +82,12 @@
         <Preference
             android:key="prefs_key_about_contributer"
             android:title="@string/about_contributer"
-            android:fragment="com.sevtinge.hyperceiler.about.AboutContributorsFragment" />
+            android:fragment="com.sevtinge.hypercraft.about.AboutContributorsFragment" />
 
         <Preference android:title="@string/about_offical">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://hyperceiler.sevtinge.com" />
+                android:data="https://hypercraft.sevtinge.com" />
         </Preference>
 
         <Preference
@@ -95,7 +95,7 @@
             android:title="@string/about_crwd">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://hosted.weblate.org/engage/hyperceiler/" />
+                android:data="https://hosted.weblate.org/engage/hypercraft/" />
         </Preference>
 
         <Preference
@@ -112,13 +112,13 @@
         <Preference android:title="@string/about_protocol">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://hyperceiler.sevtinge.com/Protocol" />
+                android:data="https://hypercraft.sevtinge.com/Protocol" />
         </Preference>
 
         <Preference android:title="@string/about_privacy">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://hyperceiler.sevtinge.com/Privacy" />
+                android:data="https://hypercraft.sevtinge.com/Privacy" />
         </Preference>
     </PreferenceCategory>
 
@@ -156,16 +156,16 @@
             android:title="@string/about_github">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://github.com/ReChronoRain/HyperCeiler" />
+                android:data="https://github.com/ReChronoRain/HyperCraft" />
         </Preference>
 
-        <com.sevtinge.hyperceiler.prefs.XmlPreference
+        <com.sevtinge.hypercraft.prefs.XmlPreference
             android:key="prefs_key_about_use"
             android:title="@string/about_use"
             app:inflatedXml="@xml/prefs_about_use" />
 
         <Preference
-            android:fragment="com.sevtinge.hyperceiler.home.helper.HelpFragment"
+            android:fragment="com.sevtinge.hypercraft.home.helper.HelpFragment"
             android:key="prefs_key_help"
             android:title="@string/help" />
     </PreferenceCategory>

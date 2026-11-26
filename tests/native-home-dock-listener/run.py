@@ -23,7 +23,7 @@ def runtime_path(path):
 
 compiler = args.kotlin_home / "lib" / "kotlin-compiler.jar"
 stdlib = args.kotlin_home / "lib" / "kotlin-stdlib.jar"
-production = args.production or root / "library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/home/other/NativeHomeHooksOS4.kt"
+production = args.production or root / "library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/home/other/NativeHomeHooksOS4.kt"
 with tempfile.TemporaryDirectory(prefix="hc-dock-listener-", dir=os.environ.get("HC_TEST_TMPDIR")) as out:
     jar = Path(out) / "listener-tests.jar"
     subprocess.run([
@@ -34,5 +34,5 @@ with tempfile.TemporaryDirectory(prefix="hc-dock-listener-", dir=os.environ.get(
     separator = ";" if windows_java or os.name == "nt" else ":"
     subprocess.run([
         args.java, "-cp", separator.join([runtime_path(jar), runtime_path(stdlib)]),
-        "com.sevtinge.hyperceiler.tests.nativehome.NativeHomeDockListenerTestKt",
+        "com.sevtinge.hypercraft.tests.nativehome.NativeHomeDockListenerTestKt",
     ], check=True)

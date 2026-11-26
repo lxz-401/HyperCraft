@@ -27,7 +27,7 @@
                 android:scaleType="centerInside"
                 android:src="?attr/searchModeEditTextIcon" />
 
-            <com.sevtinge.hyperceiler.common.widget.SearchEditText
+            <com.sevtinge.hypercraft.common.widget.SearchEditText
                 android:id="@android:id/input"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

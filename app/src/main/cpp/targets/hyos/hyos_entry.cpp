@@ -26,7 +26,7 @@
 extern "C" void hc_hyos_app_entry();
 
 namespace {
-constexpr char kLogTag[] = "HyperCeiler.HyosEntry";
+constexpr char kLogTag[] = "HyperCraft.HyosEntry";
 // The loader ABIs carry the original caller explicitly. Public dlopen/dlsym
 // trampolines substitute our caller PC and change linker namespaces.
 using Dlopen = void *(*)(const char *, int, const void *);
@@ -299,7 +299,7 @@ void *hooked_dlsym(void *handle, const char *symbol, const void *caller) {
 void record_library(const char *name, void *handle) {
     if (handle != nullptr && home_child()
         && (named(name, "libapp_launcher.so") || named(name, "libapp.so"))) {
-        hyperceiler_hyos_record_home_library(name);
+        hypercraft_hyos_record_home_library(name);
     }
 }
 
@@ -421,8 +421,8 @@ extern "C" void *hc_hyos_prepare_app_entry(uintptr_t caller) {
         && base <= UINTPTR_MAX - hyos_guard::kEntryReturnVa
         && caller == base + hyos_guard::kEntryReturnVa && verified_runtime(base)) {
         g_startup_armed.store(true, std::memory_order_release);
-        hyperceiler_hyos_record_home_library("libapp_launcher.so");
-        const bool ready = hyperceiler_hyos_start_home_control(g_api);
+        hypercraft_hyos_record_home_library("libapp_launcher.so");
+        const bool ready = hypercraft_hyos_start_home_control(g_api);
         const auto address = reinterpret_cast<uintptr_t>(target);
         if (address >= hyos_guard::kHomeEntryVa) {
             const bool recents = home_recents::prepare_before_entry(address - hyos_guard::kHomeEntryVa,

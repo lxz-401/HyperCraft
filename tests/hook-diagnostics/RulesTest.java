@@ -1,5 +1,5 @@
-import com.sevtinge.hyperceiler.common.diagnostics.*;
-import com.sevtinge.hyperceiler.diagnostics.ElfBuildId;
+import com.sevtinge.hypercraft.common.diagnostics.*;
+import com.sevtinge.hypercraft.diagnostics.ElfBuildId;
 import java.util.*;
 import java.nio.*;
 
@@ -100,7 +100,7 @@ public class RulesTest {
         check(captureReady!=null&&one(captureFailed,captureReady).state()==DiagnosticRules.State.WAITING,"successful refresh retires an old capture failure");
         var homeReady=LegacyDiagnosticAdapter.parse("LogSync.HomeCoverage","HOME_RECORDS_PRESENT: current logs found","diagnostic",5,1500,0,null);
         check(homeReady!=null&&one(missingHome,homeReady).code().equals("COLLECTION_READY"),"desktop evidence recovery retires missing coverage");
-        var legacy=LegacyDiagnosticAdapter.parse("LSPosed.ModuleLoad","MODULE_APK_LOAD_FAILED: Unable to open '/data/app/com.sevtinge.hyperceiler-abc/base.apk' ENOENT","log",1,1000,42,null);
+        var legacy=LegacyDiagnosticAdapter.parse("LSPosed.ModuleLoad","MODULE_APK_LOAD_FAILED: Unable to open '/data/app/com.sevtinge.hypercraft-abc/base.apk' ENOENT","log",1,1000,42,null);
         check(legacy!=null&&legacy.code().equals("MODULE_LOAD_FAILED")&&one(legacy).state()==DiagnosticRules.State.UNKNOWN,"explicit load failure without current target must remain uncorrelated");
         String secret="Authorization: Bearer abcXYZ\n{\"token\":\"sensitiveValue\"} mail a@example.com password=pass123 https://x.test/?token=verysecret";
         String redacted=DiagnosticRules.redact(secret);

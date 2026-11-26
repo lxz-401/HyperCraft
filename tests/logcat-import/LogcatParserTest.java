@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
-package com.sevtinge.hyperceiler.log;
+package com.sevtinge.hypercraft.log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,21 +16,21 @@ public final class LogcatParserTest {
     public static void main(String[] args) {
         String input = """
             --------- beginning of main
-            [ 1792394363.079037  root:123:456 I/HyperCeiler.HomeLayout ]
+            [ 1792394363.079037  root:123:456 I/HyperCraft.HomeLayout ]
             folder icon scale resolved
 
-            [ 1792394363.079038  system:124:457 E/HyperCeiler.Raw.Renderer ]
+            [ 1792394363.079038  system:124:457 E/HyperCraft.Raw.Renderer ]
             unable to render
             java.lang.IllegalStateException: test
                 at example.render(Test.java:1)
 
-            [ 1792394363.079039  u0_a123:125:458 D/HyperCeiler.Raw.Provision ]
+            [ 1792394363.079039  u0_a123:125:458 D/HyperCraft.Raw.Provision ]
             app record
 
-            [ 1792394363.079040  10123:125:459 I/HyperCeiler.App.Search ]
+            [ 1792394363.079040  10123:125:459 I/HyperCraft.App.Search ]
             already delivered to database listener
 
-            [ 1792394363.079041  10123:125:459 I/HyperCeiler ]
+            [ 1792394363.079041  10123:125:459 I/HyperCraft ]
             legacy app record already delivered to listener
 
             [ 1792394363.079042  1000:126:460 W/HomeTweaks ]
@@ -39,7 +39,7 @@ public final class LogcatParserTest {
             [ 1792394363.079043  1000:126:460 I/OtherApp ]
             unrelated record
 
-            [ 1792394363.079044  1000:126:460 I/HyperCeiler.HomeGesture ]
+            [ 1792394363.079044  1000:126:460 I/HyperCraft.HomeGesture ]
             final record
             """;
         var records = parse("boot-a", 0, input);
@@ -60,7 +60,7 @@ public final class LogcatParserTest {
         assert records.get(0).id() != parse("boot-b", 0, input).get(0).id();
         assert parse("boot-a", 1792394363079L, input).isEmpty() : "cleared logs must stay cleared";
 
-        String duplicate = "[ 1792394363.079044  1000:126:460 I/HyperCeiler.HomeGesture ]\nrepeat\n\n";
+        String duplicate = "[ 1792394363.079044  1000:126:460 I/HyperCraft.HomeGesture ]\nrepeat\n\n";
         var duplicates = parse("boot-a", 0, duplicate + duplicate);
         assert duplicates.size() == 2;
         assert duplicates.get(0).id() != duplicates.get(1).id() : "two identical events must survive";
@@ -68,7 +68,7 @@ public final class LogcatParserTest {
         assert parse("boot-a", 0, "[ 1792394363.079044  1000:126:460 I/HomeTweaks ]\n\nleading blank\n\n")
             .get(0).message().equals("\nleading blank");
 
-        String renamed = "[ 1792394363.079045  1000:126:460 I/HyperCeiler.HomeLayoutEngine ]\nHomeLayoutEngine ready\n\n";
+        String renamed = "[ 1792394363.079045  1000:126:460 I/HyperCraft.HomeLayoutEngine ]\nHomeLayoutEngine ready\n\n";
         var newRecord = parse("boot-a", 0, renamed).get(0);
         assert newRecord.tag().equals(HomeLayoutEngineLogNames.TAG);
         assert newRecord.message().equals("HomeLayoutEngine ready");
@@ -82,11 +82,11 @@ public final class LogcatParserTest {
         assert HomeLayoutEngineLogNames.tag("Renderer").equals("Renderer");
 
         var intermediate = parse("boot-a", 0,
-            "[ 1792394363.079045  1000:126:460 I/HyperCeiler.HomePatch ]\nHomePatch home_patch::Config\n\n").get(0);
+            "[ 1792394363.079045  1000:126:460 I/HyperCraft.HomePatch ]\nHomePatch home_patch::Config\n\n").get(0);
         assert intermediate.tag().equals(HomeLayoutEngineLogNames.TAG);
         assert intermediate.message().equals("HomeLayoutEngine home_layout_engine::Config");
 
-        String numericUid = "[ 1792394363.1  10123:125:459 W/HyperCeiler.Raw.Test ]\nnumeric uid";
+        String numericUid = "[ 1792394363.1  10123:125:459 W/HyperCraft.Raw.Test ]\nnumeric uid";
         assert parse("boot-a", 0, numericUid).get(0).app();
         assert parse("boot-a", 0, numericUid).get(0).timestamp() == 1792394363100L;
         assert parse("boot-a", 1792394363099L, numericUid).size() == 1;

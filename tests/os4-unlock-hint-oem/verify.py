@@ -4,11 +4,11 @@ from pathlib import Path
 import argparse,hashlib,json,zipfile,io,importlib.util,sys,re
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 sys.dont_write_bytecode=True
 BASE=Path(__file__).resolve().parent;ROOT=test_paths.TEST_DATA_ROOT;SHA=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();H=lambda b:hashlib.sha256(b).hexdigest()
-PROD=test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hyperceiler/libhook/rules/systemui/lockscreen/HideLockScreenHintOS4.kt'
+PROD=test_paths.SOURCE_ROOT / 'library/libhook/src/main/java/com/sevtinge/hypercraft/libhook/rules/systemui/lockscreen/HideLockScreenHintOS4.kt'
 ROT='com.android.systemui.keyguard.KeyguardIndicationRotateTextViewController';IND='com.android.systemui.keyguard.KeyguardIndication';VC='com.android.systemui.util.ViewController'
 def main():
  p=argparse.ArgumentParser();p.add_argument('--build',type=Path,required=True);p.add_argument('--android',type=Path,required=True);p.add_argument('--rom',type=Path,required=True);p.add_argument('--mutation-build',type=Path,required=True);p.add_argument('--mutation-android',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args();a.output.mkdir(parents=True,exist_ok=False)

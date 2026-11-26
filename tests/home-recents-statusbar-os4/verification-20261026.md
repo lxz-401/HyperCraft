@@ -15,7 +15,7 @@
 
 最终 APK
 
-`app/build/outputs/apk/release/HyperCeiler-2.10.166-20261026-release.apk`
+`app/build/outputs/apk/release/HyperCraft-2.10.166-20261026-release.apk`
 
 SHA256
 

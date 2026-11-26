@@ -5,7 +5,7 @@ import argparse, hashlib, importlib.util, json, struct
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import hyperceiler_test_paths as test_paths
+import hypercraft_test_paths as test_paths
 
 ROOT = test_paths.TEST_DATA_ROOT
 READER = test_paths.SOURCE_ROOT / 'tests/weather-binding/generate.py'

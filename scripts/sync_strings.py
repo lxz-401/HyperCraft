@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Locale string synchronization script for HyperCeiler.
+Locale string synchronization script for HyperCraft.
 
 Usage:
     python3 scripts/sync_strings.py [options]

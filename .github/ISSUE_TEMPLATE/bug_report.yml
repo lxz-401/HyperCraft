@@ -12,7 +12,7 @@ body:
     id: component
     attributes:
       label: Component
-      description: Which part of HyperCeiler is affected?
+      description: Which part of HyperCraft is affected?
       options:
         - "Settings / UI"
         - "Home / Launcher hooks"
@@ -96,7 +96,7 @@ body:
     id: logs
     attributes:
       label: Logs (if available)
-      description: Paste relevant logs from HyperCeiler Log Viewer or logcat (filter: HyperCeiler)
+      description: Paste relevant logs from HyperCraft Log Viewer or logcat (filter: HyperCraft)
       placeholder: |
         [Log output here]
       render: text
@@ -110,5 +110,5 @@ body:
           required: true
         - label: I have provided all requested information above
           required: true
-        - label: I am using the latest version of HyperCeiler
+        - label: I am using the latest version of HyperCraft
           required: false

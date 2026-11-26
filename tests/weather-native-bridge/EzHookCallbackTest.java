@@ -1,7 +1,7 @@
-package com.sevtinge.hyperceiler.libhook.rules.weather;
+package com.sevtinge.hypercraft.libhook.rules.weather;
 import android.content.ContentResolver;
 import android.os.*;
-import com.sevtinge.hyperceiler.libhook.base.BaseHook;
+import com.sevtinge.hypercraft.libhook.base.BaseHook;
 import io.github.libxposed.api.XposedInterface;
 import io.github.lingqiqi5211.ezhooktool.xposed.common.*;
 import java.util.*;

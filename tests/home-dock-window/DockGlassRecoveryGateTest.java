@@ -1,9 +1,9 @@
-package com.sevtinge.hyperceiler.tests.dock;
+package com.sevtinge.hypercraft.tests.dock;
 
-import com.sevtinge.hyperceiler.libhook.rules.home.dock.DockGlassRecoveryGate;
-import com.sevtinge.hyperceiler.libhook.rules.home.dock.DockGlassRecoveryGate.Outcome;
-import com.sevtinge.hyperceiler.libhook.rules.home.dock.DockGlassRetryPolicy;
-import com.sevtinge.hyperceiler.libhook.rules.home.dock.DockRotationPolicy;
+import com.sevtinge.hypercraft.libhook.rules.home.dock.DockGlassRecoveryGate;
+import com.sevtinge.hypercraft.libhook.rules.home.dock.DockGlassRecoveryGate.Outcome;
+import com.sevtinge.hypercraft.libhook.rules.home.dock.DockGlassRetryPolicy;
+import com.sevtinge.hypercraft.libhook.rules.home.dock.DockRotationPolicy;
 
 /**
  * Lifecycle regressions for the glass recovery state machine.
@@ -13,7 +13,7 @@ import com.sevtinge.hyperceiler.libhook.rules.home.dock.DockRotationPolicy;
  * covered without an Android runtime:
  *
  * <ul>
- *   <li>a temporarily unresolvable HyperCeiler package is a retryable dependency outage and
+ *   <li>a temporarily unresolvable HyperCraft package is a retryable dependency outage and
  *       never consumes the compatibility budget, and never exhausts it</li>
  *   <li>a burst of callbacks for one failed generation cannot queue parallel retries</li>
  *   <li>a retired ticket admits no retry and no stale callback</li>

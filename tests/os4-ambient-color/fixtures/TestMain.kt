@@ -8,9 +8,9 @@ import com.miui.maml.*
 import com.android.systemui.media.controls.shared.model.MediaData
 import com.android.systemui.monet.ColorScheme
 import com.miui.utils.DrawableUtils
-import com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.media3.AmbientColorResolverOS4 as Resolver
+import com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.media3.AmbientColorResolverOS4 as Resolver
 import miuix.mipalette.MiPalette
-import com.sevtinge.hyperceiler.libhook.rules.systemui.controlcenter.media3.AmbientNativeColorOS4 as Native
+import com.sevtinge.hypercraft.libhook.rules.systemui.controlcenter.media3.AmbientNativeColorOS4 as Native
 import java.util.concurrent.*
 
 private var passed=0

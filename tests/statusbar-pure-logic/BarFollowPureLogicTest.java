@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
-package com.sevtinge.hyperceiler.libhook.rules.systemui.barfollow;
+package com.sevtinge.hypercraft.libhook.rules.systemui.barfollow;
 
-import com.sevtinge.hyperceiler.libhook.rules.systemui.statusbarfollow.RecentsOpenSession;
+import com.sevtinge.hypercraft.libhook.rules.systemui.statusbarfollow.RecentsOpenSession;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;

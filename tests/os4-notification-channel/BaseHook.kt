@@ -1,4 +1,4 @@
-package com.sevtinge.hyperceiler.libhook.base
+package com.sevtinge.hypercraft.libhook.base
 import fixture.*
 class LoadPackage { val classLoader: ClassLoader = javaClass.classLoader; val packageName = "com.android.systemui" }
 abstract class BaseHook {

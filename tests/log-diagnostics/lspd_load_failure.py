@@ -4,11 +4,11 @@ import subprocess
 import tempfile
 
 root = Path(__file__).resolve().parents[2]
-loader = (root / 'app/src/main/java/com/sevtinge/hyperceiler/log/XposedLogLoader.java').read_text()
+loader = (root / 'app/src/main/java/com/sevtinge/hypercraft/log/XposedLogLoader.java').read_text()
 methods = loader[loader.index('    private void importDirectoryToDatabase('):loader.index('    private void clearLogs()')]
 constants = loader[loader.index('    private static final String FILTERED_MODULE'):loader.index('    private static volatile XposedLogLoader')]
 harness = r'''
-package com.sevtinge.hyperceiler.log;
+package com.sevtinge.hypercraft.log;
 import java.io.*; import java.util.*; import java.util.regex.*; import java.text.*;
 public class LspdImportTest {
     static class AndroidLog {static void e(String t,String m,Throwable e){throw new AssertionError(e);}}
@@ -24,8 +24,8 @@ public class LspdImportTest {
     static void check(boolean ok){if(!ok)throw new AssertionError();}
     public static void main(String[] args) throws Exception {
         File dir=new File(args[0]);dir.mkdirs();
-        String module=prefix("I","LSPosedFramework")+"(system)[com.sevtinge.hyperceiler,HyperCeiler,1,0,1] [system][Hook]: ready\n";
-        String apk="/data/app/~~fixture/com.sevtinge.hyperceiler-random==/base.apk";
+        String module=prefix("I","LSPosedFramework")+"(system)[com.sevtinge.hypercraft,HyperCraft,1,0,1] [system][Hook]: ready\n";
+        String apk="/data/app/~~fixture/com.sevtinge.hypercraft-random==/base.apk";
         String verbose=module+prefix("W","LSPosedService")+"failed to parse "+apk+"\njava.lang.Exception: fixture\n\tat fixture.method(Source:1)\n"
             +prefix("E","lspd")+"Failed to open APK '"+apk+"': I/O error\n"
             +prefix("E","lspd")+"Failed to open APK '/data/app/com.other-module/base.apk': I/O error\n"
@@ -45,7 +45,7 @@ public class LspdImportTest {
         importer.importDirectoryToDatabase(dir,"log.old",dao,batch);dao.insertAll(batch);
         check(dao.entries.size()==3);check(dao.entries.get(0).sourceGroup().equals("log.old"));
         check(!LspdLoadFailure.matches(null));
-        check(!LspdLoadFailure.matches("Failed to open APK '/data/app/com.other/base.apk' HyperCeiler"));
+        check(!LspdLoadFailure.matches("Failed to open APK '/data/app/com.other/base.apk' HyperCraft"));
         System.out.println("LSPosed APK failure import: PASS (verbose beside modules, stack, severity, no duplicates, fallback)");
     }
 }
@@ -55,5 +55,5 @@ with tempfile.TemporaryDirectory(prefix='hc-lspd-failure-') as temp:
     temp = Path(temp)
     java = temp / 'LspdImportTest.java'
     java.write_text(harness)
-    subprocess.run(['javac', '-d', str(temp), str(java), str(root / 'app/src/main/java/com/sevtinge/hyperceiler/log/LspdLoadFailure.java')], check=True)
-    subprocess.run(['java', '-ea', '-cp', str(temp), 'com.sevtinge.hyperceiler.log.LspdImportTest', str(temp / 'logs')], check=True)
+    subprocess.run(['javac', '-d', str(temp), str(java), str(root / 'app/src/main/java/com/sevtinge/hypercraft/log/LspdLoadFailure.java')], check=True)
+    subprocess.run(['java', '-ea', '-cp', str(temp), 'com.sevtinge.hypercraft.log.LspdImportTest', str(temp / 'logs')], check=True)
